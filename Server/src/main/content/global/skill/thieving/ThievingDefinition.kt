@@ -5,9 +5,12 @@ import core.api.utils.WeightBasedTable
 import core.game.event.ResourceProducedEvent
 import core.game.global.action.DoorActionHandler.handleAutowalkDoor
 import core.game.interaction.QueueStrength
+import core.game.node.Node
+import core.game.node.entity.combat.DeathTask
 import core.game.node.entity.combat.ImpactHandler
-import core.game.node.entity.combat.ImpactHandler.HitsplatType
+import core.game.node.entity.impl.Animator
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.node.scenery.Scenery
@@ -15,16 +18,23 @@ import core.game.world.GameWorld.ticks
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
+import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
 import core.tools.StringUtils.isPlusN
-import shared.consts.Animations
-import shared.consts.Items
-import shared.consts.NPCs
-import shared.consts.Quests
+import shared.consts.*
 import shared.consts.Scenery as Objects
 
 object ThievingDefinition {
+    /**
+     * The base pickpocket animation.
+     */
+    val PICKPOCKET_ANIM = Animation(Animations.HUMAN_PICKPOCKETING_881, Animator.Priority.HIGH)
+
+    /**
+     * The base punch animation for NPCs.
+     */
+    val NPC_ANIM = Animation(Animations.PUNCH_422)
 
     /**
      * Represents stall data.
@@ -62,6 +72,12 @@ object ThievingDefinition {
             get() = rewards[RandomFunction.random(rewards.size)]
 
         companion object {
+            /**
+             * Handles the action of stealing from a market stall.
+             * @param player The player attempting to steal from the stall.
+             * @param node The scenery object representing the stall.
+             * @param stall The [Stall] definition.
+             */
             fun handleSteal(player: Player, node: Scenery, stall: Stall) {
                 if (player.inCombat()) {
                     sendMessage(player, "You can't steal from the market stall during combat!")
@@ -102,7 +118,7 @@ object ThievingDefinition {
                                 npc.properties.combatPulse.attack(player)
                             }
                         }
-                        if (stall == Stall.CANDLES) {
+                        if (stall == CANDLES) {
                             stun(player, 15, false)
                             impact(player, 3, ImpactHandler.HitsplatType.NORMAL)
                             player.sendMessage("A higher power smites you.")
@@ -112,7 +128,7 @@ object ThievingDefinition {
 
 
                     player.inventory.add(item)
-                    player.getSkills().addExperience(Skills.THIEVING, stall.experience, true)
+                    rewardXP(player, Skills.THIEVING, stall.experience)
                     if (stall == SILK_STALL) {
                         player.getSavedData().globalData.setSilkSteal(System.currentTimeMillis() + 1800000)
                     }
@@ -174,6 +190,83 @@ object ThievingDefinition {
             }
 
             /**
+             * Attempts to pickpocket a given NPC for the player.
+             * @param player The player attempting the pickpocket.
+             * @param node The NPC being targeted.
+             * @return `true` if the pickpocket action was processed (successfully or unsuccessfully),
+             *         `false` if the NPC cannot be pickpocketed.
+             */
+            fun attemptPickpocket(player: Player, node: Node): Boolean {
+                val pocketData = Pickpocket.forID(node.id) ?: return false
+                val npc = node.asNpc()
+                val npcName = npc.name.lowercase()
+                val cabinetKey = hasAnItem(player, Items.DISPLAY_CABINET_KEY_4617).container != null
+
+                if (player.inCombat()) {
+                    sendMessage(player, "You can't do this while in combat.")
+                    return true
+                }
+
+                if (getStatLevel(player, Skills.THIEVING) < pocketData.requiredLevel) {
+                    sendMessage(player, "You need a Thieving level of ${pocketData.requiredLevel} to do that.")
+                    return true
+                }
+
+                if (DeathTask.isDead(npc)) {
+                    sendMessage(player, "Too late, $npcName is already dead.")
+                    return true
+                }
+
+                if (npc.id == NPCs.CURATOR_HAIG_HALEN_646 && cabinetKey) {
+                    sendMessage(player, "You have no reason to do that.")
+                    return true
+                }
+
+                if (!pocketData.table.canRoll(player)) {
+                    sendMessage(player, "You don't have enough inventory space to do that.")
+                    return true
+                }
+
+                animate(player, Animation(Animations.HUMAN_PICKPOCKETING_881, Animator.Priority.HIGH))
+                sendMessage(player, "You attempt to pick the $npcName's pocket.")
+
+                val lootTable = pickpocketRoll(player, pocketData.low, pocketData.high, pocketData.table)
+
+                if (lootTable == null) {
+                    npc.walkingQueue.reset()
+                    npc.face(player)
+                    npc.animator.animate(Animation(Animations.PUNCH_422))
+                    npc.sendChat(pocketData.message)
+                    sendMessage(player, "You fail to pick the $npcName's pocket.")
+
+                    playHurtAudio(player, 20)
+                    stun(player, pocketData.stunTime)
+                    impact(player, RandomFunction.random(pocketData.stunDamageMin, pocketData.stunDamageMax), ImpactHandler.HitsplatType.NORMAL)
+                    sendMessage(player, "You feel slightly concussed from the blow.")
+                    npc.face(null)
+                } else {
+                    lock(player, 2)
+                    playAudio(player, Sounds.PICK_2581)
+                    lootTable.forEach { player.inventory.add(it) }
+
+                    if (getStatLevel(player, Skills.THIEVING) >= 40) {
+                        when {
+                            inBorders(player, ZoneBorders(3201, 3456, 3227, 3468)) && npc.id == NPCs.GUARD_5920 -> {
+                                finishDiaryTask(player, DiaryType.VARROCK, 1, 12)
+                            }
+                            inBorders(player, ZoneBorders(2934, 3399, 3399, 3307)) && npc.id in intArrayOf(NPCs.GUARD_9, NPCs.GUARD_3230, NPCs.GUARD_3228, NPCs.GUARD_3229) -> {
+                                finishDiaryTask(player, DiaryType.FALADOR, 1, 6)
+                            }
+                        }
+                    }
+
+                    sendMessage(player, if (npc.id == NPCs.CURATOR_HAIG_HALEN_646) "You steal a tiny key." else "You pick the $npcName's pocket.")
+                    rewardXP(player, Skills.THIEVING, pocketData.experience)
+                }
+                return true
+            }
+
+            /**
              * Gets the [Pickpocket] instance associated with a specific object id.
              *
              * @param id The object ID used for lookup.
@@ -193,6 +286,20 @@ object ThievingDefinition {
             RandomFunction.getSkillSuccessChance(low, high, player.skills.getLevel(Skills.THIEVING))
     }
 
+    /**
+     * Attempts a pickpocket action for the player.
+     *
+     * Calculates the player successfully pickpockets an NPC based on:
+     * - The player thieving level
+     * - The NPCs low and high success thresholds
+     * - The equipment modifiers (e.g., Gloves of Silence)
+     *
+     * @param player The player attempting to pickpocket.
+     * @param low The min base success rate for the pickpocket attempt.
+     * @param high The max base success rate for the pickpocket attempt.
+     * @param table The weighted loot table to roll for rewards upon success.
+     * @return An [ArrayList] of [Item]s if the pickpocket succeeds, or `null` if it fails.
+     */
     @JvmStatic
     fun pickpocketRoll(player: Player, low: Double, high: Double, table: WeightBasedTable): ArrayList<Item>? {
         var successMod = 0.0
@@ -325,12 +432,12 @@ object ThievingDefinition {
      * Represents the chests available to force open.
      */
     enum class Chests(val objectIds: IntArray, val level: Int, val xp: Double, val rewards: Array<Item>, val respawnTicks: Int) {
-        TEN_COIN(intArrayOf(shared.consts.Scenery.CHEST_2566), 13, 7.8, arrayOf(Item(Items.COINS_995, 10)), 7),
-        NATURE_RUNE(intArrayOf(shared.consts.Scenery.CHEST_2567), 28, 25.0, arrayOf(Item(Items.COINS_995, 3), Item(Items.NATURE_RUNE_561, 1)), 8),
-        FIFTY_COIN(intArrayOf(shared.consts.Scenery.CHEST_2568), 43, 125.0, arrayOf(Item(Items.COINS_995, 50)), 55),
-        STEEL_ARROWHEADS(intArrayOf(shared.consts.Scenery.CHEST_2573), 47, 150.0, arrayOf(Item(41, 5)), 210),
-        BLOOD_RUNES(intArrayOf(shared.consts.Scenery.CHEST_2569), 59, 250.0, arrayOf(Item(Items.COINS_995, 500), Item(Items.BLOOD_RUNE_565, 2)), 135),
-        PALADIN(intArrayOf(shared.consts.Scenery.CHEST_2570), 72, 500.0, arrayOf(Item(Items.COINS_995, 1000), Item(Items.RAW_SHARK_383, 1), Item(Items.ADAMANTITE_ORE_449, 1), Item(Items.UNCUT_SAPPHIRE_1623, 1)), 120);
+        TEN_COIN(intArrayOf(Objects.CHEST_2566), 13, 7.8, arrayOf(Item(Items.COINS_995, 10)), 7),
+        NATURE_RUNE(intArrayOf(Objects.CHEST_2567), 28, 25.0, arrayOf(Item(Items.COINS_995, 3), Item(Items.NATURE_RUNE_561, 1)), 8),
+        FIFTY_COIN(intArrayOf(Objects.CHEST_2568), 43, 125.0, arrayOf(Item(Items.COINS_995, 50)), 55),
+        STEEL_ARROWHEADS(intArrayOf(Objects.CHEST_2573), 47, 150.0, arrayOf(Item(41, 5)), 210),
+        BLOOD_RUNES(intArrayOf(Objects.CHEST_2569), 59, 250.0, arrayOf(Item(Items.COINS_995, 500), Item(Items.BLOOD_RUNE_565, 2)), 135),
+        PALADIN(intArrayOf(Objects.CHEST_2570), 72, 500.0, arrayOf(Item(Items.COINS_995, 1000), Item(Items.RAW_SHARK_383, 1), Item(Items.ADAMANTITE_ORE_449, 1), Item(Items.UNCUT_SAPPHIRE_1623, 1)), 120);
 
         private var respawnUntil = 0
 
@@ -342,7 +449,9 @@ object ThievingDefinition {
         }
 
         /**
-         * Opening without searching = trap damage.
+         * Handles opening the chest.
+         * @param player The player attempting to open the chest.
+         * @param obj The scenery object representing the chest.
          */
         fun open(player: Player, obj: Scenery) {
             if (isRespawning) {
@@ -350,12 +459,14 @@ object ThievingDefinition {
             } else {
                 lock(player, 2)
                 sendMessage(player, "You have activated a trap on the chest.")
-                impact(player, hitDamage(player), HitsplatType.NORMAL)
+                impact(player, hitDamage(player), ImpactHandler.HitsplatType.NORMAL)
             }
         }
 
         /**
-         * Searching for traps
+         * Handles searching the chest for traps and opening it.
+         * @param player The player attempting to search.
+         * @param scenery The scenery object representing the chest.
          */
         fun searchTraps(player: Player, scenery: Scenery) {
             player.faceLocation(scenery.location)

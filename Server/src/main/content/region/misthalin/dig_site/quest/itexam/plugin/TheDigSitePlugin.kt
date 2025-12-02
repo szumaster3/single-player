@@ -68,14 +68,14 @@ class TheDigSitePlugin : InteractionListener {
             }
 
             sendMessage(player, "You attempt to pick the workman's pocket...")
-            player.animator.animate(ThievingOptionPlugin.PICKPOCKET_ANIM)
+            player.animator.animate(ThievingDefinition.PICKPOCKET_ANIM)
 
             val roll = ThievingDefinition.pickpocketRoll(player, 84.0, 240.0, table)
 
             fun handleFail() {
                 val npc = node.asNpc()
                 npc.face(player)
-                npc.animator.animate(ThievingOptionPlugin.NPC_ANIM)
+                npc.animator.animate(ThievingDefinition.NPC_ANIM)
                 sendMessage(player, "You fail to pick the workman's pocket.")
                 sendChat(npc, "What do you think you're doing???")
                 sendMessage(player, "You have been stunned.")
@@ -86,7 +86,7 @@ class TheDigSitePlugin : InteractionListener {
             }
 
             fun handleSuccess() {
-                queueScript(player, ThievingOptionPlugin.PICKPOCKET_ANIM.duration, QueueStrength.NORMAL) { stage ->
+                queueScript(player, ThievingDefinition.PICKPOCKET_ANIM.duration, QueueStrength.NORMAL) { stage ->
                     if (stage == 0) {
                         val loot = roll!!
                         if (loot.isNotEmpty()) {
