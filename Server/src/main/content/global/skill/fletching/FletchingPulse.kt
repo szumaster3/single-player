@@ -18,12 +18,7 @@ import shared.consts.Quests
 /**
  * Represents a fletching skill pulse.
  */
-class FletchingPulse(
-    player: Player,
-    private val node: Item,
-    private var amount: Int,
-    private val fletch: Fletching.FletchData
-) : SkillPulse<Item>(player, node) {
+class FletchingPulse(player: Player, private val node: Item, private var amount: Int, private val fletch: FletchingDefinition.FletchData) : SkillPulse<Item>(player, node) {
 
     private val animationId = if(node.id == Items.MAGIC_LOGS_1513) Animation(Animations.CUT_MAGIC_LOGS_7211) else Animation(Animations.FLETCH_LOGS_1248)
 

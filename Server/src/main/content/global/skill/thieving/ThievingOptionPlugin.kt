@@ -2,21 +2,21 @@ package content.global.skill.thieving
 
 import core.api.lockInteractions
 import core.api.sendDialogue
-import core.api.submitIndividualPulse
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.impl.PulseType
 import core.game.node.scenery.Scenery
 
 class ThievingOptionPlugin : InteractionListener {
     override fun defineListeners() {
 
         /*
-         * Handles thieving interaction options.
+         * Handles thieving scenery options.
          */
 
         on(IntType.SCENERY, "steal-from", "steal from", "steal") { player, node ->
-            submitIndividualPulse(player, StallThiefPulse(player, node as Scenery, Stall.forScenery(node)), type = PulseType.STANDARD)
+            val scenery = node as? Scenery ?: return@on true // rzutowanie
+            val stall = Stall.values().firstOrNull { scenery.id in it.fullIDs } ?: return@on true
+            Stall.handleStall(player, scenery, stall)
             lockInteractions(player, 6)
             return@on true
         }
@@ -27,6 +27,33 @@ class ThievingOptionPlugin : InteractionListener {
 
         on(shared.consts.Scenery.CLOTHES_STALL_6165, IntType.SCENERY, "steal-from") { player, _ ->
             sendDialogue(player, "You don't really see anything you'd want to steal from this stall.")
+            return@on true
+        }
+
+        /*
+         * Handles opening thieving chests.
+         */
+
+        on(ChestsDefinition.allObjectIds, IntType.SCENERY, "open") { player, node ->
+            ChestsDefinition.forId(node.id)?.open(player, node as Scenery)
+            return@on true
+        }
+
+        /*
+         * Handles searching for traps.
+         */
+
+        on(ChestsDefinition.allObjectIds, IntType.SCENERY, "search for traps") { player, node ->
+            ChestsDefinition.forId(node.id)?.searchTraps(player, node as Scenery)
+            return@on true
+        }
+
+        /*
+         * Handles opening the chests.
+         */
+
+        on(ChestsDefinition.allObjectIds, IntType.SCENERY, "open") { player, node ->
+            ChestsDefinition.forId(node.id)?.open(player, node as Scenery)
             return@on true
         }
     }
