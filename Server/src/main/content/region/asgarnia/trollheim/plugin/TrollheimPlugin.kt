@@ -41,23 +41,6 @@ import shared.consts.Sounds
 
 @Initializable
 class TrollheimPlugin : OptionHandler() {
-    private val rockScenery =
-        intArrayOf(
-            Scenery.ROCKS_3748,
-            Scenery.ROCKS_3723,
-            Scenery.ROCKS_3722,
-            Scenery.ROCKS_3804,
-            Scenery.ROCKS_3803,
-            Scenery.ROCKS_3791,
-            Scenery.ROCKS_3790,
-            Scenery.ROCKS_9327,
-            Scenery.ROCKS_9306,
-            Scenery.ROCKS_9305,
-            Scenery.ROCKS_9304,
-            Scenery.ROCKS_9303,
-        )
-    private val arenaScenery = intArrayOf(3786, 3785, 3783, 3782)
-
     override fun newInstance(arg: Any?): Plugin<Any?> {
         NPCDefinition.forId(1069).handlers["option:talk-to"] = this
         SceneryDefinition.forId(3742).handlers["option:read"] = this
@@ -69,7 +52,6 @@ class TrollheimPlugin : OptionHandler() {
         SceneryDefinition.forId(3791).handlers["option:climb"] = this
         SceneryDefinition.forId(3782).handlers["option:open"] = this
         SceneryDefinition.forId(3783).handlers["option:open"] = this
-
         SceneryDefinition.forId(4499).handlers["option:enter"] = this
         SceneryDefinition.forId(4500).handlers["option:enter"] = this
         SceneryDefinition.forId(9303).handlers["option:climb"] = this
@@ -96,606 +78,170 @@ class TrollheimPlugin : OptionHandler() {
     override fun handle(player: Player, node: Node, option: String): Boolean {
         val id = if (node is core.game.node.scenery.Scenery) node.id else (node as NPC).id
         val loc = node.location
-        var xOffset = 0
-        val yOffset = 0
         when (option) {
-            "enter" ->
-                when (id) {
-                    3735 -> player.properties.teleportLocation = LOCATIONS[0]
-                    4499 -> player.properties.teleportLocation = LOCATIONS[2]
-                    4500 -> player.properties.teleportLocation = LOCATIONS[3]
-                    3723 -> player.properties.teleportLocation = LOCATIONS[4]
-                    3757 ->
-                        player.properties.teleportLocation =
-                            if (loc == Location(2907, 3652, 0)) LOCATIONS[7] else LOCATIONS[4]
+            "enter" -> when (id) {
+                3735 -> player.properties.teleportLocation = LOCATIONS[0]
+                4499 -> player.properties.teleportLocation = LOCATIONS[2]
+                4500 -> player.properties.teleportLocation = LOCATIONS[3]
+                3723 -> player.properties.teleportLocation = LOCATIONS[4]
+                3757 -> player.properties.teleportLocation =
+                    if (loc == Location(2907, 3652, 0)) LOCATIONS[7] else LOCATIONS[4]
 
-                    3771 -> player.teleport(Location(2837, 10090, 2))
-                }
+                3771 -> player.teleport(Location(2837, 10090, 2))
+            }
 
             "leave" -> player.teleport(Location(2840, 3690))
-            "exit" ->
-                when (id) {
-                    3758 ->
-                        player.properties.teleportLocation =
-                            if (loc == Location(2906, 10036, 0)) LOCATIONS[6] else LOCATIONS[5]
+            "exit" -> when (id) {
+                3758 -> player.properties.teleportLocation =
+                    if (loc == Location(2906, 10036, 0)) LOCATIONS[6] else LOCATIONS[5]
+            }
+
+            "talk-to" -> when (id) {
+                1069 -> player.dialogueInterpreter.open(id, node)
+            }
+
+            "read" -> when (id) {
+                3742 -> ActivityManager.start(player, "trollheim-warning", false)
+            }
+
+            "open" -> when (id) {
+                3785, 3786, 3782, 3783 -> {
+                    DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+                    return true
                 }
 
-            "talk-to" ->
-                when (id) {
-                    1069 -> player.dialogueInterpreter.open(id, node)
-                }
+                3672 -> sendMessage(player, "You don't know how to open the secret door.")
+            }
 
-            "read" ->
-                when (id) {
-                    3742 -> ActivityManager.start(player, "trollheim-warning", false)
-                }
+            "climb-up" -> when (id) {
+                18834 -> ClimbActionHandler.climb(
+                    player,
+                    ClimbActionHandler.CLIMB_UP,
+                    Location(2828, 3678),
+                    "You clamber onto the windswept roof of the Troll Stronghold.",
+                )
+            }
 
-            "open" ->
-                when (id) {
-                    3785, 3786, 3782, 3783 -> {
-                        DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
-                        return true
-                    }
-
-                    3672 -> sendMessage(player, "You don't know how to open the secret door.")
-                }
-
-            "climb-up" ->
-                when (id) {
-                    18834 ->
-                        ClimbActionHandler.climb(
-                            player,
-                            ClimbActionHandler.CLIMB_UP,
-                            Location(2828, 3678),
-                            "You clamber onto the windswept roof of the Troll Stronghold.",
-                        )
-                }
-
-            "climb-down" ->
-                when (id) {
-                    18833 ->
-                        ClimbActionHandler.climb(
-                            player,
-                            ClimbActionHandler.CLIMB_DOWN,
-                            Location(2831, 10076, 2),
-                            "You clamber back inside the Troll Stronghold.",
-                        )
-                }
+            "climb-down" -> when (id) {
+                18833 -> ClimbActionHandler.climb(
+                    player,
+                    ClimbActionHandler.CLIMB_DOWN,
+                    Location(2831, 10076, 2),
+                    "You clamber back inside the Troll Stronghold.",
+                )
+            }
 
             "climb" -> {
                 if (!player.equipment.containsItem(CLIMBING_BOOTS)) {
                     sendMessage(player, "You need Climbing boots to negotiate these rocks.")
                     return true
                 }
-                lock(player, 3)
-                lockInteractions(player, 3)
-                sendMessage(player, "You climb onto the rock...")
-                sendMessage(player, "...and step down the other side.", 3)
-                xOffset = if (player.location.x < loc.x) 2 else -2
-                val scenery = (node as core.game.node.scenery.Scenery)
-                when (id) {
-                    3722 ->
-                        ForceMovement
-                            .run(
-                                player,
-                                player.location,
-                                Location.create(2880, 3592, 0),
-                                Animation.create(CLIMB_DOWN),
-                                Animation.create(CLIMB_DOWN),
-                                Direction.NORTH,
-                                13,
-                            ).endAnimation =
-                            Animation.RESET
 
-                    3723 ->
-                        ForceMovement
-                            .run(
-                                player,
-                                player.location,
-                                Location.create(2881, 3596, 0),
-                                Animation.create(CLIMB_UP),
-                                Animation.create(CLIMB_UP),
-                                Direction.NORTH,
-                                13,
-                            ).endAnimation =
-                            Animation.RESET
+                val scenery = node as core.game.node.scenery.Scenery
 
-                    3790 -> {
-                        if (player.location.x > 2877) {
-                            ForceMovement
-                                .run(
-                                    player,
-                                    player.location.transform(xOffset, yOffset, 0),
-                                    scenery.location.transform(xOffset, yOffset, 0),
-                                    Animation.create(CLIMB_DOWN),
-                                    Animation.create(CLIMB_DOWN),
-                                    Direction.EAST,
-                                    13,
-                                ).endAnimation =
-                                Animation.RESET
-                        } else {
-                            ForceMovement
-                                .run(
-                                    player,
-                                    player.location.transform(xOffset, yOffset, 0),
-                                    scenery.location.transform(xOffset, yOffset, 0),
-                                    Animation.create(CLIMB_UP),
-                                    Animation.create(CLIMB_UP),
-                                    Direction.WEST,
-                                    13,
-                                ).endAnimation =
-                                Animation.RESET
-                        }
-                        if (player.location.x < 2877 || player.location.equals(2878, 3622, 0)) {
-                            ForceMovement
-                                .run(
-                                    player,
-                                    player.location.transform(xOffset, yOffset, 0),
-                                    scenery.location.transform(xOffset, yOffset, 0),
-                                    Animation.create(CLIMB_DOWN),
-                                    Animation.create(CLIMB_DOWN),
-                                    Direction.WEST,
-                                    13,
-                                ).endAnimation =
-                                Animation.RESET
-                        } else {
-                            ForceMovement
-                                .run(
-                                    player,
-                                    player.location.transform(xOffset, yOffset, 0),
-                                    scenery.location.transform(xOffset, yOffset, 0),
-                                    Animation.create(CLIMB_UP),
-                                    Animation.create(CLIMB_UP),
-                                    Direction.EAST,
-                                    13,
-                                ).endAnimation =
-                                Animation.RESET
-                        }
+                fun checkRequirements(requiredLevel: Int): Boolean {
+                    if (getStatLevel(player, Skills.AGILITY) < requiredLevel) {
+                        sendMessage(
+                            player, "You need an agility level of $requiredLevel in order to climb this mountain side."
+                        )
+                        return true
                     }
+                    return false
+                }
 
-                    3791 -> {
-                        lock(player, 3)
-                        lockInteractions(player, 3)
-                        xOffset = if (player.location.x < loc.x) 2 else -2
-                        if (player.location.x < 2877 || player.location.equals(2878, 3622, 0)) {
-                            ForceMovement
-                                .run(
-                                    player,
-                                    player.location.transform(xOffset, yOffset, 0),
-                                    scenery.location.transform(xOffset, yOffset, 0),
-                                    Animation.create(CLIMB_DOWN),
-                                    Animation.create(CLIMB_DOWN),
-                                    Direction.WEST,
-                                    13,
-                                ).endAnimation =
-                                Animation.RESET
-                        } else {
-                            ForceMovement
-                                .run(
-                                    player,
-                                    player.location.transform(xOffset, yOffset, 0),
-                                    scenery.location.transform(xOffset, yOffset, 0),
-                                    Animation.create(CLIMB_UP),
-                                    Animation.create(CLIMB_UP),
-                                    Direction.EAST,
-                                    13,
-                                ).endAnimation =
-                                Animation.RESET
-                        }
+                val xOffset = if (player.location.x < loc.x) 2 else -2
+                val yOffset = 0
+
+                when (id) {
+                    3722 -> runClimb(player, Location.create(2880, 3592, 0), CLIMB_DOWN, Direction.NORTH)
+                    3723 -> runClimb(player, Location.create(2881, 3596, 0), CLIMB_UP, Direction.NORTH)
+
+                    3790, 3791 -> {
+                        val anim = if (player.location.x > 2877) CLIMB_DOWN else CLIMB_UP
+                        val dir = if (player.location.x > 2877) Direction.EAST else Direction.WEST
+                        runClimb(player, scenery.location.transform(xOffset, yOffset, 0), anim, dir)
                     }
 
                     3748 -> {
                         when (loc) {
-                            Location(2821, 3635, 0) ->
-                                ForceMovement.run(
-                                    player,
-                                    player.location,
-                                    loc.transform(
-                                        if (player.location.x >
-                                            loc.x
-                                        ) {
-                                            -1
-                                        } else {
-                                            1
-                                        },
-                                        0,
-                                        0,
-                                    ),
-                                    JUMP,
-                                )
+                            Location(2821, 3635, 0) -> runClimb(
+                                player, loc.transform(if (player.location.x > loc.x) -1 else 1, 0, 0), JUMP.id
+                            )
 
                             Location(2910, 3687, 0), Location(2910, 3686, 0) -> {
-                                if (getStatLevel(player, Skills.AGILITY) < 43) {
-                                    sendMessage(
-                                        player,
-                                        "You need an agility level of 43 in order to climb this mountain side.",
-                                    )
-                                    return true
+                                if (checkRequirements(43)) return true
+                                val target = when (player.location) {
+                                    Location(2911, 3687, 0) -> Location(2909, 3687, 0)
+                                    Location(2909, 3687, 0) -> Location(2911, 3687, 0)
+                                    Location(2911, 3686, 0) -> Location(2909, 3686, 0)
+                                    else -> Location(2911, 3686, 0)
                                 }
-                                when (player.location) {
-                                    Location.create(
-                                        2911,
-                                        3687,
-                                        0,
-                                    ),
-                                    ->
-                                        ForceMovement.run(
-                                            player,
-                                            player.location,
-                                            Location.create(2909, 3687, 0),
-                                            JUMP,
-                                        )
-
-                                    Location(
-                                        2909,
-                                        3687,
-                                        0,
-                                    ),
-                                    ->
-                                        ForceMovement.run(
-                                            player,
-                                            player.location,
-                                            Location.create(2911, 3687, 0),
-                                            JUMP,
-                                        )
-
-                                    Location.create(
-                                        2911,
-                                        3686,
-                                        0,
-                                    ),
-                                    ->
-                                        ForceMovement.run(
-                                            player,
-                                            player.location,
-                                            Location.create(2909, 3686, 0),
-                                            JUMP,
-                                        )
-
-                                    else ->
-                                        ForceMovement.run(
-                                            player,
-                                            player.location,
-                                            Location.create(2911, 3686, 0),
-                                            JUMP,
-                                        )
-                                }
+                                runClimb(player, target, JUMP.id)
                             }
 
-                            else ->
-                                ForceMovement.run(
-                                    player,
-                                    player.location,
-                                    if (player.location.y <
-                                        scenery.location.y
-                                    ) {
-                                        player.location.transform(0, 2, 0)
-                                    } else {
-                                        player.location.transform(0, -2, 0)
-                                    },
-                                    JUMP,
-                                )
+                            else -> {
+                                val deltaY = if (player.location.y < scenery.location.y) 2 else -2
+                                runClimb(player, player.location.transform(0, deltaY, 0), JUMP.id)
+                            }
                         }
                     }
 
                     3803, 3804 -> {
-                        if (getStatLevel(player, Skills.AGILITY) < 43) {
-                            sendMessage(player, "You need an agility level of 43 in order to climb this mountain side.")
-                            return true
+                        if (checkRequirements(43)) return true
+                        val target = when (player.location) {
+                            Location(2884, 3684, 0) -> Location(2886, 3684, 0)
+                            Location(2884, 3683, 0) -> Location(2886, 3683, 0)
+                            Location(2886, 3683, 0) -> Location(2884, 3683, 0)
+                            Location(2888, 3660, 0), Location(2887, 3660, 0) -> player.location.transform(0, 2, 0)
+                            Location(2888, 3662, 0), Location(2887, 3662, 0) -> player.location.transform(0, -2, 0)
+                            else -> Location(2884, 3684, 0)
                         }
-                        lock(player, 3)
-                        lockInteractions(player, 3)
-                        sendMessage(player, "You climb onto the rock...")
-                        sendMessage(player, "...and step down the other side.", 3)
-                        when (player.location) {
-                            Location.create(2884, 3684, 0) ->
-                                ForceMovement
-                                    .run(
-                                        player,
-                                        player.location,
-                                        Location.create(2886, 3684, 0),
-                                        Animation.create(CLIMB_UP),
-                                        Animation.create(CLIMB_UP),
-                                        Direction.WEST,
-                                        13,
-                                    ).endAnimation =
-                                    Animation.RESET
-
-                            Location.create(2884, 3683, 0) ->
-                                ForceMovement
-                                    .run(
-                                        player,
-                                        player.location,
-                                        Location.create(2886, 3683, 0),
-                                        Animation.create(CLIMB_UP),
-                                        Animation.create(CLIMB_UP),
-                                        Direction.EAST,
-                                        13,
-                                    ).endAnimation =
-                                    Animation.RESET
-
-                            Location.create(2886, 3683, 0) ->
-                                ForceMovement
-                                    .run(
-                                        player,
-                                        player.location,
-                                        Location.create(2884, 3683, 0),
-                                        Animation.create(CLIMB_DOWN),
-                                        Animation.create(CLIMB_DOWN),
-                                        Direction.EAST,
-                                        13,
-                                    ).endAnimation =
-                                    Animation.RESET
-
-                            Location.create(2888, 3660, 0),
-                            Location.create(2887, 3660, 0),
-                            ->
-                                ForceMovement
-                                    .run(
-                                        player,
-                                        player.location,
-                                        player.location.transform(0, 2, 0),
-                                        Animation.create(CLIMB_UP),
-                                        Animation.create(CLIMB_UP),
-                                        Direction.EAST,
-                                        13,
-                                    ).endAnimation =
-                                    Animation.RESET
-
-                            Location.create(2888, 3662, 0),
-                            Location.create(2887, 3662, 0),
-                            ->
-                                ForceMovement
-                                    .run(
-                                        player,
-                                        player.location,
-                                        player.location.transform(0, -2, 0),
-                                        Animation.create(CLIMB_DOWN),
-                                        Animation.create(CLIMB_DOWN),
-                                        Direction.EAST,
-                                        13,
-                                    ).endAnimation =
-                                    Animation.RESET
-
-                            else ->
-                                ForceMovement
-                                    .run(
-                                        player,
-                                        player.location,
-                                        Location.create(2884, 3684, 0),
-                                        Animation.create(CLIMB_DOWN),
-                                        Animation.create(CLIMB_DOWN),
-                                        Direction.EAST,
-                                        13,
-                                    ).endAnimation =
-                                    Animation.RESET
-                        }
+                        val anim = if (target.y > player.location.y) CLIMB_UP else CLIMB_DOWN
+                        runClimb(player, target, anim)
                     }
 
-                    9306 -> {
-                        if (getStatLevel(player, Skills.AGILITY) < 47) {
-                            sendMessage(player, "You need an agility level of 47 in order to climb this mountain side.")
-                            return true
+                    9303, 9304, 9305, 9306, 9327 -> {
+                        val requiredLevel = when (id) {
+                            9303 -> 41
+                            9304 -> 47
+                            9305 -> 44
+                            9306 -> 47
+                            9327 -> 64
+                            else -> 0
                         }
-                        lock(player, 3)
-                        lockInteractions(player, 3)
-                        if (player.location == Location.create(2903, 3680, 0)) {
-                            ForceMovement
-                                .run(
-                                    player,
-                                    player.location,
-                                    Location.create(2900, 3680, 0),
-                                    Animation.create(CLIMB_UP),
-                                    Animation.create(CLIMB_UP),
-                                    Direction.WEST,
-                                    13,
-                                ).endAnimation =
-                                Animation.RESET
-                        } else {
-                            ForceMovement
-                                .run(
-                                    player,
-                                    player.location,
-                                    Location.create(2903, 3680, 0),
-                                    Animation.create(CLIMB_DOWN),
-                                    Animation.create(CLIMB_DOWN),
-                                    Direction.WEST,
-                                    13,
-                                ).endAnimation =
-                                Animation.RESET
-                        }
-                    }
+                        if (checkRequirements(requiredLevel)) return true
+                        val target = when (id) {
+                            9303 -> if (player.location.x > loc.x) scenery.location.transform(
+                                -2, 0, 0
+                            ) else scenery.location.transform(2, 0, 0)
 
-                    9303 -> {
-                        if (getStatLevel(player, Skills.AGILITY) < 41) {
-                            sendMessage(player, "You need an agility level of 41 in order to climb this mountain side.")
-                            return true
-                        }
-                        lock(player, 3)
-                        lockInteractions(player, 3)
-                        if (player.location.x > loc.x) {
-                            ForceMovement
-                                .run(
-                                    player,
-                                    player.location,
-                                    scenery.location.transform(-2, 0, 0),
-                                    Animation.create(CLIMB_DOWN),
-                                    Animation.create(CLIMB_DOWN),
-                                    Direction.EAST,
-                                    13,
-                                ).endAnimation =
-                                Animation.RESET
-                        } else {
-                            ForceMovement
-                                .run(
-                                    player,
-                                    player.location,
-                                    scenery.location.transform(2, 0, 0),
-                                    Animation.create(CLIMB_UP),
-                                    Animation.create(CLIMB_UP),
-                                    Direction.EAST,
-                                    13,
-                                ).endAnimation =
-                                Animation.RESET
-                        }
-                    }
+                            9304 -> if (player.location == Location.create(2878, 3665, 0)) Location.create(
+                                2878, 3668, 0
+                            ) else Location.create(2878, 3665, 0)
 
-                    9304 -> {
-                        if (getStatLevel(player, Skills.AGILITY) < 47) {
-                            sendMessage(player, "You need an agility level of 47 in order to climb this mountain side.")
-                            return true
+                            9305 -> if (player.location == Location.create(2909, 3684, 0)) Location.create(
+                                2907, 3682, 0
+                            ) else Location.create(2909, 3684, 0)
+
+                            9306 -> if (player.location == Location.create(2903, 3680, 0)) Location.create(
+                                2900, 3680, 0
+                            ) else Location.create(2903, 3680, 0)
+
+                            9327 -> when (scenery.location) {
+                                Location(2916, 3672, 0) -> Location.create(2918, 3672, 0)
+                                Location(2917, 3672, 0) -> Location.create(2915, 3672, 0)
+                                Location(2923, 3673, 0) -> Location.create(2921, 3672, 0)
+                                Location(2922, 3672, 0) -> Location.create(2924, 3673, 0)
+                                Location(2947, 3678, 0) -> Location.create(2950, 3681, 0)
+                                Location(2949, 3680, 0) -> Location.create(2946, 3678, 0)
+                                else -> player.location
+                            }
+
+                            else -> player.location
                         }
-                        lock(player, 3)
-                        lockInteractions(player, 3)
-                        if (player.location == Location.create(2878, 3665, 0)) {
-                            ForceMovement
-                                .run(
-                                    player,
-                                    player.location,
-                                    Location.create(2878, 3668, 0),
-                                    Animation.create(CLIMB_UP),
-                                    Animation.create(CLIMB_UP),
-                                    Direction.NORTH,
-                                    13,
-                                ).endAnimation =
-                                Animation.RESET
-                        } else {
-                            ForceMovement
-                                .run(
-                                    player,
-                                    player.location,
-                                    Location.create(2878, 3665, 0),
-                                    Animation.create(CLIMB_DOWN),
-                                    Animation.create(CLIMB_DOWN),
-                                    Direction.NORTH,
-                                    13,
-                                ).endAnimation =
-                                Animation.RESET
-                        }
-                    }
-
-                    9305 -> {
-                        if (getStatLevel(player, Skills.AGILITY) < 44) {
-                            sendMessage(player, "You need an agility level of 44 in order to climb this mountain side.")
-                            return true
-                        }
-                        lock(player, 3)
-                        lockInteractions(player, 3)
-                        if (player.location == Location(2909, 3684, 0)) {
-                            ForceMovement
-                                .run(
-                                    player,
-                                    player.location,
-                                    Location.create(2907, 3682, 0),
-                                    Animation.create(CLIMB_UP),
-                                    Animation.create(CLIMB_UP),
-                                    Direction.SOUTH,
-                                    13,
-                                ).endAnimation =
-                                Animation.RESET
-                        } else {
-                            ForceMovement
-                                .run(
-                                    player,
-                                    player.location,
-                                    Location.create(2909, 3684, 0),
-                                    Animation.create(CLIMB_DOWN),
-                                    Animation.create(CLIMB_DOWN),
-                                    Direction.SOUTH,
-                                    13,
-                                ).endAnimation =
-                                Animation.RESET
-                        }
-                    }
-
-                    9327 -> {
-                        if (getStatLevel(player, Skills.AGILITY) < 64) {
-                            sendMessage(player, "You need an agility level of 64 in order to climb this mountain side.")
-                            return true
-                        }
-                        lock(player, 3)
-                        lockInteractions(player, 3)
-                        sendMessage(player, "You climb onto the rock...")
-                        sendMessage(player, "...and step down the other side.", 3)
-                        when (scenery.location) {
-                            Location(2916, 3672, 0) ->
-                                ForceMovement
-                                    .run(
-                                        player,
-                                        player.location,
-                                        Location.create(2918, 3672, 0),
-                                        Animation.create(CLIMB_UP),
-                                        Animation.create(CLIMB_UP),
-                                        Direction.EAST,
-                                        13,
-                                    ).endAnimation =
-                                    Animation.RESET
-
-                            Location(2917, 3672, 0) ->
-                                ForceMovement
-                                    .run(
-                                        player,
-                                        player.location,
-                                        Location.create(2915, 3672, 0),
-                                        Animation.create(CLIMB_DOWN),
-                                        Animation.create(CLIMB_DOWN),
-                                        Direction.EAST,
-                                        13,
-                                    ).endAnimation =
-                                    Animation.RESET
-
-                            Location(2923, 3673, 0) ->
-                                ForceMovement
-                                    .run(
-                                        player,
-                                        player.location,
-                                        Location.create(2921, 3672, 0),
-                                        Animation.create(CLIMB_UP),
-                                        Animation.create(CLIMB_UP),
-                                        Direction.WEST,
-                                        13,
-                                    ).endAnimation =
-                                    Animation.RESET
-
-                            Location(2922, 3672, 0) ->
-                                ForceMovement
-                                    .run(
-                                        player,
-                                        player.location,
-                                        Location.create(2924, 3673, 0),
-                                        Animation.create(CLIMB_DOWN),
-                                        Animation.create(CLIMB_DOWN),
-                                        Direction.WEST,
-                                        13,
-                                    ).endAnimation =
-                                    Animation.RESET
-
-                            Location(2947, 3678, 0) ->
-                                ForceMovement
-                                    .run(
-                                        player,
-                                        player.location,
-                                        Location.create(2950, 3681, 0),
-                                        Animation.create(CLIMB_DOWN),
-                                        Animation.create(CLIMB_DOWN),
-                                        Direction.WEST,
-                                        13,
-                                    ).endAnimation =
-                                    Animation.RESET
-
-                            Location(2949, 3680, 0) ->
-                                ForceMovement
-                                    .run(
-                                        player,
-                                        player.location,
-                                        Location.create(2946, 3678, 0),
-                                        Animation.create(CLIMB_UP),
-                                        Animation.create(CLIMB_UP),
-                                        Direction.WEST,
-                                        13,
-                                    ).endAnimation =
-                                    Animation.RESET
-                        }
+                        val anim =
+                            if (target.y > player.location.y || target.x > player.location.x) CLIMB_UP else CLIMB_DOWN
+                        runClimb(player, target, anim)
                     }
                 }
             }
@@ -703,10 +249,7 @@ class TrollheimPlugin : OptionHandler() {
         return true
     }
 
-    override fun getDestination(
-        node: Node,
-        n: Node,
-    ): Location? {
+    override fun getDestination(node: Node, n: Node): Location? {
         if (n is core.game.node.scenery.Scenery) {
             if (n.id == 3782) {
                 if (node.location.x >= 2897) {
@@ -725,28 +268,19 @@ class TrollheimPlugin : OptionHandler() {
         return null
     }
 
-    private fun getOpposite(dir: Direction): Direction? {
-        when (dir) {
-            Direction.EAST -> return Direction.WEST
-            Direction.NORTH -> return Direction.SOUTH
-            Direction.SOUTH -> return Direction.NORTH
-            Direction.WEST -> return Direction.EAST
-            else -> {}
-        }
-        return null
-    }
-
-    class WarningZone :
-        MapZone("trollheim-warning", true),
-        Plugin<Any?> {
+    class WarningZone : MapZone("trollheim-warning", true), Plugin<Any?> {
         override fun enter(entity: Entity): Boolean {
             if (entity is Player) {
                 val player = entity.asPlayer()
-                if (player.walkingQueue.footPrint.y < 3592 && !WarningManager.isWarningDisabled(player, Warnings.DEATH_PLATEAU)) {
+                if (player.walkingQueue.footPrint.y < 3592 &&
+                    !WarningManager.isWarningDisabled(player, Warnings.DEATH_PLATEAU))
+                {
                     player.walkingQueue.reset()
                     player.pulseManager.clear()
                     WarningManager.openWarningInterface(player, Warnings.DEATH_PLATEAU)
-                } else {
+                }
+                else
+                {
                     return false
                 }
             }
@@ -762,10 +296,7 @@ class TrollheimPlugin : OptionHandler() {
             return this
         }
 
-        override fun fireEvent(
-            identifier: String,
-            vararg args: Any?,
-        ): Any? = null
+        override fun fireEvent(identifier: String, vararg args: Any?): Any? = null
     }
 
     class WarningCutscene : CutscenePlugin {
@@ -790,27 +321,11 @@ class TrollheimPlugin : OptionHandler() {
             val loc = Location.create(2849, 3597, 0)
             PacketRepository.send(
                 CameraViewPacket::class.java,
-                CameraContext(
-                    player,
-                    CameraContext.CameraType.POSITION,
-                    loc.x - 2,
-                    loc.y,
-                    1300,
-                    1,
-                    30,
-                ),
+                CameraContext(player, CameraContext.CameraType.POSITION, loc.x - 2, loc.y, 1300, 1, 30),
             )
             PacketRepository.send(
                 CameraViewPacket::class.java,
-                CameraContext(
-                    player,
-                    CameraContext.CameraType.ROTATION,
-                    loc.x + 22,
-                    loc.y + 10,
-                    1300,
-                    1,
-                    30,
-                ),
+                CameraContext(player, CameraContext.CameraType.ROTATION, loc.x + 22, loc.y + 10, 1300, 1, 30),
             )
             Pulser.submit(
                 object : Pulse(1, player) {
@@ -818,12 +333,11 @@ class TrollheimPlugin : OptionHandler() {
 
                     override fun pulse(): Boolean {
                         when (count++) {
-                            4 ->
-                                if (npc != null) {
-                                    npc.faceTemporary(player, 3)
-                                    npc.animate(THROW)
-                                    sendProjectile(npc)
-                                }
+                            4 -> if (npc != null) {
+                                npc.faceTemporary(player, 3)
+                                npc.animate(THROW)
+                                sendProjectile(npc)
+                            }
 
                             6 -> {
                                 this@WarningCutscene.stop(false)
@@ -855,23 +369,36 @@ class TrollheimPlugin : OptionHandler() {
     }
 
     companion object {
-        private val LOCATIONS =
-            arrayOf(
-                Location(2269, 4752, 0),
-                Location(2858, 3577, 0),
-                Location.create(2808, 10002, 0),
-                Location.create(2796, 3615, 0),
-                Location.create(2907, 10019, 0),
-                Location.create(2904, 3643, 0),
-                Location(2908, 3654, 0),
-                Location.create(2907, 10035, 0),
-                Location(2893, 10074, 0),
-                Location(2893, 3671, 0),
-            )
+        private val LOCATIONS = arrayOf(
+            Location(2269, 4752, 0),
+            Location(2858, 3577, 0),
+            Location(2808, 10002, 0),
+            Location(2796, 3615, 0),
+            Location(2907, 10019, 0),
+            Location(2904, 3643, 0),
+            Location(2908, 3654, 0),
+            Location(2907, 10035, 0),
+            Location(2893, 10074, 0),
+            Location(2893, 3671, 0)
+        )
         private val CLIMBING_BOOTS = Item(Items.CLIMBING_BOOTS_3105)
         private const val CLIMB_DOWN = Animations.WALK_BACKWARDS_CLIMB_1148
         private const val CLIMB_UP = Animations.CLIMB_DOWN_B_740
-        val CLIMB_FAIL = Animations.CLIMB_DOWN_A_739
         private val JUMP = Animation(Animations.CLIMB_OBJECT_839)
+    }
+
+    /**
+     * Executes a climbing movement.
+     * @param player The player who climb.
+     * @param to The destination location to move the player to.
+     * @param anim The animation id (default is CLIMB_DOWN_B_740).
+     * @param direction The direction the player faces during the climb (default is NORTH).
+     */
+    private fun runClimb(player: Player, to: Location, anim: Int = CLIMB_UP, direction: Direction = Direction.NORTH) {
+        lock(player, 3)
+        lockInteractions(player, 3)
+        sendMessage(player, "You climb onto the rock...")
+        sendMessage(player, "...and step down the other side.", 3)
+        ForceMovement.run(player, player.location, to, Animation.create(anim), Animation.create(anim), direction, 13).endAnimation = Animation.RESET
     }
 }
