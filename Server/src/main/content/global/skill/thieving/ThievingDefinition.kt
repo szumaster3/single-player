@@ -15,6 +15,8 @@ import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.node.scenery.Scenery
+import core.game.system.task.Pulse
+import core.game.world.GameWorld.Pulser
 import core.game.world.GameWorld.ticks
 import core.game.world.map.Direction
 import core.game.world.map.Location
@@ -119,25 +121,57 @@ object ThievingDefinition {
                     val success = RandomFunction.random(15) >= 4
 
                     if (!success) {
-                        for (npc in RegionManager.getLocalNpcs(player.location, 8)) {
-                            if (!npc.properties.combatPulse.isAttacking && (npc.id == 32 || npc.id == 2236)) {
-                                npc.sendChat("Hey! Get your hands off there!")
-                                npc.properties.combatPulse.attack(player)
-                            }
+                        val guard = RegionManager.getLocalNpcs(player.location, 8)
+                            .firstOrNull {
+                                !it.properties.combatPulse.isAttacking && (it.id == NPCs.GUARD_32 || it.id == NPCs.MARKET_GUARD_2236) }
+
+                        if (guard != null) {
+                            guard.sendChat("Hey! Get your hands off there!")
+
+                            Pulser.submit(object : Pulse(1) {
+                                override fun pulse(): Boolean {
+                                    guard.properties.combatPulse.attack(player)
+                                    return true
+                                }
+                            })
                         }
+
                         if (stall == CANDLES) {
                             stun(player, 15, false)
                             impact(player, 3, ImpactHandler.HitsplatType.NORMAL)
                             player.sendMessage("A higher power smites you.")
                         }
+
                         return@queueScript stopExecuting(player)
                     }
 
 
                     player.inventory.add(item)
                     rewardXP(player, Skills.THIEVING, stall.experience)
-                    if (stall == SILK_STALL) {
-                        player.getSavedData().globalData.setSilkSteal(System.currentTimeMillis() + 1800000)
+                    when (stall) {
+                        SILK_STALL      ->
+                            player.getSavedData().globalData.setSilkSteal(System.currentTimeMillis() + 1800000)
+                        TEA_STALL       ->
+                            player.getSavedData().globalData.setTeaSteal(System.currentTimeMillis() + 1800000)
+                        BAKER_STALL     ->
+                            player.getSavedData().globalData.setBakerSteal(System.currentTimeMillis() + 1800000)
+                        FISH_STALL      ->
+                            player.getSavedData().globalData.setFishSteal(System.currentTimeMillis() + 1800000)
+                        CRAFTING_STALL      -> TODO()
+                        WINE_STALL          -> TODO()
+                        MARKET_SEED_STALL   -> TODO()
+                        FUR_STALL           -> TODO()
+                        CROSSBOW_STALL      -> TODO()
+                        SILVER_STALL        -> TODO()
+                        SPICE_STALL         -> TODO()
+                        GEM_STALL           -> TODO()
+                        SCIMITAR_STALL      -> TODO()
+                        MAGIC_STALL         -> TODO()
+                        GENERAL_STALL       -> TODO()
+                        FOOD_STALL          -> TODO()
+                        CANDLES             -> TODO()
+                        COUNTER             -> TODO()
+                        VEGETABLE_STALL     -> TODO()
                     }
                     if (node.isActive) {
                         replaceScenery(node, node.transform(stall.getEmpty(node.id)).id, stall.delay)

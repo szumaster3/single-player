@@ -22,23 +22,33 @@ class TeaSellerDialogue(player: Player? = null) : Dialogue(player) {
         npc = args[0] as NPC
         if (player.getSavedData().globalData.getTeaSteal() > System.currentTimeMillis()) {
             end()
-            Pulser.submit(
-                object : Pulse(1) {
-                    var count: Int = 0
-                    override fun pulse(): Boolean {
-                        if (count == 0) sendChat(npc, "You're the one who stole something from me!")
-                        if (count == 2) {
-                            sendChat(npc, "Guards guards!")
+
+            Pulser.submit(object : Pulse(1) {
+                var count = 0
+
+                override fun pulse(): Boolean {
+                    when (count) {
+                        0 -> sendChat(npc, "You're the one who keeps stealing from me!")
+                        2 -> {
+                            sendChat(npc, "Guards, Guards!")
                             return true
                         }
-                        count++
-                        return false
                     }
-                },
-            )
+                    count++
+                    return false
+                }
+            })
+
             return false
         }
-        npc(FaceAnim.HALF_GUILTY, "Greetings! Are you in need of refreshment?")
+
+        if (args.size > 1) {
+            npc(FaceAnim.FURIOUS, "Hey! Put that back! Those are for display only!")
+            stage = END_DIALOGUE
+        } else {
+            npc(FaceAnim.HALF_GUILTY, "Greetings! Are you in need of refreshment?")
+        }
+
         return true
     }
 

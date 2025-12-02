@@ -45,6 +45,8 @@ class GlobalData {
     private var minigameTeleportDelay: Long = 0
     private var silkSteal: Long = 0
     private var teaSteal: Long = 0
+    private var bakerSteal: Long = 0
+    private var fishSteal: Long = 0
     private var zaffTime: Long = 0
     private var doubleExpDelay: Long = 0
     private var dropDelay: Long = 0
@@ -293,6 +295,18 @@ class GlobalData {
 
     fun setSilkSteal(silkSteal: Long) {
         this.silkSteal = silkSteal
+    }
+
+    fun getBakerSteal(): Long = bakerSteal
+
+    fun setBakerSteal(bakerSteal: Long) {
+        this.bakerSteal = bakerSteal
+    }
+
+    fun getFishSteal(): Long = fishSteal
+
+    fun setFishSteal(fishSteal: Long) {
+        this.fishSteal = fishSteal
     }
 
     fun getZaffAmount(): Int = zaffAmount

@@ -22,10 +22,16 @@ class FishmongerDialogue(player: Player? = null) : Dialogue(player) {
         when (stage) {
             0 -> when (npc.id) {
                 NPCs.FISHMONGER_1393 -> {
-                    val dialogue = if (!hasRequirement(player, Quests.THRONE_OF_MISCELLANIA, false))
+                    if (player.savedData.globalData.getFishSteal() > System.currentTimeMillis()) {
+                        npc.sendChat("Get away from me!")
+                        npc.sendChat("Guards, guards!", 2)
+                        return true
+                    }
+                    val dialogue = if (!hasRequirement(player, Quests.THRONE_OF_MISCELLANIA, false)) {
                         "Greetings, Sir. Get your fresh fish here!"
-                    else
+                    } else {
                         "Greetings, Your Highness. Have some fresh fish!"
+                    }
                     npcl(FaceAnim.FRIENDLY, dialogue)
                     stage = 1
                 }

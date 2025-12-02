@@ -18,10 +18,13 @@ import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
+import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
 import core.plugin.Plugin
+import shared.consts.Items
+import shared.consts.NPCs
 import shared.consts.Sounds
 
 /**
@@ -70,8 +73,16 @@ class TelekineticGrabSpell :
                     sendMessage(player, "Too late!")
                     return true
                 }
-                if (ground.id == 6561) {
-                    openDialogue(player, 2692, findNPC(2692)!!, true)
+                /*
+                 * TODO:
+                 *  Telekinetic grab don't consume your runes which means that you cast a spell without casting it.
+                 */
+                if (ground.id == Items.AHABS_BEER_6561) {
+                    openDialogue(player, NPCs.AHAB_2692, findNPC(NPCs.AHAB_2692)!!, true)
+                    return true
+                }
+                if (ground.id == Items.CUP_OF_TEA_712 && (ground.location == Location.create(3271, 3413, 0) || ground.location == Location.create(3272, 3409, 0))) {
+                    openDialogue(player, NPCs.TEA_SELLER_595, findNPC(NPCs.TEA_SELLER_595)!!, true)
                     return true
                 }
                 val teleZone = inZone(player, "Telekinetic Theatre") && g.id == 6888
@@ -120,7 +131,6 @@ class TelekineticGrabSpell :
             }
         }
         if (isBlocked(SPELL_ID, (item as Node?)!!)) {
-
             sendDialogue(entity.asPlayer(), "You can't do that.")
             return false
         }

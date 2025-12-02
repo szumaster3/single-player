@@ -479,7 +479,7 @@ class VarrockPlugin : InteractionListener {
         }
 
         /*
-         * Handles picking up a cup of tea from the ground.
+         * Handles picking up the cup of tea ground item
          */
 
         on(Items.CUP_OF_TEA_712, IntType.GROUND_ITEM, "take") { player, node ->
@@ -490,16 +490,17 @@ class VarrockPlugin : InteractionListener {
                 return@on true
             }
 
-            val loc = node.location
-            val restricted = loc == Location(3272, 3409, 0) || loc == Location(3271, 3413, 0)
+            val restricted = node.location == Location(3272, 3409, 0) ||
+                    node.location == Location(3271, 3413, 0)
 
             if (restricted) {
+                face(player, node)
                 animate(player, Animations.HUMAN_MULTI_USE_832)
-                sendNPCDialogue(
-                    player,
+
+                player.dialogueInterpreter.open(
                     NPCs.TEA_SELLER_595,
-                    "Hey! Put that back! Those are for display only!",
-                    FaceAnim.ANNOYED,
+                    findNPC(NPCs.TEA_SELLER_595),
+                    false
                 )
             } else {
                 if (GroundItemManager.destroy(teaCup) != null) {
@@ -516,24 +517,29 @@ class VarrockPlugin : InteractionListener {
 
         on(NPCs.TEA_SELLER_595, IntType.NPC, "trade") { player, node ->
             val npc = node.asNpc()
-            if (player.getSavedData().globalData.getTeaSteal() > System.currentTimeMillis()) {
-                Pulser.submit(
-                    object : Pulse(1) {
-                        var count: Int = 0
+            val caughtUntil = player.getSavedData().globalData.getTeaSteal()
 
-                        override fun pulse(): Boolean {
-                            if (count == 0) sendChat(npc, "You're the one who stole something from me!")
-                            if (count == 2) {
+            if (caughtUntil > System.currentTimeMillis()) {
+
+                Pulser.submit(object : Pulse(1) {
+                    var count = 0
+
+                    override fun pulse(): Boolean {
+                        when (count) {
+                            0 -> sendChat(npc, "You're the one who stole something from me!")
+                            2 -> {
                                 sendChat(npc, "Guards guards!")
                                 return true
                             }
-                            count++
-                            return false
                         }
-                    },
-                )
+                        count++
+                        return false
+                    }
+                })
+
                 return@on false
             }
+
             openNpcShop(player, NPCs.TEA_SELLER_595)
             return@on true
         }
