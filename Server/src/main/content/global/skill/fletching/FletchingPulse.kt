@@ -94,7 +94,7 @@ class FletchingPulse(player: Player, private val node: Item, private var amount:
             }
 
             player.inventory.add(item)
-            player.skills.addExperience(Skills.FLETCHING, fletch.exp, true)
+            player.skills.addExperience(Skills.FLETCHING, fletch.xp, true)
             player.packetDispatch.sendMessage(getMessage())
 
             if (fletch.id == Items.MAGIC_SHORTBOW_U_72 &&

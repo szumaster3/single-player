@@ -10,7 +10,7 @@ object FletchingDefinition {
     /**
      * Represents types of darts.
      */
-    enum class Dart(val unfinished: Int, val finished: Int, val level: Int, val experience: Double) {
+    enum class Dart(val dartTipId: Int, val dartId: Int, val level: Int, val xp: Double) {
         BRONZE_DART(Items.BRONZE_DART_TIP_819, Items.BRONZE_DART_806, 1, 1.8),
         IRON_DART(Items.IRON_DART_TIP_820, Items.IRON_DART_807, 22, 3.8),
         STEEL_DART(Items.STEEL_DART_TIP_821, Items.STEEL_DART_808, 37, 7.5),
@@ -22,21 +22,21 @@ object FletchingDefinition {
 
         companion object {
             val values = enumValues<Dart>()
-            val product = values.associateBy { it.unfinished }
+            val product = values.associateBy { it.dartTipId }
         }
     }
 
     /**
      * Represents a types of limbs for crossbows.
      */
-    enum class Limb(val stock: Int, val limb: Int, val product: Int, val level: Int, val experience: Double, val animation: Int) {
-        WOODEN_STOCK(Items.WOODEN_STOCK_9440, Items.BRONZE_LIMBS_9420, Items.BRONZE_CBOW_U_9454, 9, 12.0, 4436),
-        OAK_STOCK(Items.OAK_STOCK_9442, Items.BLURITE_LIMBS_9422, Items.BLURITE_CBOW_U_9456, 24, 32.0, 4437),
-        WILLOW_STOCK(Items.WILLOW_STOCK_9444, Items.IRON_LIMBS_9423, Items.IRON_CBOW_U_9457, 39, 44.0, 4438),
-        TEAK_STOCK(Items.TEAK_STOCK_9446, Items.STEEL_LIMBS_9425, Items.STEEL_CBOW_U_9459, 46, 54.0, 4439),
-        MAPLE_STOCK(Items.MAPLE_STOCK_9448, Items.MITHRIL_LIMBS_9427, Items.MITHRIL_CBOW_U_9461, 54, 64.0, 4440),
-        MAHOGANY_STOCK(Items.MAHOGANY_STOCK_9450, Items.ADAMANTITE_LIMBS_9429, Items.ADAMANT_CBOW_U_9463, 61, 82.0, 4441),
-        YEW_STOCK(Items.YEW_STOCK_9452, Items.RUNITE_LIMBS_9431, Items.RUNITE_CBOW_U_9465, 69, 100.0, 4442),
+    enum class Limb(val stock: Int, val limb: Int, val cbowId: Int, val level: Int, val xp: Double, val animation: Int) {
+        WOODEN_STOCK(Items.WOODEN_STOCK_9440, Items.BRONZE_LIMBS_9420, Items.BRONZE_CBOW_U_9454, 9, 12.0, Animations.BRONZE_CROSSBOW_LIMBS_4436),
+        OAK_STOCK(Items.OAK_STOCK_9442, Items.BLURITE_LIMBS_9422, Items.BLURITE_CBOW_U_9456, 24, 32.0, Animations.BLURITE_CROSSBOW_LIMBS_4437),
+        WILLOW_STOCK(Items.WILLOW_STOCK_9444, Items.IRON_LIMBS_9423, Items.IRON_CBOW_U_9457, 39, 44.0, Animations.IRON_CROSSBOW_LIMBS_4438),
+        TEAK_STOCK(Items.TEAK_STOCK_9446, Items.STEEL_LIMBS_9425, Items.STEEL_CBOW_U_9459, 46, 54.0, Animations.STEEL_XBOW_LIMBS_4439),
+        MAPLE_STOCK(Items.MAPLE_STOCK_9448, Items.MITHRIL_LIMBS_9427, Items.MITHRIL_CBOW_U_9461, 54, 64.0, Animations.MITHRIL_CROSSBOW_LIMBS_4440),
+        MAHOGANY_STOCK(Items.MAHOGANY_STOCK_9450, Items.ADAMANTITE_LIMBS_9429, Items.ADAMANT_CBOW_U_9463, 61, 82.0, Animations.ADAMANT_CROSSBOW_LIMBS_4441),
+        YEW_STOCK(Items.YEW_STOCK_9452, Items.RUNITE_LIMBS_9431, Items.RUNITE_CBOW_U_9465, 69, 100.0, Animations.RUNE_CROSSBOW_LIMBS_4442),
         ;
 
         companion object {
@@ -48,7 +48,7 @@ object FletchingDefinition {
     /**
      * Represents the types of bow strings.
      */
-    enum class Strings(private val indicator: Byte, val unfinished: Int, val product: Int, val level: Int, val experience: Double, val animation: Int) {
+    enum class Strings(private val indicator: Byte, val unfinished: Int, val bowId: Int, val level: Int, val xp: Double, val animation: Int) {
         // Bows
         SHORT_BOW(1, Items.SHORTBOW_U_50, Items.SHORTBOW_841, 5, 5.0, Animations.FLETCH_SHORTBOW_6678),
         LONG_BOW(1, Items.LONGBOW_U_48, Items.LONGBOW_839, 10, 10.0, Animations.FLETCH_SHIELDBOW_6684),
@@ -89,7 +89,7 @@ object FletchingDefinition {
     /**
      * Represents the types of arrows.
      */
-    enum class ArrowHead(val unfinished: Int, val finished: Int, val level: Int, val experience: Double) {
+    enum class ArrowHead(val arrowTipsId: Int, val arrowId: Int, val level: Int, val xp: Double) {
         BRONZE_ARROW(Items.BRONZE_ARROWTIPS_39, Items.BRONZE_ARROW_882, 1, 1.3),
         IRON_ARROW(Items.IRON_ARROWTIPS_40, Items.IRON_ARROW_884, 15, 2.5),
         STEEL_ARROW(Items.STEEL_ARROWTIPS_41, Items.STEEL_ARROW_886, 30, 5.0),
@@ -105,7 +105,7 @@ object FletchingDefinition {
 
             init {
                 for (arrowHead in values()) {
-                    PRODUCT_MAP[arrowHead.unfinished] = arrowHead
+                    PRODUCT_MAP[arrowHead.arrowTipsId] = arrowHead
                 }
             }
 
@@ -116,7 +116,7 @@ object FletchingDefinition {
     /**
      * Represents the types of brutal arrows.
      */
-    enum class BrutalArrow(val base: Int, val product: Int, val level: Int, val experience: Double) {
+    enum class BrutalArrow(val nailId: Int, val product: Int, val level: Int, val xp: Double) {
         BRONZE_BRUTAL(Items.BRONZE_NAILS_4819, Items.BRONZE_BRUTAL_4773, 7, 1.4),
         IRON_BRUTAL(Items.IRON_NAILS_4820, Items.IRON_BRUTAL_4778, 18, 2.6),
         STEEL_BRUTAL(Items.STEEL_NAILS_1539, Items.STEEL_BRUTAL_4783, 33, 5.1),
@@ -128,14 +128,14 @@ object FletchingDefinition {
 
         companion object {
             val values = enumValues<BrutalArrow>()
-            val product = values.associateBy { it.base }
+            val product = values.associateBy { it.nailId }
         }
     }
 
     /**
      * Represents types of bolts.
      */
-    enum class Bolt(val unfinished: Int, val finished: Int, val level: Int, val experience: Double) {
+    enum class Bolt(val unfinished: Int, val boltId: Int, val level: Int, val xp: Double) {
         BRONZE_BOLT(Items.BRONZE_BOLTS_UNF_9375, Items.BRONZE_BOLTS_877, 9, 0.5),
         BLURITE_BOLT(Items.BLURITE_BOLTS_UNF_9376, Items.BLURITE_BOLTS_9139, 24, 1.0),
         IRON_BOLT(Items.IRON_BOLTS_UNF_9377, Items.IRON_BOLTS_9140, 39, 1.5),
@@ -155,7 +155,7 @@ object FletchingDefinition {
     /**
      * Represents the gem bolt data.
      */
-    enum class GemBolt(val base: Int, val gem: Int, val tip: Int, val product: Int, val level: Int, val experience: Double, val animation: Animation) {
+    enum class GemBolt(val base: Int, val gem: Int, val tip: Int, val boltTipId: Int, val level: Int, val xp: Double, val animation: Animation) {
         OPAL(Items.BRONZE_BOLTS_877, Items.OPAL_1609, Items.OPAL_BOLT_TIPS_45, Items.OPAL_BOLTS_879, 11, 1.6, Animation(Animations.CUT_OPAL_890)),
         JADE(Items.BLURITE_BOLTS_9139, Items.JADE_1611, Items.JADE_BOLT_TIPS_9187, Items.JADE_BOLTS_9335, 26, 2.4, Animation(Animations.CUT_JADE_891)),
         PEARL(Items.IRON_BOLTS_9140, Items.OYSTER_PEARL_411, Items.PEARL_BOLT_TIPS_46, Items.PEARL_BOLTS_880, 41, 3.2, Animation(Animations.CHISEL_OYSTER_PEARL_4470)),
@@ -181,7 +181,7 @@ object FletchingDefinition {
     /**
      * Represents the types of Kebbit bolts.
      */
-    enum class KebbitBolt(val base: Int, val product: Int, val level: Int, val experience: Double) {
+    enum class KebbitBolt(val base: Int, val product: Int, val level: Int, val xp: Double) {
         KEBBIT_BOLT(Items.KEBBIT_SPIKE_10105, Items.KEBBIT_BOLTS_10158, 32, 5.80),
         LONG_KEBBIT_BOLT(Items.LONG_KEBBIT_SPIKE_10107, Items.LONG_KEBBIT_BOLTS_10159, 83, 7.90),
         ;
@@ -191,7 +191,7 @@ object FletchingDefinition {
         }
     }
 
-    data class FletchData(val id: Int, val exp: Double, val level: Int, val amount: Int, val logId: Int)
+    data class FletchData(val id: Int, val xp: Double, val level: Int, val amount: Int, val logId: Int)
 
     /**
      * Represents table of all log-based fletching products.
@@ -297,12 +297,12 @@ object FletchingDefinition {
     /**
      * Nails used for brutal arrows.
      */
-    val NAIL_IDS          = BrutalArrow.values().map(BrutalArrow::base).toIntArray()
+    val NAIL_IDS          = BrutalArrow.values().map(BrutalArrow::nailId).toIntArray()
 
     /**
      * Unfinished arrow shafts.
      */
-    val UNF_ARROW_IDS     = ArrowHead.values().map(ArrowHead::unfinished).toIntArray()
+    val UNF_ARROW_IDS     = ArrowHead.values().map(ArrowHead::arrowTipsId).toIntArray()
 
     /**
      * Unstrung bows.
@@ -322,7 +322,7 @@ object FletchingDefinition {
     /**
      * Unfinished darts.
      */
-    val UNF_DARTS         = Dart.values().map(Dart::unfinished).toIntArray()
+    val UNF_DARTS         = Dart.values().map(Dart::dartTipId).toIntArray()
 
     /**
      * Unfinished bolts.
