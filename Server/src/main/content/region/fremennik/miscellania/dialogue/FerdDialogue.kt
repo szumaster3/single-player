@@ -2,11 +2,14 @@ package content.region.fremennik.miscellania.dialogue
 
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
+import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
+import shared.consts.NPCs
 
 class FerdDialogue : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {
+        npc = NPC(NPCs.FERD_3937)
         when (stage) {
             0 -> npc(FaceAnim.OLD_DEFAULT, "Good day, sir.").also { stage++ }
             1 -> player(FaceAnim.THINKING, "What are you doing down here?.").also { stage++ }

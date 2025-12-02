@@ -68,15 +68,6 @@ class MiscellaniaPlugin : InteractionListener {
             return@on true
         }
 
-        on(NPCs.FISHMONGER_1393, IntType.NPC, "talk-to") { player, node ->
-            if (!hasRequirement(player, Quests.THRONE_OF_MISCELLANIA, false)) {
-                sendNPCDialogue(player, node.id, "Greetings, Sir. Get your fresh fish here! I've heard that the Etceterian fish is stored in a cow shed.")
-            } else {
-                sendNPCDialogue(player, node.id, "Greetings, Your Highness. Have some fresh fish! I've heard that the Etceterian fish is stored in a cow shed.")
-            }
-            return@on true
-        }
-
         on(NPCs.GREENGROCER_1394, IntType.NPC, "talk-to") { player, node ->
             if (!hasRequirement(player, Quests.THRONE_OF_MISCELLANIA, false)) {
                 sendNPCDialogueLines(player, node.id, FaceAnim.NEUTRAL, false, "Welcome, Sir.", "I sell only the finest and freshest vegetables!")
