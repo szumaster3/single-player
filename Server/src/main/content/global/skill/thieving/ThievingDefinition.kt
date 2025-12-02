@@ -237,23 +237,13 @@ object ThievingDefinition {
         DOOR12(arrayOf(Location.create(3041, 3959)), 39, 35.0, isLockpick = true, flipped = true),
         DOOR13(arrayOf(Location.create(3038, 3956)), 39, 35.0, isLockpick = true, flipped = true);
 
-        private fun isOnCorrectSide(player: Player, obj: Scenery): Boolean {
-            val dx = player.location.x - obj.location.x
-            val dz = player.location.z - obj.location.z
-
-            val isNorth = dz > 0
-            val isEast = dx > 0
-            val correctSide = !(isNorth || isEast)
-            return if (flipped) !correctSide else correctSide
-        }
-
         /**
          * Opens the door if the player is on the correct side of the door.
          * @param player The player opening the door.
          * @param door The door being opened.
          */
         fun open(player: Player, door: Scenery) {
-            if (!isOnCorrectSide(player, door)) {
+            if (isInside(player, door) != flipped) {
                 sendMessage(player, "The door is locked.")
                 return
             }
