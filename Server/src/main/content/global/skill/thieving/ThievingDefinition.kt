@@ -62,26 +62,16 @@ object ThievingDefinition {
             get() = rewards[RandomFunction.random(rewards.size)]
 
         companion object {
-            private val idMap =
-                HashMap<Int, Stall>().apply {
-                    Stall.values().forEach { entry ->
-                        entry.fullIDs.forEach { id -> putIfAbsent(id, entry) }
-                    }
-                }
-
-            fun stealFromStall(player: Player, node: Scenery, stall: Stall) {
+            fun handleSteal(player: Player, node: Scenery, stall: Stall) {
                 if (player.inCombat()) {
                     sendMessage(player, "You can't steal from the market stall during combat!")
                     return
                 }
                 if (getStatLevel(player, Skills.THIEVING) < stall.level) {
-                    sendMessage(
-                        player,
-                        "You need to be level ${stall.level} to steal from the ${node.name.lowercase()}."
-                    )
+                    sendMessage(player, "You need to be level ${stall.level} to steal from the ${node.name.lowercase()}.")
                     return
                 }
-                if (player.inventory.freeSlots() == 0) {
+                if (freeSlots(player) == 0) {
                     sendMessage(player, "You don't have enough inventory space.")
                     return
                 }
@@ -220,7 +210,7 @@ object ThievingDefinition {
     }
 
     /**
-     * Represents doors available to force open.
+     * Represents door data.
      */
     enum class Doors(val locations: Array<Location>, val level: Int, val experience: Double, val isLockpick: Boolean = false, val flipped: Boolean = false) {
         PORT_SARIM_JAIL(arrayOf(Location.create(3014, 3182)), 1, 0.0),
@@ -238,22 +228,7 @@ object ThievingDefinition {
         YANILLE_DUNGEON(arrayOf(Location.create(2601, 9482)), 82, 0.0, isLockpick = true);
 
         /**
-         * Opens the door if the player is on the correct side of the door.
-         * @param player The player opening the door.
-         * @param door The door being opened.
-         */
-        fun open(player: Player, door: Scenery) {
-            if (isInside(player, door) != flipped) {
-                sendMessage(player, "The door is locked.")
-                return
-            }
-            handleAutowalkDoor(player, door)
-            sendMessage(player, "You go through the door.")
-        }
-
-        /**
          * Checks if the player is on the correct side of the door to interact with it.
-         *
          * @param player The player interacting with the door.
          * @param door The door being interacted with.
          * @return True if the player is inside the door, otherwise false.
@@ -270,6 +245,20 @@ object ThievingDefinition {
                 inside = true
             }
             return inside
+        }
+
+        /**
+         * Opens the door if the player is on the correct side of the door.
+         * @param player The player opening the door.
+         * @param door The door being opened.
+         */
+        fun open(player: Player, door: Scenery) {
+            if (isInside(player, door) != flipped) {
+                handleAutowalkDoor(player, door.asScenery())
+                sendMessage(player, "You go through the door.")
+            } else {
+                sendMessage(player, "The door is locked.")
+            }
         }
 
         /**
@@ -303,12 +292,10 @@ object ThievingDefinition {
             sendMessage(player, "You " + (if (success) "manage" else "fail") + " to pick the lock.", 1)
         }
 
-        companion object {
-            val DOOR_IDS = intArrayOf(Objects.DOOR_2550, Objects.DOOR_2551, Objects.DOOR_2554, Objects.DOOR_2555, Objects.DOOR_2556, Objects.DOOR_2557, Objects.DOOR_2558, Objects.DOOR_2559, Objects.DOOR_5501, Objects.DOOR_7246, Objects.DOOR_13314, Objects.DOOR_13317, Objects.DOOR_13320, Objects.DOOR_13323, Objects.DOOR_13326, Objects.DOOR_13344, Objects.DOOR_13345, Objects.DOOR_13346, Objects.DOOR_13347, Objects.DOOR_13348, Objects.DOOR_13349, Objects.DOOR_15759, Objects.DOOR_34005, Objects.DOOR_34805, Objects.DOOR_34806, Objects.DOOR_34812, Objects.CELL_DOOR_40186)
-            fun forLocation(loc: Location): Doors? =
-                values().firstOrNull { door -> door.locations.any { it == loc } }
-        }
-
+        /**
+         * Escapes the player from certain conditions like being in Shantay Jail.
+         * @param player The player escaping.
+         */
         private fun escape(player: Player) {
             if (getAttribute(player, "shantay-jail", false)) {
                 removeAttribute(player, "shantay-jail")
@@ -317,6 +304,20 @@ object ThievingDefinition {
                     "You should be in jail! But if you get into more trouble, you'll be back."
                 )
             }
+        }
+
+        companion object {
+            val DOOR_IDS = intArrayOf(
+                Objects.DOOR_2550, Objects.DOOR_2551, Objects.DOOR_2554, Objects.DOOR_2555, Objects.DOOR_2556,
+                Objects.DOOR_2557, Objects.DOOR_2558, Objects.DOOR_2559, Objects.DOOR_5501, Objects.DOOR_7246,
+                Objects.DOOR_13314, Objects.DOOR_13317, Objects.DOOR_13320, Objects.DOOR_13323, Objects.DOOR_13326,
+                Objects.DOOR_13344, Objects.DOOR_13345, Objects.DOOR_13346, Objects.DOOR_13347, Objects.DOOR_13348,
+                Objects.DOOR_13349, Objects.DOOR_15759, Objects.DOOR_34005, Objects.DOOR_34805, Objects.DOOR_34806,
+                Objects.DOOR_34812, Objects.CELL_DOOR_40186
+            )
+
+            fun forLocation(loc: Location): Doors? =
+                values().firstOrNull { door -> door.locations.any { it == loc } }
         }
     }
 
@@ -333,10 +334,10 @@ object ThievingDefinition {
 
         private var respawnUntil = 0
 
-        val isRespawning: Boolean
+        private val isRespawning: Boolean
             get() = ticks < respawnUntil
 
-        fun markRespawn() {
+        private fun setRespawn() {
             respawnUntil = ticks + (respawnTicks / 0.6).toInt()
         }
 
@@ -382,7 +383,7 @@ object ThievingDefinition {
             sendMessage(player, "You find a trap on the chest...")
             player.impactHandler.disabledTicks = 6
 
-            queueScript(player, 0) {
+            queueScript(player, 0, QueueStrength.WEAK) {
                 delayScript(player, 2)
                 sendMessage(player, "You disable the trap.")
 
@@ -400,7 +401,7 @@ object ThievingDefinition {
                     replaceScenery(scenery, 2574, 3)
                 }
 
-                markRespawn()
+                setRespawn()
                 stopExecuting(player)
             }
         }

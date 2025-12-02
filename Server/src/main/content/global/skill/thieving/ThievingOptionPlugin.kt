@@ -27,7 +27,7 @@ class ThievingOptionPlugin : InteractionListener {
         on(IntType.SCENERY, "steal-from", "steal from", "steal") { player, node ->
             val scenery = node as? Scenery ?: return@on true
             val stall = ThievingDefinition.Stall.values().firstOrNull { scenery.id in it.fullIDs } ?: return@on true
-            ThievingDefinition.Stall.stealFromStall(player, scenery, stall)
+            ThievingDefinition.Stall.handleSteal(player, scenery, stall)
             lockInteractions(player, 6)
             return@on true
         }
@@ -139,20 +139,33 @@ class ThievingOptionPlugin : InteractionListener {
         }
 
         /*
-         * Handles opening locked doors and chests.
+         * Handles opening locked doors.
          */
 
         on(ThievingDefinition.Doors.DOOR_IDS, IntType.SCENERY, "open", "pick-lock") { player, node ->
-            val door = ThievingDefinition.Doors.forLocation(node.location) ?: return@on true
-            val obj = node as Scenery
-            val opt = getUsedOption(player)
-            when (opt) {
-                "open" -> door.open(player, obj)
-                "pick-lock" -> door.pickLock(player, obj)
-            }
-            return@on true
-        }
+            val option = getUsedOption(player)
+            val door = ThievingDefinition.Doors.forLocation(node.location)
 
+            when (option) {
+                "open" -> {
+                    if (door == null) {
+                        sendMessage(player, "The door is locked.")
+                    } else {
+                        door.open(player, node as Scenery)
+                    }
+                    return@on true
+                }
+                "pick-lock" -> {
+                    if (door == null) {
+                        sendMessage(player, "This door cannot be unlocked.")
+                    } else {
+                        door.pickLock(player, node as Scenery)
+                    }
+                    return@on true
+                }
+                else -> return@on false
+            }
+        }
     }
 
     companion object {
