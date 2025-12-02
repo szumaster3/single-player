@@ -14,10 +14,11 @@ import shared.consts.Scenery
 
 class IceTrollCavePlugin : InteractionListener {
 
-    val ROPE_BRIDGE     = intArrayOf(Scenery.ROPE_BRIDGE_21316,Scenery.ROPE_BRIDGE_21317,Scenery.ROPE_BRIDGE_21318,Scenery.ROPE_BRIDGE_21319)
-    val ENTER_ENTRANCE  = intArrayOf(Scenery.CAVE_21584, Scenery.CAVE_21585, Scenery.CAVE_21586)
-    val EXIT_ENTRANCE   = intArrayOf(Scenery.CAVE_OPENING_21597, Scenery.CAVE_OPENING_21598, Scenery.CAVE_OPENING_21599)
-
+    companion object {
+        private val ROPE_BRIDGE     = intArrayOf(Scenery.ROPE_BRIDGE_21316, Scenery.ROPE_BRIDGE_21317, Scenery.ROPE_BRIDGE_21318, Scenery.ROPE_BRIDGE_21319)
+        private val ENTER_ENTRANCE  = intArrayOf(Scenery.CAVE_21584, Scenery.CAVE_21585, Scenery.CAVE_21586)
+        private val EXIT_ENTRANCE   = intArrayOf(Scenery.CAVE_OPENING_21597, Scenery.CAVE_OPENING_21598, Scenery.CAVE_OPENING_21599)
+    }
     override fun defineListeners() {
 
         /*

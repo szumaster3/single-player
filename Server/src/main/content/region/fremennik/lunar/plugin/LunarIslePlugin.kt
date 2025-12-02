@@ -1,4 +1,4 @@
-package content.region.fremennik.lunar
+package content.region.fremennik.lunar.plugin
 
 import core.api.location
 import core.api.resetCamera
@@ -15,26 +15,19 @@ import shared.consts.Scenery
 class LunarIslePlugin : InteractionListener {
 
     companion object {
-        private const val CLOSED_DOOR = Scenery.DOOR_16774
-        private const val OPENED_DOOR = Scenery.DOOR_16777
-        private const val HOUSE = NPCs.HOUSE_4512
+        private const val INSIDE_BABA_YAGA_SHOP = Scenery.DOOR_16774
+        private const val BABA_YAGA_SHOP = NPCs.HOUSE_4512
         private val CYRISUS = intArrayOf(NPCs.CYRISUS_5893, NPCs.CYRISUS_5894, NPCs.CYRISUS_5895, NPCs.CYRISUS_5896, NPCs.CYRISUS_5897)
     }
 
     override fun defineListeners() {
-        on(CLOSED_DOOR, IntType.SCENERY, "open") { player, _ ->
+        on(INSIDE_BABA_YAGA_SHOP, IntType.SCENERY, "open") { player, _ ->
             teleport(player, location(2101, 3926, 0), TeleportType.INSTANT)
             resetCamera(player)
             return@on true
         }
 
-        on(OPENED_DOOR, IntType.SCENERY, "close") { player, _ ->
-            teleport(player, location(2101, 3926, 0), TeleportType.INSTANT)
-            resetCamera(player)
-            return@on true
-        }
-
-        on(HOUSE, IntType.NPC, "go-inside") { player, _ ->
+        on(BABA_YAGA_SHOP, IntType.NPC, "go-inside") { player, _ ->
             teleport(player, location(2451, 4645, 0), TeleportType.INSTANT)
             PlayerCamera(player).shake(1, 0, 0, 16, 20)
             return@on true

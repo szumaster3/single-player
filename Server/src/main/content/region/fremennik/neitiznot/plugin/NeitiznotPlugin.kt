@@ -1,4 +1,4 @@
-package content.region.fremennik.neitiznot
+package content.region.fremennik.neitiznot.plugin
 
 import core.api.*
 import core.api.openBankAccount
@@ -25,11 +25,11 @@ class NeitiznotPlugin : InteractionListener, MapArea {
          * Handles using any item on Yak NPC.
          */
 
-        onUseWith(IntType.NPC, -1, NPCs.YAK_5529) { player, _, with ->
+        onUseAnyWith(IntType.NPC, NPCs.YAK_5529) { player, _, with ->
             if (with is NPC && with.id == NPCs.YAK_5529) {
                 sendMessage(player, "The cow doesn't want that.")
             }
-            return@onUseWith true
+            return@onUseAnyWith true
         }
 
         /*

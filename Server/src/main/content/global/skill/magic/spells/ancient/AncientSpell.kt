@@ -86,11 +86,7 @@ class AncientSpell private constructor(private val definition: AncientSpellDefin
         }
     }
 
-    private fun shouldUseMultiHit(
-        entity: Entity,
-        target: Entity,
-        isSingleTarget: Boolean
-    ): Boolean {
+    private fun shouldUseMultiHit(entity: Entity, target: Entity, isSingleTarget: Boolean): Boolean {
         if (!entity.properties.isMultiZone || !target.properties.isMultiZone) return false
         return !isSingleTarget
     }
@@ -135,19 +131,12 @@ class AncientSpell private constructor(private val definition: AncientSpellDefin
             val player = entity as? Player
             val weapon = player?.equipment?.getNew(EquipmentContainer.SLOT_WEAPON)
             val valid =
-                intArrayOf(
-                    Items.ZURIELS_STAFF_13867,
-                    Items.ZURIELS_STAFF_DEG_13869,
-                    Items.NULL_13841,
-                    Items.NULL_13843
-                )
+                intArrayOf(Items.ZURIELS_STAFF_13867, Items.ZURIELS_STAFF_DEG_13869, Items.NULL_13841, Items.NULL_13843)
                     .any { it == weapon?.id }
             if (!valid && core.game.world.GameWorld.settings?.isDevMode != true) {
                 player
                     ?.packetDispatch
-                    ?.sendMessage(
-                        "You need to be wielding Zuriel's staff in order to cast this spell."
-                    )
+                    ?.sendMessage("You need to be wielding Zuriel's staff in order to cast this spell.")
                 return false
             }
         }

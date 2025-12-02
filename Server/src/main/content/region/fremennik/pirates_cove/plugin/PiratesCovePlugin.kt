@@ -1,4 +1,4 @@
-package content.region.fremennik.pirates_cove
+package content.region.fremennik.pirates_cove.plugin
 
 import core.api.addItem
 import core.api.freeSlots

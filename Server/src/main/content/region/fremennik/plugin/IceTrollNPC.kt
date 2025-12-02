@@ -22,7 +22,7 @@ class IceTrollNPC : AbstractNPC {
 
     override fun tick() {
         tickDelay++
-        if (tickDelay < 5) {
+        if (tickDelay < 30) {
             super.tick()
             return
         }

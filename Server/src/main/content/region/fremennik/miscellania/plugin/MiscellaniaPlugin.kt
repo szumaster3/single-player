@@ -1,4 +1,4 @@
-package content.region.fremennik.miscellania
+package content.region.fremennik.miscellania.plugin
 
 import content.region.fremennik.miscellania.dialogue.FerdDialogue
 import content.region.fremennik.miscellania.dialogue.FullangrDialogue

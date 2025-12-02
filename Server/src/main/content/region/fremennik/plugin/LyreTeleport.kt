@@ -49,14 +49,13 @@ class LyreTeleport(val player: Player) : Pulse() {
             }
 
             6 -> {
-                if (inEquipment(player, Items.FREMENNIK_SEA_BOOTS_3_14573) && getAttribute(
-                        player,
-                        LYRE_TELEPORT_ALT,
-                        false
-                    )
-                ) {
+                if (inEquipment(player, Items.FREMENNIK_SEA_BOOTS_3_14573) &&
+                    getAttribute(player, LYRE_TELEPORT_ALT, false))
+                {
                     player.properties.teleportLocation = waterBirthIsland
-                } else {
+                }
+                else
+                {
                     player.properties.teleportLocation = rellekaProvince
                 }
             }

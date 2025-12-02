@@ -1,13 +1,9 @@
 package content.global.skill.herblore
 
-import core.api.addItem
-import core.api.amountInInventory
-import core.api.removeItem
-import core.api.repositionChild
+import core.api.*
 import core.game.dialogue.SkillDialogueHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.skill.SkillPulse
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
 import shared.consts.Animations
@@ -19,59 +15,78 @@ import kotlin.math.roundToInt
 class GrindItemPlugin : InteractionListener {
 
     override fun defineListeners() {
-        onUseWith(IntType.ITEM, Items.PESTLE_AND_MORTAR_233, *GRIND_ITEM_IDS) { player, _, with ->
-            val grindItem = GrindItem.forID(with.id) ?: return@onUseWith false
 
-            val handler = object : SkillDialogueHandler(player, SkillDialogue.ONE_OPTION, grindItem.product) {
+        onUseWith(IntType.ITEM, Items.PESTLE_AND_MORTAR_233, *GRIND_ITEM_IDS) { player, _, with ->
+
+            val grind = GrindItem.forID(with.id) ?: return@onUseWith false
+            val sourceId = with.id
+            val productId = grind.product
+
+            val handler = object : SkillDialogueHandler(player, SkillDialogue.ONE_OPTION, Item(productId)) {
 
                 override fun create(amount: Int, index: Int) {
-                    player.pulseManager.run(object : SkillPulse<Item>(player, Item(grindItem.product)) {
-                        var remaining = amount
+                    var remaining = amount
 
-                        init {
-                            val inventoryAmount = amountInInventory(player, node.id)
-                            remaining = remaining.coerceAtMost(inventoryAmount)
+                    val invAmount = amountInInventory(player, sourceId)
+                    remaining = remaining.coerceAtMost(invAmount)
+                    if (sourceId == FISHING_BAIT) {
+                        val max = ceil(invAmount.toDouble() / 10).roundToInt()
+                        remaining = remaining.coerceAtMost(max)
+                    }
 
-                            if (node.id == FISHING_BAIT) {
-                                val maxAmount = ceil(inventoryAmount.toDouble() / 10).roundToInt()
-                                remaining = remaining.coerceAtMost(maxAmount)
+                    queueScript(player, 0) { stage ->
+
+                        if (remaining <= 0) return@queueScript stopExecuting(player)
+
+                        val currentSource = amountInInventory(player, sourceId)
+                        if (currentSource <= 0) return@queueScript stopExecuting(player)
+
+                        when (stage) {
+
+                            0 -> {
+                                player.animate(Animation.create(Animations.HUMAN_USE_PESTLE_AND_MORTAR_364))
+                                delayScript(player, 2)
                             }
-                            delay = 2
-                        }
 
-                        override fun checkRequirements(): Boolean = true
+                            else -> {
+                                if (sourceId == FISHING_BAIT) {
+                                    val removeQty = 10.coerceAtMost(currentSource)
 
-                        override fun animate() {
-                            player.animator.animate(ANIMATION)
-                        }
+                                    if (removeItem(player, Item(sourceId, removeQty))) {
+                                        addItem(player, productId, removeQty)
+                                    } else {
+                                        return@queueScript stopExecuting(player)
+                                    }
 
-                        override fun reward(): Boolean {
-                            return if (node.id == FISHING_BAIT) {
-                                val quantityToRemove = 10.coerceAtMost(amountInInventory(player, FISHING_BAIT))
-                                if (removeItem(player, Item(node.id, quantityToRemove))) {
-                                    addItem(player, grindItem.product, quantityToRemove)
-                                    remaining -= 1
-                                    remaining <= 0
                                 } else {
-                                    true
+                                    if (removeItem(player, Item(sourceId, 1))) {
+                                        addItem(player, productId, 1)
+                                    } else {
+                                        return@queueScript stopExecuting(player)
+                                    }
                                 }
-                            } else {
-                                if (removeItem(player, Item(node.id, 1))) {
-                                    addItem(player, grindItem.product)
-                                    remaining -= 1
-                                    remaining <= 0
-                                } else {
-                                    true
-                                }
+                                sendMessage(player, grind.message)
+
+                                remaining--
+
+                                if (remaining > 0) {
+                                    setCurrentScriptState(player, 0)
+                                    delayScript(player, 2)
+                                } else stopExecuting(player)
                             }
                         }
-                    })
+                    }
                 }
 
                 override fun getAll(index: Int): Int {
-                    return amountInInventory(player, with.id)
+                    val invAmount = amountInInventory(player, with.id)
+
+                    return if (with.id == FISHING_BAIT) {
+                        ceil(invAmount.toDouble() / 10).roundToInt()
+                    } else invAmount
                 }
             }
+
             handler.open()
             repositionChild(player, Components.SKILL_MULTI1_309, 2, 210, 15)
             return@onUseWith true
@@ -80,7 +95,6 @@ class GrindItemPlugin : InteractionListener {
 
     companion object {
         private val GRIND_ITEM_IDS = GrindItem.values().flatMap { it.items }.toSet().toIntArray()
-        private val ANIMATION = Animation(Animations.HUMAN_USE_PESTLE_AND_MORTAR_364)
         private const val FISHING_BAIT = Items.FISHING_BAIT_313
     }
 
@@ -106,16 +120,12 @@ class GrindItemPlugin : InteractionListener {
         ANCHOVIES(setOf(Items.ANCHOVIES_319), Items.ANCHOVY_PASTE_11266, "You grind the anchovies into a fishy, sticky paste."),
         CHOCOLATE_BAR(setOf(Items.CHOCOLATE_BAR_1973), Items.CHOCOLATE_DUST_1975, "You grind the chocolate into dust."),
         SULPHUR(setOf(Items.SULPHUR_3209), Items.GROUND_SULPHUR_3215, "You grind down the sulphur."),
+        SUQAH_TOOTH(setOf(Items.SUQAH_TOOTH_9079), Items.GROUND_TOOTH_9082, "You grind the suqah tooth to dust."),
         GUAM_LEAF(setOf(Items.CLEAN_GUAM_249), Items.GROUND_GUAM_6681, "You grind down the guam.");
 
         companion object {
             private val map = GrindItem.values().flatMap { g -> g.items.map { it to g } }.toMap()
-            /**
-             * Finds the [GrindItem] for given item id.
-             */
-            @JvmStatic
             fun forID(id: Int): GrindItem? = map[id]
         }
     }
 }
-
