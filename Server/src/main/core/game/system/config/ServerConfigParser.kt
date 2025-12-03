@@ -199,6 +199,7 @@ object ServerConfigParser {
         ServerConstants.RUNECRAFTING_FORMULA_REVISION = data.getLong("world.runecrafting_formula_revision", 581).toInt()
         ServerConstants.CONNECTIVITY_CHECK_URL = data.getString("server.connectivity_check_url", "https://google.com")
         ServerConstants.CONNECTIVITY_TIMEOUT = data.getLong("server.connectivity_timeout", 500L).toInt()
+        ServerConstants.AFK_LOGOUT_DISABLED = data.getBoolean("world.afk_logout_disabled", false)
 
         val logLevel = data.getString("server.log_level", "VERBOSE").uppercase()
         ServerConstants.LOG_LEVEL = parseEnumEntry<LogLevel>(logLevel) ?: LogLevel.VERBOSE

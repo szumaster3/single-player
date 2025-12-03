@@ -320,5 +320,13 @@ class ServerConstants {
 
         @JvmField
         var CONNECTIVITY_TIMEOUT = 500
+
+        /**
+         * Disables automatic AFK logout when true.
+         * Players will not be logged out for being idle if this is set.
+         * This does NOT apply to administrators, who are never logged out automatically.
+         */
+        @JvmField
+        var AFK_LOGOUT_DISABLED = false
     }
 }

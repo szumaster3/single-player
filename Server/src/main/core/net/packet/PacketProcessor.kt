@@ -1,6 +1,5 @@
 package core.net.packet
 
-import content.data.GameAttributes
 import content.global.plugins.interfaces.ge.StockMarket
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.SpellListeners
@@ -338,11 +337,10 @@ object PacketProcessor {
             }
 
             is Packet.TrackingAfkTimeout -> {
-                // if (pkt.player.details.rights != Rights.ADMINISTRATOR)
-                // {
-                //     pkt.player.isAfkLogout = true
-                //     pkt.player.packetDispatch.sendLogout()
-                // }
+                if (ServerConstants.AFK_LOGOUT_DISABLED || pkt.player.details.rights == Rights.ADMINISTRATOR) return
+
+                pkt.player.isAfkLogout = true
+                pkt.player.packetDispatch.sendLogout()
             }
 
             is Packet.TrackingCameraPos -> {
