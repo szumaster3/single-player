@@ -166,6 +166,8 @@ class EnlightenedJourney : Quest(Quests.ENLIGHTENED_JOURNEY, 55, 54, 1, Vars.VAR
         addItemOrDrop(player, Items.BOMBER_JACKET_9944)
         addItemOrDrop(player, Items.BOMBER_CAP_9945)
 
+        // Varbits found by .css
+        // Source: https://rune-server.org/threads/balloon-traveling-varbits.704722/#post-5791539
         setVarbit(player, Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_PROGRESS_2866, 200, true)
         setVarbit(player, Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_ENTRANA_BALLOON_2867, 2, true)
         setVarbit(player, Vars.VARBIT_QUEST_ENLIGHTENED_JOURNEY_TAVERLEY_BALLOON_2868, 1, true)

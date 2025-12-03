@@ -17,7 +17,8 @@ class FirstExperimentCutscene(player: Player) : Cutscene(player) {
         if (player.settings.isRunToggled) {
             player.settings.toggleRun()
         }
-        loadRegion(Regions.ENTRANA_11060)
+        loadRegion(//Regions.ENTRANA_
+            11060)
     }
 
     override fun runStage(stage: Int) {

@@ -15,11 +15,16 @@ class SecondExperimentCutscene(player: Player) : Cutscene(player) {
         if (player.settings.isRunToggled) {
             player.settings.toggleRun()
         }
-        loadRegion(Regions.ENTRANA_11060)
+        loadRegion(//Regions.ENTRANA_
+            11060)
     }
 
     override fun runStage(stage: Int) {
         when (stage) {
+            0 -> {
+                fadeToBlack()
+                timedUpdate(6)
+            }
             1 -> {
                 teleport(player, 56, 27,0)
                 faceLocation(player, player.location.transform(Direction.SOUTH))

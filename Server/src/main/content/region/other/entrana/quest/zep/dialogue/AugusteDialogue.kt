@@ -164,29 +164,25 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
                 0 -> npcl(FaceAnim.HALF_ASKING, "Do you have the other two sheets of papyrus and a full sack of potatoes?").also { stage++ }
                 1 -> options("Yes, I have them here.", "Oh, I've misplaced them.").also { stage++ }
                 2 -> when (buttonID) {
-                    1 -> playerl(FaceAnim.HAPPY, "Yes, I have them here.").also { stage = 3 }
-                    2 -> playerl(FaceAnim.NEUTRAL, "Oh, I've misplaced them.").also { stage = 4 }
-                }
-                3 -> {
-                    val missing = buildList {
-                        if (!hasPotatoes) add("a full sack of potatoes")
-                        if (!hasPapyrus) add("more papyrus")
-                    }
-
-                    if (missing.isEmpty()) {
-                        npc(FaceAnim.HAPPY, "Commendable. If I may have those, I will construct this", "experiment.").also { stage = 5 }
-                    } else {
-                        val message = when (missing.size) {
-                            1 -> "You need ${missing[0]}."
-                            else -> "You need ${missing.joinToString(" and ")}."
+                    1 -> playerl(FaceAnim.HAPPY, "Yes, I have them here.").also {
+                        val missing = buildList {
+                            if (!hasPotatoes) add("a full sack of potatoes")
+                            if (!inInventory(player!!, Items.PAPYRUS_970, 2)) add("more papyrus")
                         }
-                        npcl(FaceAnim.FRIENDLY, message).also { stage = END_DIALOGUE }
+
+                        if (missing.isEmpty()) {
+                            stage = 5
+                        } else {
+                            val message = if (missing.size == 1) "You need ${missing[0]}." else "You need ${missing.joinToString(" and ")}."
+                            npcl(FaceAnim.FRIENDLY, message)
+                            stage = END_DIALOGUE
+                        }
                     }
+                    2 -> playerl(FaceAnim.NEUTRAL, "Oh, I've misplaced them.").also { stage = END_DIALOGUE }
                 }
-                4 -> npcl(FaceAnim.FRIENDLY, "Failure is not an option.").also { stage = END_DIALOGUE }
                 5 -> {
                     end()
-                    if(removeItem(player, Item(Items.PAPYRUS_970, 3)) && removeItem(player, Item(Items.POTATOES10_5438, 1))) {
+                    if(removeItem(player, Item(Items.PAPYRUS_970, 2)) && removeItem(player, Item(Items.POTATOES10_5438, 1))) {
                         SecondExperimentCutscene(player).start()
                         setQuestStage(player, Quests.ENLIGHTENED_JOURNEY, 5)
                     }
@@ -218,7 +214,6 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
                 21 -> {
                     end()
                     setQuestStage(player, Quests.ENLIGHTENED_JOURNEY, 6)
-                    // Player can get branches from willow tree.
                     addItemOrDrop(player, Items.AUGUSTES_SAPLING_9932, 1)
                     addItemOrDrop(player, Items.APPLES5_5386, 1)
                 }
@@ -276,6 +271,9 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
                     val neededSilk = 10
                     if (hasGiven(player, "ej-silk")) {
                         npcl(FaceAnim.FRIENDLY, "You have already given the silk.").also { stage = 3 }
+                    } else if (inInventory(player, Items.SILK_951, neededSilk)) {
+                        npc(FaceAnim.SAD, "What am I supposed to do with a note?? I can't make ", "a baloon from notes!")
+                        stage = END_DIALOGUE
                     } else if (inInventory(player, Items.SILK_950, neededSilk)) {
                         removeItem(player, Item(Items.SILK_950, neededSilk))
                         setGiven(player, "ej-silk")
@@ -345,7 +343,7 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             7 -> when (stage) {
-                0 -> npcl(FaceAnim.FRIENDLY, "You just need to build the basket and I can finish the balloon! How are you getting on with the willow?").also { stage++ }
+                0 -> npc(FaceAnim.HAPPY, "You just need to build the basket and I can finish the", "balloon! How are you getting on with the willow?").also { stage++ }
                 1 -> options("I have lost my willow sapling. Can I buy a replacement?", "What do I do again?", "Fine thanks.").also { stage++ }
                 2 -> when (buttonID) {
                     1 -> playerl(FaceAnim.FRIENDLY, "I have lost my willow sapling. Can I buy a replacement?").also { stage = 3 }
