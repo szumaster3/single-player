@@ -228,11 +228,7 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
 
             6 -> when (stage) {
                 0 -> npcl(FaceAnim.FRIENDLY, "Do you have anything for me?").also { stage = 1 }
-                1 -> options(
-                    "Yes, I want to give you some items.",
-                    "I'm having trouble finding some of the items.",
-                    "I have lost my willow sapling. Can I buy a replacement?"
-                ).also { stage = 2 }
+                1 -> options("Yes, I want to give you some items.", "I'm having trouble finding some of the items.", "I have lost my willow sapling. Can I buy a replacement?").also { stage = 2 }
                 2 -> when (buttonID) {
                     1 -> playerl(FaceAnim.FRIENDLY, "Yes, I want to give you some items.").also { stage = 3 }
                     2 -> playerl(FaceAnim.FRIENDLY, "I'm having trouble finding some of the items.").also { stage = 12 }
@@ -262,7 +258,7 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
                         setGiven(player, "ej-dye-yellow")
                         setGiven(player, "ej-dye-red")
                         npcl(FaceAnim.FRIENDLY, "Ah, wonderful - the red and yellow dye. Thank you.")
-                        stage = 6 // ostatni przedmiot lub oba razem
+                        stage = 6
                     } else if (hasYellow && !gaveYellow) {
                         removeItem(player, Item(Items.YELLOW_DYE_1765, 1))
                         setGiven(player, "ej-dye-yellow")
