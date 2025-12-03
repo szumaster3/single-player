@@ -92,7 +92,7 @@ class ImmerseWorld : StartupListener {
                 skillingBotAssembler.produce(SkillingBotAssembler.Wealth.POOR, Location.create(2738, 3444, 0)),
             )
             GeneralBotCreator(
-                FletchingBankstander(),
+                GlassBlowingBankstander(),
                 skillingBotAssembler.produce(SkillingBotAssembler.Wealth.AVERAGE, Location.create(2722, 3493, 0)),
             )
             GeneralBotCreator(
@@ -189,7 +189,7 @@ class ImmerseWorld : StartupListener {
                 skillingBotAssembler.produce(SkillingBotAssembler.Wealth.RICH, Location.create(3189, 3435, 0)),
             )
             GeneralBotCreator(
-                FletchingBankstander(),
+                Idler(),
                 skillingBotAssembler.produce(SkillingBotAssembler.Wealth.AVERAGE, Location.create(3189, 3439, 0)),
             )
             GeneralBotCreator(
