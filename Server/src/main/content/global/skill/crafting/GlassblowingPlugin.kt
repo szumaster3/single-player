@@ -72,6 +72,7 @@ class GlassblowingPlugin : InteractionListener, InterfaceListener {
         private const val GLASS_BLOWING_INTERFACE = Components.CRAFTING_GLASS_542
 
         fun handleGlassblowing(player: Player, product: CraftingDefinition.Glass, amount: Int) {
+            if (!clockReady(player, Clocks.SKILLING)) return
             var remaining = amount
 
             queueScript(player, 0, QueueStrength.WEAK) {

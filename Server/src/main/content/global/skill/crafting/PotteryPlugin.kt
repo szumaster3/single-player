@@ -112,51 +112,49 @@ class PotteryPlugin : InteractionListener {
                 withItems(pottery.unfinished)
                 create { _, amount ->
                     var remaining = amount
-                    queueScript(player, 0, QueueStrength.WEAK) { stage ->
-                        if (remaining <= 0) return@queueScript stopExecuting(player)
-
-                        when (stage) {
-                            0 -> {
-                                animate(player, Animations.HUMAN_FURNACE_SMELT_3243)
-                                playAudio(player, 2588)
-                                sendMessage(player, "You put ${pottery.unfinished.name.lowercase(Locale.getDefault())} in the oven.")
-                                delayScript(player, 5)
-                            }
-                            1 -> {
-                                sendMessage(player, "The ${pottery.product.name.lowercase(Locale.getDefault())} hardens in the oven.")
-                                delayScript(player, 5)
-                            }
-                            else -> {
-                                delayClock(player, Clocks.SKILLING, 5)
-                                if (removeItem(player, pottery.unfinished)) {
-                                    addItem(player, pottery.product.id)
-                                    rewardXP(player, Skills.CRAFTING, pottery.fireExp)
-                                    sendMessage(player, "You remove ${pottery.product.name.lowercase(Locale.getDefault())} from the oven.")
-
-                                    // Varrock diary.
-                                    when (pottery) {
-                                        CraftingDefinition.Pottery.BOWL -> if (withinDistance(player, Location(3085, 3408, 0)) &&
-                                            getAttribute(player, "diary:varrock:spun-bowl", false)) {
-                                            finishDiaryTask(player, DiaryType.VARROCK, 0, 9)
-                                        }
-                                        CraftingDefinition.Pottery.POT -> if (withinDistance(player, Location(3085, 3408, 0))) {
-                                            finishDiaryTask(player, DiaryType.LUMBRIDGE, 0, 8)
-                                        }
-                                        else -> {}
-                                    }
-                                    remaining--
-                                }
-
-                                if (remaining > 0) {
-                                    setCurrentScriptState(player, 0)
-                                    delayScript(player, 5)
-                                } else stopExecuting(player)
-                            }
+                    queueScript(player, 0, QueueStrength.NORMAL) {
+                        if (remaining <= 0 || !clockReady(player, Clocks.SKILLING) || !inInventory(player, pottery.unfinished.id)) {
+                            return@queueScript false
                         }
+
+                        animate(player, Animations.HUMAN_FURNACE_SMELT_3243)
+                        playAudio(player, 2588)
+                        sendMessage(player, "You put ${pottery.unfinished.name.lowercase(Locale.getDefault())} in the oven.")
+
+                        if (removeItem(player, pottery.unfinished)) {
+                            addItem(player, pottery.product.id)
+                            rewardXP(player, Skills.CRAFTING, pottery.fireExp)
+                            sendMessage(player, "You remove ${pottery.product.name.lowercase(Locale.getDefault())} from the oven.")
+
+                            // Varrock diary.
+                            when (pottery) {
+                                CraftingDefinition.Pottery.BOWL ->
+                                    if (withinDistance(player, Location(3085, 3408, 0)) && getAttribute(player, "diary:varrock:spun-bowl", false)) {
+                                        finishDiaryTask(player, DiaryType.VARROCK, 0, 9)
+                                    }
+                                CraftingDefinition.Pottery.POT ->
+                                    if (withinDistance(player, Location(3085, 3408, 0))) {
+                                        finishDiaryTask(player, DiaryType.LUMBRIDGE, 0, 8)
+                                    }
+                                else -> {}
+                            }
+
+                            remaining--
+                        }
+
+                        if (remaining > 0 && inInventory(player, pottery.unfinished.id)) {
+                            delayClock(player, Clocks.SKILLING, 5)
+                            setCurrentScriptState(player, 0)
+                            delayScript(player, 5)
+                            return@queueScript true
+                        }
+
+                        return@queueScript false
                     }
                 }
                 calculateMaxAmount { player.inventory.getAmount(pottery.unfinished) }
             }
+
             return true
         }
 

@@ -19,6 +19,7 @@ class GemCutPlugin : InteractionListener {
         /*
          * Handles cutting gems using chisel.
          */
+
         onUseWith(IntType.ITEM, Items.CHISEL_1755, *UNCUT_Gem) { player, used, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
 
@@ -80,9 +81,6 @@ class GemCutPlugin : InteractionListener {
          * Patch: 27 January 2009
          */
 
-        /*
-          * Handles crushing semi-precious gems using a hammer.
-          */
         onUseWith(IntType.ITEM, Items.HAMMER_2347, *SEMIPRECIOUS_Gem) { player, used, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
 

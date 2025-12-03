@@ -94,8 +94,8 @@ class LeatherCraftingPlugin : InteractionListener, InterfaceListener {
     }
 
     private fun handleLeatherCrafting(player: Player, craft: CraftingDefinition.Leather, amountToMake: Int) {
+        if (!clockReady(player, Clocks.SKILLING)) return
         var remaining = amountToMake
-
         queueScript(player, 0, QueueStrength.WEAK) {
             if (remaining <= 0 || !clockReady(player, Clocks.SKILLING)) {
                 return@queueScript stopExecuting(player)

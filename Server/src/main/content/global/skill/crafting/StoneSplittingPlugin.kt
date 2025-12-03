@@ -104,7 +104,7 @@ class StoneSplittingPlugin : InteractionListener {
          * Handles limestone cutting into bricks.
          */
 
-        onUseWith(IntType.ITEM, Items.LIMESTONE_3211, Items.CHISEL_1755) { player, used, _ ->
+        onUseWith(IntType.ITEM, Items.CHISEL_1755, Items.LIMESTONE_3211) { player, used, with ->
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
             if (!hasLevel(player, Skills.CRAFTING, 12) || !hasTool(player, Items.CHISEL_1755)) return@onUseWith true
 
@@ -114,47 +114,43 @@ class StoneSplittingPlugin : InteractionListener {
                 create { _, amount ->
                     var remaining = amount
 
-                    queueScript(player, 0, QueueStrength.WEAK) { stage ->
-                        if (!clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
-                        if (remaining <= 0 || !inInventory(player, used.id)) {
+                    queueScript(player, 0, QueueStrength.WEAK) {
+                        if (!clockReady(player, Clocks.SKILLING)) return@queueScript false
+                        if (remaining <= 0 || !inInventory(player, with.id)) {
                             sendMessage(player, "You have ran out of limestone.")
-                            return@queueScript stopExecuting(player)
+                            return@queueScript false
                         }
 
-                        when (stage) {
-                            0 -> {
-                                animate(player, Animations.CHISEL_OYSTER_PEARL_4470)
-                                delayClock(player, Clocks.SKILLING, 2)
-                                delayScript(player, 2)
+                        animate(player, Animations.CHISEL_OYSTER_PEARL_4470)
+                        delayClock(player, Clocks.SKILLING, 2)
+
+                        if (removeItem(player, with.id)) {
+                            val successProbability = BASE_SUCCESS_PROBABILITY + getStatLevel(player, Skills.CRAFTING) * SUCCESS_PER_LEVEL
+
+                            if (RandomUtils.randomDouble() <= successProbability) {
+                                rewardXP(player, Skills.CRAFTING, 6.0)
+                                addItem(player, Items.LIMESTONE_BRICK_3420)
+                                sendMessage(player, "You successfully craft ${getItemName(Items.LIMESTONE_BRICK_3420)}.")
+                            } else {
+                                rewardXP(player, Skills.CRAFTING, 1.5)
+                                addItem(player, Items.ROCK_968)
+                                sendMessage(player, "You fail to craft ${getItemName(Items.LIMESTONE_BRICK_3420)}.")
                             }
 
-                            else -> {
-                                if (removeItem(player, used.id)) {
-                                    val successProbability =
-                                        BASE_SUCCESS_PROBABILITY + getStatLevel(player, Skills.CRAFTING) * SUCCESS_PER_LEVEL
-                                    if (RandomUtils.randomDouble() <= successProbability) {
-                                        rewardXP(player, Skills.CRAFTING, 6.0)
-                                        addItem(player, Items.LIMESTONE_BRICK_3420)
-                                        sendMessage(player, "You successfully craft ${getItemName(Items.LIMESTONE_BRICK_3420)}.")
-                                    } else {
-                                        rewardXP(player, Skills.CRAFTING, 1.5)
-                                        addItem(player, Items.ROCK_968)
-                                        sendMessage(player, "You fail to craft ${getItemName(Items.LIMESTONE_BRICK_3420)}.")
-                                    }
-                                }
+                            remaining--
+                        }
 
-                                remaining--
-
-                                if (remaining > 0 && inInventory(player, used.id)) {
-                                    setCurrentScriptState(player, 0)
-                                    delayScript(player, 2)
-                                } else stopExecuting(player)
-                            }
+                        return@queueScript if (remaining > 0 && inInventory(player, with.id)) {
+                            setCurrentScriptState(player, 0)
+                            delayScript(player, 2)
+                            true
+                        } else {
+                            false
                         }
                     }
                 }
 
-                calculateMaxAmount { min(amountInInventory(player, used.id), amountInInventory(player, used.id)) }
+                calculateMaxAmount { amountInInventory(player, with.id) }
             }
 
             return@onUseWith true

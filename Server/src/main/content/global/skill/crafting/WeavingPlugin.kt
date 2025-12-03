@@ -35,7 +35,7 @@ class WeavingPlugin : InteractionListener {
                     val product = type.product
 
                     queueScript(player, 0, QueueStrength.WEAK) {
-
+                        if (!clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
                         var remaining = amount
 
                         if (getStatLevel(player, Skills.CRAFTING) < type.level) {

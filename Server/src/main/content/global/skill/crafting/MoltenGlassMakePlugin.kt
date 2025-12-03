@@ -81,7 +81,6 @@ class MoltenGlassMakePlugin : InteractionListener {
         }
     }
 
-
     private fun handleMoltenGlassProcess(player: Player, productId: Int, amount: Int) {
         var remaining = amount
 
