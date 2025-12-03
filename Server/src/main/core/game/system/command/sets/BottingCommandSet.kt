@@ -20,6 +20,10 @@ class BottingCommandSet : CommandSet(Privilege.ADMIN) {
             return
         }
 
+        /*
+         * Command for listing all available bot scripts.
+         */
+
         define(name = "scripts", Privilege.ADMIN) { player, _ ->
             if (GameWorld.settings?.enabled_botting != true) {
                 player.sendChat("I just tried to do something silly!")
@@ -51,6 +55,10 @@ class BottingCommandSet : CommandSet(Privilege.ADMIN) {
             player.interfaceManager.open(Component(Components.QUESTJOURNAL_SCROLL_275))
         }
 
+        /*
+         * Command for starting a bot script by its identifier.
+         */
+
         define(name = "script", Privilege.ADMIN) { player, args ->
             if (GameWorld.settings?.enabled_botting != true) {
                 player.sendChat("I just tried to do something very silly!")
@@ -81,6 +89,10 @@ class BottingCommandSet : CommandSet(Privilege.ADMIN) {
             sendMessage(player, colorize("%RStarting script..."))
             sendMessage(player, colorize("%RTo stop the script, do ::stopscript or log out."))
         }
+
+        /*
+         * Command for stopping the currently running bot script.
+         */
 
         define(name = "stopscript", Privilege.ADMIN) { player, _ ->
             val pulse: GeneralBotCreator.BotScriptPulse? = player.getAttribute("botting:script", null)

@@ -29,7 +29,14 @@ class ModerationCommandSet : CommandSet(Privilege.MODERATOR) {
     override fun defineCommands() {
         val maxJailTime = 1800 // Max jail time (in seconds)
 
-        define("kick", Privilege.MODERATOR) { player, args ->
+        /*
+         * Command for kicking a player from the game.
+         */
+
+        define(
+            name = "kick",
+            privilege = Privilege.MODERATOR
+        ) { player, args ->
             val playerToKick: Player? = Repository.getPlayerByName(args[1])
             if (playerToKick != null) {
                 playerToKick.clear()
@@ -38,6 +45,11 @@ class ModerationCommandSet : CommandSet(Privilege.MODERATOR) {
                 reject(player, "ERROR REMOVING PLAYER.")
             }
         }
+
+        /*
+         * Command for banning a player account
+         * for a specified duration.
+         */
 
         define(
             name = "ban",
@@ -62,10 +74,7 @@ class ModerationCommandSet : CommandSet(Privilege.MODERATOR) {
                     val durationInt: Int =
                         (intToken.toIntOrNull() ?: -1).also {
                             if (it == -1) {
-                                reject(
-                                    player,
-                                    "Invalid duration: $intToken",
-                                )
+                                reject(player, "Invalid duration: $intToken")
                             }
                         }
                     durationUnit =
@@ -96,6 +105,10 @@ class ModerationCommandSet : CommandSet(Privilege.MODERATOR) {
             notify(player, "Banned user $name for $intToken ${durationUnit.name.lowercase()}.")
         }
 
+        /*
+         * Command for banning all accounts associated with a given IP.
+         */
+
         define(
             name = "ipban",
             privilege = Privilege.ADMIN,
@@ -115,10 +128,7 @@ class ModerationCommandSet : CommandSet(Privilege.MODERATOR) {
                     val durationInt: Int =
                         (intToken.toIntOrNull() ?: -1).also {
                             if (it == -1) {
-                                reject(
-                                    player,
-                                    "Invalid duration: $intToken",
-                                )
+                                reject(player, "Invalid duration: $intToken")
                             }
                         }
                     durationUnit =
@@ -158,6 +168,10 @@ class ModerationCommandSet : CommandSet(Privilege.MODERATOR) {
 
             notify(player, "Banned all accounts on $ip for $intToken ${durationUnit.name.lowercase()}.")
         }
+
+        /*
+         * Command for muting a player for a specified duration.
+         */
 
         define(
             name = "mute",
@@ -217,6 +231,10 @@ class ModerationCommandSet : CommandSet(Privilege.MODERATOR) {
             notify(player, "Muted user $name for $intToken ${durationUnit.name.lowercase()}.")
         }
 
+        /*
+         * Command for jailing a player for a set number of seconds.
+         */
+
         define(
             name = "jail",
             privilege = Privilege.MODERATOR,
@@ -265,6 +283,10 @@ class ModerationCommandSet : CommandSet(Privilege.MODERATOR) {
             )
         }
 
+        /*
+         * Command for modifying a player credits by a given amount.
+         */
+
         define(
             name = "modcr",
             privilege = Privilege.MODERATOR,
@@ -312,6 +334,10 @@ class ModerationCommandSet : CommandSet(Privilege.MODERATOR) {
             )
         }
 
+        /*
+         * Command for awarding credits to players listed in a CSV file.
+         */
+
         define(
             name = "csvmodcr",
             privilege = Privilege.ADMIN,
@@ -347,6 +373,10 @@ class ModerationCommandSet : CommandSet(Privilege.MODERATOR) {
                 }
             }
         }
+
+        /*
+         * Command for retrieving a specific attribute value of a player.
+         */
 
         define(
             name = "getattribute",

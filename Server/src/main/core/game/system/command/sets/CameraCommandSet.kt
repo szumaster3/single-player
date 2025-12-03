@@ -10,6 +10,12 @@ import core.plugin.Initializable
 class CameraCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
+
+        /*
+         * Command for positioning the
+         * camera to the given region-local coordinates.
+         */
+
         define(
             name = "poscam",
             privilege = Privilege.ADMIN,
@@ -34,6 +40,11 @@ class CameraCommandSet : CommandSet(Privilege.ADMIN) {
             )
             PlayerCamera(player).setPosition(globalLoc.x, globalLoc.y, height)
         }
+
+        /*
+         * Command for moving the camera
+         * smoothly to the given region-local coordinates.
+         */
 
         define(
             name = "movcam",
@@ -65,6 +76,11 @@ class CameraCommandSet : CommandSet(Privilege.ADMIN) {
             PlayerCamera(player).panTo(globalLoc.x, globalLoc.y, height, speed)
         }
 
+        /*
+         * Command for rotating the camera
+         * to face the given region-local coordinates.
+         */
+
         define(
             name = "rotcam",
             privilege = Privilege.ADMIN,
@@ -94,6 +110,11 @@ class CameraCommandSet : CommandSet(Privilege.ADMIN) {
             )
             PlayerCamera(player).rotateTo(globalLoc.x, globalLoc.y, height, speed)
         }
+
+        /*
+         * Command for shaking the camera
+         * with a given type and optional parameters.
+         */
 
         define(
             name = "shakecam",
@@ -134,7 +155,16 @@ class CameraCommandSet : CommandSet(Privilege.ADMIN) {
             PlayerCamera(player).shake(cameraMovementType, jitter, amplitude, frequency, speed)
         }
 
-        define("resetcam", Privilege.ADMIN, "::resetcam", "Resets the current camera position.") { player, _ ->
+        /*
+         * Command for resetting the camera to its default position.
+         */
+
+        define(
+            name = "resetcam",
+            privilege = Privilege.ADMIN,
+            usage = "::resetcam",
+            description = "Resets the current camera position."
+        ) { player, _ ->
             sendMessage(player, "<col=8e7cc3><shad=000000>CAMERA RESET</shad></col>")
             PlayerCamera(player).reset()
         }

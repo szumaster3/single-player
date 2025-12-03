@@ -16,22 +16,46 @@ class QuestCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
 
+        /*
+         * Command for instantly completing the
+         * Enlightened Journey quest (balloon travel).
+         */
+
         define(
             name = "balloon",
             privilege = Privilege.ADMIN,
-            usage = "",
-            description = "Toggle balloon travel.",
+            usage = "::balloon",
+            description = "Toggle balloon travel",
         ) { player, _ ->
             finishQuest(player, Quests.ENLIGHTENED_JOURNEY)
         }
 
-        define(name = "allquest", Privilege.ADMIN) { player, _ ->
+        /*
+         * Command for completing all quests for the player.
+         */
+
+        define(
+            name = "allquest",
+            privilege = Privilege.ADMIN,
+            usage = "::allquest",
+            description = "Completing all quests",
+        ) { player, _ ->
             for (quest in QuestRepository.getQuests().values) {
                 quest.finish(player)
             }
         }
 
-        define(name = "quest", Privilege.ADMIN) { player, args ->
+        /*
+         * Command for showing quest debug info.
+         * Can be used to check quests for yourself or another player.
+         */
+
+        define(
+            name = "quest",
+            privilege = Privilege.ADMIN,
+            usage = "::quest",
+            description = "Shows quest debug info",
+        ) { player, args ->
             if (args.size < 3) {
                 val lookupP =
                     if (args.size == 1) {
@@ -47,6 +71,10 @@ class QuestCommandSet : CommandSet(Privilege.ADMIN) {
                 reject(player, "Usage: ::quest || ::quest <username>")
             }
         }
+
+        /*
+         * Command for setting a specific quest stage.
+         */
 
         define(name = "setqueststage", Privilege.ADMIN) { player, args ->
             if (args.size < 3) {
@@ -68,6 +96,10 @@ class QuestCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command for opening the quest interface
+         * and listing all quests.
+         */
         define(name = "quests", privilege = Privilege.ADMIN) { player, _ ->
             sendQuests(player)
         }

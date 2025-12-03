@@ -34,12 +34,23 @@ class FunCommandSet : CommandSet(Privilege.ADMIN) {
     var npcs: List<NPC> = ArrayList()
 
     override fun defineCommands() {
+
+        /*
+         * Command for making the player use a bike animation.
+         */
+
         define(
             name = "bike",
             privilege = Privilege.ADMIN,
+            usage = "::bike",
+            description = "Test a bike animation",
         ) { player, args ->
             animate(player, Animations.USE_BIKE_MACHINE_2433)
         }
+
+        /*
+         * Command for making nearby NPCs perform an animation.
+         */
 
         define(
             name = "npcanim",
@@ -58,6 +69,10 @@ class FunCommandSet : CommandSet(Privilege.ADMIN) {
                 n.animate(Animation.create(-1), 6)
             }
         }
+
+        /*
+         * Command for transforming the player into a given NPC.
+         */
 
         define(
             name = "pnpc",
@@ -79,42 +94,71 @@ class FunCommandSet : CommandSet(Privilege.ADMIN) {
             notify(player, "Transformed into NPC $pnpc_id")
         }
 
-        define(name = "bank", privilege = Privilege.ADMIN, usage = "", description = "Opens your bank.") { player, _ ->
-            // sendChat(player, "Hey, everyone, I just tried to do something very silly!")
+        /*
+         * Command for opening the player's bank.
+         */
+
+        define(
+            name = "bank",
+            privilege = Privilege.ADMIN,
+            usage = "::bank",
+            description = "Opens your bank."
+        ) { player, _ ->
             player.bank.open()
         }
+
+        /*
+         * Command for toggling player invisibility.
+         */
 
         define(
             name = "invis",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "::invis",
             description = "Makes you invisible to others.",
         ) { player, _ ->
             player.isInvisible = !player.isInvisible
             notify(player, "You are now ${if (player.isInvisible) "invisible" else "visible"} to others.")
         }
 
+        /*
+         * Command for enabling/disabling 1-hit KO mode.
+         */
+
         define(
             name = "1hit",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "::1hit",
             description = "Makes you kill things in 1 hit.",
         ) { player, _ ->
             player.setAttribute("1hko", !player.getAttribute("1hko", false))
             notify(player, "1-hit KO mode " + if (player.getAttribute("1hko", false)) "on." else "off.")
         }
 
+        /*
+         * Command for toggling god mode (invulnerability).
+         */
+
         define(
             name = "god",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "::god",
             description = "Makes you invulnerable to damage.",
         ) { player, _ ->
             player.setAttribute("godMode", !player.getAttribute("godMode", false))
             notify(player, "God mode ${if (player.getAttribute("godMode", false)) "enabled." else "disabled."}")
         }
 
-        define(name = "mrboneswildride") { player, args ->
+        /*
+         * Command for enabling/disabling "Mr. Bones Wild Ride" mode on a player.
+         */
+
+        define(
+            name = "mrboneswildride",
+            privilege = Privilege.ADMIN,
+            usage = "::mrboneswildride",
+            description = "mrboneswildride",
+        ) { player, args ->
             val p: Player =
                 if (args.size > 2) {
                     reject(player, "Usage: ::mrboneswildride <username>")
@@ -145,9 +189,18 @@ class FunCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command for opening the Character Design interface (makeover).
+         */
+
         define(name = "makeover", privilege = Privilege.MODERATOR) { player, _ ->
             CharacterDesign.open(player)
         }
+
+        /*
+         * Command for dumping the player appearance and
+         * equipment to the clipboard as JSON.
+         */
 
         define(name = "dumpappearance", privilege = Privilege.MODERATOR) { player, _ ->
             val gson = Gson()
@@ -167,7 +220,17 @@ class FunCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
-        define("bury") { player, _ ->
+        /*
+         * Command for burying the player entire inventory
+         * at their location.
+         */
+
+        define(
+            "bury",
+            privilege = Privilege.ADMIN,
+            usage = "::bury",
+            description = "Burying the entire inventory."
+        ) { player, _ ->
             if (player.inventory.isEmpty) {
                 reject(player, "You have no items to bury.")
             }
@@ -197,14 +260,23 @@ class FunCommandSet : CommandSet(Privilege.ADMIN) {
             )
         }
 
+        /*
+         * Command for opening the Character Design interface.
+         */
+
         define(
             name = "appearance",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "::appearance",
             description = "Allows you to change your appearance.",
         ) { player, _ ->
             CharacterDesign.open(player)
         }
+
+        /*
+         * Command for casting a weak barrage spell
+         * on nearby players without killing them.
+         */
 
         define(
             name = "barrage",

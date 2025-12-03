@@ -38,6 +38,10 @@ class SpawnCommandSet : CommandSet(Privilege.ADMIN) {
     }
     override fun defineCommands() {
         val npcLocations = mutableMapOf<Int, MutableList<String>>()
+        /*
+         * Command for spawning an NPC at the player's location.
+         * Saves spawn data to JSON file.
+         */
 
         define(name = "npc", privilege = Privilege.ADMIN, usage = "Spawns a npc with the given ID") { player, args ->
             if (args.size < 2) {
@@ -84,6 +88,10 @@ class SpawnCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command for giving the player an item.
+         */
+
         define(name = "item") { player, args ->
             if (args.size < 2) {
                 reject(player, "You must specify an item ID")
@@ -104,6 +112,10 @@ class SpawnCommandSet : CommandSet(Privilege.ADMIN) {
             player.inventory.add(item)
         }
 
+        /*
+         * Command for spawning a scenery object at the player location.
+         */
+
         define(
             name = "object",
             privilege = Privilege.MODERATOR,
@@ -115,26 +127,19 @@ class SpawnCommandSet : CommandSet(Privilege.ADMIN) {
             }
             val scenery =
                 if (args.size > 3) {
-                    Scenery(
-                        CommandPlugin.toInteger(
-                            args[1],
-                        ),
-                        player.location,
-                        CommandPlugin.toInteger(args[2]),
-                        CommandPlugin.toInteger(args[3]),
-                    )
+                    Scenery(CommandPlugin.toInteger(args[1]), player.location, CommandPlugin.toInteger(args[2]), CommandPlugin.toInteger(args[3]),)
                 } else if (args.size == 3) {
-                    Scenery(
-                        CommandPlugin.toInteger(args[1]),
-                        player.location,
-                        CommandPlugin.toInteger(args[2]),
-                    )
+                    Scenery(CommandPlugin.toInteger(args[1]), player.location, CommandPlugin.toInteger(args[2]))
                 } else {
                     Scenery(CommandPlugin.toInteger(args[1]), player.location)
                 }
             SceneryBuilder.add(scenery)
             log(this::class.java, Log.FINE, "object = $scenery")
         }
+
+        /*
+         * Command for spawning a grid of objects.
+         */
 
         define(
             name = "objectgrid",
@@ -151,30 +156,15 @@ class SpawnCommandSet : CommandSet(Privilege.ADMIN) {
             val type = args[3].toIntOrNull() ?: return@define
             val rotation = args[4].toIntOrNull() ?: return@define
             for (i in 0..10) {
-                SceneryBuilder.add(
-                    Scenery(
-                        29447 + i,
-                        player.location.transform(i, -1, 0),
-                    ),
-                )
+                SceneryBuilder.add(Scenery(29447 + i, player.location.transform(i, -1, 0)))
             }
             for (i in beginId..endId) {
                 val j = i - beginId
                 val scenery =
-                    Scenery(
-                        i,
-                        player.location.transform(j % 10, j / 10, 0),
-                        type,
-                        rotation,
-                    )
+                    Scenery(i, player.location.transform(j % 10, j / 10, 0), type, rotation)
                 SceneryBuilder.add(scenery)
                 if (j % 10 == 0) {
-                    SceneryBuilder.add(
-                        Scenery(
-                            29447 + (j / 10) % 10,
-                            player.location.transform(-1, j / 10, 0),
-                        ),
-                    )
+                    SceneryBuilder.add(Scenery(29447 + (j / 10) % 10, player.location.transform(-1, j / 10, 0)))
                 }
             }
         }

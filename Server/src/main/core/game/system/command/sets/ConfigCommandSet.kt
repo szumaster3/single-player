@@ -8,6 +8,12 @@ import core.plugin.Initializable
 class ConfigCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
+
+        /*
+         * Command for setting a range of configuration
+         * ids (varps) to the maximum integer value for the player.
+         */
+
         define(name = "sconfigrange", Privilege.ADMIN) { player, args ->
             if (args.size < 3) {
                 reject(player, "usage: sconfigrange idlo idhi")
@@ -20,6 +26,11 @@ class ConfigCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command for setting a range of configuration
+         * ids (varps) to 0 for the player.
+         */
+
         define(name = "sconfigrange0", Privilege.ADMIN) { player, args ->
             if (args.size < 3) {
                 reject(player, "usage: sconfigrange0 idlo idhi")
@@ -31,6 +42,10 @@ class ConfigCommandSet : CommandSet(Privilege.ADMIN) {
                 notify(player, "Config: $idsend value: 0")
             }
         }
+
+        /*
+         * Command for opening interface.
+         */
 
         define(
             name = "iface",

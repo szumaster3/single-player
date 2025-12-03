@@ -17,24 +17,60 @@ class ItemKitsCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
 
-        define(name = "rope", privilege = Privilege.ADMIN, usage = "", description = "") { p, _ ->
+        /*
+         * Command for giving the player a rope.
+         */
+
+        define(
+            name = "rope",
+            privilege = Privilege.ADMIN,
+            usage = "::rope",
+            description = "Giving the player a rope"
+        ) { p, _ ->
             addItem(p, Items.ROPE_954)
         }
 
-        define(name = "spade", privilege = Privilege.ADMIN, usage = "", description = "") { p, _ ->
+        /*
+         * Command for giving the player a spade.
+         */
+
+        define(
+            name = "spade",
+            privilege = Privilege.ADMIN,
+            usage = "::spade",
+            description = "Giving the player a spade"
+        ) { p, _ ->
             addItem(p, Items.SPADE_952)
         }
 
-        define(name = "knife", privilege = Privilege.ADMIN, usage = "", description = "") { p, _ ->
+        /*
+         * Command for giving the player a knife.
+         */
+
+        define(
+            name = "knife",
+            privilege = Privilege.ADMIN,
+            usage = "::knife",
+            description = "Giving the player a knife"
+        ) { p, _ ->
             addItem(p, Items.KNIFE_946)
         }
 
-        define(name = "chisel", privilege = Privilege.ADMIN, usage = "", description = "") { p, _ ->
+        /*
+         * Command for giving the player a chisel.
+         */
+
+        define(
+            name = "chisel",
+            privilege = Privilege.ADMIN,
+            usage = "::chisel",
+            description = "Giving the player a chisel"
+        ) { p, _ ->
             addItem(p, Items.CHISEL_1755)
         }
 
         /*
-         * Provide a kit of various farming equipment.
+         * Command for providing a kit of various farming tools.
          */
 
         define(
@@ -50,7 +86,7 @@ class ItemKitsCommandSet : CommandSet(Privilege.ADMIN) {
         }
 
         /*
-         * Provides 1000 of each rune type to the player.
+         * Command for giving 1000 of each rune type.
          */
 
         define(

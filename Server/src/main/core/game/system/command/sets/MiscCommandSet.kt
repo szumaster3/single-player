@@ -41,6 +41,11 @@ import java.awt.datatransfer.StringSelection
 class MiscCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
+
+        /*
+         * Command for fully restoring the player's health.
+         */
+
         define(
             name = "heal",
             privilege = Privilege.ADMIN,
@@ -50,14 +55,22 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             player.fullRestore()
         }
 
+        /*
+         * Command for toggling debug mode on or off for the player.
+         */
         define(
             name = "debug",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "::debug",
             description = "Toggles debug mode.",
         ) { player, _ ->
             player.toggleDebug()
         }
+
+        /*
+         * Command for calculating your chance to hit a NPC
+         *  and printing debug info.
+         */
 
         define(
             name = "calc_accuracy",
@@ -78,57 +91,29 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command for printing detailed information about the
+         * player's current location, including coordinates
+         * and objects.
+         */
+
         define(
             name = "loc",
-            privilege = Privilege.ADMIN,
-            usage = "",
-            description = "Prints quite a lot of information about your current location.",
-        ) { player, _ ->
+            privilege = Privilege.STANDARD,
+            usage = "::loc",
+            description = "Prints quite a lot of information about your current location."
+        ){ player, _->
             val l = player.location
             val r = player.viewport.region
             var obj: Scenery? = null
-            notify(
-                player,
-                "Absolute: " + l + ", regional: [" + l.localX + ", " + l.localY + "], chunk: [" + l.chunkOffsetX + ", " +
-                        l.chunkOffsetY +
-                        "], flag: [" +
-                        RegionManager.isTeleportPermitted(l) +
-                        ", " +
-                        RegionManager.getClippingFlag(l) +
-                        ", " +
-                        RegionManager.isLandscape(l) +
-                        "].",
-            )
-            notify(
-                player,
-                "Region: [id=" + l.regionId + ", active=" + r!!.isActive + ", instanced=" + (r is DynamicRegion) +
-                        "], obj=" +
-                        RegionManager.getObject(l) +
-                        ".",
-            )
+            notify(player,"Absolute: " + l + ", regional: [" + l.localX + ", " + l.localY + "], chunk: [" + l.chunkOffsetX + ", " + l.chunkOffsetY + "], flag: [" + RegionManager.isTeleportPermitted(l) + ", " + RegionManager.getClippingFlag(l) + ", " + RegionManager.isLandscape(l) + "].")
+            notify(player,"Region: [id=" + l.regionId + ", active=" + r?.isActive + ", instanced=" + (r is DynamicRegion) + "], obj=" + RegionManager.getObject(l) + ".")
             notify(player, "Jagex: ${l.z}_${l.regionId shr 8}_${l.regionId and 0xFF}_${l.localX}_${l.localY}")
-            notify(player, "Object: " + RegionManager.getObject(l).also { obj = it } + ".")
-            notify(
-                player,
-                "Object Varp: " + obj?.definition?.configFile?.varpId + " offset: " + obj?.definition?.configFile?.startBit + " size: " + (obj
-                    ?.definition
-                    ?.configFile
-                    ?.startBit
-                    ?.minus(
-                        obj?.definition?.configFile?.startBit!!
-                    ))
-            )
-            log(
-                this::class.java,
-                Log.FINE,
-                "Viewport: " + l.getSceneX(player.playerFlags.lastSceneGraph) + "," + l.getSceneY(player.playerFlags.lastSceneGraph)
-            )
+            notify(player,"Object: " + RegionManager.getObject(l).also{obj = it} + ".")
+            notify(player,"Object Varp: " + obj?.definition?.configFile?.varpId + " offset: " + obj?.definition?.configFile?.startBit + " size: " + (obj?.definition?.configFile?.startBit?.minus(obj?.definition?.configFile?.startBit!!)))
+            log(this::class.java, Log.FINE,  "Viewport: " + l.getSceneX(player.playerFlags.lastSceneGraph) + "," + l.getSceneY(player.playerFlags.lastSceneGraph))
             val loc = "Location.create(" + l.x + ", " + l.y + ", " + l.z + ")"
-            log(
-                this::class.java,
-                Log.FINE,
-                loc + "; " + player.playerFlags.lastSceneGraph + ", " + l.localX + ", " + l.localY
-            )
+            log(this::class.java, Log.FINE,  loc + "; " + player.playerFlags.lastSceneGraph + ", " + l.localX + ", " + l.localY)
             try {
                 val stringSelection = StringSelection(loc)
                 val clpbrd = Toolkit.getDefaultToolkit().systemClipboard
@@ -139,10 +124,15 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command for calculating and displaying
+         *  the player's current maximum hit.
+         */
+
         define(
             name = "calcmaxhit",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "::calcmaxhit",
             description = "Calculates and shows you your current max hit.",
         ) { player, _ ->
             val swingHandler = player.getSwingHandler(false)
@@ -150,15 +140,24 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             notify(player, "max hit (${(swingHandler as Scenery).javaClass.getName()}): $hit")
         }
 
+        /*
+         * Command for emptying the player inventory completely.
+         */
+
         define(
             name = "empty",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "empty",
             description = "Empties your inventory.",
         ) { player, _ ->
             player.inventory.clear()
             player.inventory.refresh()
         }
+
+        /*
+         * Command for sending a server-wide news
+         * message with the provided text.
+         */
 
         define(
             name = "news",
@@ -170,10 +169,14 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             sendNews(message)
         }
 
+        /*
+         * Command for displaying a list of online players.
+         */
+
         define(
             name = "players",
             privilege = Privilege.MODERATOR,
-            usage = "",
+            usage = "::players",
             description = "Lists the online players.",
         ) { player, _ ->
             val rights = player.rights.ordinal
@@ -212,6 +215,11 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command for printing debug information
+         * about a specific bot.
+         */
+
         define(
             name = "botinfo",
             privilege = Privilege.ADMIN,
@@ -230,6 +238,12 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             // Print the bot's information, max 80chars per line.
             botInfo.chunked(80).forEach { notify(player, it) }
         }
+
+        /*
+         * Command for accessing the Grand Exchange
+         * book with different modes (buying, selling, search,
+         * bots, botsearch).
+         */
 
         define(
             name = "ge",
@@ -251,6 +265,68 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
                 else -> reject(player, "Invalid mode used. Available modes are: buying, selling, search")
             }
         }
+
+        define(
+            name = "commandbook",
+            privilege = Privilege.ADMIN,
+            usage = "commandbook",
+            description = "Shows commands in a book (only commands)"
+        ) { player, args ->
+
+            val requestedPage = if (args.size > 1) (args[1].toIntOrNull() ?: 1) - 1 else 0
+            val pages = CommandMapping.getPageIndices(player.rights.ordinal)
+            val pageCount = pages.size
+            val page = requestedPage.coerceIn(0, pageCount - 1)
+            val startIndex = pages[page]
+            val endIndex = if (page < pageCount - 1) pages[page + 1] else CommandMapping.getCommands().size
+
+            val rawLines = ArrayList<String>()
+
+            for (i in startIndex until endIndex) {
+                val command = CommandMapping.getCommands()[i]
+                if (command.privilege.ordinal > player.rights.ordinal) continue
+                rawLines.add("::${command.name}")
+            }
+
+            fun splitLine(line: String, maxLen: Int = 25): List<String> {
+                val result = ArrayList<String>()
+                var start = 0
+                while (start < line.length) {
+                    val end = (start + maxLen).coerceAtMost(line.length)
+                    result.add(line.substring(start, end))
+                    start = end
+                }
+                return result
+            }
+
+            val splitLines = rawLines.flatMap { splitLine(it, 25) }
+
+            val linesPerSide = 15
+            val leftLines = ArrayList<String>()
+            val rightLines = ArrayList<String>()
+            val chunks = splitLines.chunked(linesPerSide * 2)
+
+            for (chunk in chunks) {
+                val leftChunk = chunk.take(linesPerSide)
+                val rightChunk = if (chunk.size > linesPerSide) chunk.drop(linesPerSide) else List(linesPerSide) { "" }
+
+                for (i in 0 until linesPerSide) {
+                    leftLines.add(leftChunk.getOrElse(i) { "" })
+                    rightLines.add(rightChunk.getOrElse(i) { "" })
+                }
+            }
+
+            showGeBook(
+                player,
+                "Commands${if (pageCount > 1) " (${page + 1}/$pageCount)" else ""}",
+                leftLines,
+                rightLines
+            )
+        }
+
+        /*
+         * Command for listing all commands.
+         */
 
         define(
             name = "commands",
@@ -277,19 +353,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
                 sendString(player, "", Components.QUESTJOURNAL_SCROLL_275, i)
             }
 
-            sendString(
-                player,
-                "Commands" +
-                        if (pages.size >
-                            1
-                        ) {
-                            " (${page + 1}/${pages.size})"
-                        } else {
-                            ""
-                        },
-                Components.QUESTJOURNAL_SCROLL_275,
-                2,
-            )
+            sendString(player, "Commands" + if (pages.size > 1) { " (${page + 1}/${pages.size})" } else { "" }, Components.QUESTJOURNAL_SCROLL_275, 2,)
 
             for (i in pages[page] until end) {
                 val command = CommandMapping.getCommands()[i]
@@ -306,42 +370,31 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
                 sendString(player, title, Components.QUESTJOURNAL_SCROLL_275, lineid++)
 
                 if (command.usage.isNotEmpty()) {
-                    sendString(
-                        player,
-                        "<col=454545> Usage:</col> <img=3> <col=ffffff>${command.usage}</col>",
-                        Components.QUESTJOURNAL_SCROLL_275,
-                        lineid++
-                    )
+                    sendString(player, "<col=454545> Usage:</col> <img=3> <col=ffffff>${command.usage}</col>", Components.QUESTJOURNAL_SCROLL_275, lineid++)
                 }
 
                 if (command.description.isNotEmpty()) {
-                    sendString(
-                        player,
-                        "<col=454545> Info:</col> <img=2> <col=ffffff>${command.description}</col>",
-                        Components.QUESTJOURNAL_SCROLL_275,
-                        lineid++
-                    )
+                    sendString(player, "<col=454545> Info:</col> <img=2> <col=ffffff>${command.description}</col>", Components.QUESTJOURNAL_SCROLL_275, lineid++)
                 }
 
                 sendString(player, "", Components.QUESTJOURNAL_SCROLL_275, lineid++)
 
                 if (lineid > 306) {
-                    sendString(
-                        player,
-                        "<col=ff0000>To view the next page, use ::commands ${page + 2}</col>",
-                        Components.QUESTJOURNAL_SCROLL_275,
-                        lineid
-                    )
+                    sendString(player, "<col=ff0000>To view the next page, use ::commands ${page + 2}</col>", Components.QUESTJOURNAL_SCROLL_275, lineid)
                     break
                 }
             }
             openInterface(player, Components.QUESTJOURNAL_SCROLL_275)
         }
 
+        /*
+         * Command for replying to your last received DM.
+         */
+
         define(
             name = "reply",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "::reply",
             description = "Opens a reply prompt to your last DM. Same as pressing tab.",
         ) { player, _ ->
             if (player.interfaceManager.isOpened()) {
@@ -359,18 +412,32 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command for closing the currently
+         * opened interface.
+         */
+
         define(
             name = "xface",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "::xface",
             description = "Closes the currently opened interface/dialogue.",
         ) { player, _ ->
             closeAllInterfaces(player)
         }
 
-        define(name = "max", privilege = Privilege.ADMIN, usage = "", description = "Gives you all 99s.") { player, _ ->
+        /*
+         * Command for setting all player skills to level 99.
+         */
+
+        define(
+            name = "max",
+            privilege = Privilege.ADMIN,
+            usage = "::max",
+            description = "Gives you all 99s."
+        ) { player, _ ->
             var index = 0
-            Skills.SKILL_NAME.forEach {
+            Skills.SKILL_NAME.forEach { _ ->
                 player.skills.setStaticLevel(index, 99)
                 player.skills.setLevel(index, 99)
                 index++
@@ -378,14 +445,18 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             player.skills.updateCombatLevel()
         }
 
+        /*
+         * Command for resetting player stats to default levels.
+         */
+
         define(
             name = "noobme",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "::noobme",
             description = "Sets you back to default stats.",
         ) { player, _ ->
             var index = 0
-            Skills.SKILL_NAME.forEach {
+            Skills.SKILL_NAME.forEach { _ ->
                 if (index == Skills.HITPOINTS) {
                     player.skills.setStaticLevel(index, 10)
                     player.skills.setLevel(index, 10)
@@ -399,11 +470,16 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             player.skills.updateCombatLevel()
         }
 
+        /*
+         * Command for setting a skill level
+         * for yourself or another player.
+         */
+
         define(
             name = "setlevel",
             privilege = Privilege.ADMIN,
             usage = "::setlevel <lt>SKILL NAME<gt> <lt>LEVEL<gt> <lt>PLAYER<gt>",
-            description = "Sets SKILL NAME to LEVEL for PLAYER (self if omitted).",
+            description = "Sets skill level to player.",
         ) { player, args ->
             if (args.size < 3) reject(player, "Usage: ::setlevel skillname level")
             val skillname = args[1]
@@ -428,6 +504,10 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             target.skills.updateCombatLevel()
         }
 
+        /*
+         * Command for adding experience points to a skill.
+         */
+
         define(
             name = "addxp",
             privilege = Privilege.ADMIN,
@@ -445,6 +525,10 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             player.skills.addExperience(skill, xp!!)
         }
 
+        /*
+         * Command for completing all achievement diaries.
+         */
+
         define(
             name = "completediaries",
             privilege = Privilege.ADMIN,
@@ -460,6 +544,10 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command for logging the current player location.
+         */
+
         define(name = "log", privilege = Privilege.ADMIN) { player, _ ->
             var log: ArrayList<String>? = player.getAttribute("loc-log")
             log = log ?: ArrayList<String>()
@@ -468,7 +556,14 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             player.setAttribute("loc-log", log)
         }
 
-        define(name = "logdone") { player, _ ->
+        /*
+         * Command for exporting logged locations to the clipboard.
+         */
+
+        define(
+            name = "logdone",
+            privilege = Privilege.ADMIN
+        ) { player, _ ->
             val log: ArrayList<String>? = player.getAttribute("loc-log")
             log ?: return@define
 
@@ -488,6 +583,11 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             player.setAttribute("loc-log", log)
         }
 
+        /*
+         * Command for rolling Trawler
+         * minigame loot and opening the reward interface.
+         */
+
         define(
             name = "rolltrawlerloot",
             privilege = Privilege.ADMIN,
@@ -501,10 +601,14 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             sendMessage(player, "Opened Fishing Trawler reward interface with $rolls rolls.")
         }
 
+        /*
+         * Command for filling the bank with one of each item.
+         */
+
         define(
             name = "fillbank",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "::fillbank",
             description = "Right as it says on the tin.",
         ) { player, _ ->
             for (i in 0 until ServerConstants.BANK_SIZE) {
@@ -512,20 +616,28 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command for clearing all items from the player bank.
+         */
+
         define(
             name = "emptybank",
             privilege = Privilege.ADMIN,
-            usage = "",
-            description = "Right as it says on the tin.",
+            usage = "::emptybank",
+            description = "Clearing all items from the bank",
         ) { player, _ ->
             player.bank.clear()
             player.bank.update()
         }
 
+        /*
+         * Command for setting a Varp config.
+         */
+
         define(
             name = "setconfig",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "setconfig",
             description = "DEPRECATED: Use setvarp or setvarbit.",
         ) { player, args ->
             if (args.size < 3) {
@@ -536,13 +648,27 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             setVarp(player, configID, configValue)
         }
 
-        define(name = "getobjectvarp") { player, args ->
+        /*
+         * Command for retrieving the varp
+         * associated with a scenery object.
+         */
+
+        define(name = "getobjectvarp",
+            privilege = Privilege.ADMIN,
+            usage = "getobjectvarp",
+            description = "Get varp for scenery object."
+        ) { player, args ->
             if (args.size < 2) {
                 reject(player, "Syntax: ::getobjectvarp objectid")
             }
             val objectID = args[1].toInt()
             notify(player, "${VarbitDefinition.forSceneryId(SceneryDefinition.forId(objectID).varbitID).varpId}")
         }
+
+        /*
+         * Command for printing information
+         * about a varbit.
+         */
 
         define(
             name = "define_varbit",
@@ -557,11 +683,16 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             notify(player, "$varbitID: ${VarbitDefinition.forId(varbitID)}")
         }
 
+        /*
+         * Command for setting a single varbit
+         * to a value.
+         */
+
         define(
             name = "setvarbit",
             privilege = Privilege.ADMIN,
             usage = "::setvarbit <lt>VARBIT ID<gt> <lt>VALUE<gt>",
-            description = "",
+            description = "Setting a single varbit.",
         ) { player, args ->
             if (args.size != 3) {
                 reject(player, "Usage: ::setvarbit varbit value")
@@ -576,24 +707,9 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             setVarbit(player, index!!, value!!)
         }
 
-        define(
-            name = "setvarbit",
-            privilege = Privilege.ADMIN,
-            usage = "::setvarbit <lt>VARBIT ID<gt> <lt>VALUE<gt>",
-            description = "Sets a varbit value for the player.",
-        ) { player, args ->
-            if (args.size != 3) {
-                reject(player, "Usage: ::setvarbit varbit value")
-            }
-            val index = args[1].toIntOrNull()
-            val value = args[2].toIntOrNull()
-
-            if (index == null || value == null) {
-                reject(player, "Usage ::setvarbit index offset value")
-            }
-
-            setVarbit(player, index!!, value!!)
-        }
+        /*
+         * Command for setting a range of varbits to the same value.
+         */
 
         define(
             name = "setvarbits",
@@ -613,6 +729,10 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command for getting the current value of a varbit.
+         */
+
         define(
             name = "getvarbit",
             privilege = Privilege.ADMIN,
@@ -626,11 +746,15 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             notify(player, "Varbit $index: Currently ${getVarbit(player, index)}")
         }
 
+        /*
+         * Command for setting the value of a varp starting at a bit offset.
+         */
+
         define(
             name = "setvarp",
             privilege = Privilege.ADMIN,
             usage = "::setvarp <lt>VARP ID<gt> <lt>BIT OFFSET<gt> <lt>VALUE<gt>",
-            description = "Sets the value starting at the BIT OFFSET of the varp.",
+            description = "Sets the value starting at the bit offset of the varp.",
         ) { player, args ->
             if (args.size < 4) {
                 reject(player, "Usage: ::setvarp index offset value")
@@ -645,6 +769,10 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
 
             setVarp(player, index!!, value!! shl offset!!)
         }
+
+        /*
+         * Command for setting a varc value.
+         */
 
         define(
             name = "setvarc",
@@ -665,10 +793,14 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             player.packetDispatch.sendVarcUpdate(index!!, value!!)
         }
 
+        /*
+         * Command for instantly growing all planted crops by one stage.
+         */
+
         define(
             name = "grow",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "::grow",
             description = "Grows all planted crops by 1 stage.",
         ) { player, _ ->
             val state = getOrStartTimer<CropGrowth>(player)
@@ -680,10 +812,13 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             state.run(player)
         }
 
+        /*
+         * Command for finishing any in-progress compost bins.
+         */
         define(
             name = "finishbins",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "::finishbins",
             description = "Finishes any in-progress compost bins.",
         ) { player, _ ->
             val bins = getOrStartTimer<Compost>(player).getBins()
@@ -692,20 +827,28 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command for resetting all compost bins to their initial states.
+         */
+
         define(
             name = "resetbins",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "::resetbins",
             description = "Resets the player's compost bins to their initial states.",
         ) { player, _ ->
             val bins = getOrStartTimer<Compost>(player).getBins()
             for (bin in bins) bin.reset()
         }
 
+        /*
+         * Command for diseasing all crops instantly.
+         */
+
         define(
             name = "diseasecrops",
             privilege = Privilege.ADMIN,
-            usage = "",
+            usage = "::diseasecrops",
             description = "Disease all crops.",
         ) { player, _ ->
             val state = getOrStartTimer<CropGrowth>(player)
@@ -716,9 +859,17 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             state.run(player)
         }
 
+        /*
+         * Command for adding 100 credits to the player.
+         */
+
         define(name = "addcredits", privilege = Privilege.ADMIN) { player, _ ->
             player.details.credits += 100
         }
+
+        /*
+         * Command for finding the parent NPC of a given NPC id.
+         */
 
         define(name = "getnpcparent") { player, args ->
             if (args.size < 2) {
@@ -742,7 +893,16 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
-        define(name = "infinitespecial", privilege = Privilege.ADMIN) { player, args ->
+        /*
+         * Command for toggling infinite special attack for the player.
+         */
+
+        define(
+            name = "infinitespecial",
+            privilege = Privilege.ADMIN,
+            usage = "infinitespecial true | false",
+            description = "Toggling infinite special",
+        ) { player, args ->
             val usageStr = "Usage: ::infinitespecial true|false"
             if (args.size < 2) {
                 reject(player, usageStr)
@@ -754,6 +914,9 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command for toggling NPC aggression (aggro) on the player.
+         */
         define(
             name = "aggro",
             privilege = Privilege.ADMIN,
@@ -777,10 +940,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
         }
     }
 
-    fun showGeBotsearch(
-        player: Player,
-        searchTerm: String,
-    ) {
+    private fun showGeBotsearch(player: Player, searchTerm: String) {
         val offerAmounts = HashMap<Int, Int>()
         val offerPrice = HashMap<Int, Int>()
 
@@ -808,7 +968,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
         showGeBook(player, "Bot Stock - \"$searchTerm\"", leftLines, rightLines)
     }
 
-    fun showGeBots(player: Player) {
+    private fun showGeBots(player: Player) {
         val offerAmounts = HashMap<Int, Int>()
         val offerPrice = HashMap<Int, Int>()
 
@@ -829,7 +989,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
         showGeBook(player, "Bot Stock", leftLines, rightLines)
     }
 
-    fun showGeSell(player: Player) {
+    private fun showGeSell(player: Player) {
         val offerAmounts = HashMap<Int, Int>()
         val lowestPrice = HashMap<Int, Int>()
 
@@ -857,7 +1017,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
         showGeBook(player, "Active Sell Offers", leftLines, rightLines)
     }
 
-    fun showGeBuy(player: Player) {
+    private fun showGeBuy(player: Player) {
         val offerAmounts = HashMap<Int, Int>()
         val highestPrice = HashMap<Int, Int>()
 
@@ -885,10 +1045,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
         showGeBook(player, "Active Buy Offers", leftLines, rightLines)
     }
 
-    fun showOffers(
-        player: Player,
-        searchTerm: String,
-    ) {
+    private fun showOffers(player: Player, searchTerm: String) {
         val offers =
             GrandExchange.getValidOffers().filter {
                 getItemName(it.itemID).contains(searchTerm, true) ||
@@ -948,11 +1105,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
         showGeBook(player, "Results for \"$searchTerm\"", leftLines, rightLines)
     }
 
-    private fun showGeInputDialogue(
-        player: Player,
-        args: Array<String>,
-        op: (Player, String) -> (Unit),
-    ) {
+    private fun showGeInputDialogue(player: Player, args: Array<String>, op: (Player, String) -> (Unit)) {
         if (args.size > 2) {
             val target = args.copyOfRange(2, args.size).joinToString(" ").lowercase()
             op(player, target)
@@ -963,12 +1116,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
         }
     }
 
-    private fun showGeBook(
-        player: Player,
-        title: String,
-        leftLines: ArrayList<String>,
-        rightLines: ArrayList<String>,
-    ) {
+    private fun showGeBook(player: Player, title: String, leftLines: ArrayList<String>, rightLines: ArrayList<String>) {
         if (leftLines.size == 0) {
             sendMessage(player, "No results.")
             return

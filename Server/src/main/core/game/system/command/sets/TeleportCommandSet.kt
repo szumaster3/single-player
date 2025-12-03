@@ -18,6 +18,12 @@ import java.time.format.DateTimeFormatter
 class TeleportCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
+
+        /*
+         * Teleports the player to a named destination as defined
+         * in ServerConstants.TELEPORT_DESTINATIONS.
+         */
+
         define(
             name = "to",
             privilege = Privilege.ADMIN,
@@ -42,6 +48,17 @@ class TeleportCommandSet : CommandSet(Privilege.ADMIN) {
                 reject(player, "Could not locate teleport destination [name=$place]!")
             }
         }
+
+        /*
+         * Teleports the player to coordinates.
+         * Supports multiple formats:
+         * - x y (z optional)
+         * - regionX_regionY
+         * - regionX_regionY_offsetX_offsetY
+         * - plane_regionX_regionY_offsetX_offsetY
+         * - JAGCOORD format: Z_REGIONX_REGIONY_LOCALX_LOCALY
+         * ::tele <coords>
+         */
 
         define(
             name = "tele",
@@ -113,6 +130,11 @@ class TeleportCommandSet : CommandSet(Privilege.ADMIN) {
                 Location.create(args[1].toInt(), args[2].toInt(), if (args.size > 3) args[3].toInt() else 0)
         }
 
+        /*
+         * Teleports the player to the first object with the
+         * given name within a specific region.
+         */
+
         define(
             name = "teleobj",
             privilege = Privilege.ADMIN,
@@ -154,6 +176,10 @@ class TeleportCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Teleports the player to another player.
+         */
+
         define(
             name = "teleto",
             privilege = Privilege.ADMIN,
@@ -173,6 +199,10 @@ class TeleportCommandSet : CommandSet(Privilege.ADMIN) {
             }
             player.properties.teleportLocation = target.location
         }
+
+        /*
+         * Teleports another player to the command user.
+         */
 
         define(
             name = "teletome",
@@ -194,6 +224,10 @@ class TeleportCommandSet : CommandSet(Privilege.ADMIN) {
             target.properties.teleportLocation = player.location
         }
 
+        /*
+         * Teleports the player to their home location.
+         */
+
         define(
             name = "home",
             privilege = Privilege.ADMIN,
@@ -202,6 +236,11 @@ class TeleportCommandSet : CommandSet(Privilege.ADMIN) {
         ) { player, _ ->
             player.properties.teleportLocation = player.getRespawnLocation()
         }
+
+        /*
+         * Finds all scenery objects in a region with ids
+         * in a given range and dumps their locations to a file.
+         */
 
         define(
             name = "findobjs",

@@ -12,6 +12,10 @@ import core.plugin.Initializable
 class AnimationCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
+        /*
+         * Command for playing animation on the player.nie
+         */
+
         define(
             name = "anim",
             privilege = Privilege.ADMIN,
@@ -24,6 +28,11 @@ class AnimationCommandSet : CommandSet(Privilege.ADMIN) {
             val animation = Animation(args[1].toInt())
             player.animate(animation)
         }
+
+        /*
+         * Command for loopanim: plays a range of animations
+         * sequentially on the player with a configurable delay.
+         */
 
         define(
             name = "loopanim",
@@ -58,6 +67,10 @@ class AnimationCommandSet : CommandSet(Privilege.ADMIN) {
             })
         }
 
+        /*
+         * Command for setting the player render (walk/idle) animation.
+         */
+
         define(
             name = "ranim",
             privilege = Privilege.ADMIN,
@@ -89,6 +102,11 @@ class AnimationCommandSet : CommandSet(Privilege.ADMIN) {
                 }
             }
         }
+
+        /*
+         * Command for reset the player render
+         * (walk/idle) animation to default.
+         */
 
         define(
             name = "resetanim",

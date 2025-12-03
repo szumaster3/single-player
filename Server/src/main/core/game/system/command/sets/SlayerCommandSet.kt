@@ -13,21 +13,23 @@ import core.plugin.Initializable
 class SlayerCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
+
+        /*
+         * Command for finishing your current slayer
+         * task immediately by spawning the required NPC.
+         */
+
         define(name = "finishtask", Privilege.ADMIN) { player, _ ->
             notify(player, "Kill the npc that spawned to finish your task.")
             SlayerManager.getInstance(player).amount = 1
-            val finisher =
-                NPC(
-                    SlayerManager
-                        .getInstance(player)
-                        .task
-                        ?.npcs
-                        ?.get(0) ?: 0,
-                    player.location,
-                )
+            val finisher = NPC(SlayerManager.getInstance(player).task?.npcs?.get(0) ?: 0, player.location,)
             finisher.isRespawn = false
             finisher.init()
         }
+
+        /*
+         * Command for setting a slayer points to a specific amount.
+         */
 
         define(name = "setslayerpoints", Privilege.ADMIN) { player, args ->
             if (args.size < 2) {
@@ -43,6 +45,10 @@ class SlayerCommandSet : CommandSet(Privilege.ADMIN) {
             notify(player, "Set slayer points to $amount.")
         }
 
+        /*
+         * Command for assigning a slayer task to a player.
+         */
+
         define(
             name = "setslayertask",
             privilege = Privilege.ADMIN,
@@ -55,9 +61,7 @@ class SlayerCommandSet : CommandSet(Privilege.ADMIN) {
             val task = (Tasks.forId(npc) ?: reject(player, "Must enter valid npc id")) as Tasks
             val amount =
                 args.getOrNull(2)?.toIntOrNull()?.let {
-                    if (it !in
-                        1..255
-                    ) {
+                    if (it !in 1..255) {
                         reject(player, "Amount must be an integer: 1-255.")
                     } else {
                         it
@@ -67,11 +71,7 @@ class SlayerCommandSet : CommandSet(Privilege.ADMIN) {
             if (slayer.hasTask()) {
                 slayer.task = task
             } else {
-                SlayerUtils.assign(
-                    player,
-                    task,
-                    SlayerMaster.values().random(),
-                )
+                SlayerUtils.assign(player, task, SlayerMaster.values().random())
             }
             if (amount != null) slayer.amount = amount
             setVarp(player, 2502, slayer.flags.taskFlags shr 4)

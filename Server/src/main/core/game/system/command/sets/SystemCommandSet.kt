@@ -22,22 +22,42 @@ import kotlin.system.exitProcess
 class SystemCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
-        define(name = "update", Privilege.ADMIN) { _, args ->
+        /*
+         * Command to start a server update with an optional countdown.
+         */
+
+        define(name = "update",
+            privilege = Privilege.MODERATOR,
+            usage = "::update",
+            description = "Launch an update",
+        ) { _, args ->
             if (args.size > 1) {
                 SystemManager.updater.setCountdown(args[1].toInt())
             }
             SystemManager.flag(SystemState.UPDATING)
         }
 
-        define(name = "cancelupdate", Privilege.MODERATOR) { _, _ ->
+        /*
+         * Command to cancel a pending server update.
+         */
+
+        define(
+            name = "cancelupdate",
+            privilege = Privilege.MODERATOR,
+            usage = "::cancelupdate",
+            description = "WARNING: Case insensitive due to dialogue limitations."
+        ) { _, _ ->
             SystemManager.updater.cancel()
         }
 
+        /*
+         * Command for a player to reset their own password.
+         */
         define(
             name = "resetpassword",
             privilege = Privilege.MODERATOR,
-            usage = "",
-            description = "WARNING: Case insensitive due to dialogue limitations.",
+            usage = "::resetpassword",
+            description = "Case insensitive due to dialogue limitations.",
         ) { player, _ ->
             sendInputDialogue(player, InputType.STRING_SHORT, "Enter Current Password:") { value ->
                 val pass = value.toString()
@@ -62,6 +82,10 @@ class SystemCommandSet : CommandSet(Privilege.ADMIN) {
                 }
             }
         }
+
+        /*
+         * Command for admin to set a password for another user.
+         */
 
         define(
             name = "setpasswordother",
@@ -95,6 +119,10 @@ class SystemCommandSet : CommandSet(Privilege.ADMIN) {
                 reject(player, "USER DOES NOT EXIST!")
             }
         }
+
+        /*
+         * Command to give an item to a player.
+         */
 
         define(
             name = "giveitem",
@@ -141,6 +169,11 @@ class SystemCommandSet : CommandSet(Privilege.ADMIN) {
                 reject(player, "WRONG USAGE. USE giveitem target itemID || giveitem target itemID amt")
             }
         }
+
+        /*
+         * Command to remove an item from a
+         * specific location (inventory, bank, equipment) of a player.
+         */
 
         define(
             name = "removeitem",
@@ -208,11 +241,16 @@ class SystemCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command to remove all instances of a given
+         * item from a player's account (inventory, bank, equipment).
+         */
+
         define(
             name = "removeitemall",
             privilege = Privilege.ADMIN,
             usage = "::removeitemall <lt>USERNAME<gt> <lt>ITEM ID<gt>",
-            description = "Removes ALL of a given item from the player.",
+            description = "Removes ALL of a given item from the player",
         ) { player, args ->
             if (args.size == 3) {
                 val victim = Repository.getPlayerByName(args[1])
@@ -264,18 +302,36 @@ class SystemCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command to give the player a rotten potato (admin item).
+         */
+
         define(
             name = "potato",
             privilege = Privilege.ADMIN,
-            usage = "",
-            description = "Gives you a rotten potato.",
+            usage = "::potato",
+            description = "Gives you a rotten potato",
         ) { player, _ ->
             player.inventory.add(Item(Items.ROTTEN_POTATO_5733))
         }
 
-        define(name = "shutdown", privilege = Privilege.ADMIN) { _, _ ->
+        /*
+         * Command to shut down the server immediately.
+         */
+
+        define(
+            name = "shutdown",
+            privilege = Privilege.ADMIN,
+            usage = "::shutdown",
+            description = "Shut down the server immediately",
+        ) { _, _ ->
             exitProcess(0)
         }
+
+        /*
+         * Command to get or set the charge of an item,
+         * either internal or distinct.
+         */
 
         define(
             name = "charge",

@@ -30,15 +30,14 @@ abstract class CommandSet(val defaultPrivilege: Privilege) : Plugin<Any?> {
         sendMessage(player, colorize("-->$message"))
     }
 
-    fun define(
-        name: String,
-        privilege: Privilege = defaultPrivilege,
-        usage: String = "",
-        description: String = "",
-        handle: (Player, Array<String>) -> Unit,
-    ) {
+    fun define(name: String, privilege: Privilege = defaultPrivilege, usage: String = "", description: String = "", handle: (Player, Array<String>) -> Unit) {
         CommandMapping.register(
-            Command(name = name, privilege = privilege, usage = usage, description = description, handle = handle),
-        )
+            Command(
+                name = name,
+                privilege = privilege,
+                usage = usage,
+                description = description,
+                handle = handle
+            ))
     }
 }

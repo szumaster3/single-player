@@ -15,6 +15,10 @@ import core.plugin.Initializable
 class AudioCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
+        /*
+         * Command for playing a song for the player.
+         */
+
         define(
             name = "playsong",
             privilege = Privilege.ADMIN,
@@ -31,6 +35,10 @@ class AudioCommandSet : CommandSet(Privilege.ADMIN) {
             player.musicPlayer.play(MusicEntry.forId(id!!))
             notify(player, "Now playing song $id")
         }
+
+        /*
+         * Command for playing a jingle for the player.
+         */
 
         define(
             name = "playjingle",
@@ -49,6 +57,10 @@ class AudioCommandSet : CommandSet(Privilege.ADMIN) {
             notify(player, "Now playing jingle $id")
         }
 
+        /*
+         * Command for playing a song for the player.
+         */
+
         define(name = "playid", Privilege.ADMIN) { player, arg ->
             if (arg.size < 2) reject(player, "Needs more args.")
             val id = arg[1].toIntOrNull()
@@ -57,6 +69,10 @@ class AudioCommandSet : CommandSet(Privilege.ADMIN) {
                 notify(player, "Now playing song $id")
             }
         }
+
+        /*
+         * Command for unlocking all music ids.
+         */
 
         define(
             name = "allmusic",
@@ -69,6 +85,10 @@ class AudioCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Plays a specific audio effect for the player.
+         */
+
         define(
             name = "audio",
             privilege = Privilege.ADMIN,
@@ -80,6 +100,11 @@ class AudioCommandSet : CommandSet(Privilege.ADMIN) {
             val loops = if (args.size > 2) args[2].toInt() else 1
             playAudio(player, id, 0, loops)
         }
+
+        /*
+         * Command for playing a global audio effect at
+         * a location or around a player.
+         */
 
         define(
             name = "globalaudio",
