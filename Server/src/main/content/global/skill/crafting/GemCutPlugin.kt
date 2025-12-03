@@ -39,7 +39,7 @@ class GemCutPlugin : InteractionListener {
 
                 animate(player, gem.animation)
                 playAudio(player, Sounds.CHISEL_2586)
-                delayClock(player, Clocks.SKILLING, 2)
+                delayClock(player, Clocks.SKILLING, 1)
 
                 removeItem(player, gem.uncut)
 
@@ -68,7 +68,7 @@ class GemCutPlugin : InteractionListener {
                 remaining--
                 if (remaining > 0 && inInventory(player, gem.uncut)) {
                     setCurrentScriptState(player, 0)
-                    delayScript(player, 2)
+                    delayScript(player, 1)
                 } else stopExecuting(player)
             }
 
