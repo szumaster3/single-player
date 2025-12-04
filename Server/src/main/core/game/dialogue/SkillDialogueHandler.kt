@@ -98,7 +98,6 @@ open class SkillDialogueHandler(val player: Player, val type: SkillDialogue?, va
                 repositionChild(player, Components.SKILL_MULTI1_309, 5, 60, 35)
                 repositionChild(player, Components.SKILL_MULTI1_309, 6, 60, 35)
                 repositionChild(player, Components.SKILL_MULTI1_309, 7, 8, 12)
-                sendString(player, "${DARK_RED}How many would you like to make?", Components.SKILL_MULTI1_309, 7)
             }
 
             /**
@@ -137,7 +136,6 @@ open class SkillDialogueHandler(val player: Player, val type: SkillDialogue?, va
                 repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 4, 60, 35)
                 repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 5, 60, 35)
                 repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 6, 8, 12)
-                sendString(player, "${DARK_RED}How many would you like to make?", Components.SKILL_MULTI1_SMALL_582, 6)
             }
 
             override fun getAmount(handler: SkillDialogueHandler, buttonId: Int): Int = when (buttonId) {
