@@ -418,7 +418,7 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             8 -> when (stage) {
-                0 -> npcl(FaceAnim.FRIENDLY, "Well, let's get going!").also { stage++ }
+                0 -> npcl(FaceAnim.HAPPY, "Well, let's get going!").also { stage++ }
                 1 -> options("Wait; tell me what we're doing.", "Okay.", "No, I'm not ready.").also { stage++ }
                 2 -> when (buttonID) {
                     1 -> playerl(FaceAnim.FRIENDLY, "Wait; tell me what we're doing.").also { stage = 3 }
@@ -448,8 +448,11 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
                 22 -> npcl(FaceAnim.FRIENDLY, "Are you ready to go?").also { stage++ }
                 23 -> {
                     end()
-                    openInterface(player, Components.ZEP_INTERFACE_SIDE_471)
-                    openDialogue(player, AugusteDialogueFile())
+                    lock(player, 1000)
+                    setMinimapState(player, 2)
+                    openOverlay(player, Components.ZEP_INTERFACE_470)
+                    openSingleTab(player, Components.ZEP_INTERFACE_SIDE_471)
+                    //openDialogue(player, AugusteDialogueFile())
                 }
             }
 
@@ -520,21 +523,4 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
     private fun setGiven(player: Player, key: String) = setAttribute(player, "/save:$key", true)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.AUGUSTE_5049)
-}
-
-private class AugusteDialogueFile : DialogueFile() {
-    override fun handle(componentID: Int, buttonID: Int) {
-        npc = NPC(NPCs.AUGUSTE_5049)
-        when (stage) {
-            0 -> playerl(FaceAnim.FRIENDLY, "So what are you going to do now?").also { stage++ }
-            1 -> npcl(FaceAnim.FRIENDLY, "I am considering starting a balloon enterprise. People all over ${GameWorld.settings?.name} will be able to travel in a new, exciting way.").also { stage++ }
-            2 -> npcl(FaceAnim.FRIENDLY, "As my first assistant, you will always be welcome to use a balloon. You'll have to bring your own fuel, though.").also { stage++ }
-            3 -> playerl(FaceAnim.FRIENDLY, "Thanks!").also { stage++ }
-            4 -> npcl(FaceAnim.FRIENDLY, "I will base my operations in Entrana. If you'd like to travel to new places, come see me there.").also { stage++ }
-            5 -> {
-                end()
-                finishQuest(player!!, Quests.ENLIGHTENED_JOURNEY)
-            }
-        }
-    }
 }

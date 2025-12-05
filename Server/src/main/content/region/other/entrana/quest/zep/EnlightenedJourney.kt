@@ -102,7 +102,7 @@ class EnlightenedJourney : Quest(Quests.ENLIGHTENED_JOURNEY, 55, 54, 1, Vars.VAR
             line(player, "There was an awful lot of fire.", line++)
             line++
         }
-        if (stage >= 5) {
+        if (stage == 5) {
             line(player, "I need to gather the materials Auguste required:", line++, true)
             line(player, "three sheets of papyrus", line++, true)
             line(player, "a ball of wool", line++, true)
@@ -117,13 +117,16 @@ class EnlightenedJourney : Quest(Quests.ENLIGHTENED_JOURNEY, 55, 54, 1, Vars.VAR
             line(player, "Auguste conducted the first experiment.", line++, true)
             line(player, "There was an awful lot of fire.", line++, true)
             line++
-            line(player, "Auguste conducted the second experiment.", line++, stage >= 6)
-            line(player, "A flash mob appeared. They seem to have a grudge against science.", line++, stage >= 6)
+            line(player, "Auguste conducted the second experiment.", line++)
+            line(player, "A flash mob appeared. They seem to have a grudge against science.", line++)
             line++
         }
-        if (stage >= 6) {
-            line(player, "I gave Auguste all the supplies and made the basket for the balloon.", line++, stage >= 7)
+        if (stage == 8) {
+            line(player, "I gave Auguste all the supplies and made the basket for the balloon.", line++)
             line++
+            line(player, "The balloon is all made and looks impressive!", line++, )
+            line(player, "Let's hope it doesn't end the way the experiments did.", line++, )
+
         }
         if (stage >= 7) {
             line(player, "The balloon is all made and looks impressive!", line++, stage >= 8)

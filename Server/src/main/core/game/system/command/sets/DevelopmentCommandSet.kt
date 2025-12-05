@@ -60,6 +60,9 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
 
             val dyn = DynamicRegion.create(regionId)
             dyn.add(player)
+            registerLogoutListener(player, "before-teleport") {
+                player.location = Location.create(2500,2500,0)
+            }
             teleport(player, dyn.baseLocation)
 
             sendMessage(player, "Dynamic region $regionId loaded.")
