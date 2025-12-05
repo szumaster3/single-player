@@ -87,6 +87,14 @@ class PhoenixLair : MapArea {
             }
         }
 
+        if(getAttribute(player, GameAttributes.PHOENIX_LAIR_ACTIVITY_REWARD, false)) {
+            val npc = NPC.create(NPCs.PHOENIX_8548,Location.create(3536, 5197, 0))
+            registerLogoutListener(player, InPyreNeed.LOGOUT_LISTENER) {
+                npc.clear()
+            }
+            npc.init()
+        }
+
         val npcIdsToSpawn = if (!isQuestComplete(player, Quests.IN_PYRE_NEED)) {
             listOf(
                 NPCs.LESSER_REBORN_MAGE_8573,
