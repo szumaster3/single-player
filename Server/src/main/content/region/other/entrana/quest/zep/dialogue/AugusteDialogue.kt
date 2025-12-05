@@ -263,7 +263,7 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
                     val hasYellow = inInventory(player, Items.YELLOW_DYE_1765, 1)
                     val hasRed = inInventory(player, Items.RED_DYE_1763, 1)
                     if (inInventory(player, Items.YELLOW_DYE_1766, 1) || inInventory(player, Items.RED_DYE_1764, 1)) {
-                        npc(FaceAnim.SAD, "What am I supposed to do with a note?? I can't make ", "a balloon from notes!")
+                        npc(FaceAnim.SAD, "What am I supposed to do with a note?? I can't make", "a balloon from notes!")
                         stage = END_DIALOGUE
                     } else if (hasYellow && hasRed && !gaveYellow && !gaveRed) {
                         removeItem(player, Item(Items.YELLOW_DYE_1765, 1))
@@ -320,7 +320,7 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
                     if (hasGiven(player, "ej-silk")) {
                         npcl(FaceAnim.FRIENDLY, "You have already given the silk.").also { stage = 3 }
                     } else if (inInventory(player, Items.SILK_951, neededSilk)) {
-                        npc(FaceAnim.SAD, "What am I supposed to do with a note?? I can't make ", "a balloon from notes!")
+                        npc(FaceAnim.SAD, "What am I supposed to do with a note?? I can't make", "a balloon from notes!")
                         stage = END_DIALOGUE
                     } else if (hasSilk) {
                         removeItem(player, Item(Items.SILK_950, neededSilk))
@@ -334,7 +334,7 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
                     if (hasGiven(player, "ej-bowl")) {
                         npcl(FaceAnim.FRIENDLY, "You have already given the bowl.").also { stage = 3 }
                     } else if (inInventory(player, Items.UNFIRED_BOWL_1792, 1)) {
-                        npc(FaceAnim.SAD, "What am I supposed to do with a note?? I can't make ", "a baloon from notes!")
+                        npc(FaceAnim.SAD, "What am I supposed to do with a note?? I can't make", "a baloon from notes!")
                         stage = END_DIALOGUE
                     } else if (!hasBowl) {
                         npcl(FaceAnim.FRIENDLY, "I need a plain clay-fired bowl; they're quite easy to come by.").also { stage = END_DIALOGUE }
