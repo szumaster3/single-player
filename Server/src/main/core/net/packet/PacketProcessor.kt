@@ -1,5 +1,6 @@
 package core.net.packet
 
+import content.data.GameAttributes
 import content.global.plugins.interfaces.ge.StockMarket
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.SpellListeners
@@ -295,10 +296,16 @@ object PacketProcessor {
                 player.dialogueInterpreter.handle(pkt.iface, pkt.child)
             }
 
+            //if (!getAttribute(GameAttributes.TUTORIAL_COMPLETE, false)) {
+            //    packetDispatch.sendRunScript(102, "s", messages[0]);
             is Packet.ItemExamine -> {
                 val def = ItemDefinition.forId(pkt.id) ?: return
                 pkt.player.debug("[ITEM] ID: ${pkt.id} Value: ${def.value} Model: ${def.interfaceModelId}")
-                pkt.player.sendMessage(def.examine)
+                if (!pkt.player.getAttribute(GameAttributes.TUTORIAL_COMPLETE, false))
+                    pkt.player.packetDispatch.sendRunScript(102, "s", def.examine)
+                  else
+                    pkt.player.sendMessage(def.examine)
+
             }
 
             is Packet.SceneryExamine -> {
@@ -308,7 +315,10 @@ object PacketProcessor {
                 if (def.configFile != null)
                     pkt.player.debug("Varbit: ${def.configFile.id}")
                 pkt.player.debug("------------------------------")
-                pkt.player.sendMessage(def.examine)
+                if (!pkt.player.getAttribute(GameAttributes.TUTORIAL_COMPLETE, false))
+                    pkt.player.packetDispatch.sendRunScript(102, "s", def.examine)
+                else
+                    pkt.player.sendMessage(def.examine)
             }
 
             is Packet.NpcExamine -> {
@@ -318,7 +328,10 @@ object PacketProcessor {
                 if (def.configFileId != -1)
                     pkt.player.debug("Varbit: ${def.configFileId}")
                 pkt.player.debug("------------------------------")
-                pkt.player.sendMessage(def.examine)
+                if (!pkt.player.getAttribute(GameAttributes.TUTORIAL_COMPLETE, false))
+                    pkt.player.packetDispatch.sendRunScript(102, "s", def.examine)
+                else
+                    pkt.player.sendMessage(def.examine)
             }
 
 

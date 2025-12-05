@@ -939,11 +939,11 @@ public class Player extends Entity {
      * @param messages the messages
      */
     public void sendMessages(String... messages) {
-        if (!getAttribute(GameAttributes.TUTORIAL_COMPLETE, false)) {
-            packetDispatch.sendRunScript(102, "s", messages[0]);
-        } else {
+        //if (!getAttribute(GameAttributes.TUTORIAL_COMPLETE, false)) {
+        //    packetDispatch.sendRunScript(102, "s", messages[0]);
+        //} else {
             packetDispatch.sendMessages(messages);
-        }
+        //}
     }
 
     /**
