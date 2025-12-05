@@ -47,6 +47,8 @@ class EnlightenedJourneyPlugin : InteractionListener, InterfaceListener {
         on(Components.ZEP_INTERFACE_SIDE_471) { player: Player, component: Component, opcode: Int, buttonID: Int, slot: Int, itemID: Int ->
             val progress = "zep_sequence_progress"
             val index = getAttribute(player, progress, 0)
+            setVarbit(player, 2880, 8) // s
+            setVarbit(player, 2881, 10) // l
             if (buttonID == requiredSequence[index]) {
                 setAttribute(player, progress, index + 1)
                 // player.debug("[$buttonID]")

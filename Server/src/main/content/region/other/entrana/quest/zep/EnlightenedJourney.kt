@@ -64,11 +64,11 @@ class EnlightenedJourney : Quest(Quests.ENLIGHTENED_JOURNEY, 55, 54, 1, Vars.VAR
         }
         else
         {
-            line(player, "I need to gather the materials Auguste required:", line++)
-            line(player, "three sheets of papyrus", line++, amountInInventory(player, Items.PAPYRUS_970) >= 3)
-            line(player, "a ball of wool", line++, inInventory(player, Items.BALL_OF_WOOL_1759))
-            line(player, "a full sack of potatoes", line++, inInventory(player, Items.POTATOES10_5438))
-            line(player, "one unlit candle.", line++, inInventory(player, Items.CANDLE_36))
+            line(player, "I need to gather the materials Auguste required:", line++, stage == 100)
+            line(player, "three sheets of papyrus", line++, amountInInventory(player, Items.PAPYRUS_970) >= 3 || stage == 100)
+            line(player, "a ball of wool", line++, inInventory(player, Items.BALL_OF_WOOL_1759)|| stage == 100)
+            line(player, "a full sack of potatoes", line++, inInventory(player, Items.POTATOES10_5438)|| stage == 100)
+            line(player, "one unlit candle.", line++, inInventory(player, Items.CANDLE_36)|| stage == 100)
             line++
         }
 
@@ -81,8 +81,8 @@ class EnlightenedJourney : Quest(Quests.ENLIGHTENED_JOURNEY, 55, 54, 1, Vars.VAR
             line++
 
             line(player, if(!inInventory(player, Items.ORIGAMI_BALLOON_9934)) "I need to make an !!origami balloon??." else "I made an !!origami balloon??.", line++)
-            line(player, "Auguste said I could make these any time I want if", line++)
-            line(player, "I have the materials.", line++)
+            line(player, "Auguste said I could make these any time I want if", line++, true)
+            line(player, "I have the materials.", line++, true)
             line++
         }
 
@@ -117,31 +117,20 @@ class EnlightenedJourney : Quest(Quests.ENLIGHTENED_JOURNEY, 55, 54, 1, Vars.VAR
             line(player, "Auguste conducted the first experiment.", line++, true)
             line(player, "There was an awful lot of fire.", line++, true)
             line++
-            line(player, "Auguste conducted the second experiment.", line++)
-            line(player, "A flash mob appeared. They seem to have a grudge against science.", line++)
+            line(player, "Auguste conducted the second experiment.", line++, true)
+            line(player, "A flash mob appeared. They seem to have a grudge against science.", line++, true)
             line++
         }
         if (stage == 8) {
-            line(player, "I gave Auguste all the supplies and made the basket for the balloon.", line++)
+            line(player, "I gave Auguste all the supplies and made the basket for the balloon.", line++, true)
             line++
-            line(player, "The balloon is all made and looks impressive!", line++, )
-            line(player, "Let's hope it doesn't end the way the experiments did.", line++, )
-
-        }
-        if (stage >= 7) {
-            line(player, "The balloon is all made and looks impressive!", line++, stage >= 8)
-            line(player, "Let's hope it doesn't end the way the experiments did.", line++, stage >= 8)
+            line(player, "The balloon is all made and looks impressive!", line++, true)
+            line(player, "Let's hope it doesn't end the way the experiments did.", line++, true)
             line++
-        }
-        if (stage >= 8) {
-            line(player, "Whew! We survived our first balloon flight.", line++, stage >= 9)
-            line++
-        }
-        if (stage >= 9) {
-            line(player, "We successfully flew the first balloon to Taverley!", line++, stage >= 10)
-            line++
+            line(player, "Whew! We survived our first balloon flight.", line++, true)
         }
         if (stage == 100) {
+            line(player, "We successfully flew the first balloon to Taverley!", line++, true)
             line++
             line(player, "<col=FF0000>QUEST COMPLETE!</col>", line++, false)
             line++

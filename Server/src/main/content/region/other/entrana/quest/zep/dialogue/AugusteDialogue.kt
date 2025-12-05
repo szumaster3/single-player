@@ -9,6 +9,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.GameWorld
+import core.game.world.map.Location
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import shared.consts.*
@@ -448,11 +449,28 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
                 22 -> npcl(FaceAnim.FRIENDLY, "Are you ready to go?").also { stage++ }
                 23 -> {
                     end()
-                    lock(player, 1000)
-                    setMinimapState(player, 2)
-                    openOverlay(player, Components.ZEP_INTERFACE_470)
-                    openSingleTab(player, Components.ZEP_INTERFACE_SIDE_471)
-                    //openDialogue(player, AugusteDialogueFile())
+                    teleport(player, Location(2940, 3420, 0))
+                    openDialogue(player, object : DialogueFile() {
+                        override fun handle(componentID: Int, buttonID: Int) {
+                            npc = core.game.node.entity.npc.NPC(NPCs.AUGUSTE_5049)
+                            when (stage) {
+                                0 -> playerl(FaceAnim.FRIENDLY, "So what are you going to do now?").also { stage++ }
+                                1 -> npcl(FaceAnim.FRIENDLY, "I am considering starting a balloon enterprise. People all over ${GameWorld.settings?.name} will be able to travel in a new, exciting way.").also { stage++ }
+                                2 -> npcl(FaceAnim.FRIENDLY, "As my first assistant, you will always be welcome to use a balloon. You'll have to bring your own fuel, though.").also { stage++ }
+                                3 -> playerl(FaceAnim.FRIENDLY, "Thanks!").also { stage++ }
+                                4 -> npcl(FaceAnim.FRIENDLY, "I will base my operations in Entrana. If you'd like to travel to new places, come see me there.").also { stage++ }
+                                5 -> {
+                                    end()
+                                    finishQuest(player!!, Quests.ENLIGHTENED_JOURNEY)
+                                }
+                            }
+                        }
+                    })
+                    // lock(player, 1000)
+                    // setMinimapState(player, 2)
+                    // openOverlay(player, Components.ZEP_INTERFACE_470)
+                    // openSingleTab(player, Components.ZEP_INTERFACE_SIDE_471)
+                    // openDialogue(player, AugusteDialogueFile())
                 }
             }
 
