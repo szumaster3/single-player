@@ -40,19 +40,19 @@ class WoundedPhoenixCutscene(
             }
 
             3 -> {
-                move(getNPC(PHOENIX)!!, 14, 15)
+                move(getNPC(PHOENIX)!!, 14, 19)
                 rotateCamera(20, 20, 300, 2)
                 timedUpdate(5)
             }
 
             4 -> {
-                teleport(getNPC(PHOENIX)!!, 14, 19) // Inside
+                move(getNPC(PHOENIX)!!, 14, 19) // Inside
                 InPyreNeed.WOUNDED_PHOENIX_ID.teleporter.send(
                     Location.create(3534, 5203, 0),       // Outside
                     TeleportManager.TeleportType.INSTANT,
                 )
                 rotateCamera(20, 25, 300, 2)
-                timedUpdate(3)
+                timedUpdate(8)
             }
 
             5 -> {

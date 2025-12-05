@@ -208,10 +208,11 @@ class InPyreNeedPlugin : InteractionListener {
                 sendMessage(
                     player, "You weave a large basket from the five wooden ribbons and add it to the pyre base."
                 )
-                WoundedPhoenixCutscene(player).start(true)
                 InPyreNeed.RIBBON_ID.forEach {
                     removeItem(player, Item(it, 1), Container.INVENTORY)
                 }
+
+                WoundedPhoenixCutscene(player).start(true)
             }
             return@onUseWith true
         }
