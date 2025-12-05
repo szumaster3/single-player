@@ -159,6 +159,7 @@ internal object GameAttributes {
     const val PHOENIX_LAIR_VISITED = "/save:location:phoenix-lair:visit"
     const val TALK_WITH_PRIEST = "/save:quest:phoenix:talk-with-priest"
     const val PHOENIX_LAIR_ACTIVITY_REWARD = "/save:phoenix-activity:quills"
+    const val PHOENIX_LAIR_FIRST_KILL = "/save:phoenix-activity:first-kill"
 
     // Tears of Guthix quest.
     const val QUEST_TOG_LAST_DATE = "/save:quest:tog:last_date"

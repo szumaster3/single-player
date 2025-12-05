@@ -3,6 +3,8 @@ package content.global.activity.phoenix
 import com.google.gson.JsonObject
 import content.data.GameAttributes
 import core.ServerStore
+import core.api.getStatLevel
+import core.api.rewardXP
 import core.api.sendMessage
 import core.api.setAttribute
 import core.game.node.entity.Entity
@@ -13,6 +15,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.agg.AggressiveBehavior
 import core.game.node.entity.npc.agg.AggressiveHandler
 import core.game.node.entity.player.Player
+import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.plugin.Initializable
@@ -90,9 +93,16 @@ class PhoenixNPC (id: Int = 0, location: Location? = null) : AbstractNPC(id, loc
                 sendMessage(entity, "The Phoenix is flying too high for Melee attacks.")
             return false
         }
+
+        if (entity is Player && getStatLevel(entity, Skills.SLAYER) < 51)
+        {
+            if (message)
+                sendMessage(entity, "Phoenix is a Slayer monster that requires a Slayer level of 51 to kill.")
+            return false
+        }
+
         return super.isAttackable(entity, style, message)
     }
-
 
     override fun finalizeDeath(killer: Entity?)
     {
@@ -104,6 +114,16 @@ class PhoenixNPC (id: Int = 0, location: Location? = null) : AbstractNPC(id, loc
             store.addProperty(username, true)
             val npc = NPC.create(NPCs.PHOENIX_8548,Location.create(3536, 5197, 0))
             setAttribute(player, GameAttributes.PHOENIX_LAIR_ACTIVITY_REWARD, true)
+
+            val firstKill = player.getAttribute(GameAttributes.PHOENIX_LAIR_FIRST_KILL, false)
+
+            if (!firstKill) {
+                rewardXP(player, Skills.SLAYER, 5000.0)
+                setAttribute(player, GameAttributes.PHOENIX_LAIR_FIRST_KILL, true)
+            } else {
+                rewardXP(player, Skills.SLAYER, 500.0)
+            }
+
             npc.init()
         }
         clear()
