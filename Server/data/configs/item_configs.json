@@ -30884,6 +30884,7 @@
     "id": "3056"
   },
   {
+    "remove_beard": "true",
     "examine": "A mime would wear this.",
     "durability": null,
     "name": "Mime mask",
@@ -97785,7 +97786,7 @@
     "id": "11281"
   },
   {
-    "remove_head": "true",
+    "remove_beard": "true",
     "examine": "Essential mime wear.",
     "durability": null,
     "name": "Beret and mask",
