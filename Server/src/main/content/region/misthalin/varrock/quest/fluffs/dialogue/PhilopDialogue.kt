@@ -22,7 +22,7 @@ class PhilopDialogue(player: Player? = null) : Dialogue(player) {
             0 -> npc(FaceAnim.CHILD_NORMAL, "Gwwrr!").also { stage++ }
             1 -> playerl(FaceAnim.HALF_GUILTY, "Err, hello there. What's that you have there?").also { stage++ }
             2 -> npc(FaceAnim.CHILD_NORMAL, "Gwwwrrr! Dwa-gon Gwwwwrrrr!").also { stage++ }
-            3 -> playerl(FaceAnim.CHILD_NORMAL, "Enjoy playing with your dragon, then.").also { stage++ }
+            3 -> playerl(FaceAnim.HALF_GUILTY, "Enjoy playing with your dragon, then.").also { stage++ }
             4 -> npc(FaceAnim.CHILD_NORMAL, "Gwwwrrr!").also { stage = END_DIALOGUE }
         }
         return true
