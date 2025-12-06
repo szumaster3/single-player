@@ -21,7 +21,7 @@ class WoodDryadDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 -> npcl(FaceAnim.NEUTRAL, "Heehee, what a strange question; that's because I'm a dryad.").also { stage++ }
+            0 -> npcl(FaceAnim.LAUGH, "Heehee, what a strange question; that's because I'm a dryad.").also { stage++ }
             1 -> end()
         }
         return true

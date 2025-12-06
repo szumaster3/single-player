@@ -119,4 +119,5 @@ object Regions {
     const val MISCELLANIA_10044 = 10044
     const val ETCETERIA_10300 = 10300
     const val ENTRANA_11060 = 11060
+    const val ENCHANTED_VALLEY_12102 = 12102
 }

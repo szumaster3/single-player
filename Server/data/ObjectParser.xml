@@ -73,6 +73,7 @@
     <ObjectAction mode="add" id="14440" x="3070" y="3839" z="0"/>
 
     <!-- Rock - Enchanted Valley. -->
+    <ObjectAction mode="add" id="31059" x="3024" y="4491" z="0"/>
     <ObjectAction mode="add" id="31060" x="3025" y="4491" z="0"/>
 
     <!-- Lever scenery - Prison Pete random event area. -->

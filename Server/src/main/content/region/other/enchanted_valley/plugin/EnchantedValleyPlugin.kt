@@ -4,71 +4,53 @@ import content.data.skill.SkillingTool
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.npc.NPC
+import core.game.node.entity.Entity
+import core.game.node.entity.impl.Animator
+import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player
-import core.game.system.task.Pulse
+import core.game.world.map.Direction
+import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
+import core.game.world.update.flag.context.Graphics
 import shared.consts.*
 import kotlin.math.ceil
 
+/**
+ * Handles interaction around Enchanted valley region.
+ */
 class EnchantedValleyPlugin : InteractionListener {
-
-    companion object {
-        private const val ENCHANTED_V_TREE = Scenery.TREE_16265
-        private const val ENCHANTED_V_ROCK = Scenery.ROCKS_31060
-        private const val ENCHANTED_V_FISH = Scenery.FISHING_SPOT_1175
-
-        private val TREE_SPIRIT_IDS = intArrayOf(
-            NPCs.TREE_SPIRIT_438,
-            NPCs.TREE_SPIRIT_439,
-            NPCs.TREE_SPIRIT_440,
-            NPCs.TREE_SPIRIT_441,
-            NPCs.TREE_SPIRIT_442,
-            NPCs.TREE_SPIRIT_443
-        )
-        private val ROCK_GOLEM_IDS = intArrayOf(
-            NPCs.ROCK_GOLEM_413,
-            NPCs.ROCK_GOLEM_414,
-            NPCs.ROCK_GOLEM_415,
-            NPCs.ROCK_GOLEM_416,
-            NPCs.ROCK_GOLEM_417,
-            NPCs.ROCK_GOLEM_418
-        )
-        private val RIVER_TROLL_IDS = intArrayOf(
-            NPCs.RIVER_TROLL_391,
-            NPCs.RIVER_TROLL_392,
-            NPCs.RIVER_TROLL_393,
-            NPCs.RIVER_TROLL_394,
-            NPCs.RIVER_TROLL_395,
-            NPCs.RIVER_TROLL_396
-        )
-    }
 
     override fun defineListeners() {
 
         /*
          * Handles spawn of River troll.
-         * https://www.youtube.com/watch?v=QOBX51i2UZ8
          */
 
-        on(ENCHANTED_V_FISH, IntType.SCENERY, "net") { player, _ ->
-            if (!inInventory(player, Items.SMALL_FISHING_NET_303))
-                sendDialogue(player, "You need a small net to catch these fish.")
-             else
-                sendMessage(player, "You cast out your net...")
+        on(ENCHANTED_V_FISH, IntType.NPC, "lure", "bait") { player, node ->
+            val option = getUsedOption(player)
 
-            if (player.viewport.region!!.id == 12102) {
-                player.animate(Animation(Animations.NET_FISHING_621))
-                spawnEvent(player, getNpcFor(player, RIVER_TROLL_IDS)) { npc ->
-                    visualize(npc, -1, Graphics.RE_PUFF_86)
-                    val message = if (hasRequirement(player, Quests.SWAN_SONG)) {
-                        "You killed da Sea Troll Queen - you die now!"
-                    } else "Fishies be mine, leave dem fishies!"
-                    sendChat(npc, message)
-                }
-            } else {
-                sendMessage(player, "Nothing interesting happens.")
+            if (option == "bait" && !inInventory(player, Items.FISHING_ROD_307)) {
+                sendDialogue(player, "You need a net to bait these fish.")
+                return@on true
             }
+
+            if (option == "lure" && !inInventory(player, Items.SMALL_FISHING_NET_303)) {
+                sendDialogue(player, "You need a small net to catch these fish.")
+                return@on true
+            }
+
+            if (player.getAttribute<Boolean>("enchanted_valley_npc") == true) {
+                sendMessage(player, "You already have a creature spawned.")
+                return@on true
+            }
+
+            sendMessage(player, "You cast out your net...")
+
+            if (player.viewport.region?.id == 12102) {
+                val npc = EnchantedValleyNPC.getRandom(RIVER_TROLL_IDS, node.location, player)
+                npc.init()
+            } else sendMessage(player, "Nothing interesting happens.")
+
             return@on true
         }
 
@@ -79,23 +61,33 @@ class EnchantedValleyPlugin : InteractionListener {
         on(ENCHANTED_V_ROCK, IntType.SCENERY, "mine", "prospect") { player, _ ->
             val tool = SkillingTool.getPickaxe(player)
             if (tool == null) {
-                sendMessage(player, "You lack a pickaxe which you have the Mining level to use.")
-            } else
-                 if(getUsedOption(player) != "prospect") {
-                     sendMessage(player, "You swing your pickaxe at the rock.")
-                     player.animate(Animation(tool.animation))
-                 }
-             else
-                 sendMessage(player, "You examine the rock for ores...")
-
-            if (inBorders(player, 3023, 4491, 3029, 4494)) {
-                spawnEvent(player, getNpcFor(player, ROCK_GOLEM_IDS)) { npc ->
-                    visualize(npc, -1, Graphics.RE_PUFF_86)
-                    sendChat(npc, "Gerroff da rock!")
-                }
-            } else {
-                sendMessage(player, "Nothing interesting happens.")
+                sendDialogueLines(
+                    player,
+                    "You need a pickaxe to mine this rock. You do not have a pickaxe",
+                    "which you have the Mining level to use."
+                )
+                return@on true
             }
+
+            if (getUsedOption(player) != "prospect") {
+                sendMessage(player, "You swing your pickaxe at the rock.")
+                player.animate(Animation(tool.animation))
+            }
+            else
+                sendMessage(player, "You examine the rock for ores...")
+
+            if (!inBorders(player, 3023, 4491, 3029, 4494)) {
+                sendMessage(player, "Nothing interesting happens.")
+                return@on true
+            }
+
+            if (player.getAttribute<Boolean>("enchanted_valley_npc") == true) {
+                sendMessage(player, "You already have a creature spawned.")
+                return@on true
+            }
+
+            val npc = EnchantedValleyNPC.getRandom(ROCK_GOLEM_IDS, player.location, player)
+            npc.init()
             return@on true
         }
 
@@ -106,48 +98,136 @@ class EnchantedValleyPlugin : InteractionListener {
         on(ENCHANTED_V_TREE, IntType.SCENERY, "chop-down") { player, _ ->
             val tool = SkillingTool.getAxe(player)
             if (tool == null) {
-                sendMessage(player, "You lack an axe which you have the Woodcutting level to use.")
+                sendDialogue(player, "You lack an axe which you have the Woodcutting level to use.")
                 return@on true
             }
 
             sendMessage(player, "You swing your axe at the tree.")
             player.animate(Animation(tool.animation))
 
-            spawnEvent(player, getNpcFor(player, TREE_SPIRIT_IDS)) { npc ->
-                visualize(npc, -1, Graphics.RE_PUFF_86)
+            if (player.getAttribute<Boolean>("enchanted_valley_npc") == true) {
+                sendMessage(player, "You already have a creature spawned.")
+                return@on true
             }
 
+            val npc = EnchantedValleyNPC.getRandom(TREE_SPIRIT_IDS, player.location, player)
+            npc.init()
             return@on true
         }
     }
 
-    /**
-     * Generic NPC event spawner for the Enchanted Valley events.
-     */
-    private fun spawnEvent(player: Player, npc: NPC, preAttack: ((NPC) -> Unit)? = null) {
-        player.pulseManager.run(object : Pulse(1) {
-            var counter = 0
-            override fun pulse(): Boolean {
-                when (counter++) {
-                    2 -> {
-                        npc.location = player.location
-                        npc.init()
-                        npc.moveStep()
-                        npc.isRespawn = false
-                        preAttack?.invoke(npc)
-                    }
-                    3 -> npc.attack(player)
-                }
-                return false
-            }
-        })
+    companion object {
+        /**
+         * The scenery used for spawning tree spirit.
+         */
+        private const val ENCHANTED_V_TREE = Scenery.TREE_16265
+
+        /**
+         * The scenery used for spawning rock golem.
+         */
+        private val ENCHANTED_V_ROCK = intArrayOf(Scenery.ROCKS_31060, Scenery.ROCKS_31059)
+
+        /**
+         * The scenery used for spawning river troll.
+         */
+        private const val ENCHANTED_V_FISH = NPCs.FISHING_SPOT_1189
+
+        /**
+         * The river troll npc ids.
+         */
+        val RIVER_TROLL_IDS = intArrayOf(
+            NPCs.RIVER_TROLL_391, NPCs.RIVER_TROLL_392, NPCs.RIVER_TROLL_393,
+            NPCs.RIVER_TROLL_394, NPCs.RIVER_TROLL_395, NPCs.RIVER_TROLL_396
+        )
+
+        /**
+         * The rock golem npc ids.
+         */
+        val ROCK_GOLEM_IDS = intArrayOf(
+            NPCs.ROCK_GOLEM_413, NPCs.ROCK_GOLEM_414, NPCs.ROCK_GOLEM_415,
+            NPCs.ROCK_GOLEM_416, NPCs.ROCK_GOLEM_417, NPCs.ROCK_GOLEM_418
+        )
+
+        /**
+         * The tree spirit npc ids.
+         */
+        val TREE_SPIRIT_IDS = intArrayOf(
+            NPCs.TREE_SPIRIT_438, NPCs.TREE_SPIRIT_439, NPCs.TREE_SPIRIT_440,
+            NPCs.TREE_SPIRIT_441, NPCs.TREE_SPIRIT_442, NPCs.TREE_SPIRIT_443
+        )
     }
 
     /**
-     * Gets the NPC for the player combat level.
+     * Represents the Enchanted valley NPCs.
      */
-    private fun getNpcFor(player: Player, ids: IntArray): NPC {
-        val index = (ceil(player.properties.currentCombatLevel / 20.0).toInt()).coerceAtMost(ids.lastIndex)
-        return NPC(ids[index])
+    class EnchantedValleyNPC(id: Int, spawnLoc: Location? = null, private val p: Player) : AbstractNPC(id, spawnLoc) {
+
+        override fun init() {
+            if (p.getAttribute<Boolean>("enchanted_valley_npc") != true) {
+                p.setAttribute("enchanted_valley_npc", true)
+
+                p.logoutListeners["enchanted_valley_npc"] = { pl ->
+                    if (isActive) clear()
+                    pl.removeAttribute("enchanted_valley_npc")
+                }
+
+                location = location ?: Location.getRandomLocation(p.location, 1, true)
+                isRespawn = false
+                isAggressive = true
+
+                initSpawn()
+                super.init()
+            }
+        }
+
+        private fun initSpawn() {
+            when (id) {
+                in RIVER_TROLL_IDS -> {
+                    visualize(this, -1, shared.consts.Graphics.WATER_SPLASH_68)
+                    p.animate(Animation(1441, Animator.Priority.HIGH))
+                    forceMove(p, p.location, p.location.transform(0, -1, 0), 0, 60, Direction.NORTH)
+                    sendChat(this, if (hasRequirement(p, Quests.SWAN_SONG, false))
+                        "You killed da Sea Troll Queen - you die now!"
+                    else "Fishies be mine, leave dem fishies!")
+                }
+
+                in ROCK_GOLEM_IDS -> {
+                    visualize(this, -1, shared.consts.Graphics.RE_PUFF_86)
+                    sendChat(this, "Gerroff da rock!")
+                }
+
+                in TREE_SPIRIT_IDS -> {
+                    visualize(this, -1, Graphics(shared.consts.Graphics.BIND_IMPACT_179, 100))
+                    sendChat(this, "Leave these woods and never return!")
+                }
+            }
+
+            this.moveStep()
+            attack(p)
+        }
+
+        override fun finalizeDeath(killer: Entity) {
+            super.finalizeDeath(killer)
+            if (killer is Player) {
+                p.removeAttribute("enchanted_valley_npc")
+            }
+        }
+
+        override fun construct(id: Int, location: Location, vararg objects: Any?): AbstractNPC =
+            EnchantedValleyNPC(id, location, p)
+
+        override fun getIds(): IntArray = when (id) {
+            in RIVER_TROLL_IDS -> RIVER_TROLL_IDS
+            in ROCK_GOLEM_IDS -> ROCK_GOLEM_IDS
+            in TREE_SPIRIT_IDS -> TREE_SPIRIT_IDS
+            else -> intArrayOf(id)
+        }
+
+        companion object {
+            fun getRandom(ids: IntArray, loc: Location, owner: Player): EnchantedValleyNPC {
+                val index = (ceil(owner.properties.currentCombatLevel / 20.0).toInt()).coerceAtMost(ids.lastIndex)
+                return EnchantedValleyNPC(ids[index], loc, owner)
+            }
+        }
     }
 }
