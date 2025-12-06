@@ -64,10 +64,10 @@ object EvilTwinUtils {
         val mollyNPC = NPC.create(npcId, Location.getRandomLocation(player.location, 1, true))
 
         mollyNPC?.apply {
-            init()
             isWalks = false
             isNeverWalks = true
             isRespawn = false
+            init()
         }
 
         sendChat(mollyNPC!!, "I need your help, ${player.username}.")
