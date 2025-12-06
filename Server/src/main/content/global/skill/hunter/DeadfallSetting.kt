@@ -34,7 +34,6 @@ class DeadfallSetting :
                 return true
             }
         }
-        sendMessage(player, "You need logs in order to set a deadfall trap.")
         return false
     }
 
