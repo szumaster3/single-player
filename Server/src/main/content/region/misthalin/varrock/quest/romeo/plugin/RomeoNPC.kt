@@ -11,11 +11,7 @@ class RomeoNPC : AbstractNPC {
 
     private constructor(id: Int, location: Location) : super(id, location, true)
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = RomeoNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = RomeoNPC(id, location)
 
     override fun init() {
         isWalks = true
@@ -31,6 +27,5 @@ class RomeoNPC : AbstractNPC {
 
     companion object {
         private val ID = intArrayOf(NPCs.ROMEO_639)
-        private const val speakDelay = 0
     }
 }

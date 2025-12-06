@@ -18,14 +18,9 @@ private val CERTIFICATE = Item(Items.CERTIFICATE_769)
  * - [Shield of Arrav][content.region.misthalin.varrock.quest.phoenixgang.ShieldofArrav]
  */
 class KingRoaldDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
-        if (player!!.inventory.containsItem(ShieldofArrav.PHOENIX_SHIELD) || player!!.inventory.containsItem(
-                ShieldofArrav.BLACKARM_SHIELD
-            )
-        ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
+        if (player!!.inventory.containsItem(ShieldofArrav.PHOENIX_SHIELD) || player!!.inventory.containsItem(ShieldofArrav.BLACKARM_SHIELD)) {
             when (stage) {
                 START_DIALOGUE -> player("Your majesty, I have recovered the Shield of Arrav; I", "would like to claim the reward.").also { stage++ }
                 1 -> npc("The Shield of Arrav, eh? Yes, I do recall my father,", "King Roald, put a reward out for that.").also { stage++ }

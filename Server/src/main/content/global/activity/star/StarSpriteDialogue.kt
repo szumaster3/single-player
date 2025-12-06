@@ -27,12 +27,7 @@ class StarSpriteDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (getStoreFile().getBoolean(player.username.lowercase()) || !inInventory(
-                player,
-                ShootingStarPlugin.STAR_DUST,
-                1,
-            )
-        ) {
+        if (getStoreFile().getBoolean(player.username.lowercase()) || !inInventory(player, ShootingStarPlugin.STAR_DUST, 1)) {
             npc("Hello, strange creature.").also { stage = 0 }
         } else {
             npc("Thank you for helping me out of here.").also { stage = 50 }
@@ -40,26 +35,11 @@ class StarSpriteDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(
-        interfaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 -> npc(
-                "I'm a star sprite! I was in my star in the sky, when it",
-                "lost control and crashed into the ground. With half my",
-                "star sticking into the ground, I became stuck.",
-                "Fortunately, I was mined out by the kind creatures of",
-            ).also { stage++ }
-
+            0 -> npc("I'm a star sprite! I was in my star in the sky, when it", "lost control and crashed into the ground. With half my", "star sticking into the ground, I became stuck.", "Fortunately, I was mined out by the kind creatures of").also { stage++ }
             1 -> npc("your race.").also { stage++ }
-            2 -> options(
-                "What's a star sprite?",
-                "What are you going to do without your star?",
-                "I thought stars were huge balls of burning gas.",
-                "Well, I'm glad you're okay.",
-            ).also { stage++ }
-
+            2 -> options("What's a star sprite?", "What are you going to do without your star?", "I thought stars were huge balls of burning gas.", "Well, I'm glad you're okay.").also { stage++ }
             3 -> when (buttonId) {
                 1 -> player("What's a star sprite?").also { stage = 10 }
                 2 -> player("What are you going to do without your star?").also { stage = 20 }
@@ -67,53 +47,23 @@ class StarSpriteDialogue(player: Player? = null) : Dialogue(player) {
                 4 -> player("Well, I'm glad you're okay.").also { stage = 40 }
             }
 
-            10 -> npc(
-                "We're what makes the stars in the sky shine. I made",
-                "this star shine when it was in the sky.",
-            ).also { stage++ }
-
-            11 -> options(
-                "What are you going to do without your star?",
-                "I thought stars were huge balls of burning gas.",
-                "Well, I'm glad you're okay.",
-            ).also { stage++ }
-
+            10 -> npc("We're what makes the stars in the sky shine. I made", "this star shine when it was in the sky.").also { stage++ }
+            11 -> options("What are you going to do without your star?", "I thought stars were huge balls of burning gas.", "Well, I'm glad you're okay.").also { stage++ }
             12 -> when (buttonId) {
                 1 -> player("What are you going to do without your star?").also { stage = 20 }
                 2 -> player("I thought stars were huge balls of burning gas.").also { stage = 30 }
                 3 -> player("Well, I'm glad you're okay.").also { stage = 40 }
             }
-
-            20 -> npc(
-                "Don't worry about me. I'm sure I'll find some good",
-                "rocks around here and get back up into the sky in no",
-                "time.",
-            ).also { stage++ }
-
-            21 -> options(
-                "What's a star sprite?",
-                "I thought stars were huge balls of burning gas.",
-                "Well, I'm glad you're okay.",
-            ).also { stage++ }
-
+            20 -> npc("Don't worry about me. I'm sure I'll find some good", "rocks around here and get back up into the sky in no", "time.").also { stage++ }
+            21 -> options("What's a star sprite?", "I thought stars were huge balls of burning gas.", "Well, I'm glad you're okay.").also { stage++ }
             22 -> when (buttonId) {
                 1 -> player("What's a star sprite?").also { stage = 10 }
                 2 -> player("I thought stars were huge balls of burning gas.").also { stage = 30 }
                 3 -> player("Well, I'm glad you're okay.").also { stage = 40 }
             }
 
-            30 -> npc(
-                "Most of them are, but a lot of shooting stars on this",
-                "plane of the multiverse are rocks with star sprites in",
-                "them.",
-            ).also { stage++ }
-
-            31 -> options(
-                "What's a star sprite?",
-                "What are you going to do without your star?",
-                "Well, I'm glad you're okay.",
-            ).also { stage++ }
-
+            30 -> npc("Most of them are, but a lot of shooting stars on this", "plane of the multiverse are rocks with star sprites in", "them.").also { stage++ }
+            31 -> options("What's a star sprite?", "What are you going to do without your star?", "Well, I'm glad you're okay.").also { stage++ }
             32 -> when (buttonId) {
                 1 -> player("What's a star sprite?").also { stage = 10 }
                 2 -> player("What are you going to do without your star?").also { stage = 20 }

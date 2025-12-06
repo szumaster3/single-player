@@ -54,11 +54,7 @@ class RomeoDialogue(player: Player? = null) : Dialogue(player) {
                 player(FaceAnim.HALF_GUILTY, "Romeo...great news...I've been in touch with Juliet!")
                 stage = 300
             } else {
-                player(
-                    FaceAnim.HALF_GUILTY,
-                    "Romeo...great news...I've been in touch with Juliet!",
-                    "She's written a message for you...",
-                )
+                player(FaceAnim.HALF_GUILTY, "Romeo...great news...I've been in touch with Juliet!", "She's written a message for you...")
                 stage = 400
             }
 
@@ -68,12 +64,7 @@ class RomeoDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             40 -> {
-                npc(
-                    "Ooh did you manage to survive one of Lather",
-                    "Fawrences sermons? I bet not, you were ages! I bet",
-                    "you snoozed on the welcome mat just as soon as you",
-                    "heard his voice!",
-                )
+                npc("Ooh did you manage to survive one of Lather", "Fawrences sermons? I bet not, you were ages! I bet", "you snoozed on the welcome mat just as soon as you", "heard his voice!")
                 stage = 236
             }
 
@@ -91,11 +82,7 @@ class RomeoDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             70 -> {
-                player(
-                    "Romeo, it's all set. Juliet has drunk the potion and has",
-                    "been taken down into the Crypt...now you just need to",
-                    "pop along and collect her.",
-                )
+                player("Romeo, it's all set. Juliet has drunk the potion and has", "been taken down into the Crypt...now you just need to", "pop along and collect her.")
                 stage = 71
             }
 
@@ -148,35 +135,22 @@ class RomeoDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             14 -> {
-                npc(FaceAnim.HALF_GUILTY, "Oh and she has these lovley shoulders as well..")
+                npc(FaceAnim.HALF_GUILTY, "Oh and she has these lovely shoulders as well..")
                 stage = 15
             }
 
             15 -> {
-                player(
-                    FaceAnim.HALF_GUILTY,
-                    "Shoulders...right so she has hair, lips and shoulders...that",
-                    "should cut it down a bit.",
-                )
+                player(FaceAnim.HALF_GUILTY, "Shoulders...right so she has hair, lips and shoulders...that", "should cut it down a bit.")
                 stage = 16
             }
 
             16 -> {
-                npc(
-                    FaceAnim.HALF_GUILTY,
-                    "Oh yes, Juliet Is very different...please tell her that she",
-                    "is the love of my long and that I life to be with her?",
-                )
+                npc(FaceAnim.HALF_GUILTY, "Oh yes, Juliet Is very different...please tell her that she", "is the love of my long and that I life to be with her?")
                 stage = 17
             }
 
             17 -> {
-                player(
-                    FaceAnim.HALF_GUILTY,
-                    "What?",
-                    "Surely you mean that 'she is the love of your life and",
-                    "that you long to be with her?",
-                )
+                player(FaceAnim.HALF_GUILTY, "What?", "Surely you mean that 'she is the love of your life and", "that you long to be with her?")
                 stage = 18
             }
 
@@ -184,7 +158,7 @@ class RomeoDialogue(player: Player? = null) : Dialogue(player) {
                 npc(
                     FaceAnim.HALF_GUILTY,
                     "Oh yeah...what you said...tell her that, it sounds much",
-                    "bettter!",
+                    "better!",
                     "Oh you're so good at this!",
                 )
                 stage = 19
@@ -698,7 +672,7 @@ class RomeoDialogue(player: Player? = null) : Dialogue(player) {
             327 -> {
                 player(
                     "Yes, he's given me details of a potion which should help",
-                    "resolve this siution. The Apothecary is helping me",
+                    "resolve this situation. The Apothecary is helping me",
                     "prepare it.",
                 )
                 stage = 328
