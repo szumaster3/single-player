@@ -40,26 +40,29 @@ class FuneralPyreCutscene(player: Player) : Cutscene(player) {
             2 -> {
                 moveCamera(12, 18, 600, 1)
                 rotateCamera(16, 13, 300, 1)
+                timedUpdate(3)
+            }
+            3 -> {
+                rotateCamera(14, 15, 300, 1)
+                timedUpdate(1)
+            }
+
+            4 -> {
                 getNPC(PHOENIX)!!.transform(NPCs.PHOENIX_8548)
                 // Inside
                 teleport(getNPC(PHOENIX)!!, 15, 14)
                 visualize(getNPC(PHOENIX)!!, 11072, 1983)
-                timedUpdate(3)
-            }
 
-            3 -> {
-                visualize(getNPC(PHOENIX)!!, -1, 1984)
-                rotateCamera(14, 15, 300, 1)
                 // Outside
                 InPyreNeed.WOUNDED_PHOENIX_ID.transform(NPCs.PHOENIX_8548)
                 InPyreNeed.WOUNDED_PHOENIX_ID.teleporter.send(
                     Location.create(3535, 5198, 0), TeleportManager.TeleportType.INSTANT
                 )
                 setVarbit(player, 5774, 4, true)
-                timedUpdate(3)
+                timedUpdate(6)
             }
 
-            4 -> {
+            5 -> {
                 endWithoutFade {
                     resetCamera()
                     setVarbit(player, InPyreNeed.PROGRESS, 6, true)

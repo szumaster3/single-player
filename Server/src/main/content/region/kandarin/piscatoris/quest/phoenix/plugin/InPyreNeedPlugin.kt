@@ -203,6 +203,7 @@ class InPyreNeedPlugin : InteractionListener {
             else
                 Animations.PRUNE_WITH_SECATEURS_11088
 
+            lock(player, 3)
             animate(player, anim)
             sendMessage(player, "You weave a large basket from the five wooden ribbons and add it to the pyre base.")
 
@@ -214,9 +215,9 @@ class InPyreNeedPlugin : InteractionListener {
                 setAttribute(player, "phoenix-spawned", true)
                 SpawnPhoenix(player).start(true)
             } else {
+                setVarbit(player, 5774, 1, true)
                 WoundedPhoenixCutscene(player).start(true)
             }
-
             return@onUseWith true
         }
 
@@ -224,12 +225,7 @@ class InPyreNeedPlugin : InteractionListener {
          * Handles lighting the pyre.
          */
 
-        onUseWith(IntType.SCENERY, Items.TINDERBOX_590, Scenery.PYRE_41908) { player, _, _ ->
-            if (isQuestComplete(player, Quests.IN_PYRE_NEED)) {
-                sendMessage(player, "You have already completed the quest.")
-                return@onUseWith true
-            }
-
+        onUseWith(IntType.SCENERY, Items.TINDERBOX_590, Scenery.PYRE_41909) { player, _, _ ->
             if (getStatLevel(player, Skills.FIREMAKING) < 55) {
                 sendMessage(player, "You need at least 55 Firemaking to light the funeral pyre.")
                 return@onUseWith true
@@ -241,20 +237,9 @@ class InPyreNeedPlugin : InteractionListener {
                 return@onUseWith true
             }
 
-            if (InPyreNeed.RIBBON_ID.any { !inInventory(player, it) }) {
-                sendMessage(player, "You need all 5 ribbons to light the pyre.")
-                return@onUseWith true
-            }
-
             lock(player, 3)
             animate(player, Animations.HUMAN_LIGHT_FIRE_WITH_TINDERBOX_733)
-
-            InPyreNeed.RIBBON_ID.forEach { ribbonId ->
-                removeItem(player, Item(ribbonId, 1), Container.INVENTORY)
-            }
-
             FuneralPyreCutscene(player).start()
-
             return@onUseWith true
         }
 
@@ -263,7 +248,7 @@ class InPyreNeedPlugin : InteractionListener {
          */
 
         onUseWith(IntType.NPC, Items.TINDERBOX_590, NPCs.WOUNDED_PHOENIX_8547) { player, _, _ ->
-            sendNPCDialogue(player, NPCs.WOUNDED_PHOENIX_8547, "Light the pyre, not me!", FaceAnim.OLD_NORMAL)
+            sendNPCDialogue(player, NPCs.WOUNDED_PHOENIX_8547, "Light the pyre, not me!", FaceAnim.FAMILIAR_NEUTRAL)
             return@onUseWith true
         }
 
@@ -330,7 +315,7 @@ class InPyreNeedPlugin : InteractionListener {
                             }
 
                             2 -> {
-                                sendGraphics(1974, findNPC(NPCs.LARGE_EGG_8552)!!.location)
+                                visualize(findNPC(NPCs.LARGE_EGG_8552)!!, -1,1974)
                                 return@queueScript delayScript(player, 3)
                             }
 

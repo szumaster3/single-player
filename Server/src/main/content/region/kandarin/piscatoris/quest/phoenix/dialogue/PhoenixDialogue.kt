@@ -54,7 +54,7 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
 
             2 -> {
                 npc(
-                    FaceAnim.FAMILIAR_HAPPY,
+                    FaceAnim.FAMILIAR_NEUTRAL,
                     "(Ah, such modesty. In that case, I shall withhold the",
                     "reward I planned for you, and send you away with my",
                     "thanks.)"
@@ -368,17 +368,17 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             52 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(Yes, it was. Si'morgh learned a lot faster than I did. He was always looking out for me, finding me food and protecting me from danger as I grew up. We were about the age at which you could call a phoenix a teenager when it happened.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(Yes, it was. Si'morgh learned a lot faster than I did. He was always looking out for me, finding me food and protecting me from danger as I grew up. We were about the age at which you could call a phoenix a teenager when it happened.)")
                 stage++
             }
 
             53 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(There was a strange new creature outside of our lair. Curiosity led me to leave the safety of the cave and investigate.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(There was a strange new creature outside of our lair. Curiosity led me to leave the safety of the cave and investigate.)")
                 stage++
             }
 
             54 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(I had never seen a dragon before.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(I had never seen a dragon before.)")
                 stage++
             }
 
@@ -388,25 +388,25 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             56 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(Si'morgh was out looking for something to eat at the time. The dragon attacked me. I tried to defend myself, but I was overpowered. At the last moment, as the dragon was about to land the killing blow, Si'morgh returned.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(Si'morgh was out looking for something to eat at the time. The dragon attacked me. I tried to defend myself, but I was overpowered. At the last moment, as the dragon was about to land the killing blow, Si'morgh returned.)")
                 stage++
             }
 
             57 -> {
                 npcl(
-                    FaceAnim.FAMILIAR_HAPPY,
+                    FaceAnim.FAMILIAR_NEUTRAL,
                     "(He threw himself at the dragon to protect me, and screamed at me to run. I got away as fast as I could, hiding in our lair, where the huge dragon could not follow. Hours passed, and Si'morgh did not return.)"
                 )
                 stage++
             }
 
             58 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(That night, I took a cautious peek out of the cave. I couldn't see or hear the dragon anywhere, so I went out looking for Si'morgh.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(That night, I took a cautious peek out of the cave. I couldn't see or hear the dragon anywhere, so I went out looking for Si'morgh.)")
                 stage++
             }
 
             59 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(I found him. Bits of him, at least.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(I found him. Bits of him, at least.)")
                 stage++
             }
 
@@ -416,7 +416,7 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             61 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(He gave his life in exchange for mine, but he left me alone.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(He gave his life in exchange for mine, but he left me alone.)")
                 stage++
             }
 
@@ -426,22 +426,22 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             63 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(Yes. I had to grow up quickly, as there was no Si'morgh to look after me. Essentially, I had to fend for myself, so the first thing I did was to fortify my home.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(Yes. I had to grow up quickly, as there was no Si'morgh to look after me. Essentially, I had to fend for myself, so the first thing I did was to fortify my home.)")
                 stage++
             }
 
             64 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(I started becoming more adventurous when the loneliness got to me. After all, I was used to company, and living with none was quite difficult.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(I started becoming more adventurous when the loneliness got to me. After all, I was used to company, and living with none was quite difficult.)")
                 stage++
             }
 
             65 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(I started collecting trinkets to keep myself occupied, leaving my lair for centuries at a time and returning only to reborn. I became a people-watcher - watching the races as they developed with time.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(I started collecting trinkets to keep myself occupied, leaving my lair for centuries at a time and returning only to reborn. I became a people-watcher - watching the races as they developed with time.)")
                 stage++
             }
 
             66 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(You know the rest of my story, " + player.username + ", because you have helped to continue writing it.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(You know the rest of my story, " + player.username + ", because you have helped to continue writing it.)")
                 stage++
             }
 
@@ -451,7 +451,7 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             68 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(It is no bother. In truth, it is nice to have someone to talk to - someone to call a friend. Thank you for listening, " + player.username + ".)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(It is no bother. In truth, it is nice to have someone to talk to - someone to call a friend. Thank you for listening, " + player.username + ".)")
                 stage++
             }
 
@@ -461,7 +461,7 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             70 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(I do not wish to be rude, friend, but may I have some time alone with my thoughts?)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(I do not wish to be rude, friend, but may I have some time alone with my thoughts?)")
                 stage++
             }
 
@@ -476,7 +476,7 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             73 -> {
-                npc(FaceAnim.FAMILIAR_HAPPY, "(Found my egg chamber?)")
+                npc(FaceAnim.FAMILIAR_NEUTRAL, "(Found my egg chamber?)")
                 stage++
             }
 
@@ -486,7 +486,7 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             75 -> {
-                npc(FaceAnim.FAMILIAR_HAPPY, "(Yes, I know. This is extremely rare. I imagine you have many questions. Ask away.)")
+                npc(FaceAnim.FAMILIAR_NEUTRAL, "(Yes, I know. This is extremely rare. I imagine you have many questions. Ask away.)")
                 stage++
             }
 
@@ -496,7 +496,7 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             77 -> {
-                npc(FaceAnim.FAMILIAR_HAPPY, "(Not at all. You helped me in my time of need. I know you'll take good care of my eggling until such a time that it can take care of itself.)")
+                npc(FaceAnim.FAMILIAR_NEUTRAL, "(Not at all. You helped me in my time of need. I know you'll take good care of my eggling until such a time that it can take care of itself.)")
                 stage++
             }
 
@@ -511,7 +511,7 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             80 -> {
-                npc(FaceAnim.FAMILIAR_HAPPY, "(Barring the eggling you've adopted for me and any others that may hatch, that is true, yes. The matter of reproduction in my species...differs from the norm, somewhat.)")
+                npc(FaceAnim.FAMILIAR_NEUTRAL, "(Barring the eggling you've adopted for me and any others that may hatch, that is true, yes. The matter of reproduction in my species...differs from the norm, somewhat.)")
                 stage++
             }
 
@@ -521,27 +521,27 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             82 -> {
-                npc(FaceAnim.FAMILIAR_HAPPY, "(Certainly! I had no idea you were such an avid appreciator of nature.)")
+                npc(FaceAnim.FAMILIAR_NEUTRAL, "(Certainly! I had no idea you were such an avid appreciator of nature.)")
                 stage++
             }
 
             83 -> {
-                npc(FaceAnim.FAMILIAR_HAPPY, "(After a phoenix performs its rebirth ritual, its ashes are stored within a magical egg. I perform this part of my ritual after you have left; I need some rest before I can utilize the necessary magicks to perform the act.)")
+                npc(FaceAnim.FAMILIAR_NEUTRAL, "(After a phoenix performs its rebirth ritual, its ashes are stored within a magical egg. I perform this part of my ritual after you have left; I need some rest before I can utilize the necessary magicks to perform the act.)")
                 stage++
             }
 
             84 -> {
-                npc(FaceAnim.FAMILIAR_HAPPY, "(I keep all of these eggs in my egg chamber. They are mostly dormant at the moment, though.)")
+                npc(FaceAnim.FAMILIAR_NEUTRAL, "(I keep all of these eggs in my egg chamber. They are mostly dormant at the moment, though.)")
                 stage++
             }
 
             85 -> {
-                npc(FaceAnim.FAMILIAR_HAPPY, "(The eggs are a sort of contingency plan. You see, the phoenixes are linked. It is a link similar to that which I share with my guardians; a sort of shared consciousness.)")
+                npc(FaceAnim.FAMILIAR_NEUTRAL, "(The eggs are a sort of contingency plan. You see, the phoenixes are linked. It is a link similar to that which I share with my guardians; a sort of shared consciousness.)")
                 stage++
             }
 
             86 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(If all the phoenixes were to die out at once, one of the eggs would become magically fertile, ensuring that, as long as we complete our rebirth ritual at least once before meeting our end, there will always be an eggling phoenix to take over when we...pass on.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(If all the phoenixes were to die out at once, one of the eggs would become magically fertile, ensuring that, as long as we complete our rebirth ritual at least once before meeting our end, there will always be an eggling phoenix to take over when we...pass on.)")
                 stage++
             }
 
@@ -556,12 +556,12 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             89 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(There is a very small chance that an egg will become magically fertile without the death of all phoenixes. Seeing as we phoenixes perform our rituals once every five hundred years - under normal circumstances - this means the population is usually one.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(There is a very small chance that an egg will become magically fertile without the death of all phoenixes. Seeing as we phoenixes perform our rituals once every five hundred years - under normal circumstances - this means the population is usually one.)")
                 stage++
             }
 
             90 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(The most phoenixes alive at once, since my birth, has been two.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(The most phoenixes alive at once, since my birth, has been two.)")
                 stage++
             }
 
@@ -571,12 +571,12 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             92 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(Anyway, to make a long story short, you were simply very lucky to find a hatching egg.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(Anyway, to make a long story short, you were simply very lucky to find a hatching egg.)")
                 stage++
             }
 
             93 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(${player.username}, promise me something.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(${player.username}, promise me something.)")
                 stage++
             }
 
@@ -586,7 +586,7 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             95 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(Let my child see the world, but teach it to fear danger. I don't want it to end up dead like Si'morgh, or a frightened hermit like me.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(Let my child see the world, but teach it to fear danger. I don't want it to end up dead like Si'morgh, or a frightened hermit like me.)")
                 stage++
             }
 
@@ -596,12 +596,12 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             97 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(Thank you, " + player.username + ".)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(Thank you, " + player.username + ".)")
                 stage++
             }
 
             98 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(Why was he not slain like the other intruders in my lair?)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(Why was he not slain like the other intruders in my lair?)")
                 stage++
             }
 
@@ -611,32 +611,32 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             100 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(I must admit, I did regard him with cautions for a while; but in all his trips into my lair, he never did anything worth stopping.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(I must admit, I did regard him with cautions for a while; but in all his trips into my lair, he never did anything worth stopping.)")
                 stage++
             }
 
             101 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(I found him most curious, carefully avoiding my guardians with all his stealth and guile. I knew he was there, but I was holding them back.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(I found him most curious, carefully avoiding my guardians with all his stealth and guile. I knew he was there, but I was holding them back.)")
                 stage++
             }
 
             102 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(In all his visits, all he ever did was look around and take notes; watch me as I went about my business; and study my guardians going about theirs.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(In all his visits, all he ever did was look around and take notes; watch me as I went about my business; and study my guardians going about theirs.)")
                 stage++
             }
 
             103 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(I did take exception to him taking away my antiques collection, I suppose, but he provided me with a lovely shrine and tapestry in exchange. So, I'm content. Heh heh.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(I did take exception to him taking away my antiques collection, I suppose, but he provided me with a lovely shrine and tapestry in exchange. So, I'm content. Heh heh.)")
                 stage++
             }
 
             104 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(Was there something you wanted to ask about?)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(Was there something you wanted to ask about?)")
                 stage = 42
             }
 
             105 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(The feathers I gave you are a part of me. You can use them to infuse a summoning pouch with some of my essence.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(The feathers I gave you are a part of me. You can use them to infuse a summoning pouch with some of my essence.)")
                 stage++
             }
 
@@ -646,12 +646,12 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             107 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(Indeed. The energy from the pouch creates a spectral version of my, but the essence contained within it links it to my mind.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(Indeed. The energy from the pouch creates a spectral version of my, but the essence contained within it links it to my mind.)")
                 stage++
             }
 
             108 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(You see, there is only one of me, but using the summoning pouches and spectral essences means I can be in many places at once.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(You see, there is only one of me, but using the summoning pouches and spectral essences means I can be in many places at once.)")
                 stage++
             }
 
@@ -661,12 +661,12 @@ class PhoenixDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             110 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(I will still be a powerful magical fighter, and will also have the power to conjure up ashes and hurl them at your foe, blinding them temporarily.)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(I will still be a powerful magical fighter, and will also have the power to conjure up ashes and hurl them at your foe, blinding them temporarily.)")
                 stage++
             }
 
             111 -> {
-                npcl(FaceAnim.FAMILIAR_HAPPY, "(When these ashes fall to the floor, use my summoning scroll on them. This will be particularly useful if I am running low on life points. Heh heh heh!)")
+                npcl(FaceAnim.FAMILIAR_NEUTRAL, "(When these ashes fall to the floor, use my summoning scroll on them. This will be particularly useful if I am running low on life points. Heh heh heh!)")
                 stage++
             }
 

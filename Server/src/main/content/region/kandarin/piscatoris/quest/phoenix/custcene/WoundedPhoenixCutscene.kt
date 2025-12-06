@@ -61,6 +61,7 @@ class WoundedPhoenixCutscene(player: Player) : Cutscene(player) {
                 endWithoutFade {
                     resetCamera()
                     setVarbit(player, Vars.VARBIT_QUEST_IN_PYRE_NEED_PROGRESS_5761, 6, true)
+                    setVarbit(player, 5774, 1, true)
                 }
             }
         }
