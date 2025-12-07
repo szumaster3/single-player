@@ -4,6 +4,7 @@ import content.data.LightSources
 import core.api.*
 import core.game.component.Component
 import core.game.event.EventHook
+import core.game.event.ItemEquipEvent
 import core.game.event.UseWithEvent
 import core.game.interaction.Option
 import core.game.node.Node
@@ -11,6 +12,7 @@ import core.game.node.entity.Entity
 import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.combat.ImpactHandler.HitsplatType
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryManager
 import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
@@ -37,7 +39,7 @@ import java.util.*
  *
  * @author Emperor
  */
-class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
+class DarkZone : MapZone("Dark zone", true), EventHook<core.game.event.Event> {
 
     override fun configure() {
         register(SKAVID_CAVE_10131)
@@ -99,6 +101,7 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
             }
         }
         e.hook(Event.UsedWith, this)
+        e.hook(Event.ItemEquipped, this)
         return true
     }
 
@@ -133,11 +136,28 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
         }
     }
 
-    override fun process(entity: Entity, event: UseWithEvent) {
-        val isTinderbox = getItemName(event.used) == "Tinderbox" || getItemName(event.with) == "Tinderbox"
-        if (isTinderbox && entity is Player) {
-            runTask(entity, 2, 1) { checkDarkArea(entity.asPlayer()) }
+    override fun process(entity: Entity, event: core.game.event.Event) {
+        when (event) {
+            is UseWithEvent -> handleUseWith(entity, event)
+            is ItemEquipEvent -> handleEquip(entity, event)
         }
+    }
+
+    private fun handleUseWith(entity: Entity, event: UseWithEvent) {
+        if (entity !is Player) return
+
+        val isTinderbox = getItemName(event.used) == "Tinderbox" || getItemName(event.with) == "Tinderbox"
+        if (isTinderbox) {
+            runTask(entity, 2, 1) { checkDarkArea(entity) }
+        }
+    }
+
+    private fun handleEquip(entity: Entity, event: ItemEquipEvent) {
+        if (entity !is Player) return
+        if (event.slotId != EquipmentSlot.HEAD.ordinal) return
+        val headbandId = DiaryManager(entity).headband
+        if (event.itemId != headbandId) return
+        runTask(entity, 2, 1) { checkDarkArea(entity) }
     }
 
     companion object {
