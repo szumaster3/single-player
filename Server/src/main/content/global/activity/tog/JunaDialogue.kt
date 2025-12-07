@@ -9,6 +9,7 @@ import core.game.dialogue.FaceAnim
 import core.game.dialogue.splitLines
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
+import core.tools.DARK_RED
 import core.tools.END_DIALOGUE
 import core.tools.Log
 import shared.consts.Items
@@ -29,39 +30,19 @@ class JunaDialogue(player: Player? = null) : Dialogue(player) {
         val wait = TearsOfGuthix.daysLeft(player) > 0
         val xpMissing = TearsOfGuthix.xpLeft(player) > 0
         val qpMissing = TearsOfGuthix.questPointsLeft(player) > 0
-        val questStage = getQuestStage(player, Quests.TEARS_OF_GUTHIX)
-
-        if (player.getQuestRepository().points == 0 || (xpMissing && qpMissing)) {
-            npcl(FaceAnim.OLD_DEFAULT, "You need more experience and quest points before entering the Tears of Guthix cave.")
-            return true
-        }
 
         if (wait) {
             npcl(FaceAnim.OLD_DEFAULT, "You must wait longer before entering the Tears of Guthix cave.")
             return true
         }
 
-        when {
-            !isQuestComplete(player, Quests.TEARS_OF_GUTHIX) && questStage < 1 -> {
-                npc(FaceAnim.OLD_DEFAULT, "Tell me... a story...")
-                stage = 2
-            }
-
-            questStage >= 1 && !inInventory(player, Items.STONE_BOWL_4704) -> {
-                npc(FaceAnim.OLD_DEFAULT, "Before you can collect the Tears of Guthix you must", "make a bowl out of the special stone in the cave", "on the south side of the chasm.")
-                stage = 24
-            }
-
-            questStage >= 1 -> {
-                npc(FaceAnim.OLD_DEFAULT, "Tell me... a story...")
-                stage = 2
-            }
-
-            else -> {
-                npcl(FaceAnim.OLD_DEFAULT, "You may now enter the Tears of Guthix cave.")
-                stage = 28
-            }
+        if (player.getQuestRepository().points == 0 || (xpMissing && qpMissing)) {
+            npcl(FaceAnim.OLD_DEFAULT, "You need more experience and quest points before entering the Tears of Guthix cave.")
+            return true
         }
+
+        npc(FaceAnim.OLD_DEFAULT, "Tell me... a story...")
+        stage = 2
         return true
     }
 
@@ -655,9 +636,14 @@ class JunaDialogue(player: Player? = null) : Dialogue(player) {
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+        val daysLeft = TearsOfGuthix.daysLeft(player)
+        val xpLeft = TearsOfGuthix.xpLeft(player)
+        val qpLeft = TearsOfGuthix.questPointsLeft(player)
         when (stage) {
             2 -> options("Okay...", "A story?", "Not now", "You tell me a story").also { stage = 19 }
-            3 -> {
+
+            31 -> sendDialogue(player, "You tell Juna some stories of your adventures.").also { stage++ }
+            32 -> {
                 dialogueNodes = buildQuestStories()
                 if (dialogueNodes.isEmpty()) {
                     player("I... actually don't have any good stories right now.").also {
@@ -678,7 +664,7 @@ class JunaDialogue(player: Player? = null) : Dialogue(player) {
             7 -> npc(FaceAnim.OLD_DEFAULT, "Then you can drink of the power of balance, which will", "make you stronger in whatever area you are weakest.").also { stage++ }
             8 -> options("Okay...", "Not now.", "What are the Tears of Guthix?").also { stage++ }
             9 -> when (buttonId) {
-                1 -> player("Okay...").also { stage = 3 }
+                1 -> player("Okay...").also { stage = 31 }
                 2 -> player("Not now.").also { stage = END_DIALOGUE }
                 3 -> player("What are the Tears of Guthix?").also { stage++ }
             }
@@ -696,22 +682,26 @@ class JunaDialogue(player: Player? = null) : Dialogue(player) {
                 stage = END_DIALOGUE
             }
             19 -> when (buttonId) {
-                1 -> player("Okay...").also { stage = 3 }
+                1 -> player("Okay...").also { stage = 31 }
                 2 -> player("A story?").also { stage = 4 }
                 3 -> player("Not now.").also { stage = END_DIALOGUE }
                 4 -> player("You tell me a story").also { stage = 10 }
             }
 
-            20 -> npc(FaceAnim.OLD_DEFAULT, "Your stories have entertained me. I will let you into", "the cave for a short time.").also { stage++ }
-            21 -> npc(FaceAnim.OLD_DEFAULT, "But first you will need to make a bowl in which to", "collect the tears.").also { stage = if (!inInventory(player, Items.STONE_BOWL_4704)) 22 else 25 }
-            22 -> npc(FaceAnim.OLD_DEFAULT, "There is a cave on the south side of the chasm that is", "infused with Guthix's power. Mine stone from there and", "craft a bowl.").also { stage = 23 }
+            20 -> npc(FaceAnim.OLD_DEFAULT, "Your stories have entertained me. I will let you into", "the cave for a short time.").also {
+                stage = if (!isQuestComplete(player, Quests.TEARS_OF_GUTHIX)) {
+                    if (inInventory(player, Items.STONE_BOWL_4704)) 25 else 21
+                } else {
+                    26
+                }
+            }
+            21 -> npc(FaceAnim.OLD_DEFAULT, "But first you will need to make a bowl in which to", "collect the tears.").also { stage++ }
+            22 -> npc(FaceAnim.OLD_DEFAULT, "There is a cave on the south side of the chasm that is", "infused with Guthix's power. Mine stone from there and", "craft a bowl.").also { stage++ }
             23 -> {
-                npc(FaceAnim.OLD_DEFAULT, "Bring the bowl to me, and then I will let you collect the tears.")
+                npcl(FaceAnim.OLD_DEFAULT, "Bring the bowl to me, and then I will let you collect the tears.")
                 setQuestStage(player, Quests.TEARS_OF_GUTHIX, 1)
                 stage = END_DIALOGUE
             }
-
-            // Player has no bowl earlier.
             24 -> {
                 npc(FaceAnim.OLD_DEFAULT, "Mine some stone from that cave, make it into a bowl,", "and bring it to me.")
                 setQuestStage(player, Quests.TEARS_OF_GUTHIX, 1)
@@ -720,31 +710,51 @@ class JunaDialogue(player: Player? = null) : Dialogue(player) {
 
             25 -> player("I have a bowl.").also { stage++ }
 
-            // Player already has bowl.
             26 -> {
                 if (!isQuestComplete(player, Quests.TEARS_OF_GUTHIX)) {
                     npc(FaceAnim.OLD_DEFAULT, "I will keep your bowl for you, so that you may collect", "the tears many times in the future.")
                     stage = 27
                 } else {
-                    if (!hasHandsFree(player)) {
-                        npc(FaceAnim.OLD_NORMAL, "But you must have both hands free to carry the bowl.", "Speak to me again when your hands are free.")
-                        stage = END_DIALOGUE
-                    } else {
-                        npc(FaceAnim.OLD_NORMAL, "Collect as much as you can from the blue streams. If", "you let in water from the green streams it will reduce", "your reward.")
-                        stage = 28
+                    when {
+                        daysLeft > 0 && xpLeft > 0 && qpLeft > 0 -> {
+                            npcl(FaceAnim.OLD_DEFAULT, "Your stories have entertained me. But I will not permit any adventurer to access the tears more than once a week. Come back in $daysLeft days.")
+                            stage = 29
+                        }
+                        xpLeft > 0 && qpLeft > 0 -> {
+                            npc(FaceAnim.OLD_DEFAULT, "Your story has entertained me. But it is a poor sort", "of adventurer who only tells stories of the past and", "does not find new stories to tell. I will not let you", "into the cave again until you have had more adventures.")
+                            stage = 29
+                        }
+                        daysLeft > 0 -> {
+                            npcl(FaceAnim.OLD_DEFAULT, "Your stories have entertained me. But I will not permit any adventurer to access the tears more than once a week. Come back in $daysLeft days.")
+                            stage = END_DIALOGUE
+                        }
+                        !hasHandsFree(player) -> {
+                            npc(FaceAnim.OLD_NORMAL, "But you must have both hands free to carry the bowl.", "Speak to me again when your hands are free.")
+                            stage = END_DIALOGUE
+                        }
+                        else -> {
+                            npc(FaceAnim.OLD_DEFAULT, "Collect as much as you can from the blue streams. If", "you let in water from the green streams, it will take", "away from the blue. For Guthix is god of balance, and", "balance lies in the juxtaposition of opposites.")
+                            stage = 28
+                        }
                     }
                 }
             }
 
             27 -> {
                 end()
-                removeItem(player, Items.STONE_BOWL_4704)
-                finishQuest(player, Quests.TEARS_OF_GUTHIX)
+                if(removeItem(player, Items.STONE_BOWL_4704)) {
+                    finishQuest(player, Quests.TEARS_OF_GUTHIX)
+                }
             }
 
             28 -> {
                 end()
                 TearsOfGuthixActivity.startGame(player)
+            }
+
+            29 -> {
+                end()
+                sendDialogue(player, "You cannot enter the cave again until you have gained either ${DARK_RED}one quest point</col> or ${DARK_RED}$xpLeft total XP</col>.")
             }
         }
 
