@@ -15,10 +15,7 @@ import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
 import core.game.world.update.flag.context.Animation
-import shared.consts.Components
-import shared.consts.Items
-import shared.consts.Quests
-import shared.consts.Scenery
+import shared.consts.*
 
 /**
  * Tears of Guthix Activity
@@ -28,44 +25,16 @@ import shared.consts.Scenery
  * ```
  * @author ovenbreado
  */
-class TearsOfGuthixActivity :
-    InteractionListener,
-    EventHook<TickEvent>,
-    MapArea {
-    companion object {
-        const val varbitTimeBar = 454
-        const val varbitPoints = 455
-        const val attributeTicksRemaining = "minigame:tearsofguthix-ticksremaining"
-        const val attributeTearsCollected = "minigame:tearsofguthix-tearscollected"
-        const val attributeIsCollecting = "minigame:tearsofguthix-iscollecting"
+class TearsOfGuthixActivity : MapArea, InteractionListener, EventHook<TickEvent> {
 
-        // In order specified by RS
-        private val rewardArray =
-            arrayOf(
-                Skills.COOKING,
-                Skills.CRAFTING,
-                Skills.FIREMAKING,
-                Skills.FISHING,
-                Skills.MAGIC,
-                Skills.MINING,
-                Skills.PRAYER,
-                Skills.RANGE,
-                Skills.RUNECRAFTING,
-                Skills.SMITHING,
-                Skills.WOODCUTTING,
-                Skills.AGILITY,
-                Skills.HERBLORE,
-                Skills.FLETCHING,
-                Skills.THIEVING,
-                Skills.SLAYER,
-                Skills.ATTACK,
-                Skills.DEFENCE,
-                Skills.STRENGTH,
-                Skills.HITPOINTS,
-                Skills.FARMING,
-                Skills.CONSTRUCTION,
-                Skills.HUNTER,
-            )
+    companion object {
+        const val TEARS_SWITCH = Vars.VARBIT_TOG_COLLECTING_TEARS_SWITCH_453
+        const val QP_REQUIREMENTS = Vars.VARBIT_TEARS_OF_GUTHIX_QUEST_POINT_REQUIREMENT_456
+        const val VARBIT_TOG_TIME_BAR = Vars.VARBIT_TEARS_OF_GUTHIX_TIME_BAR_454
+        const val VARBIT_TOG_SCORE = Vars.VARBIT_TEARS_OF_GUTHIX_POINTS_455
+
+        private val junaScenery = getScenery(Location(3252, 9516, 2))
+        private val rewardArray = arrayOf(Skills.COOKING, Skills.CRAFTING, Skills.FIREMAKING, Skills.FISHING, Skills.MAGIC, Skills.MINING, Skills.PRAYER, Skills.RANGE, Skills.RUNECRAFTING, Skills.SMITHING, Skills.WOODCUTTING, Skills.AGILITY, Skills.HERBLORE, Skills.FLETCHING, Skills.THIEVING, Skills.SLAYER, Skills.ATTACK, Skills.DEFENCE, Skills.STRENGTH, Skills.HITPOINTS, Skills.FARMING, Skills.CONSTRUCTION, Skills.HUNTER)
 
         private val rewardText =
             arrayOf(
@@ -120,67 +89,41 @@ class TearsOfGuthixActivity :
 
             sendMessage(player, rewardText[rewardArray.indexOf(lowestSkill)])
 
-            val tearsCollected = getAttribute(player, attributeTearsCollected, 0)
+            val tearsCollected = getAttribute(player, GameAttributes.TOG_TEARS_TTL, 0)
             rewardXP(player, lowestSkill, perTearXP * tearsCollected)
         }
 
         fun startGame(player: Player) {
-            lock(player, 15)
-
             player.interfaceManager.openSingleTab(Component(Components.TOG_WATER_BOWL_4))
-            setAttribute(player, attributeTicksRemaining, getQuestPoints(player) + 15)
-            setAttribute(player, attributeTearsCollected, 0)
-            setVarbit(player, varbitTimeBar, 10)
-            setVarbit(player, varbitPoints, 0)
+            setAttribute(player, GameAttributes.TOG_TIMER, getQuestPoints(player) + 15)
+            setAttribute(player, GameAttributes.TOG_TEARS_TTL, 0)
 
-            player.appearance.holdTogBowl()
+            setVarbit(player, VARBIT_TOG_TIME_BAR, 10)
+            setVarbit(player, VARBIT_TOG_SCORE, 0)
 
-            queueScript(player, 0, QueueStrength.SOFT) { stage: Int ->
+            player.equipment.replace(Item(Items.STONE_BOWL_4704), 3)
+            player.appearance.setAnimations(Animation(Animations.TOG_BOWL_RENDER_357))
+            player.appearance.sync()
+
+            playAudio(player, Sounds.JUNA_HISS_1797)
+            junaScenery?.let { animateScenery(it, Animations.JUNA_TAIL_LIFT_2055) }
+
+            player.walkingQueue.reset()
+            queueScript(player, 1, QueueStrength.SOFT) { stage ->
                 when (stage) {
                     0 -> {
-                        val distance = player.location.getDistance(Location(3251, 9516, 2)).toInt() + 1 // Per tick?
-                        forceMove(player, player.location, Location(3251, 9516, 2), 0, distance * 15, null, 8997)
-                        return@queueScript delayScript(player, distance)
+                        val dest = Location(3251, 9516, 2)
+                        player.walkingQueue.addPath(dest.x, dest.y)
+                        return@queueScript delayScript(player, 4)
                     }
-
                     1 -> {
-                        face(player, Location(3252, 9516, 2))
-                        val junaScenery = getScenery(Location(3252, 9516, 2))
-                        if (junaScenery != null) {
-                            animateScenery(junaScenery, 2055)
-                        }
-                        return@queueScript delayScript(player, 2)
+                        val dest = Location(3253, 9516, 2)
+                        player.walkingQueue.addPath(dest.x, dest.y)
+                        return@queueScript delayScript(player, 4)
                     }
-
                     2 -> {
-                        val distance = player.location.getDistance(Location(3253, 9516, 2)).toInt() + 1 // Per tick?
-                        forceMove(player, player.location, Location(3253, 9516, 2), 0, distance * 15, null, 8997)
-                        return@queueScript delayScript(player, distance)
-                    }
-
-                    3 -> {
-                        face(player, Location(3253, 9517, 2))
-                        return@queueScript delayScript(player, 2)
-                    }
-
-                    4 -> {
-                        val distance = player.location.getDistance(Location(3253, 9517, 2)).toInt() + 1 // Per tick?
-                        forceMove(player, player.location, Location(3253, 9517, 2), 0, distance * 15, null, 8997)
-                        return@queueScript delayScript(player, distance)
-                    }
-
-                    5 -> {
-                        face(player, Location(3257, 9517, 2))
-                        return@queueScript delayScript(player, 2)
-                    }
-
-                    6 -> {
-                        val distance = player.location.getDistance(Location(3257, 9517, 2)).toInt() + 1 // Per tick?
-                        forceMove(player, player.location, Location(3257, 9517, 2), 0, distance * 15, null, 8997)
-                        return@queueScript delayScript(player, distance)
-                    }
-
-                    7 -> {
+                        val dest = Location(3257, 9517, 2)
+                        player.walkingQueue.addPath(dest.x, dest.y)
                         return@queueScript stopExecuting(player)
                     }
 
@@ -190,54 +133,45 @@ class TearsOfGuthixActivity :
         }
 
         fun endGame(player: Player) {
-            lock(player, 22)
-            queueScript(player, 0, QueueStrength.SOFT) { stage: Int ->
+            sendMessage(player, "Your time in the cave is up.")
+
+            playAudio(player, Sounds.JUNA_HISS_1797)
+            junaScenery?.let { animateScenery(it, Animations.JUNA_TAIL_LIFT_2055) }
+
+            player.walkingQueue.reset()
+            queueScript(player, 1, QueueStrength.SOFT) { stage ->
                 when (stage) {
                     0 -> {
-                        sendMessage(player, "Your time in the cave is up.")
-                        val distance = player.location.getDistance(Location(3253, 9517, 2)).toInt() + 1 // Per tick?
-                        forceMove(player, player.location, Location(3253, 9517, 2), 0, distance * 15, null, 8997)
-                        return@queueScript delayScript(player, distance)
+                        val dest = Location(3253, 9517, 2)
+                        player.walkingQueue.addPath(dest.x, dest.y)
+                        return@queueScript delayScript(player, 4)
                     }
 
                     1 -> {
-                        face(player, Location(3253, 9516, 2))
-                        return@queueScript delayScript(player, 2)
+                        val dest = Location(3253, 9516, 2)
+                        player.walkingQueue.addPath(dest.x, dest.y)
+                        return@queueScript delayScript(player, 4)
                     }
 
                     2 -> {
-                        val distance = player.location.getDistance(Location(3253, 9516, 2)).toInt() + 1 // Per tick?
-                        forceMove(player, player.location, Location(3253, 9516, 2), 0, distance * 15, null, 8997)
-                        return@queueScript delayScript(player, distance)
+                        val dest = Location(3251, 9516, 2)
+                        player.walkingQueue.addPath(dest.x, dest.y)
+                        return@queueScript delayScript(player, 4)
                     }
 
                     3 -> {
-                        face(player, Location(3251, 9516, 2))
-                        val junaScenery = getScenery(Location(3252, 9516, 2))
-                        if (junaScenery != null) {
-                            animateScenery(junaScenery, 2055)
-                        }
-                        return@queueScript delayScript(player, 2)
-                    }
-
-                    4 -> {
-                        val distance = player.location.getDistance(Location(3251, 9516, 2)).toInt() + 1 // Per tick?
-                        forceMove(player, player.location, Location(3251, 9516, 2), 0, distance * 15, null, 8997)
-                        return@queueScript delayScript(player, distance)
-                    }
-
-                    5 -> {
+                        playAudio(player, Sounds.DRINK_AND_MAGIC_1796)
+                        animate(player, Animations.DRINK_BOWL_2045)
                         sendMessage(player, "You drink the liquid...")
-                        animate(player, 2045)
                         return@queueScript delayScript(player, 3)
                     }
 
-                    6 -> {
+                    4 -> {
                         rewardTears(player)
                         setAttribute(player, GameAttributes.QUEST_TOG_LAST_DATE, System.currentTimeMillis())
                         setAttribute(player, GameAttributes.QUEST_TOG_LAST_XP_AMOUNT, player.skills.totalXp)
                         setAttribute(player, GameAttributes.QUEST_TOG_LAST_QP, getQuestPoints(player))
-                        removeAttribute(player, attributeTearsCollected)
+                        removeAttribute(player, GameAttributes.TOG_TEARS_TTL)
                         if (player.interfaceManager.singleTab?.id == 4) {
                             player.interfaceManager.closeSingleTab()
                         }
@@ -254,32 +188,52 @@ class TearsOfGuthixActivity :
 
     override fun defineListeners() {
         on(Scenery.WEEPING_WALL_6660, SCENERY, "collect-from") { player, node ->
-            animate(player, 2043)
+            playAudio(player, Sounds.COLLECT_TEAR_1795)
+            animate(player, Animations.FILL_TOG_BOWL_2043)
             val index = TearsOfGuthixListener.allWalls.indexOf(node.location)
-            setAttribute(player, attributeIsCollecting, index)
+            setAttribute(player, GameAttributes.TOG_ACTVITY, index)
             return@on true
         }
     }
 
     override fun process(entity: Entity, event: TickEvent) {
-        if (entity is Player) {
-            if (getAttribute(entity, attributeTicksRemaining, -1) > 0) {
-                setAttribute(entity, attributeTicksRemaining, getAttribute(entity, attributeTicksRemaining, 0) - 1)
-                setVarbit(entity, varbitTimeBar, (getAttribute(entity, attributeTicksRemaining, 0) * 10 / getQuestPoints(entity)), false)
-                if (getAttribute(entity, attributeIsCollecting, 0) != 0) {
-                    val currentArrayIndex = getAttribute(entity, attributeIsCollecting, 0)
-                    val currentTearState = TearsOfGuthixListener.globalWallState[currentArrayIndex]
-                    if (currentTearState == 1) {
-                        setAttribute(entity, attributeTearsCollected, getAttribute(entity, attributeTearsCollected, 0) + 1)
-                    } else if (currentTearState == 2 && getAttribute(entity, attributeTearsCollected, 0) > 0) {
-                        setAttribute(entity, attributeTearsCollected, getAttribute(entity, attributeTearsCollected, 0) - 1)
+        if (entity !is Player) return
+
+        val timer = getAttribute(entity, GameAttributes.TOG_TIMER, -1)
+        if (timer > 0) {
+            val newTimer = timer - 1
+            setAttribute(entity, GameAttributes.TOG_TIMER, newTimer)
+
+            // Timer bar.
+            val questPoints = getQuestPoints(entity)
+            setVarbit(entity, VARBIT_TOG_TIME_BAR, (newTimer * 10 / questPoints), false)
+
+            // Activity.
+            val activityIndex = getAttribute(entity, GameAttributes.TOG_ACTVITY, 0)
+            if (activityIndex != 0) {
+                val tearState = TearsOfGuthixListener.globalWallState[activityIndex]
+                var tears = getAttribute(entity, GameAttributes.TOG_TEARS_TTL, 0)
+
+                when (tearState) {
+                    1 -> {
+                        playAudio(entity, Sounds.COLLECT_GOOD_TEAR_1794)
+                        tears++
                     }
-                    setVarbit(entity, varbitPoints, getAttribute(entity, attributeTearsCollected, 0))
+                    2 -> {
+                        if (tears > 0) {
+                            playAudio(entity, Sounds.COLLECT_BAD_TEAR_1793)
+                            tears--
+                        }
+                    }
                 }
-            } else if (getAttribute(entity, attributeTicksRemaining, -1) == 0) {
-                removeAttribute(entity, attributeTicksRemaining)
-                endGame(entity)
+
+                setAttribute(entity, GameAttributes.TOG_TEARS_TTL, tears)
+                setVarbit(entity, VARBIT_TOG_SCORE, tears)
             }
+
+        } else if (timer == 0) {
+            removeAttribute(entity, GameAttributes.TOG_TIMER)
+            endGame(entity)
         }
     }
 
@@ -289,7 +243,7 @@ class TearsOfGuthixActivity :
 
     override fun areaEnter(entity: Entity) {
         if (entity is Player) {
-            if (getAttribute(entity, attributeTicksRemaining, 0) <= 0) {
+            if (getAttribute(entity, GameAttributes.TOG_TIMER, 0) <= 0) {
                 removeItem(entity, Items.STONE_BOWL_4704, Container.EQUIPMENT)
                 teleport(entity, Location(3251, 9516, 2))
             } else {
@@ -303,8 +257,8 @@ class TearsOfGuthixActivity :
             entity.unhook(this)
             if (logout) {
                 removeItem(entity, Items.STONE_BOWL_4704, Container.EQUIPMENT)
-                removeAttribute(entity, attributeTearsCollected)
-                removeAttribute(entity, attributeTicksRemaining)
+                removeAttribute(entity, GameAttributes.TOG_TEARS_TTL)
+                removeAttribute(entity, GameAttributes.TOG_TIMER)
                 teleport(entity, Location(3251, 9516, 2))
             }
         }
@@ -313,7 +267,7 @@ class TearsOfGuthixActivity :
     override fun entityStep(entity: Entity, location: Location, lastLocation: Location) {
         if (entity is Player) {
             entity.hook(Event.Tick, this)
-            setAttribute(entity, attributeIsCollecting, 0)
+            setAttribute(entity, GameAttributes.TOG_ACTVITY, 0)
         }
     }
 }

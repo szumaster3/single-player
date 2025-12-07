@@ -1,5 +1,6 @@
 package core.game.node.entity.npc;
 
+import content.data.GameAttributes;
 import content.global.skill.slayer.Tasks;
 import content.global.skill.summoning.familiar.Familiar;
 import core.api.utils.PlayerStatsCounter;
@@ -519,6 +520,7 @@ public class NPC extends Entity {
         }
         Player p = !(killer instanceof Player) ? null : (Player) killer;
         if (p != null) {
+            p.incrementAttribute(GameAttributes.NPC_KILLCOUNT);
             PlayerStatsCounter.incrementKills(p, originalId);
         }
         handleDrops(p, killer);

@@ -171,7 +171,7 @@ object Animations {
     const val ANIMATION_354 = 354
     const val ANIMATION_355 = 355
     const val ANIMATION_356 = 356
-    const val ANIMATION_357 = 357
+    const val TOG_BOWL_RENDER_357 = 357
     const val ANIMATION_358 = 358
     const val ANIMATION_359 = 359
     const val ANIMATION_360 = 360
@@ -1869,7 +1869,7 @@ object Animations {
     const val ANIMATION_2052 = 2052
     const val ANIMATION_2053 = 2053
     const val ANIMATION_2054 = 2054
-    const val ANIMATION_2055 = 2055
+    const val JUNA_TAIL_LIFT_2055 = 2055
     const val ANIMATION_2056 = 2056
     const val ANIMATION_2057 = 2057
     const val ANIMATION_2058 = 2058

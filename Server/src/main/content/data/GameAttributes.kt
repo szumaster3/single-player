@@ -16,6 +16,9 @@ internal object GameAttributes {
     const val TUTORIAL_COMPLETE = "/save:tutorial:complete"
     const val TUTORIAL_STAGE = "/save:tutorial:stage"
 
+    // Statistics.
+    const val NPC_KILLCOUNT = "/save:stats_manager:enemies_killed"
+
     // Prayer lock.
     const val PRAYER_LOCK = "prayer:lock"
 
@@ -462,4 +465,9 @@ internal object GameAttributes {
     // Recruitment drive
     const val RECRUITMENT_DRIVE_TEST_OF_PATIENCE = "rd:test_of_patience"
     const val RECRUITMENT_DRIVE_NPC_SPAWN = "rd:generatedsirleye"
+
+    // Tog
+    const val TOG_TIMER = "minigame:tearsofguthix-ticksremaining"
+    const val TOG_TEARS_TTL = "minigame:tearsofguthix-tearscollected"
+    const val TOG_ACTVITY = "minigame:tearsofguthix-iscollecting"
 }
