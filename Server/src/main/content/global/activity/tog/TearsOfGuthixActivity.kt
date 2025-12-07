@@ -107,22 +107,27 @@ class TearsOfGuthixActivity : MapArea, InteractionListener, EventHook<TickEvent>
 
             playAudio(player, Sounds.JUNA_HISS_1797)
             junaScenery?.let { animateScenery(it, Animations.JUNA_TAIL_LIFT_2055) }
+            registerLogoutListener(player, "tog-bowl") {
+                removeItem(player, Items.STONE_BOWL_4704, Container.EQUIPMENT)
+            }
 
-            player.walkingQueue.reset()
             queueScript(player, 1, QueueStrength.SOFT) { stage ->
                 when (stage) {
                     0 -> {
                         val dest = Location(3251, 9516, 2)
+                        player.walkingQueue.reset()
                         player.walkingQueue.addPath(dest.x, dest.y)
-                        return@queueScript delayScript(player, 4)
+                        return@queueScript delayScript(player, 1)
                     }
                     1 -> {
                         val dest = Location(3253, 9516, 2)
+                        player.walkingQueue.reset()
                         player.walkingQueue.addPath(dest.x, dest.y)
-                        return@queueScript delayScript(player, 4)
+                        return@queueScript delayScript(player, 1)
                     }
                     2 -> {
                         val dest = Location(3257, 9517, 2)
+                        player.walkingQueue.reset()
                         player.walkingQueue.addPath(dest.x, dest.y)
                         return@queueScript stopExecuting(player)
                     }
@@ -138,32 +143,34 @@ class TearsOfGuthixActivity : MapArea, InteractionListener, EventHook<TickEvent>
             playAudio(player, Sounds.JUNA_HISS_1797)
             junaScenery?.let { animateScenery(it, Animations.JUNA_TAIL_LIFT_2055) }
 
-            player.walkingQueue.reset()
             queueScript(player, 1, QueueStrength.SOFT) { stage ->
                 when (stage) {
                     0 -> {
                         val dest = Location(3253, 9517, 2)
+                        player.walkingQueue.reset()
                         player.walkingQueue.addPath(dest.x, dest.y)
-                        return@queueScript delayScript(player, 4)
+                        return@queueScript delayScript(player, 1)
                     }
 
                     1 -> {
                         val dest = Location(3253, 9516, 2)
+                        player.walkingQueue.reset()
                         player.walkingQueue.addPath(dest.x, dest.y)
-                        return@queueScript delayScript(player, 4)
+                        return@queueScript delayScript(player, 1)
                     }
 
                     2 -> {
                         val dest = Location(3251, 9516, 2)
+                        player.walkingQueue.reset()
                         player.walkingQueue.addPath(dest.x, dest.y)
-                        return@queueScript delayScript(player, 4)
+                        return@queueScript delayScript(player, 1)
                     }
 
                     3 -> {
                         playAudio(player, Sounds.DRINK_AND_MAGIC_1796)
                         animate(player, Animations.DRINK_BOWL_2045)
                         sendMessage(player, "You drink the liquid...")
-                        return@queueScript delayScript(player, 3)
+                        return@queueScript delayScript(player, 1)
                     }
 
                     4 -> {
@@ -177,6 +184,7 @@ class TearsOfGuthixActivity : MapArea, InteractionListener, EventHook<TickEvent>
                         }
                         player.interfaceManager.restoreTabs()
                         removeItem(player, Items.STONE_BOWL_4704, Container.EQUIPMENT)
+                        clearLogoutListener(player, "tog-bowl")
                         return@queueScript stopExecuting(player)
                     }
 
