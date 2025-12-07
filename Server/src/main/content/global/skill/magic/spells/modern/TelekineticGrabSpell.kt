@@ -67,9 +67,10 @@ class TelekineticGrabSpell :
     private fun getGrabPulse(entity: Entity, ground: GroundItem): Pulse {
         return object : Pulse(getDelay(ground.location.getDistance(entity.location)), entity) {
             override fun pulse(): Boolean {
-                val player = entity as? Player
-                val g = GroundItemManager.get(ground.id, ground.location, player!!)
-                if (g == null) {
+                val player = entity as? Player ?: return true
+
+                val g = GroundItemManager.get(ground.id, ground.location, player)
+                if (g == null || !g.isActive) {
                     sendMessage(player, "Too late!")
                     return true
                 }
@@ -78,30 +79,39 @@ class TelekineticGrabSpell :
                  *  Telekinetic grab don't consume your runes which means that you cast a spell without casting it.
                  */
                 if (ground.id == Items.AHABS_BEER_6561) {
-                    openDialogue(player, NPCs.AHAB_2692, findNPC(NPCs.AHAB_2692)!!, true)
+                    findNPC(NPCs.AHAB_2692)?.let { npc ->
+                        openDialogue(player, NPCs.AHAB_2692, npc, true)
+                    }
                     return true
                 }
-                if (ground.id == Items.CUP_OF_TEA_712 && (ground.location == Location.create(3271, 3413, 0) || ground.location == Location.create(3272, 3409, 0))) {
-                    openDialogue(player, NPCs.TEA_SELLER_595, findNPC(NPCs.TEA_SELLER_595)!!, true)
+
+                if (ground.id == Items.CUP_OF_TEA_712 &&
+                    (ground.location == Location.create(3271, 3413, 0) ||
+                            ground.location == Location.create(3272, 3409, 0))) {
+
+                    findNPC(NPCs.TEA_SELLER_595)?.let { npc ->
+                        openDialogue(player, NPCs.TEA_SELLER_595, npc, true)
+                    }
                     return true
                 }
+
                 val teleZone = inZone(player, "Telekinetic Theatre") && g.id == 6888
-                if (!g.isActive) {
-                    sendMessage(player, "Too late!")
-                    return true
-                }
+
                 playAudio(player, Sounds.VULNERABILITY_IMPACT_3008)
+
                 if (!teleZone) {
                     player.inventory.add(Item(g.id, g.amount, g.charge))
                 } else {
-                    val zone: TelekineticTheatrePlugin = TelekineticTheatrePlugin.getZone(player)
-                    zone.moveStatue()
+                    TelekineticTheatrePlugin.getZone(player).moveStatue()
                     player.lock(delay)
                 }
+
                 sendGraphics(END_Graphics, ground.location)
+
                 if (!teleZone) {
                     GroundItemManager.destroy(g)
                 }
+
                 return true
             }
         }
