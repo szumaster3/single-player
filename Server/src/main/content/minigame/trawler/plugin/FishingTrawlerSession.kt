@@ -8,9 +8,6 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.game.node.scenery.Scenery
 import core.game.node.scenery.SceneryBuilder
-import core.game.system.command.sets.FISHING_TRAWLER_GAMES_WON
-import core.game.system.command.sets.FISHING_TRAWLER_SHIPS_SANK
-import core.game.system.command.sets.STATS_BASE
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Location
@@ -112,7 +109,6 @@ class FishingTrawlerSession(
                 player.interfaceManager.closeOverlay()
                 player.appearance.setAnimations(Animation(188))
                 player.properties.teleportLocation = session.base.transform(36, 24, 0)
-                player.incrementAttribute("/save:$STATS_BASE:$FISHING_TRAWLER_SHIPS_SANK")
             }
             return true
         }
@@ -161,7 +157,6 @@ class FishingTrawlerSession(
                 for (player in session.players) {
                     player.interfaceManager.closeOverlay()
                     player.properties.teleportLocation = Location.create(2666, 3162, 0)
-                    player.incrementAttribute("/save:$STATS_BASE:$FISHING_TRAWLER_GAMES_WON")
                     val rolls = ceil(session.fishAmount / session.players.size.toDouble()).toInt()
                     player.removeAttribute("ft-session")
                     player.setAttribute("/save:ft-rolls", rolls)

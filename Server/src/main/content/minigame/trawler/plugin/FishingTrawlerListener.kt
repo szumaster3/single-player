@@ -9,8 +9,6 @@ import core.game.interaction.InteractionListener
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import core.game.system.command.sets.FISHING_TRAWLER_LEAKS_PATCHED
-import core.game.system.command.sets.STATS_BASE
 import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
@@ -63,7 +61,6 @@ class FishingTrawlerInteractionHandler : InteractionListener {
                                 session
                                     .repairHole(player, node.asScenery())
                                     .also {
-                                        player.incrementAttribute("/save:$STATS_BASE:$FISHING_TRAWLER_LEAKS_PATCHED")
                                         player.unlock()
                                     }
 

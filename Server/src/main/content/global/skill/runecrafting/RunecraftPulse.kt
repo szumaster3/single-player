@@ -11,8 +11,6 @@ import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.SkillPulse
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import core.game.system.command.sets.STATS_BASE
-import core.game.system.command.sets.STATS_RC
 import core.game.world.GameWorld.ticks
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
@@ -148,7 +146,6 @@ class RunecraftPulse(
             val craftedRunes = Item(rune.rune.id, total)
             if (removeItem(player, item) && hasSpaceFor(player, craftedRunes)) {
                 addItem(player, craftedRunes.id, craftedRunes.amount)
-                player.incrementAttribute("/save:$STATS_BASE:$STATS_RC", amount)
                 sendMessage(
                     player,
                     "You bind the temple's power into " + (if (combination) getItemName(combo!!.rune) else rune.rune.name.lowercase()) + "s."
