@@ -31,9 +31,7 @@ import core.net.packet.out.Interface;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
-import shared.consts.Animations;
-import shared.consts.NPCs;
-import shared.consts.Sounds;
+import shared.consts.*;
 
 import static core.api.ContentAPIKt.playAudio;
 
@@ -117,7 +115,7 @@ public final class GiantMoleNPC extends AbstractNPC {
 
     private void splatterMud(Location hole) {
         for (Player p : RegionManager.getLocalPlayers(getCenterLocation(), (size() >> 1) + 2)) {
-            PacketRepository.send(Interface.class, new InterfaceContext(p, 548, 77, 226, true));
+            PacketRepository.send(Interface.class, new InterfaceContext(p, Components.TOPLEVEL_548, 77, 226, true));
             LightSources s = LightSources.getActiveLightSource(p);
             if (s == null || s.getOpen()) {
                 if (s != null) {
@@ -217,7 +215,7 @@ public final class GiantMoleNPC extends AbstractNPC {
         DigSpadeHandler.register(Location.create(2984, 3387, 0), action);
         DigSpadeHandler.register(Location.create(2987, 3387, 0), action);
 
-        SceneryDefinition.forId(12230).getHandlers().put("option:climb", new OptionHandler() {
+        SceneryDefinition.forId(Scenery.ROPE_12230).getHandlers().put("option:climb", new OptionHandler() {
             @Override
             public Plugin<Object> newInstance(Object arg) throws Throwable {
                 return this;
