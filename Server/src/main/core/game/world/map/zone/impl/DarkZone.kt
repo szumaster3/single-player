@@ -199,8 +199,9 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
             val source = LightSources.getActiveLightSource(player) ?: return
             val gasArea = inBorders(player, 3155, 9579, 3174, 9596) || inBorders(player, 3202, 9548, 3213, 9562)
             if (!gasArea || !source.open) return
+            val itemName = getItemName(source.litId).lowercase()
 
-            sendMessage(player, core.tools.RED + "Your ${source.name.lowercase()} flares brightly!")
+            sendMessage(player, core.tools.RED + "Your $itemName flares brightly!")
             runTask(player, 7) {
                 val damage = player.skills.lifepoints / 4
                 playGlobalAudio(player.location, Sounds.LANTERN_EXPLODES_1583)
@@ -208,7 +209,7 @@ class DarkZone : MapZone("Dark zone", true), EventHook<UseWithEvent> {
 
                 player.inventory.getSlot(Item(source.litId)).takeIf { it != -1 }?.let { slot ->
                     player.inventory.replace(Item(source.emptyId), slot, true)
-                    sendMessage(player, "Your ${source.name.lowercase()} has gone out!")
+                    sendMessage(player, "Your $itemName has gone out!")
                 }
 
                 if (!LightSources.hasActiveLightSource(player)) {
