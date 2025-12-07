@@ -30885,12 +30885,12 @@
   },
   {
     "remove_head": "true",
-    "remove_beard": "true",
     "examine": "A mime would wear this.",
     "durability": null,
     "name": "Mime mask",
     "archery_ticket_price": "0",
     "id": "3057",
+    "remove_beard": "true",
     "equipment_slot": "0"
   },
   {
@@ -37641,9 +37641,9 @@
     "walk_anim": "1468",
     "durability": null,
     "turn90ccw_anim": "1468",
-    "equip_audio": "1864",
     "attack_speed": "4",
     "two_handed": "true",
+    "equip_audio": "1864",
     "turn180_anim": "1468",
     "render_anim": "1119",
     "equipment_slot": "3",
@@ -65406,8 +65406,8 @@
     "render_anim": "1",
     "equipment_slot": "3",
     "grand_exchange_price": "2024",
-    "attack_audios": "1647,1648,1649,0",
     "stand_anim": "808",
+    "attack_audios": "1647,1648,1649,0",
     "name": "Mud pie",
     "tradeable": "true",
     "run_anim": "824",
@@ -84794,89 +84794,88 @@
     "tradeable": "false",
     "destroy": "true",
     "archery_ticket_price": "0",
-    "id": "9933",
-    "weight": "0.001"
+    "weight": "0.001",
+    "id": "9933"
   },
   {
     "examine": "An origami balloon.",
     "durability": null,
     "name": "Origami balloon",
     "archery_ticket_price": "0",
-    "id": "9934",
-    "weight": "0.001"
+    "weight": "0.001",
+    "id": "9934"
   },
   {
     "examine": "An origami balloon.",
     "durability": null,
     "name": "Yellow balloon",
     "archery_ticket_price": "0",
-    "id": "9935",
-    "weight": "0.001"
+    "weight": "0.001",
+    "id": "9935"
   },
   {
     "examine": "An origami balloon.",
     "durability": null,
     "name": "Blue balloon",
     "archery_ticket_price": "0",
-    "id": "9936",
-    "weight": "0.001"
+    "weight": "0.001",
+    "id": "9936"
   },
   {
     "examine": "An origami balloon.",
     "durability": null,
     "name": "Red balloon",
     "archery_ticket_price": "0",
-    "id": "9937",
-    "weight": "0.001"
+    "weight": "0.001",
+    "id": "9937"
   },
   {
     "examine": "An origami balloon.",
     "durability": null,
     "name": "Orange balloon",
     "archery_ticket_price": "0",
-    "id": "9938",
-    "weight": "0.001"
+    "weight": "0.001",
+    "id": "9938"
   },
   {
     "examine": "An origami balloon.",
     "durability": null,
     "name": "Green balloon",
     "archery_ticket_price": "0",
-    "id": "9939",
-    "weight": "0.001"
+    "weight": "0.001",
+    "id": "9939"
   },
   {
     "examine": "An origami balloon.",
     "durability": null,
     "name": "Purple balloon",
     "archery_ticket_price": "0",
-    "id": "9940",
-    "weight": "0.001"
+    "weight": "0.001",
+    "id": "9940"
   },
   {
     "examine": "An origami balloon.",
     "durability": null,
     "name": "Pink balloon",
     "archery_ticket_price": "0",
-    "id": "9941",
-    "weight": "0.001"
+    "weight": "0.001",
+    "id": "9941"
   },
   {
     "examine": "An origami balloon.",
     "durability": null,
     "name": "Black balloon",
     "archery_ticket_price": "0",
-    "id": "9942",
-    "weight": "0.001"
+    "weight": "0.001",
+    "id": "9942"
   },
   {
     "examine": "A bag full of sand.",
     "durability": null,
     "name": "Sandbag",
-    "weight": "1",
+    "weight": "1.5",
     "archery_ticket_price": "0",
-    "id": "9943",
-    "weight": "1.5"
+    "id": "9943"
   },
   {
     "destroy_message": "You'll have to visit Auguste on Entrana to get a new jacket.",
@@ -84900,9 +84899,9 @@
     "tradeable": "false",
     "destroy": "true",
     "archery_ticket_price": "0",
+    "weight": "0.001",
     "id": "9945",
-    "equipment_slot": "0",
-    "weight": "0.001"
+    "equipment_slot": "0"
   },
   {
     "remove_head": "true",
@@ -84910,9 +84909,9 @@
     "durability": null,
     "name": "Cap and goggles",
     "archery_ticket_price": "0",
+    "weight": "0.001",
     "id": "9946",
-    "equipment_slot": "0",
-    "weight": "0.001"
+    "equipment_slot": "0"
   },
   {
     "destroy_message": "You can reclaim this item from the place you found it.",
@@ -95500,10 +95499,10 @@
     "durability": null,
     "name": "Beacon ring",
     "tradeable": "false",
-    "equip_audio": "3525",
     "destroy": "true",
     "archery_ticket_price": "0",
     "id": "11014",
+    "equip_audio": "3525",
     "bonuses": "0,0,0,2,0,0,0,0,1,0,0,0,0,0,0",
     "equipment_slot": "12"
   },
@@ -97788,13 +97787,13 @@
   },
   {
     "remove_head": "true",
-    "remove_beard": "true",
     "examine": "Essential mime wear.",
     "durability": null,
     "name": "Beret and mask",
     "weight": "1",
     "archery_ticket_price": "0",
     "id": "11282",
+    "remove_beard": "true",
     "equipment_slot": "0"
   },
   {
