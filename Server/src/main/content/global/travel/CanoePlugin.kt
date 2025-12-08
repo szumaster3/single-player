@@ -340,8 +340,8 @@ class CanoePlugin : InteractionListener, InterfaceListener {
                     }
                 }
 
-            if (player.familiarManager.hasFamiliar()) {
-                sendMessage(player, "You can't take a follower on a canoe.")
+            if (player.familiarManager.hasFamiliar() || player.familiarManager.hasPet()) {
+                sendMessage(player, "You cannot take a canoe with a pet or familiar with you. It is not safe!")
                 return@on true
             }
 
