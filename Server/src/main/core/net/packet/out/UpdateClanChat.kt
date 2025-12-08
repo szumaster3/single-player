@@ -1,21 +1,20 @@
 package core.net.packet.out
 
 import core.net.packet.IoBuffer
-import core.net.packet.OutgoingContext
 import core.net.packet.OutgoingPacket
 import core.net.packet.PacketHeader
+import core.net.packet.context.ClanContext
 import core.tools.StringUtils.stringToLong
 
 /**
  * Handles the update clan chat outgoing packet.
- *
  * @author Emperor
  */
-class UpdateClanChat : OutgoingPacket<Clan> {
-    override fun send(context: Clan) {
+class UpdateClanChat : OutgoingPacket<ClanContext> {
+    override fun send(context: ClanContext) {
         val buffer = IoBuffer(55, PacketHeader.SHORT)
         val clan = context.clan
-        if (!context.leave) {
+        if (!context.isLeave) {
             buffer.putLong(stringToLong(clan.owner))
             buffer.putLong(stringToLong(clan.name))
             buffer.put(clan.kickRequirement.value)
@@ -34,7 +33,7 @@ class UpdateClanChat : OutgoingPacket<Clan> {
         } else {
             buffer.putLong(0)
         }
-        buffer.cypherOpcode(context.player.session.getIsaacPair()!!.output)
+        buffer.cypherOpcode(context.player.session.isaacPair.output)
         context.player.session.write(buffer)
     }
 }
