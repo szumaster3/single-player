@@ -12,6 +12,7 @@
     <modules>
         <module>Config</module>
         <module>Server</module>
+        <module>Management-Server</module>
     </modules>
 
     <properties>
