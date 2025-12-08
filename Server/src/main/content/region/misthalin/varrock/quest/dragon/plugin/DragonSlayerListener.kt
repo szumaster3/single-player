@@ -92,15 +92,7 @@ class DragonSlayerListener : InteractionListener {
                         }
                     }
                 }
-                forceMove(
-                    player,
-                    player.location,
-                    player.location.transform(if (player.location.x == 2845) 2 else -2, 0, 0),
-                    30,
-                    90,
-                    null,
-                    Animations.CLIMB_OVER_ROCK_10573
-                )
+                forceMove(player, player.location, player.location.transform(if (player.location.x == 2845) 2 else -2, 0, 0), 30, 90, null, Animations.CLIMB_OVER_ROCK_10573)
                 return@on true
             }
             if (inInventory(player, DragonSlayer.ELVARG_HEAD.id)) {

@@ -239,7 +239,8 @@ class MelzarNotes : InteractionListener {
     private fun display(player: Player, pageNum: Int, buttonID: Int): Boolean {
         val randomIndex = melzarPages.indices.random()
         val randomBook = melzarPages[randomIndex]
-        BookInterface.pageSetup(player, BookInterface.FANCY_BOOK_3_49, "Melzar's notes", arrayOf(randomBook))
+        BookInterface.pageSetup(player, BookInterface.FANCY_BOOK_3_49, "Melzar's notes", arrayOf(randomBook), false)
+
         return true
     }
 

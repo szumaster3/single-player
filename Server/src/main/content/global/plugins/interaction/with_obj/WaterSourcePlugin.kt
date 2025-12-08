@@ -69,7 +69,7 @@ class WaterSourcePlugin : InteractionListener {
 
         setDest(IntType.SCENERY, intArrayOf(9695), "use") { player, node ->
             if (player.location.regionId == 11571) {
-                return@setDest Location.create(2934, 3280, 0)
+                return@setDest Location(2934, 3280, 0)
             }
             return@setDest node.location
         }
