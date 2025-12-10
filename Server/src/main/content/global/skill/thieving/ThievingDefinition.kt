@@ -115,8 +115,6 @@ object ThievingDefinition {
                 player.locks.lockInteractions(2)
 
                 queueScript(player, 0, QueueStrength.WEAK) {
-                    delayClock(player, Clocks.SKILLING, 2)
-                    delayScript(player, 2)
                     val item = stall.randomLoot
                     val success = RandomFunction.random(15) >= 4
 
@@ -184,6 +182,7 @@ object ThievingDefinition {
                         }."
                     )
                     player.dispatch(ResourceProducedEvent(item.id, item.amount, node, 0))
+                    delayClock(player, Clocks.SKILLING, 2)
                     return@queueScript stopExecuting(player)
                 }
             }
@@ -268,6 +267,7 @@ object ThievingDefinition {
                     return true
                 }
 
+                delayClock(player, Clocks.SKILLING, 2)
                 animate(player, Animation(Animations.HUMAN_PICKPOCKETING_881, Animator.Priority.HIGH))
                 sendMessage(player, "You attempt to pick the $npcName's pocket.")
 
@@ -430,6 +430,9 @@ object ThievingDefinition {
                 sendMessage(player, "You need a lockpick in order to pick this lock.")
                 return
             }
+
+            delayClock(player, Clocks.SKILLING, 2)
+
             if (success) {
                 rewardXP(player, Skills.THIEVING, experience)
                 handleAutowalkDoor(player, door.asScenery())
@@ -509,6 +512,7 @@ object ThievingDefinition {
          * @param scenery The scenery object representing the chest.
          */
         fun searchTraps(player: Player, scenery: Scenery) {
+            if (!clockReady(player, Clocks.SKILLING)) return
             player.faceLocation(scenery.location)
 
             if (isRespawning) {
@@ -533,27 +537,34 @@ object ThievingDefinition {
             animate(player, Animations.HUMAN_OPEN_CHEST_536, false)
             sendMessage(player, "You find a trap on the chest...")
             player.impactHandler.disabledTicks = 6
+            delayClock(player, Clocks.SKILLING, 6)
 
-            queueScript(player, 0, QueueStrength.WEAK) {
-                delayScript(player, 2)
-                sendMessage(player, "You disable the trap.")
+            queueScript(player, 0, QueueStrength.WEAK) { stage : Int ->
+                when(stage){
+                    0 -> {
+                        sendMessage(player, "You disable the trap.")
+                        return@queueScript delayScript(player, 2)
+                    }
 
-                delayScript(player, 2)
-                animate(player, Animation.create(Animations.HUMAN_OPEN_CHEST_536))
-                player.faceLocation(scenery.location)
-                sendMessage(player, "You open the chest.")
+                    1 -> {
+                        animate(player, Animation.create(Animations.HUMAN_OPEN_CHEST_536))
+                        player.faceLocation(scenery.location)
+                        sendMessage(player, "You open the chest.")
+                        return@queueScript delayScript(player, 2)
+                    }
+                    2 -> {
+                        rewards.forEach { player.inventory.add(it, player) }
+                        sendMessage(player, "You find treasure inside!")
+                        rewardXP(player, Skills.THIEVING, xp)
+                        if (scenery.isActive) {
+                            replaceScenery(scenery, 2574, 3)
+                        }
+                        setRespawn()
+                        return@queueScript stopExecuting(player)
+                    }
 
-                delayScript(player, 2)
-                rewards.forEach { player.inventory.add(it, player) }
-                sendMessage(player, "You find treasure inside!")
-                rewardXP(player, Skills.THIEVING, xp)
-
-                if (scenery.isActive) {
-                    replaceScenery(scenery, 2574, 3)
+                    else -> return@queueScript stopExecuting(player)
                 }
-
-                setRespawn()
-                stopExecuting(player)
             }
         }
 

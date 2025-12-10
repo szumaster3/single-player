@@ -22,11 +22,7 @@ class DummyAttack : OptionHandler() {
         return this
     }
 
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         player.lock(3)
         player.animate(player.properties.attackAnimation)
         if (player.properties.currentCombatLevel < 8) {
