@@ -2,6 +2,7 @@ package content.global.skill.herblore
 
 import core.api.*
 import core.game.dialogue.SkillDialogueHandler
+import core.game.interaction.Clocks
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
@@ -14,7 +15,6 @@ import shared.consts.Items
 class GrindItemPlugin : InteractionListener {
 
     override fun defineListeners() {
-
         onUseWith(IntType.ITEM, Items.PESTLE_AND_MORTAR_233, *GRIND_ITEM_IDS) { player, _, with ->
             val grind = GrindItem.forID(with.id) ?: return@onUseWith false
             val sourceId = with.id
@@ -22,90 +22,60 @@ class GrindItemPlugin : InteractionListener {
 
             val invAmount = amountInInventory(player, sourceId)
 
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
             if (invAmount == 1) {
-                queueScript(player, 0, QueueStrength.WEAK) { stage ->
-                    when (stage) {
-                        0 -> {
-                            player.animate(Animation.create(Animations.HUMAN_USE_PESTLE_AND_MORTAR_364))
-                            delayScript(player, 2)
-                        }
-                        else -> {
-                            if (removeItem(player, Item(sourceId, 1))) {
-                                addItem(player, productId, 1)
-                                sendMessage(player, grind.message)
-                            }
-                            stopExecuting(player)
-                        }
-                    }
+                if (removeItem(player, Item(sourceId, 1))) {
+                    player.animate(Animation.create(Animations.HUMAN_USE_PESTLE_AND_MORTAR_364))
+                    addItem(player, productId, 1)
+                    sendMessage(player, grind.message)
+                    delayClock(player, Clocks.SKILLING, 2)
                 }
                 return@onUseWith true
             }
 
             val handler = object : SkillDialogueHandler(player, SkillDialogue.ONE_OPTION, Item(productId)) {
-
                 override fun create(amount: Int, index: Int) {
                     var remaining = amount
+                    val maxAmount = amountInInventory(player, sourceId)
+                    remaining = remaining.coerceAtMost(maxAmount)
 
-                    val invAmount = amountInInventory(player, sourceId)
-                    remaining = remaining.coerceAtMost(invAmount)
-                    if (sourceId == FISHING_BAIT) {
-                        remaining = remaining.coerceAtMost(10)
-                    }
+                    if (sourceId == FISHING_BAIT) remaining = remaining.coerceAtMost(10)
 
-                    queueScript(player, 0, QueueStrength.WEAK) { stage ->
+                    queueScript(player, 0, QueueStrength.WEAK) {
+                        if (!clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
 
                         val currentSource = amountInInventory(player, sourceId)
-                        if (remaining <= 0 || currentSource <= 0)
-                            return@queueScript stopExecuting(player)
+                        if (remaining <= 0 || currentSource <= 0) return@queueScript stopExecuting(player)
 
-                        when (stage) {
-                            0 -> {
-                                player.animate(Animation.create(Animations.HUMAN_USE_PESTLE_AND_MORTAR_364))
-                                delayScript(player, 2)
-                            }
+                        player.animate(Animation.create(Animations.HUMAN_USE_PESTLE_AND_MORTAR_364))
+                        delayClock(player, Clocks.SKILLING, 2)
 
-                            else -> {
-                                if (sourceId == FISHING_BAIT) {
-                                    val removeQty = 10.coerceAtMost(currentSource)
+                        val removeQty = if (sourceId == FISHING_BAIT) 10.coerceAtMost(currentSource) else 1
+                        if (removeItem(player, Item(sourceId, removeQty))) {
+                            addItem(player, productId, removeQty)
+                            sendMessage(player, grind.message)
+                        } else return@queueScript stopExecuting(player)
 
-                                    if (removeItem(player, Item(sourceId, removeQty))) {
-                                        addItem(player, productId, removeQty)
-                                    } else {
-                                        return@queueScript stopExecuting(player)
-                                    }
+                        remaining -= removeQty
 
-                                } else {
-                                    if (removeItem(player, Item(sourceId, 1))) {
-                                        addItem(player, productId, 1)
-                                    } else {
-                                        return@queueScript stopExecuting(player)
-                                    }
-                                }
-
-                                sendMessage(player, grind.message)
-                                remaining--
-
-                                if (remaining > 0) {
-                                    setCurrentScriptState(player, 0)
-                                    delayScript(player, 2)
-                                } else {
-                                    return@queueScript stopExecuting(player)
-                                }
-                            }
+                        if (remaining > 0) {
+                            delayClock(player, Clocks.SKILLING, 2)
+                            setCurrentScriptState(player, 0)
+                            delayScript(player, 2)
+                        } else {
+                            stopExecuting(player)
                         }
                     }
                 }
 
                 override fun getAll(index: Int): Int {
-                    val invAmount = amountInInventory(player, with.id)
-                    return if (with.id == FISHING_BAIT)
-                        10
-                    else invAmount
+                    val invAmount = amountInInventory(player, sourceId)
+                    return if (sourceId == FISHING_BAIT) 10 else invAmount
                 }
             }
 
-            handler.open()
-            repositionChild(player, Components.SKILL_MULTI1_309, 2, 210, 15)
+            val maxAmount = handler.getAll(0)
+            if (maxAmount <= 1) handler.create(1, 0) else handler.open()
             return@onUseWith true
         }
     }
@@ -114,6 +84,7 @@ class GrindItemPlugin : InteractionListener {
         private val GRIND_ITEM_IDS = GrindItem.values().flatMap { it.items }.toSet().toIntArray()
         private const val FISHING_BAIT = Items.FISHING_BAIT_313
     }
+
 
     /**
      * Represents an item that can be ground down.

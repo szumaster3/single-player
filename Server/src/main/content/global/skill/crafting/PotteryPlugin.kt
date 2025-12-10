@@ -117,8 +117,9 @@ class PotteryPlugin : InteractionListener {
                             return@queueScript false
                         }
 
-                        animate(player, Animations.HUMAN_FURNACE_SMELT_3243)
                         playAudio(player, 2588)
+                        animate(player, Animations.HUMAN_FURNACE_SMELT_3243)
+                        delayClock(player, Clocks.SKILLING, 5)
                         sendMessage(player, "You put ${pottery.unfinished.name.lowercase(Locale.getDefault())} in the oven.")
 
                         if (removeItem(player, pottery.unfinished)) {
@@ -143,7 +144,6 @@ class PotteryPlugin : InteractionListener {
                         }
 
                         if (remaining > 0 && inInventory(player, pottery.unfinished.id)) {
-                            delayClock(player, Clocks.SKILLING, 5)
                             setCurrentScriptState(player, 0)
                             delayScript(player, 5)
                             return@queueScript true

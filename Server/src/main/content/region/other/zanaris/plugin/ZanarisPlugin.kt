@@ -64,11 +64,13 @@ class ZanarisPlugin : InteractionListener {
         }
 
         on(ENTRY_RING, IntType.SCENERY, "use") { player, _ ->
+            if (!fairyMagic(player)) return@on true
             teleport(player, Location.create(3203, 3168, 0), TeleportManager.TeleportType.FAIRY_RING)
             return@on true
         }
 
         on(MARKETPLACE_RING, IntType.SCENERY, "use") { player, _ ->
+            if (!fairyMagic(player)) return@on true
             teleport(player, Location.create(3262, 3167, 0), TeleportManager.TeleportType.FAIRY_RING)
             return@on true
         }

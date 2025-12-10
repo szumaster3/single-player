@@ -76,8 +76,6 @@ class SpinningPlugin : InteractionListener, InterfaceListener {
         queueScript(player, 0, QueueStrength.WEAK) {
             if (remaining <= 0) return@queueScript false
 
-            if (!clockReady(player, Clocks.SKILLING)) return@queueScript false
-
             var delay = 5
             if (player.achievementDiaryManager.getDiary(DiaryType.SEERS_VILLAGE)?.isComplete(2) == true
                 && withinDistance(player, Location(2711, 3471, 1))
@@ -92,8 +90,8 @@ class SpinningPlugin : InteractionListener, InterfaceListener {
                 return@queueScript false
             }
 
-            animate(player, 894)
             playAudio(player, Sounds.SPINNING_2590)
+            animate(player, 894)
             delayClock(player, Clocks.SKILLING, delay)
 
             if (removeItem(player, Item(spin.need, 1))) {
@@ -108,11 +106,7 @@ class SpinningPlugin : InteractionListener, InterfaceListener {
                     setAttribute(player, "/save:diary:seers:bowstrings-spun", 5)
                     finishDiaryTask(player, DiaryType.SEERS_VILLAGE, 0, 4)
                 } else {
-                    setAttribute(
-                        player,
-                        "/save:diary:seers:bowstrings-spun",
-                        getAttribute(player, "diary:seers:bowstrings-spun", 0) + 1
-                    )
+                    setAttribute(player, "/save:diary:seers:bowstrings-spun", getAttribute(player, "diary:seers:bowstrings-spun", 0) + 1)
                 }
             }
 

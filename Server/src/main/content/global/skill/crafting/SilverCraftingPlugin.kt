@@ -151,6 +151,12 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
 
     private fun handleSilverCrafting(player: Player, product: CraftingDefinition.Silver, amount: Int) {
         if (!clockReady(player, Clocks.SKILLING)) return
+
+        if (!inInventory(player, product.required)) {
+            sendMessage(player, "You need the ${getItemName(product.required).lowercase()} to make this.")
+            return
+        }
+
         var remaining = amount
         closeInterface(player)
         queueScript(player, 0, QueueStrength.WEAK) {

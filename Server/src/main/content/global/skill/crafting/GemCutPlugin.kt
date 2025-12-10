@@ -29,7 +29,7 @@ class GemCutPlugin : InteractionListener {
             var remaining = if (invAmount <= 0) 1 else invAmount
 
             queueScript(player, 0, QueueStrength.WEAK) {
-                if (remaining <= 0 || !clockReady(player, Clocks.SKILLING) || !inInventory(player, gem.uncut))
+                if (remaining <= 0 || !inInventory(player, gem.uncut))
                     return@queueScript stopExecuting(player)
 
                 if (getStatLevel(player, Skills.CRAFTING) < gem.level) {
@@ -67,6 +67,7 @@ class GemCutPlugin : InteractionListener {
 
                 remaining--
                 if (remaining > 0 && inInventory(player, gem.uncut)) {
+                    delayClock(player, Clocks.SKILLING, 1)
                     setCurrentScriptState(player, 0)
                     delayScript(player, 1)
                 } else stopExecuting(player)
@@ -89,7 +90,7 @@ class GemCutPlugin : InteractionListener {
             var remaining = if (invAmount <= 0) 1 else invAmount
 
             queueScript(player, 0, QueueStrength.WEAK) {
-                if (remaining <= 0 || !clockReady(player, Clocks.SKILLING) || !inInventory(player, gemId))
+                if (remaining <= 0 || !inInventory(player, gemId))
                     return@queueScript stopExecuting(player)
 
                 animate(player, Animations.USE_HAMMER_CHISEL_11041)
@@ -102,6 +103,7 @@ class GemCutPlugin : InteractionListener {
 
                 remaining--
                 if (remaining > 0 && inInventory(player, gemId)) {
+                    delayClock(player, Clocks.SKILLING, 1)
                     setCurrentScriptState(player, 0)
                     delayScript(player, 1)
                 } else stopExecuting(player)

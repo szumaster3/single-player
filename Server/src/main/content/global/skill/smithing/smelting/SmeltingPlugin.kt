@@ -3,12 +3,11 @@ package content.global.skill.smithing.smelting
 import content.global.skill.smithing.items.Bar
 import core.api.*
 import core.game.dialogue.FaceAnim
-import core.game.dialogue.SkillDialogueHandler
 import core.game.event.ResourceProducedEvent
+import core.game.interaction.Clocks
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
-import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
@@ -54,20 +53,81 @@ class SmeltingPlugin : InteractionListener {
          * Handles creating cannonballs.
          */
 
-        onUseWith(IntType.SCENERY, Items.STEEL_BAR_2353, *FURNACE_IDS) { player, used, _ ->
-            val handler: SkillDialogueHandler =
-                object : SkillDialogueHandler(player, SkillDialogue.ONE_OPTION, Item(Items.CANNONBALL_2)) {
-                    override fun create(
-                        amount: Int,
-                        index: Int,
-                    ) {
-                        submitIndividualPulse(player, CannonballPulse(player, used.asItem(), amount), type = PulseType.STANDARD)
-                    }
+        onUseWith(IntType.SCENERY, Items.STEEL_BAR_2353, *FURNACE_IDS) { player, _, _ ->
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
 
-                    override fun getAll(index: Int): Int = amountInInventory(player, used.id)
+            if (!isQuestComplete(player, Quests.DWARF_CANNON)) {
+                sendDialogue(player, "You need to complete the ${Quests.DWARF_CANNON} quest in order to do this.")
+                return@onUseWith true
+            }
+
+            if (getDynLevel(player, Skills.SMITHING) < 35) {
+                sendDialogue(player, "You need a Smithing level of at least 35 in order to do this.")
+                return@onUseWith true
+            }
+
+            if (!inInventory(player, Items.AMMO_MOULD_4)) {
+                sendDialogue(player, "You need an ammo mould in order to make a cannonball.")
+                return@onUseWith true
+            }
+
+            if(!hasSpaceFor(player, Item(Items.CANNONBALL_2, 4))) {
+                sendDialogue(player, "You do not have enough inventory space.")
+                return@onUseWith true
+            }
+
+            sendSkillDialogue(player) {
+                withItems(Items.CANNONBALL_2)
+
+                create { _, amount ->
+                    var remaining = amount
+                    queueScript(player, 0, QueueStrength.NORMAL) { stage: Int ->
+                        if (remaining <= 0 || !clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
+                        if (amountInInventory(player, Items.STEEL_BAR_2353) <= 0) {
+                            sendMessage(player, "You have run out of steel bars.")
+                            return@queueScript stopExecuting(player)
+                        }
+
+                        when (stage) {
+                            0 -> {
+                                sendMessage(player, "You heat the steel bar into a liquid state.")
+                                playAudio(player, Sounds.FURNACE_2725)
+                                animate(player, Animations.HUMAN_FURNACE_SMELT_3243)
+                                return@queueScript delayScript(player, 3)
+                            }
+                            1 -> {
+                                sendMessage(player, "You pour the molten metal into your cannonball mould.")
+                                animate(player, Animations.HUMAN_BURYING_BONES_827)
+                                return@queueScript delayScript(player, 1)
+                            }
+                            2 -> {
+                                sendMessage(player, "The molten metal cools slowly to form 4 cannonballs.")
+                                return@queueScript delayScript(player, 3)
+                            }
+                            3 -> {
+                                if (removeItem(player, Items.STEEL_BAR_2353)) {
+                                    addItem(player, Items.CANNONBALL_2, 4)
+                                    rewardXP(player, Skills.SMITHING, 25.6)
+                                }
+                                animate(player, Animations.HUMAN_BURYING_BONES_827)
+                                remaining--
+
+                                if (remaining > 0 && amountInInventory(player, Items.STEEL_BAR_2353) > 0) {
+                                    setCurrentScriptState(player, 0)
+                                    delayClock(player, Clocks.SKILLING, 3)
+                                    return@queueScript delayScript(player, 3)
+                                }
+
+                                return@queueScript stopExecuting(player)
+                            }
+                            else -> return@queueScript stopExecuting(player)
+                        }
+                    }
                 }
 
-            handler.open()
+                calculateMaxAmount { amountInInventory(player, Items.STEEL_BAR_2353) }
+            }
+
             return@onUseWith true
         }
 

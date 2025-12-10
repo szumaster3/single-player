@@ -76,13 +76,13 @@ class GlassblowingPlugin : InteractionListener, InterfaceListener {
             var remaining = amount
 
             queueScript(player, 0, QueueStrength.WEAK) {
-                if (remaining <= 0 || !clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
+                if (remaining <= 0) return@queueScript stopExecuting(player)
                 if (!inInventory(player, Items.GLASSBLOWING_PIPE_1785) || !inInventory(player, Items.MOLTEN_GLASS_1775)) {
                     return@queueScript stopExecuting(player)
                 }
 
-                animate(player, Animations.GLASS_BLOW_884)
                 playAudio(player, Sounds.GLASSBLOWING_2724)
+                animate(player, Animations.GLASS_BLOW_884)
                 delayClock(player, Clocks.SKILLING, 3)
 
                 if (!removeItem(player, Items.MOLTEN_GLASS_1775)) return@queueScript stopExecuting(player)
@@ -97,6 +97,7 @@ class GlassblowingPlugin : InteractionListener, InterfaceListener {
                 remaining--
 
                 if (remaining > 0 && inInventory(player, Items.MOLTEN_GLASS_1775)) {
+                    delayClock(player, Clocks.SKILLING, 3)
                     setCurrentScriptState(player, 0)
                     delayScript(player, 3)
                 } else {

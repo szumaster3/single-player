@@ -10,6 +10,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
 import shared.consts.Animations
 import shared.consts.Items
+import shared.consts.Sounds
 import kotlin.math.min
 
 class MoltenGlassMakePlugin : InteractionListener {
@@ -43,12 +44,13 @@ class MoltenGlassMakePlugin : InteractionListener {
                     var remaining = amount
 
                     queueScript(player, 0, QueueStrength.WEAK) {
-                        if (remaining <= 0 || !clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
+                        if (remaining <= 0) return@queueScript stopExecuting(player)
                         if (!inInventory(player, SODA_ASH) || !anyInInventory(player, *SAND_SOURCES)) return@queueScript stopExecuting(player)
 
+                        playAudio(player, Sounds.FURNACE_2725)
                         animate(player, Animations.HUMAN_FURNACE_SMELT_3243)
                         sendMessage(player, "You heat the sand and soda ash in the furnace to make glass.")
-                        delayClock(player, Clocks.SKILLING, 3)
+                        delayClock(player, Clocks.SKILLING, 2)
 
                         removeItem(player, SODA_ASH)
                         when {
@@ -68,6 +70,7 @@ class MoltenGlassMakePlugin : InteractionListener {
 
                         remaining--
                         if (remaining > 0) {
+                            delayClock(player, Clocks.SKILLING, 2)
                             setCurrentScriptState(player, 0)
                             delayScript(player, 2)
                         } else stopExecuting(player)
@@ -78,71 +81,6 @@ class MoltenGlassMakePlugin : InteractionListener {
             }
 
             return@onUseWith true
-        }
-    }
-
-    private fun handleMoltenGlassProcess(player: Player, productId: Int, amount: Int) {
-        var remaining = amount
-
-        queueScript(player, 0) { stage ->
-            if (!clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
-            if (remaining <= 0) return@queueScript stopExecuting(player)
-
-            if (!inInventory(player, SODA_ASH) || !anyInInventory(player, *SAND_SOURCES)) {
-                return@queueScript stopExecuting(player)
-            }
-
-            when (stage) {
-                0 -> {
-                    delayClock(player, Clocks.SKILLING, 3)
-                    delayScript(player, 2)
-                }
-
-                else -> {
-                    animate(player, Animations.HUMAN_FURNACE_SMELT_3243)
-                    sendMessage(player, "You heat the sand and soda ash in the furnace to make glass.")
-
-                    if (!removeItem(player, SODA_ASH) || !removeSand(player)) {
-                        return@queueScript stopExecuting(player)
-                    }
-
-                    addItem(player, productId)
-                    rewardXP(player, Skills.CRAFTING, 20.0)
-                    player.dispatch(ResourceProducedEvent(productId, 1, player))
-
-                    remaining--
-
-                    if (remaining > 0) {
-                        setCurrentScriptState(player, 0)
-                        delayScript(player, 2)
-                    } else {
-                        stopExecuting(player)
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Removes one sand source from the inventory.
-     */
-    private fun removeSand(player: Player): Boolean {
-        return when {
-            inInventory(player, BUCKET_OF_SAND) -> {
-                if (removeItem(player, BUCKET_OF_SAND)) {
-                    addItem(player, Items.BUCKET_1925)
-                    true
-                } else false
-            }
-
-            inInventory(player, SANDBAG) -> {
-                if (removeItem(player, SANDBAG)) {
-                    addItem(player, Items.EMPTY_SACK_5418)
-                    true
-                } else false
-            }
-
-            else -> false
         }
     }
 }

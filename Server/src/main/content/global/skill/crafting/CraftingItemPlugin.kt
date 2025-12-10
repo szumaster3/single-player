@@ -4,6 +4,7 @@ import content.global.skill.construction.items.NailType
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.Topic
+import core.game.interaction.Clocks
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.link.diary.DiaryType
@@ -24,6 +25,7 @@ class CraftingItemPlugin : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, Items.CHISEL_1755, *CraftingDefinition.CRAB_ITEM_IDS.keys.toIntArray()) { player, _, used ->
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
             val (productId, xp) = CraftingDefinition.CRAB_ITEM_IDS[used.id] ?: return@onUseWith true
             val productName = getItemName(productId).lowercase()
 
@@ -43,6 +45,7 @@ class CraftingItemPlugin : InteractionListener {
                     addItem(player, productId)
                     rewardXP(player, Skills.CRAFTING, xp)
                     sendMessage(player, "You craft a $productName.")
+                    delayClock(player, Clocks.SKILLING, 1)
                 }
                 return@onUseWith true
             }
@@ -56,6 +59,7 @@ class CraftingItemPlugin : InteractionListener {
                             addItem(player, productId)
                             rewardXP(player, Skills.CRAFTING, xp)
                             sendMessage(player, "You craft ${if (amount > 1) "$amount ${productName}s" else "a $productName"}.")
+                            delayClock(player, Clocks.SKILLING, 1)
                         } else {
                             sendMessage(player, "You do not have enough ${getItemName(used.id).lowercase()} to continue crafting.")
                         }
@@ -73,6 +77,8 @@ class CraftingItemPlugin : InteractionListener {
 
         onUseWith(IntType.ITEM, Items.COIF_1169, *CraftingDefinition.FeatherHeaddress.baseIds) { player, used, _ ->
             val item = CraftingDefinition.FeatherHeaddress.forBase(used.id) ?: return@onUseWith false
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
+
             if (!hasLevelDyn(player, Skills.CRAFTING, 79)) {
                 sendMessage(player, "You need a crafting level of at least 79 in order to do this.")
                 return@onUseWith true
@@ -89,6 +95,7 @@ class CraftingItemPlugin : InteractionListener {
                     addItem(player, item.product, 1)
                     rewardXP(player, Skills.CRAFTING, 50.0)
                     sendMessage(player, "You add the feathers to the coif to make a feathered headdress.")
+                    delayClock(player, Clocks.SKILLING, 1)
                 }
                 return@onUseWith true
             }
@@ -102,6 +109,7 @@ class CraftingItemPlugin : InteractionListener {
                             addItem(player, item.product, 1)
                             rewardXP(player, Skills.CRAFTING, 50.0)
                             sendMessage(player, "You add the feathers to the coif to make ${if (amount > 1) "$amount feathered headdresses" else "a feathered headdress"}.")
+                            delayClock(player, Clocks.SKILLING, 1)
                         } else {
                             sendMessage(player, "You don't have enough materials to continue crafting.")
                         }
@@ -119,6 +127,7 @@ class CraftingItemPlugin : InteractionListener {
 
         onUseWith(IntType.ITEM, Items.CHISEL_1755, *CraftingDefinition.SnelmItem.SHELLS) { player, _, used ->
             val snelmId = CraftingDefinition.SnelmItem.fromShellId(used.id) ?: return@onUseWith true
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
 
             if (!hasLevelDyn(player, Skills.CRAFTING, 15)) {
                 sendMessage(player, "You need a crafting level of at least 15 to do this.")
@@ -136,6 +145,7 @@ class CraftingItemPlugin : InteractionListener {
                     addItem(player, snelmId.product)
                     rewardXP(player, Skills.CRAFTING, 32.5)
                     sendMessage(player, "You craft the shell into a helmet.")
+                    delayClock(player, Clocks.SKILLING, 1)
                 }
                 return@onUseWith true
             }
@@ -149,6 +159,7 @@ class CraftingItemPlugin : InteractionListener {
                             addItem(player, snelmId.product)
                             rewardXP(player, Skills.CRAFTING, 32.5)
                             sendMessage(player, "You craft the shell into a helmet.")
+                            delayClock(player, Clocks.SKILLING, 1)
                         }
                     }
                 }
@@ -167,6 +178,7 @@ class CraftingItemPlugin : InteractionListener {
             CraftingDefinition.Battlestaff.BATTLESTAFF_ID
         ) { player, used, with ->
             val product = CraftingDefinition.Battlestaff.forId(used.id) ?: return@onUseWith true
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
 
             if (!hasLevelDyn(player, Skills.CRAFTING, product.requiredLevel)) {
                 sendMessage(player, "You need a crafting level of ${product.requiredLevel} to make this.")
@@ -180,6 +192,7 @@ class CraftingItemPlugin : InteractionListener {
                     playAudio(player, Sounds.ATTACH_ORB_2585)
                     addItem(player, product.productId, product.amount)
                     rewardXP(player, Skills.CRAFTING, product.experience)
+                    delayClock(player, Clocks.SKILLING, 1)
                 }
                 return@onUseWith true
             }
@@ -196,6 +209,7 @@ class CraftingItemPlugin : InteractionListener {
                             playAudio(player, Sounds.ATTACH_ORB_2585)
                             addItem(player, product.productId)
                             rewardXP(player, Skills.CRAFTING, product.experience)
+                            delayClock(player, Clocks.SKILLING, 1)
                         }
 
                         if (product.productId == Items.AIR_BATTLESTAFF_1397) {
@@ -221,6 +235,7 @@ class CraftingItemPlugin : InteractionListener {
         onUseWith(IntType.ITEM, Items.HAMMER_2347, *CraftingDefinition.TRIBAL_ITEM_IDS.keys.toIntArray()) { player, _, with ->
             val maskId = with.id
             val shieldId = CraftingDefinition.TRIBAL_ITEM_IDS[maskId] ?: return@onUseWith false
+            if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
 
             if (getStatLevel(player, Skills.CRAFTING) < 35) {
                 sendMessage(player, "You don't have the crafting level needed to do that.")
@@ -282,6 +297,7 @@ class CraftingItemPlugin : InteractionListener {
                                         animate(player, anim)
                                         addItemOrDrop(player, shieldId, 1)
                                         rewardXP(player, Skills.CRAFTING, 100.0)
+                                        delayClock(player, Clocks.SKILLING, 1)
                                     }
                                 }
                             }
@@ -314,6 +330,7 @@ class CraftingItemPlugin : InteractionListener {
                         animate(player, anim)
                         addItemOrDrop(player, shieldId, 1)
                         rewardXP(player, Skills.CRAFTING, 100.0)
+                        delayClock(player, Clocks.SKILLING, 1)
                     }
                 }
             }

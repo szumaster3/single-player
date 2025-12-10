@@ -127,10 +127,9 @@ object JewelleryUtils {
                 return@queueScript stopExecuting(player)
             }
 
-            animate(player, Animations.HUMAN_FURNACE_SMELT_3243)
             playAudio(player, Sounds.FURNACE_2725)
-
-            delayClock(player, Clocks.SKILLING, 3)
+            animate(player, Animations.HUMAN_FURNACE_SMELT_3243)
+            delayClock(player, Clocks.SKILLING, 5)
 
             if (!removeItem(player, type.items)) {
                 return@queueScript stopExecuting(player)
@@ -143,7 +142,7 @@ object JewelleryUtils {
 
             if (remaining > 0) {
                 setCurrentScriptState(player, 0)
-                delayScript(player, 3)
+                delayScript(player, 5)
             } else stopExecuting(player)
         }
     }
