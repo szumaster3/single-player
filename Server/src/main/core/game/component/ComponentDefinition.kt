@@ -39,11 +39,7 @@ class ComponentDefinition {
      * @throws SQLException If an error occurs while parsing values.
      */
     @Throws(SQLException::class)
-    fun parse(
-        type: String,
-        walkable: String,
-        tabIndex: String,
-    ): ComponentDefinition {
+    fun parse(type: String, walkable: String, tabIndex: String): ComponentDefinition {
         try {
             this.type = InterfaceType.values()[type.toInt()]
             this.isWalkable = walkable.toBoolean()
@@ -92,18 +88,12 @@ class ComponentDefinition {
          * @param plugin The plugin to associate.
          */
         @JvmStatic
-        fun put(
-            id: Int,
-            plugin: ComponentPlugin?,
-        ) {
+        fun put(id: Int, plugin: ComponentPlugin?) {
             forId(id).plugin = plugin
         }
 
         @JvmStatic
-        fun put(
-            id: Int,
-            definition: ComponentDefinition,
-        ) {
+        fun put(id: Int, definition: ComponentDefinition) {
             DEFINITIONS[id] = definition
         }
 

@@ -19,10 +19,7 @@ object DialogueUtils {
      * @param regex The regular expression pattern to match and remove.
      * @return The processed message with all matches removed.
      */
-    fun removeMatches(
-        message: String,
-        regex: Regex,
-    ): String = regex.replace(message, "")
+    fun removeMatches(message: String, regex: Regex): String = regex.replace(message, "")
 }
 
 /**
@@ -32,10 +29,7 @@ object DialogueUtils {
  * @param perLineLimit The maximum number of characters allowed per line (default is 54).
  * @return An array of strings, each representing a line of dialogue.
  */
-fun splitLines(
-    message: String,
-    perLineLimit: Int = 54,
-): Array<String> {
+fun splitLines(message: String, perLineLimit: Int = 54): Array<String> {
     // Calculate the number of lines required to split the message, considering tag removal.
     var lines =
         Array(

@@ -6,6 +6,7 @@ package core.game.container
  * @author Emperor
  */
 enum class ContainerType {
+
     /**
      * The default container type.
      */

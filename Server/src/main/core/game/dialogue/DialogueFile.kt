@@ -19,10 +19,7 @@ abstract class DialogueFile {
     /**
      * Handles dialogue interactions based on component and button ID.
      */
-    abstract fun handle(
-        componentID: Int,
-        buttonID: Int,
-    )
+    abstract fun handle(componentID: Int, buttonID: Int)
 
     /**
      * Loads the dialogue file with the provided player, NPC, and interpreter.

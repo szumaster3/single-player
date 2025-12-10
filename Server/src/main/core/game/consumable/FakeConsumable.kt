@@ -10,10 +10,7 @@ import core.game.node.item.Item
  * @param id The item id of the fake consumable.
  * @param messages Messages to send when consumed.
  */
-class FakeConsumable(
-    id: Int,
-    vararg messages: String?,
-) : Consumable(intArrayOf(id), null, *messages) {
+class FakeConsumable(id: Int, vararg messages: String?) : Consumable(intArrayOf(id), null, *messages) {
 
     /**
      * Sends consumption messages without any effect.

@@ -109,12 +109,32 @@ class GrandExchange : StartupListener, Commands {
     }
 
     companion object {
+
+        /**
+         * Queue of pending Grand Exchange offers to be processed.
+         */
         val pendingOffers = LinkedBlockingDeque<GrandExchangeOffer>()
+
+        /**
+         * SQL query to fetch a specific offer by its unique id.
+         */
         private val GET_SPECIFIC_OFFER_BY_UID = "SELECT * FROM player_offers WHERE uid = ?;"
-        private val GET_MATCHES_FROM_PLAYER_OFFERS =
-            "SELECT * FROM player_offers WHERE item_id = ? AND is_sale = ? AND offer_state < 4 AND NOT offer_state = 2;"
+
+        /**
+         * SQL query to fetch matching offers from player offers for a specific item and sale type.
+         */
+        private val GET_MATCHES_FROM_PLAYER_OFFERS = "SELECT * FROM player_offers WHERE item_id = ? AND is_sale = ? AND offer_state < 4 AND NOT offer_state = 2;"
+
+        /**
+         * SQL query to fetch matching offers from bot offers for a specific item.
+         */
         private val GET_MATCH_FROM_BOT_OFFERS = "SELECT * FROM bot_offers WHERE item_id = ?;"
 
+        /**
+         * Gets a Grand Exchange offer by its unique id.
+         * @param uid the unique id of the offer.
+         * @return the matching GrandExchangeOffer if found, otherwise null.
+         */
         private fun getOfferByUid(uid: Long): GrandExchangeOffer? {
             var offer: GrandExchangeOffer? = null
             GEDatabase.run { conn ->
@@ -129,26 +149,34 @@ class GrandExchange : StartupListener, Commands {
             return offer
         }
 
+        /**
+         * Gets the recommended price for an item.
+         * @param itemID the id of the item.
+         * @param fromBot if true, consider bot prices and apply a 10% markup.
+         * @return the recommended price for the item.
+         */
         @JvmStatic
-        fun getRecommendedPrice(
-            itemID: Int,
-            fromBot: Boolean = false,
-        ): Int {
+        fun getRecommendedPrice(itemID: Int, fromBot: Boolean = false): Int {
             var base = PriceIndex.getValue(itemID)
             if (fromBot) base = (max(BotPrices.getPrice(itemID), base) * 1.10).toInt()
             return base
         }
 
-        private fun getItemDefPrice(itemID: Int): Int = max(
-            itemDefinition(itemID).getConfiguration(ItemConfigParser.GE_PRICE) ?: 0,
-            itemDefinition(itemID).value,
-        )
+        /**
+         * Gets the configured price for an item from its item definition.
+         * @param itemID the id of the item.
+         * @return the highest available price between GE price config and item value.
+         */
+        private fun getItemDefPrice(itemID: Int): Int = max(itemDefinition(itemID).getConfiguration(ItemConfigParser.GE_PRICE) ?: 0, itemDefinition(itemID).value,)
 
+        /**
+         * Gets statistics about current offers for a given item.
+         * @param itemID the id of the item.
+         * @param sale true to get sell offers, false to get buy offers.
+         * @return a formatted string containing stock amounts and prices.
+         */
         @JvmStatic
-        fun getOfferStats(
-            itemID: Int,
-            sale: Boolean,
-        ): String {
+        fun getOfferStats(itemID: Int, sale: Boolean): String {
             val sb = StringBuilder()
 
             GEDatabase.run { conn ->
@@ -211,10 +239,13 @@ class GrandExchange : StartupListener, Commands {
             return sb.toString()
         }
 
-        fun addBotOffer(
-            itemID: Int,
-            amount: Int,
-        ): Boolean {
+        /**
+         * Adds a bot offer to the pending queue for a specific item.
+         * @param itemID the id of the item.
+         * @param amount the quantity of the item to offer.
+         * @return true if the offer was added successfully, false if the item cannot be traded.
+         */
+        fun addBotOffer(itemID: Int, amount: Int): Boolean {
             if (!PriceIndex.canTrade(itemID)) {
                 return false
             }
@@ -226,10 +257,13 @@ class GrandExchange : StartupListener, Commands {
             return true
         }
 
-        fun dispatch(
-            player: Player,
-            offer: GrandExchangeOffer,
-        ): Boolean {
+        /**
+         * Dispatches a player's offer to the Grand Exchange.
+         * @param player the player creating the offer.
+         * @param offer the offer to be dispatched.
+         * @return true if the offer was successfully queued, false otherwise.
+         */
+        fun dispatch(player: Player, offer: GrandExchangeOffer): Boolean {
             if (offer.amount < 1) {
                 sendMessage(player, "You must choose the quantity you wish to buy!").also { return false }
             }
@@ -282,10 +316,12 @@ class GrandExchange : StartupListener, Commands {
             return true
         }
 
-        fun exchange(
-            offer: GrandExchangeOffer,
-            other: GrandExchangeOffer,
-        ) {
+        /**
+         * Matches two offers in the Grand Exchange and performs the exchange.
+         * @param offer the first offer.
+         * @param other the second offer.
+         */
+        fun exchange(offer: GrandExchangeOffer, other: GrandExchangeOffer) {
             if (offer.sell == other.sell) return
             val amount = Integer.min(offer.amount - offer.completedAmount, other.amount - other.completedAmount)
 
@@ -343,15 +379,22 @@ class GrandExchange : StartupListener, Commands {
             buyerPlayer?.let { ExchangeHistory.getInstance(buyerPlayer).visualizeRecords() }
         }
 
-        private fun canUpdatePriceIndex(
-            seller: GrandExchangeOffer,
-            buyer: GrandExchangeOffer,
-        ): Boolean {
+        /**
+         * Checks if the price index can be updated based on the buyer and seller.
+         * @param seller the selling offer.
+         * @param buyer the buying offer.
+         * @return true if the trade should update the price index.
+         */
+        private fun canUpdatePriceIndex(seller: GrandExchangeOffer, buyer: GrandExchangeOffer): Boolean {
             if (seller.playerUID == buyer.playerUID) return false
             if (!ServerConstants.BOTS_INFLUENCE_PRICE_INDEX && (seller.isBot || buyer.isBot)) return false
             return true
         }
 
+        /**
+         * Gets all player valid offers that are pending or active.
+         * @return a list of GrandExchangeOffer objects.
+         */
         fun getValidOffers(): List<GrandExchangeOffer> {
             val offers = ArrayList<GrandExchangeOffer>()
 
@@ -369,6 +412,10 @@ class GrandExchange : StartupListener, Commands {
             return offers
         }
 
+        /**
+         * Gets all bot offers currently available.
+         * @return a list of GrandExchangeOffer objects representing bot offers.
+         */
         fun getBotOffers(): List<GrandExchangeOffer> {
             val offers = ArrayList<GrandExchangeOffer>()
 
@@ -384,6 +431,11 @@ class GrandExchange : StartupListener, Commands {
             return offers
         }
 
+        /**
+         * Get the total stock available for a item in bot offers.
+         * @param itemId the id of the item
+         * @return the total quantity available from bot offers
+         */
         fun getBotstockForId(itemId: Int): Int {
             var total = 0
             GEDatabase.run { conn ->

@@ -32,12 +32,7 @@ open class Food : Consumable {
      * @param animation Custom animation to play on consumption.
      * @param messages Optional custom messages.
      */
-    constructor(
-        ids: IntArray?,
-        effect: ConsumableEffect?,
-        animation: Animation?,
-        vararg messages: String?,
-    ) : super(ids, effect, animation, *messages)
+    constructor(ids: IntArray?, effect: ConsumableEffect?, animation: Animation?, vararg messages: String?): super(ids, effect, animation, *messages)
 
     /**
      * Sends the default message when food is eaten.

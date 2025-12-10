@@ -115,12 +115,7 @@ abstract class Cutscene(val player: Player) {
      * @param regionY The Y-coordinate in the region.
      * @param plane The plane (height level) of the location. Defaults to 0.
      */
-    fun teleport(
-        entity: Entity,
-        regionX: Int,
-        regionY: Int,
-        plane: Int = 0,
-    ) {
+    fun teleport(entity: Entity, regionX: Int, regionY: Int, plane: Int = 0) {
         val newLoc = base.transform(regionX, regionY, plane)
         logCutscene(
             "Teleporting ${entity.username} to coordinates: LOCAL[$regionX,$regionY,$plane] GLOBAL[${newLoc.x},${newLoc.y},$plane].",
@@ -135,11 +130,7 @@ abstract class Cutscene(val player: Player) {
      * @param regionX The X-coordinate in the region.
      * @param regionY The Y-coordinate in the region.
      */
-    fun move(
-        entity: Entity,
-        regionX: Int,
-        regionY: Int,
-    ) {
+    fun move(entity: Entity, regionX: Int, regionY: Int) {
         logCutscene("Moving ${entity.username} to LOCAL[$regionX,$regionY].")
         entity.pulseManager.run(
             object : MovementPulse(entity, base.transform(regionX, regionY, 0), Pathfinder.SMART) {
@@ -157,13 +148,7 @@ abstract class Cutscene(val player: Player) {
      * @param onContinue The action to perform when the dialogue is continued.
      * @param hide Whether to hide the dialogue after it's shown.
      */
-    fun dialogueUpdate(
-        npcId: Int,
-        expression: FaceAnim,
-        message: String,
-        onContinue: () -> Unit = { incrementStage() },
-        hide: Boolean = false,
-    ) {
+    fun dialogueUpdate(npcId: Int, expression: FaceAnim, message: String, onContinue: () -> Unit = { incrementStage() }, hide: Boolean = false) {
         logCutscene("Sending NPC dialogue update.")
         sendNPCDialogue(player, npcId, message, expression)
         player.dialogueInterpreter.addAction { _, _ -> onContinue.invoke() }
@@ -177,12 +162,7 @@ abstract class Cutscene(val player: Player) {
      * @param message The messages to display.
      * @param onContinue The action to perform when the dialogue is continued.
      */
-    fun dialogueLinesUpdate(
-        npcId: Int,
-        expression: FaceAnim,
-        vararg message: String,
-        onContinue: () -> Unit = { incrementStage() },
-    ) {
+    fun dialogueLinesUpdate(npcId: Int, expression: FaceAnim, vararg message: String, onContinue: () -> Unit = { incrementStage() }) {
         logCutscene("Sending NPC dialogue lines update.")
         sendNPCDialogueLines(player, npcId, expression, true, *message)
         player.dialogueInterpreter.addAction { _, _ -> onContinue.invoke() }
@@ -203,11 +183,7 @@ abstract class Cutscene(val player: Player) {
      * @param messages The message to display.
      * @param onContinue The action to perform when the dialogue is continued.
      */
-    fun dialogueUpdate(
-        splitLines: Boolean = false,
-        vararg messages: String,
-        onContinue: () -> Unit = { incrementStage() }
-    ) {
+    fun dialogueUpdate(splitLines: Boolean = false, vararg messages: String, onContinue: () -> Unit = { incrementStage() }) {
         logCutscene("Sending standard dialogue update. splitLines=$splitLines")
 
         val finalMessage = messages.joinToString(" ")
@@ -228,11 +204,7 @@ abstract class Cutscene(val player: Player) {
      * @param message The message to display.
      * @param onContinue The action to perform when the dialogue is continued.
      */
-    fun playerDialogueUpdate(
-        expression: FaceAnim,
-        message: String,
-        onContinue: () -> Unit = { incrementStage() },
-    ) {
+    fun playerDialogueUpdate(expression: FaceAnim, message: String, onContinue: () -> Unit = { incrementStage() }) {
         logCutscene("Sending player dialogue update")
         sendPlayerDialogue(player, message, expression)
         player.dialogueInterpreter.addAction { _, _ -> onContinue.invoke() }
@@ -244,10 +216,7 @@ abstract class Cutscene(val player: Player) {
      * @param ticks The number of ticks to wait before triggering the update.
      * @param newStage The new stage to move to after the update, or -1 to increment the stage.
      */
-    fun timedUpdate(
-        ticks: Int,
-        newStage: Int = -1,
-    ) {
+    fun timedUpdate(ticks: Int, newStage: Int = -1) {
         logCutscene("Executing timed update for $ticks ticks.")
         GameWorld.Pulser.submit(
             object : Pulse(ticks) {
@@ -287,11 +256,7 @@ abstract class Cutscene(val player: Player) {
      * @param plane The plane (height level) of the location. Defaults to 0.
      * @return The object at the specified location, or null if not found.
      */
-    fun getObject(
-        regionX: Int,
-        regionY: Int,
-        plane: Int = 0,
-    ): Scenery? {
+    fun getObject(regionX: Int, regionY: Int, plane: Int = 0): Scenery? {
         val obj = RegionManager.getObject(base.transform(regionX, regionY, plane))
         logCutscene("Retrieving object at LOCAL[$regionX,$regionY], GOT: ${obj?.definition?.name ?: "null"}.")
         return obj
@@ -306,13 +271,7 @@ abstract class Cutscene(val player: Player) {
      * @param direction The direction the NPC should face.
      * @param plane The plane (height level) of the location. Defaults to 0.
      */
-    fun addNPC(
-        id: Int,
-        regionX: Int,
-        regionY: Int,
-        direction: Direction,
-        plane: Int = 0,
-    ) {
+    fun addNPC(id: Int, regionX: Int, regionY: Int, direction: Direction, plane: Int = 0) {
         val npc = NPC(id)
         npc.isRespawn = false
         npc.isAggressive = false
@@ -369,10 +328,7 @@ abstract class Cutscene(val player: Player) {
      * @param fade Whether to include a fade effect when ending the cutscene.
      * @param endActions Additional actions to perform when the cutscene ends.
      */
-    fun end(
-        fade: Boolean = true,
-        endActions: (() -> Unit)? = null,
-    ) {
+    fun end(fade: Boolean = true, endActions: (() -> Unit)? = null) {
         ended = true
         if (fade) fadeToBlack()
         GameWorld.Pulser.submit(
@@ -532,12 +488,7 @@ abstract class Cutscene(val player: Player) {
      * @param height The height (Z-axis) at which to set the camera. Defaults to 300.
      * @param speed The speed at which the camera will move. Defaults to 100.
      */
-    fun moveCamera(
-        regionX: Int,
-        regionY: Int,
-        height: Int = 300,
-        speed: Int = 100,
-    ) {
+    fun moveCamera(regionX: Int, regionY: Int, height: Int = 300, speed: Int = 100) {
         val globalLoc = base.transform(regionX, regionY, 0)
         camera.panTo(globalLoc.x, globalLoc.y, height, speed)
     }
@@ -550,12 +501,7 @@ abstract class Cutscene(val player: Player) {
      * @param height The height (Z-axis) at which to set the camera. Defaults to 300.
      * @param speed The speed at which the camera will rotate. Defaults to 100.
      */
-    fun rotateCamera(
-        regionX: Int,
-        regionY: Int,
-        height: Int = 300,
-        speed: Int = 100,
-    ) {
+    fun rotateCamera(regionX: Int, regionY: Int, height: Int = 300, speed: Int = 100) {
         val globalLoc = base.transform(regionX, regionY, 0)
         camera.rotateTo(globalLoc.x, globalLoc.y, height, speed)
     }
@@ -568,12 +514,7 @@ abstract class Cutscene(val player: Player) {
      * @param diffHeight The difference in the height (Z-axis) to rotate the camera by. Defaults to 300.
      * @param diffSpeed The speed at which to rotate the camera. Defaults to 100.
      */
-    fun rotateCameraBy(
-        diffX: Int,
-        diffY: Int,
-        diffHeight: Int = 300,
-        diffSpeed: Int = 100,
-    ) {
+    fun rotateCameraBy(diffX: Int, diffY: Int, diffHeight: Int = 300, diffSpeed: Int = 100) {
         camera.rotateBy(diffX, diffY, diffHeight, diffSpeed)
     }
 
@@ -586,13 +527,7 @@ abstract class Cutscene(val player: Player) {
      * @param frequency The frequency of the shake. Defaults to 128.
      * @param speed The speed at which the shake occurs. Defaults to 2.
      */
-    fun shakeCamera(
-        cameraType: CameraShakeType,
-        jitter: Int = 0,
-        amplitude: Int = 0,
-        frequency: Int = 128,
-        speed: Int = 2,
-    ) {
+    fun shakeCamera(cameraType: CameraShakeType, jitter: Int = 0, amplitude: Int = 0, frequency: Int = 128, speed: Int = 2) {
         camera.shake(cameraType.ordinal, jitter, amplitude, frequency, speed)
     }
 
@@ -673,10 +608,7 @@ abstract class Cutscene(val player: Player) {
         const val ATTRIBUTE_CUTSCENE_STAGE = "cutscene:stage"
 
         object CUTSCENE_DEATH_HOOK : EventHook<SelfDeathEvent> {
-            override fun process(
-                entity: Entity,
-                event: SelfDeathEvent,
-            ) {
+            override fun process(entity: Entity, event: SelfDeathEvent) {
                 if (entity !is Player) return
                 entity.getCutscene()?.end() ?: entity.unhook(this)
             }

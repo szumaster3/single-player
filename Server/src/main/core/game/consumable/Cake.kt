@@ -8,11 +8,7 @@ import core.game.node.item.Item
 /**
  * Consumable cake with multiple bites.
  */
-class Cake(
-    ids: IntArray?,
-    effect: ConsumableEffect?,
-    vararg messages: String?,
-) : Food(ids, effect, *messages) {
+class Cake(ids: IntArray?, effect: ConsumableEffect?, vararg messages: String?) : Food(ids, effect, *messages) {
 
     /**
      * Consumes the cake and applies effects.
@@ -31,12 +27,7 @@ class Cake(
     /**
      * Sends messages after consumption.
      */
-    override fun sendMessages(
-        player: Player,
-        initialLifePoints: Int,
-        item: Item,
-        messages: Array<String>
-    ) {
+    override fun sendMessages(player: Player, initialLifePoints: Int, item: Item, messages: Array<String>) {
         if (messages.isEmpty()) sendDefaultMessages(player, item)
         else sendCustomMessages(player, messages, item.id)
         sendHealingMessage(player, initialLifePoints)

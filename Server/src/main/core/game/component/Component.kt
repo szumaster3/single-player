@@ -83,13 +83,7 @@ open class Component {
         if (definition == null) {
             PacketRepository.send(
                 Interface::class.java,
-                InterfaceContext(
-                    player,
-                    manager.windowPaneId,
-                    manager.defaultChildId,
-                    id,
-                    false,
-                ),
+                InterfaceContext(player, manager.windowPaneId, manager.defaultChildId, id, false),
             )
             plugin?.open(player, this)
             return
@@ -100,30 +94,24 @@ open class Component {
         }
 
         if (definition.type == InterfaceType.TAB) {
-            PacketRepository.send(
-                Interface::class.java,
-                InterfaceContext(
-                    player,
-                    definition.getWindowPaneId(manager.isResizable),
-                    definition.getChildId(manager.isResizable) + definition.tabIndex,
-                    id,
-                    definition.isWalkable,
-                ),
-            )
+            PacketRepository.send(Interface::class.java, InterfaceContext(
+                player,
+                definition.getWindowPaneId(manager.isResizable),
+                definition.getChildId(manager.isResizable) + definition.tabIndex,
+                id,
+                definition.isWalkable
+            ))
             plugin?.open(player, this)
             return
         }
 
-        PacketRepository.send(
-            Interface::class.java,
-            InterfaceContext(
-                player,
-                definition.getWindowPaneId(manager.isResizable),
-                definition.getChildId(manager.isResizable),
-                id,
-                definition.isWalkable,
-            ),
-        )
+        PacketRepository.send(Interface::class.java, InterfaceContext(
+            player,
+            definition.getWindowPaneId(manager.isResizable),
+            definition.getChildId(manager.isResizable),
+            id,
+            definition.isWalkable
+        ))
         plugin?.open(player, this)
     }
 
@@ -141,13 +129,9 @@ open class Component {
      * @param player     The player interacting with the slots.
      * @param sourceSlot The source slot index.
      * @param destSlot   The destination slot index.
-     * @return `true` if the slot switch was handled successfully, otherwise `false`..
+     * @return `true` if the slot switch was handled successfully, otherwise `false`.
      */
-    fun handleSlotSwitch(
-        player: Player,
-        sourceSlot: Int,
-        destSlot: Int,
-    ): Boolean = runSlotSwitch(player, this, sourceSlot, destSlot)
+    fun handleSlotSwitch(player: Player, sourceSlot: Int, destSlot: Int): Boolean = runSlotSwitch(player, this, sourceSlot, destSlot)
 
     /**
      * Adds a new slot to this component.
@@ -155,10 +139,7 @@ open class Component {
      * @param slotId    The slot identifier.
      * @param container The container associated with the slot.
      */
-    fun addSlot(
-        slotId: Int,
-        container: Container,
-    ) {
+    fun addSlot(slotId: Int, container: Container) {
         slots.add(Slot(slotId, container))
     }
 
@@ -188,10 +169,7 @@ open class Component {
          * @param component The component to mark as unclosable.
          */
         @JvmStatic
-        fun setUnclosable(
-            player: Player,
-            component: Component,
-        ) {
+        fun setUnclosable(player: Player, component: Component) {
             player.setAttribute("close_c_", true)
             component.setUncloseEvent { player, _ ->
                 !player.getAttribute("close_c_", false)

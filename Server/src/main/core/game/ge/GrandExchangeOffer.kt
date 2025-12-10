@@ -119,10 +119,7 @@ class GrandExchangeOffer {
      * @param id The ID of the item being added.
      * @param amount The amount of the item to be added.
      */
-    fun addWithdrawItem(
-        id: Int,
-        amount: Int,
-    ) {
+    fun addWithdrawItem(id: Int, amount: Int) {
         if (amount == 0) return
         for (item in withdraw) {
             if (item != null && item.id == id) {

@@ -8,31 +8,19 @@ import static core.api.ContentAPIKt.sendInputDialogue;
 
 /**
  * Represents the dialogue plugin used to automatically handle skill dialogues with creation amounts.
- *
  * @author Vexia
  */
 @Initializable
 public class SkillDialoguePlugin extends Dialogue {
 
-    /**
-     * Represents the skill dialogue handler.
-     */
     private SkillDialogueHandler handler;
 
-    /**
-     * Constructs a new {@code SkillDialoguePlugin} {@code Object}.
-     */
     public SkillDialoguePlugin() {
-        /**
+        /*
          * empty.
          */
     }
 
-    /**
-     * Constructs a new {@code SkillDialoguePlugin} {@code Object}.
-     *
-     * @param player the player.
-     */
     public SkillDialoguePlugin(final Player player) {
         super(player);
     }

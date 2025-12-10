@@ -7,11 +7,7 @@ import core.game.node.item.Item
 /**
  * Potion representing the Barbarian Mix.
  */
-class BarbarianMix(
-    ids: IntArray?,
-    effect: ConsumableEffect?,
-    vararg messages: String?,
-) : Potion(ids, effect, *messages) {
+class BarbarianMix(ids: IntArray?, effect: ConsumableEffect?, vararg messages: String?) : Potion(ids, effect, *messages) {
 
     /**
      * Sends the default drinking message to the player.

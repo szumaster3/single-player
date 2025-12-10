@@ -279,10 +279,7 @@ class ExchangeHistory(private val player: Player? = null) : PersistPlayer, Login
      * @param uid The unique identifier of the offer.
      * @param slot The slot of the offer in the player's record.
      */
-    data class OfferRecord(
-        val uid: Long,
-        val slot: Int,
-    )
+    data class OfferRecord(val uid: Long, val slot: Int)
 
     companion object {
         /**

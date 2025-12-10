@@ -38,11 +38,7 @@ class EquipHandler : InteractionListener {
          * @param itemId The ID of the item to unequip.
          */
         @JvmStatic
-        fun unequip(
-            player: Player,
-            slot: Int,
-            itemId: Int,
-        ) {
+        fun unequip(player: Player, slot: Int, itemId: Int) {
             if (slot < 0 || slot > 13) {
                 return
             }
@@ -101,10 +97,7 @@ class EquipHandler : InteractionListener {
          * @param node The item node representing the item to equip.
          */
         @JvmStatic
-        fun handleEquip(
-            player: Player,
-            node: Node,
-        ) {
+        fun handleEquip(player: Player, node: Node) {
             val item = node.asItem()
 
             // If the item is not valid or the player doesn't own it, return

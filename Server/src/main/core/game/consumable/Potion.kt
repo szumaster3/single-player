@@ -13,11 +13,7 @@ import shared.consts.Sounds
  * @param effect Optional effect applied on consumption.
  * @param messages Optional custom messages per dose.
  */
-open class Potion(
-    private val ids: IntArray?,
-    private val effect: ConsumableEffect?,
-    private vararg val messages: String?,
-) : Drink(ids, effect, *messages) {
+open class Potion(private val ids: IntArray?, private val effect: ConsumableEffect?, private vararg val messages: String?) : Drink(ids, effect, *messages) {
 
     /**
      * Consumes a dose of the potion, replaces it with the next dose or vial.

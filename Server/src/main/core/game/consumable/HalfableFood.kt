@@ -8,11 +8,7 @@ import java.util.*
 /**
  * Food that can be eaten in halves.
  */
-class HalfableFood(
-    ids: IntArray?,
-    effect: ConsumableEffect?,
-    vararg messages: String?,
-) : Food(ids, effect, *messages) {
+class HalfableFood(ids: IntArray?, effect: ConsumableEffect?, vararg messages: String?) : Food(ids, effect, *messages) {
 
     /**
      * Sends messages specific to which half of the food is eaten.
