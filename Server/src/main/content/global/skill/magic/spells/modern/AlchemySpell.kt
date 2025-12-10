@@ -60,23 +60,23 @@ class AlchemySpell : SpellListener("modern") {
 
         val explorersRingGraphics = Graphics(Graphic.EXPLORERS_RING_ALCH_1698)
 
+        val weapon = getItemFromEquipment(player, EquipmentSlot.WEAPON)
+        val staff = weapon?.let { w -> MagicStaff.values().find { it.staves.contains(w.id) } }
+
         val (animation, graphics) = when {
             explorersRing -> lowAlchemyAnimation to explorersRingGraphics
+            staff != null -> {
+                if (high) highAlchemyStaffAnimation to highAlchemyStaffGraphics
+                else lowAlchemyStaffAnimation to lowAlchemyStaffGraphics
+            }
             else -> {
-                val weapon = getItemFromEquipment(player, EquipmentSlot.WEAPON)
-                val staff = weapon?.id?.let { MagicStaff.forId(it) }
-                if (weapon != null && weapon == staff) {
-                    if (high) highAlchemyStaffAnimation to highAlchemyStaffGraphics
-                    else lowAlchemyStaffAnimation to lowAlchemyStaffGraphics
-                } else {
-                    if (high) highAlchemyAnimation to highAlchemyGraphics
-                    else lowAlchemyAnimation to lowAlchemyGraphics
-                }
+                if (high) highAlchemyAnimation to highAlchemyGraphics
+                else lowAlchemyAnimation to lowAlchemyGraphics
             }
         }
-        visualize(player, animation, graphics)
 
         playAudio(player, if (high) Sounds.HIGH_ALCHEMY_97 else Sounds.LOW_ALCHEMY_98)
+        visualize(player, animation, graphics)
 
         player.dispatch(ItemAlchemizationEvent(item.id, high))
         if (player.inventory.remove(Item(item.id, 1)) && coins.amount > 0) {
