@@ -28,7 +28,6 @@ class KeldagrimPlugin : InteractionListener {
     }
 
     companion object {
-        // Scenery.
         private val ENTRANCE = intArrayOf(Scenery.CAVE_ENTRANCE_5973, Scenery.ENTRANCE_5998)
         private const val DOORWAY_1 = Scenery.DOORWAY_23286
         private const val DOORWAY_2 = Scenery.DOORWAY_23287
@@ -38,32 +37,23 @@ class KeldagrimPlugin : InteractionListener {
         private const val TUNNEL = Scenery.TUNNEL_5014
         private const val INN_KEEPER = NPCs.INN_KEEPER_2176
 
-        // Cart travel system.
-        private val optionsWithQuest = arrayOf("To the Grand Exchange", "To Ice Mountain", "To White Wolf Mountain", "Stay here")
-        private val optionsWithoutQuest = arrayOf("To the Grand Exchange", "To Ice Mountain", "Stay here")
-
         private val CART_SCENERY = intArrayOf(
-            Scenery.HIDDEN_TRAPDOOR_28094,
             Scenery.TRAIN_CART_7028,
             Scenery.TRAIN_CART_7029,
             Scenery.TRAIN_CART_7030
         )
-        private val destinations = arrayOf(
-            Location.create(3140, 3507, 0), // Grand Exchange
-            Location.create(2997, 9837, 0), // Ice Mountain
-            Location.create(2875, 9871, 0)  // White Wolf Mountain
-        )
 
+        /**
+         * Travel pulses.
+         */
         private fun startTravelToKeldagrim(player: Player) {
-            if (hasRequirement(player, Quests.THE_GIANT_DWARF)) {
+            if (hasRequirement(player, Quests.THE_GIANT_DWARF))
                 submitWorldPulse(TravelToKeldagrimPulse(player))
-            }
         }
 
         private fun startTravelFromKeldagrim(player: Player, dest: Location) {
-            if (hasRequirement(player, Quests.THE_GIANT_DWARF)) {
+            if (hasRequirement(player, Quests.THE_GIANT_DWARF))
                 submitWorldPulse(TravelFromKeldagrimPulse(player, dest))
-            }
         }
 
         private class TravelFromKeldagrimPulse(val player: Player, val dest: Location) : Pulse() {
@@ -71,34 +61,34 @@ class KeldagrimPlugin : InteractionListener {
 
             override fun pulse(): Boolean {
                 when (counter++) {
-                    0 -> startTravel()
-                    4 -> player.teleportWithCart(Location.create(2911, 10171, 0), true)
+                    0 -> start()
+                    4 -> player.teleportWithCart(Location(2911, 10171, 0), true)
                     5 -> player.moveCartTo(2936, 10171)
-                    6 -> fadeToNormal()
-                    14 -> fadeToBlack()
+                    6 -> fadeNormal()
+                    14 -> fadeBlack()
                     21 -> player.teleportWithCart(dest, false)
-                    23 -> fadeToNormal()
-                    25 -> return finishTravel()
+                    23 -> fadeNormal()
+                    25 -> return finish()
                 }
                 return false
             }
 
-            private fun startTravel() {
+            override fun start() {
                 lock(player, 25)
                 openInterface(player, Components.FADE_TO_BLACK_120)
                 setMinimapState(player, 2)
             }
 
-            private fun fadeToNormal() {
+            private fun fadeNormal() {
                 closeInterface(player)
                 openInterface(player, Components.FADE_FROM_BLACK_170)
             }
 
-            private fun fadeToBlack() {
+            private fun fadeBlack() {
                 openInterface(player, Components.FADE_TO_BLACK_120)
             }
 
-            private fun finishTravel(): Boolean {
+            private fun finish(): Boolean {
                 unlock(player)
                 setMinimapState(player, 0)
                 closeInterface(player)
@@ -112,12 +102,12 @@ class KeldagrimPlugin : InteractionListener {
 
             override fun pulse(): Boolean {
                 when (counter++) {
-                    0 -> startTravel()
-                    6 -> player.teleportWithCart(Location.create(2943, 10170, 0), true)
+                    0 -> start()
+                    6 -> player.teleportWithCart(Location(2943, 10170, 0), true)
                     7 -> player.moveCartTo(2939, 10173)
                     8 -> player.moveCartTo(2914, 10173)
-                    10 -> fadeToNormal()
-                    23 -> finalizeTravel()
+                    10 -> fadeNormal()
+                    23 -> finish()
                     33 -> {
                         cartNPC.clear()
                         return true
@@ -126,18 +116,18 @@ class KeldagrimPlugin : InteractionListener {
                 return false
             }
 
-            private fun startTravel() {
+            override fun start() {
                 lock(player, 20)
                 openInterface(player, Components.FADE_TO_BLACK_115)
                 setMinimapState(player, 2)
             }
 
-            private fun fadeToNormal() {
+            private fun fadeNormal() {
                 closeInterface(player)
                 openInterface(player, Components.FADE_FROM_BLACK_170)
             }
 
-            private fun finalizeTravel() {
+            private fun finish() {
                 closeInterface(player)
                 setMinimapState(player, 0)
                 unlock(player)
@@ -161,43 +151,67 @@ class KeldagrimPlugin : InteractionListener {
     }
 
     override fun defineListeners() {
-        on(CART_SCENERY, IntType.SCENERY, "open", "ride") { player, node ->
-            val questDone = isQuestComplete(player, Quests.FISHING_CONTEST)
-            val options = if (questDone) optionsWithQuest else optionsWithoutQuest
-
+        on(CART_SCENERY, IntType.SCENERY, "ride") { player, node ->
             if (!getAttribute(player, GameAttributes.MINECART_TRAVEL_UNLOCK, false)) {
                 sendMessage(player, "You must visit Keldagrim to use this shortcut.")
                 return@on true
             }
+
             when (node.id) {
-                Scenery.HIDDEN_TRAPDOOR_28094 -> {
-                    sendDialogueLines(
-                        player,
-                        "This trapdoor leads to a small dwarven mine cart station. The mine",
-                        "cart will take you to Keldagrim."
-                    )
-                }
                 Scenery.TRAIN_CART_7028 -> {
-                    sendOptions(player, "What would you like to do?", *options)
+                    val questDone = hasRequirement(player, Quests.FISHING_CONTEST)
+
+                    val options = if (questDone) {
+                        arrayOf("To the Grand Exchange", "To Ice Mountain", "To White Wolf Mountain", "Stay here.")
+                    } else {
+                        arrayOf("To the Grand Exchange", "To Ice Mountain", "Stay here.")
+                    }
+
+                    sendOptions(player, "Select an option", *options)
                     addDialogueAction(player) { p, choice ->
-                        when {
-                            choice == options.size -> closeDialogue(p)
-                            choice == 1 -> startTravelFromKeldagrim(p, destinations[0])
-                            choice == 2 -> startTravelFromKeldagrim(p, destinations[1])
-                            questDone && choice == 3 -> startTravelFromKeldagrim(p, destinations[2])
+                        when (choice) {
+                            2 -> startTravelFromKeldagrim(p, Location.create(3140, 3507, 0))
+                            3 -> startTravelFromKeldagrim(p, Location.create(2997, 9837, 0))
+                            4 -> if (questDone) startTravelFromKeldagrim(p, Location.create(2875, 9871, 0)) else closeDialogue(p)
                             else -> closeDialogue(p)
                         }
                     }
                 }
+
                 else -> {
-                    sendOptions(player, "What would you like to do?", "Travel to Keldagrim", "Stay here")
+                    sendOptions(player, "Select an option", "Travel to Keldagrim", "Stay here.")
                     addDialogueAction(player) { p, choice ->
-                        if (choice == 1) startTravelToKeldagrim(p) else closeDialogue(p)
+                        when (choice) {
+                            2 -> startTravelToKeldagrim(p)
+                            3 -> closeDialogue(p)
+                        }
                     }
                 }
             }
             return@on true
         }
+
+        on(Scenery.HIDDEN_TRAPDOOR_28094, IntType.SCENERY, "open") { player, _ ->
+            if (!getAttribute(player, GameAttributes.MINECART_TRAVEL_UNLOCK, false)) {
+                sendMessage(player, "You must visit Keldagrim to use this shortcut.")
+                return@on true
+            }
+            sendDialogueLines(player, "This trapdoor leads to a small dwarven mine cart station.", "The mine cart will take you to Keldagrim.")
+            addDialogueAction(player) { _, _ ->
+                closeDialogue(player)
+                sendOptions(player, "Select an option", "Travel to Keldagrim", "Stay here.")
+                addDialogueAction(player) { p, choice ->
+                    closeDialogue(player)
+                    when (choice) {
+                        2 -> startTravelToKeldagrim(p)
+                        3 -> closeDialogue(p)
+                    }
+                }
+            }
+
+            return@on true
+        }
+
 
         /*
          * Handles entering through doorway.
@@ -286,7 +300,7 @@ class KeldagrimPlugin : InteractionListener {
          */
 
         setDest(IntType.NPC, intArrayOf(INN_KEEPER), "talk-to") { _, _ ->
-            return@setDest Location.create(2843, 10193, 1)
+            return@setDest Location(2843, 10193, 1)
         }
     }
 }

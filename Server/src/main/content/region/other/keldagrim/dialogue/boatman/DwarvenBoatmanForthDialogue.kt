@@ -75,7 +75,7 @@ class DwarvenBoatmanForthDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.DWARVEN_BOATMAN_2205)
 }
 
-class TravelForthPulse(
+private class TravelForthPulse(
     val player: Player,
 ) : Pulse(1) {
     var counter = 0
