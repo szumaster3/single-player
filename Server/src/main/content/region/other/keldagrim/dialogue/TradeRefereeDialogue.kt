@@ -1,4 +1,4 @@
-package content.region.other.keldagrim.dialogue.politics
+package content.region.other.keldagrim.dialogue
 
 import core.game.dialogue.Dialogue
 import core.game.node.entity.player.Player

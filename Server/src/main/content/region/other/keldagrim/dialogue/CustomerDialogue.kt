@@ -1,4 +1,4 @@
-package content.region.other.keldagrim.dialogue.library
+package content.region.other.keldagrim.dialogue
 
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

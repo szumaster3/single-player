@@ -1,4 +1,4 @@
-package content.region.other.keldagrim.dialogue.library
+package content.region.other.keldagrim.dialogue
 
 import core.api.hasRequirement
 import core.game.dialogue.Dialogue

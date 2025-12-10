@@ -1,4 +1,4 @@
-package content.region.other.keldagrim.dialogue.ferryman
+package content.region.other.keldagrim.dialogue
 
 import core.api.inInventory
 import core.api.removeItem
@@ -19,7 +19,7 @@ import shared.consts.NPCs
  * Represents the Dwarven Ferryman (Keldagrim) dialogue.
  */
 @Initializable
-class DwarvenFerrymanBackDialogue(player: Player? = null) : Dialogue(player) {
+class DwarvenFerrymanDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
@@ -45,12 +45,19 @@ class DwarvenFerrymanBackDialogue(player: Player? = null) : Dialogue(player) {
                 } else {
                     if (removeItem(player, Item(Items.COINS_995, 2))) {
                         end()
-                        teleport(player, Location.create(2864, 10133, 0))
+                        teleport(player,
+                            if(npc.id == 1844)
+                                Location.create(2864, 10133, 0)
+                            else
+                                Location.create(2836, 10143, 0))
                     }
                 }
             }
-
-            13 -> npcl(FaceAnim.OLD_DEFAULT, "Come back later.").also { stage++ }
+            13 -> if(npc.id == 1843) {
+                npcl(FaceAnim.OLD_DEFAULT, "Come back later.").also { stage = END_DIALOGUE }
+            } else {
+                npcl(FaceAnim.OLD_DEFAULT, "Come back later.").also { stage++ }
+            }
             14 -> playerl(FaceAnim.FRIENDLY, "But... that means I'm stuck here.").also { stage++ }
             15 -> npcl(FaceAnim.OLD_DEFAULT, "Hmm. I suppose I could make an exception for you this time.").also { stage++ }
             16 -> playerl(FaceAnim.FRIENDLY, "Thanks a lot!").also { stage++ }
@@ -62,7 +69,7 @@ class DwarvenFerrymanBackDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun newInstance(player: Player?): Dialogue = DwarvenFerrymanBackDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = DwarvenFerrymanDialogue(player)
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.DWARVEN_FERRYMAN_1844)
+    override fun getIds(): IntArray = intArrayOf(NPCs.DWARVEN_FERRYMAN_1843, NPCs.DWARVEN_FERRYMAN_1844)
 }

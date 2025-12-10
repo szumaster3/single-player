@@ -1,0 +1,158 @@
+package content.region.other.keldagrim.dialogue
+
+import content.data.GameAttributes
+import core.api.*
+import core.game.dialogue.Dialogue
+import core.game.dialogue.FaceAnim
+import core.game.dialogue.Topic
+import core.game.interaction.QueueStrength
+import core.game.node.entity.player.Player
+import core.game.world.map.Location
+import core.plugin.Initializable
+import core.tools.END_DIALOGUE
+import core.tools.START_DIALOGUE
+import shared.consts.Components
+import shared.consts.NPCs
+
+/**
+ * Represents the Dwarven Boatman (Keldagrim) dialogue.
+ */
+@Initializable
+class DwarvenBoatmanDialogue(player: Player? = null) : Dialogue(player) {
+
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+        when(npc.id) {
+            NPCs.DWARVEN_BOATMAN_2206 -> when (stage) {
+                0 -> npcl(FaceAnim.OLD_HAPPY, "Want me to take you back to the mines?").also { stage++ }
+                1 -> showTopics(
+                    Topic(FaceAnim.FRIENDLY, "Yes, please take me.", 2),
+                    Topic(FaceAnim.FRIENDLY, "What, on your ship! No thanks!", 3),
+                )
+                2 -> {
+                    end()
+                    lock(player, 10)
+                    queueScript(player, 1, QueueStrength.SOFT) { stage : Int ->
+                        when(stage) {
+                            0 -> {
+                                openInterface(player, Components.FADE_TO_BLACK_120)
+                                return@queueScript delayScript(player, 3)
+                            }
+                            1 -> {
+                                teleport(player, Location.create(2838, 10127, 0))
+                                return@queueScript delayScript(player, 1)
+                            }
+                            2 -> {
+                                unlock(player)
+                                closeInterface(player)
+                                openInterface(player, Components.FADE_FROM_BLACK_170)
+                                return@queueScript stopExecuting(player)
+                            }
+
+                            else -> return@queueScript stopExecuting(player)
+                        }
+                    }
+                }
+
+                3 -> npcl(FaceAnim.OLD_NORMAL, "Hey now, it was only a slight accident!").also { stage++ }
+                4 -> playerl(FaceAnim.FRIENDLY, "A slight accident?? Have you any idea how much time I spent rebuilding that statue?").also { stage++ }
+                5 -> npcl(FaceAnim.OLD_NORMAL, "Calm down, calm down! You got what you paid for the trip, didn't you?").also { stage = END_DIALOGUE }
+            }
+
+            NPCs.DWARVEN_BOATMAN_2205 -> if (
+                !getAttribute(player, GameAttributes.MINECART_TRAVEL_UNLOCK, false))
+            {
+                when (stage) {
+                    START_DIALOGUE -> npcl(FaceAnim.OLD_HAPPY, "Ho there, human!").also { stage++ }
+                    1 -> playerl(FaceAnim.FRIENDLY, "${player.name}.").also { stage++ }
+                    2 -> npcl(FaceAnim.OLD_HAPPY, "Ho there, ${player.name}! Want to take a ride with me?").also { stage++ }
+                    3 -> playerl(FaceAnim.FRIENDLY, "Where are you going? Across the river?").also { stage++ }
+                    4 -> npcl(FaceAnim.OLD_HAPPY, "No no, that's what the ferryman is for! I'm going to Keldagrim, my home!").also { stage++ }
+
+                    5 -> playerl(FaceAnim.FRIENDLY, "How much will that cost me then?").also { stage++ }
+                    6 -> npcl(FaceAnim.OLD_HAPPY, "For a human like you, I can do it for free!").also { stage++ }
+                    7 -> showTopics(
+                        Topic(FaceAnim.FRIENDLY, "That's a deal!", 8),
+                        Topic(FaceAnim.FRIENDLY, "I prefer the mines to the city.", 15),
+                    )
+                    8 -> npcl(FaceAnim.OLD_HAPPY, "Excellent! I'm just waiting for my ship to arrive and then we can go.").also { stage++ }
+                    9 -> npcl(FaceAnim.OLD_HAPPY, "Mind, this trip could take a few minutes! Are you sure you're ready to go as well?").also { stage++ }
+                    10 -> {
+                        setTitle(player, 2)
+                        sendOptions(player, "(Not Done) Start The Giant Dwarf quest?", "Yes", "No").also { stage++ }
+                    }
+                    11 -> when (buttonId) {
+                        1 -> playerl(FaceAnim.FRIENDLY, "Yes, I'm ready and don't mind it taking a few minutes.").also { stage = 12 }
+                        2 -> playerl(FaceAnim.FRIENDLY, "No, I don't have time right now, I'll be back later.").also { stage = 14 }
+                    }
+                    12 -> npcl(FaceAnim.OLD_HAPPY, "Well, let's not waste any more time then!").also { stage++ }
+                    13 -> {
+                        end()
+                        lock(player, 10)
+                        queueScript(player, 1, QueueStrength.SOFT) { stage : Int ->
+                            when(stage) {
+                                0 -> {
+                                    openInterface(player, Components.FADE_TO_BLACK_120)
+                                    return@queueScript delayScript(player, 3)
+                                }
+                                1 -> {
+                                    teleport(player, Location.create(2892, 10225, 0))
+                                    return@queueScript delayScript(player, 1)
+                                }
+                                2 -> {
+                                    unlock(player)
+                                    closeInterface(player)
+                                    openInterface(player, Components.FADE_FROM_BLACK_170)
+                                    setAttribute(player, GameAttributes.MINECART_TRAVEL_UNLOCK, true)
+                                    return@queueScript stopExecuting(player)
+                                }
+
+                                else -> return@queueScript stopExecuting(player)
+                            }
+                        }
+                    }
+                    14 -> npcl(FaceAnim.OLD_HAPPY, "Sure, sure! Come back when you need to!").also { stage = END_DIALOGUE }
+                    15 -> npcl(FaceAnim.OLD_HAPPY, "Well, suit yourself then!").also { stage = END_DIALOGUE }
+                }
+            } else {
+                when (stage) {
+                    START_DIALOGUE -> npcl(FaceAnim.OLD_HAPPY, "Hello again, ${player.name}! Want to go back to Keldagrim?").also { stage++ }
+                    1 -> showTopics(
+                        Topic(FaceAnim.FRIENDLY, "Yes, please take me.", 2),
+                        Topic(FaceAnim.FRIENDLY, "What, on your ship? No way.", 3),
+                    )
+                    2 -> {
+                        end()
+                        lock(player, 10)
+                        queueScript(player, 1, QueueStrength.SOFT) { stage : Int ->
+                            when(stage) {
+                                0 -> {
+                                    openInterface(player, Components.FADE_TO_BLACK_120)
+                                    return@queueScript delayScript(player, 3)
+                                }
+                                1 -> {
+                                    teleport(player, Location.create(2892, 10225, 0))
+                                    return@queueScript delayScript(player, 1)
+                                }
+                                2 -> {
+                                    unlock(player)
+                                    closeInterface(player)
+                                    openInterface(player, Components.FADE_FROM_BLACK_170)
+                                    setAttribute(player, GameAttributes.MINECART_TRAVEL_UNLOCK, true)
+                                    return@queueScript stopExecuting(player)
+                                }
+
+                                else -> return@queueScript stopExecuting(player)
+                            }
+                        }
+                    }
+                    3 -> npcl(FaceAnim.OLD_NORMAL, "Hey, it was only a little accident! Calm down!").also { stage = END_DIALOGUE }
+                }
+            }
+        }
+        return true
+    }
+
+    override fun newInstance(player: Player?): Dialogue = DwarvenBoatmanDialogue(player)
+
+    override fun getIds(): IntArray = intArrayOf(NPCs.DWARVEN_BOATMAN_2205, NPCs.DWARVEN_BOATMAN_2206)
+}

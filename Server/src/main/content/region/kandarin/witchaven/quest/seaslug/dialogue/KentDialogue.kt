@@ -5,11 +5,14 @@ import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
+import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
+import core.game.world.map.Location
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
+import shared.consts.Components
 import shared.consts.NPCs
 import shared.consts.Quests
 import shared.consts.Sounds
@@ -55,31 +58,25 @@ class KentDialogue(player: Player? = null) : Dialogue(player) {
                 end()
                 lock(player, 4)
                 lockMovement(npc, 10)
-                submitWorldPulse(
-                    object : Pulse() {
-                        var ticks = 0
-
-                        override fun pulse(): Boolean {
-                            when (ticks++) {
-                                2 -> {
-                                    sendMessage(player, "*slooop*")
-                                    playAudio(player, Sounds.SLUG_SCOOP_SLUG_3025)
-                                    visualize(findLocalNPC(player, NPCs.KENT_701)!!, 4807, 790)
-                                    sendMessage(player, "He pulls a sea slug from under your top.")
-                                }
-
-                                4 -> {
-                                    openDialogue(player, KentDialogueFile())
-                                    return true
-                                }
-                            }
-                            return false
+                queueScript(player, 1, QueueStrength.SOFT) { stage : Int ->
+                    when(stage) {
+                        0 -> {
+                            sendMessage(player, "*slooop*")
+                            playAudio(player, Sounds.SLUG_SCOOP_SLUG_3025)
+                            visualize(findLocalNPC(player, NPCs.KENT_701)!!, 4807, 790)
+                            sendMessage(player, "He pulls a sea slug from under your top.")
+                            return@queueScript delayScript(player, 3)
                         }
-                    },
-                )
+                        1 -> {
+                            openDialogue(player, KentDialogueFile())
+                            return@queueScript stopExecuting(player)
+                        }
+                        else -> return@queueScript stopExecuting(player)
+                    }
+                }
             }
-            100 -> npc(FaceAnim.HALF_GUILTY, "Oh my, I must get back to shore.").also { stage = END_DIALOGUE }
 
+            100 -> npc(FaceAnim.HALF_GUILTY, "Oh my, I must get back to shore.").also { stage = END_DIALOGUE }
             200 -> player("Hello again Kent.").also { stage++ }
             201 -> npcl(FaceAnim.FRIENDLY, "I never did get the chance to thank you properly for saving Kennith and myself.").also { stage++ }
             202 -> playerl(FaceAnim.FRIENDLY, "Oh, don't be silly, it was nothing really.").also { stage++ }
