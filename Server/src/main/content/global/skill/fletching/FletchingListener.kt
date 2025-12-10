@@ -417,6 +417,11 @@ class FletchingListener : InteractionListener {
             if (!clockReady(player, Clocks.SKILLING)) return@onUseWith true
             val limbEnum = FletchingDefinition.Limb.product[with.id] ?: return@onUseWith true
 
+            if (limbEnum.limb != used.id) {
+                sendMessage(player, "That's not the right limb to attach to that stock.")
+                return@onUseWith true
+            }
+
             sendSkillDialogue(player) {
                 withItems(limbEnum.cbowId)
 
@@ -426,10 +431,7 @@ class FletchingListener : InteractionListener {
                     queueScript(player, 0, QueueStrength.WEAK) {
                         if (remaining <= 0) return@queueScript stopExecuting(player)
                         if (getStatLevel(player, Skills.FLETCHING) < limbEnum.level) {
-                            sendDialogue(
-                                player,
-                                "You need a Fletching level of ${limbEnum.level} to attach these limbs."
-                            )
+                            sendDialogue(player, "You need a Fletching level of ${limbEnum.level} to attach these limbs.")
                             return@queueScript stopExecuting(player)
                         }
 

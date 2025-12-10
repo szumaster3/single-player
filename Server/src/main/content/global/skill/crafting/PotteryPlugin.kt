@@ -32,7 +32,6 @@ class PotteryPlugin : InteractionListener {
 
                 create { itemId, amount ->
                     val pottery = CraftingDefinition.Pottery.forId(itemId) ?: run {
-                        sendMessage(player, "Invalid pottery selection.")
                         return@create
                     }
 
@@ -54,7 +53,6 @@ class PotteryPlugin : InteractionListener {
 
                         animate(player, 883)
                         delayClock(player, Clocks.SKILLING, 5)
-                        delayScript(player, 5)
 
                         if (removeItem(player, Items.SOFT_CLAY_1761)) {
                             addItem(player, pottery.unfinished.id)
@@ -77,6 +75,7 @@ class PotteryPlugin : InteractionListener {
                         }
 
                         if (remaining > 0 && inInventory(player, Items.SOFT_CLAY_1761)) {
+                            delayClock(player, Clocks.SKILLING, 5)
                             setCurrentScriptState(player, 0)
                             delayScript(player, 5)
                         } else stopExecuting(player)

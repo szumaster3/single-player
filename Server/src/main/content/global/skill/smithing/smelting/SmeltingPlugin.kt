@@ -71,18 +71,18 @@ class SmeltingPlugin : InteractionListener {
                 return@onUseWith true
             }
 
-            if(!hasSpaceFor(player, Item(Items.CANNONBALL_2, 4))) {
+            if (!hasSpaceFor(player, Item(Items.CANNONBALL_2, 4))) {
                 sendDialogue(player, "You do not have enough inventory space.")
                 return@onUseWith true
             }
 
             sendSkillDialogue(player) {
-                withItems(Items.CANNONBALL_2)
+                withItems(Items.STEEL_BAR_2353)
 
                 create { _, amount ->
                     var remaining = amount
                     queueScript(player, 0, QueueStrength.NORMAL) { stage: Int ->
-                        if (remaining <= 0 || !clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
+                        if (remaining <= 0) return@queueScript stopExecuting(player)
                         if (amountInInventory(player, Items.STEEL_BAR_2353) <= 0) {
                             sendMessage(player, "You have run out of steel bars.")
                             return@queueScript stopExecuting(player)
@@ -105,16 +105,17 @@ class SmeltingPlugin : InteractionListener {
                                 return@queueScript delayScript(player, 3)
                             }
                             3 -> {
-                                if (removeItem(player, Items.STEEL_BAR_2353)) {
+                                if (removeItem(player, Item(Items.STEEL_BAR_2353, 1))) {
                                     addItem(player, Items.CANNONBALL_2, 4)
                                     rewardXP(player, Skills.SMITHING, 25.6)
                                 }
                                 animate(player, Animations.HUMAN_BURYING_BONES_827)
+
                                 remaining--
 
                                 if (remaining > 0 && amountInInventory(player, Items.STEEL_BAR_2353) > 0) {
-                                    setCurrentScriptState(player, 0)
                                     delayClock(player, Clocks.SKILLING, 3)
+                                    setCurrentScriptState(player, 0)
                                     return@queueScript delayScript(player, 3)
                                 }
 
