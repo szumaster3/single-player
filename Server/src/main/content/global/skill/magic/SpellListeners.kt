@@ -1,5 +1,6 @@
 package content.global.skill.magic
 
+import content.global.skill.magic.spells.lunar.SpellbookSwapSpell
 import core.api.*
 import core.game.event.SpellCastEvent
 import core.game.interaction.MovementPulse
@@ -143,6 +144,7 @@ object SpellListeners {
             )
         } else {
             try {
+                SpellbookSwapSpell.onCastDuringSwap(player)
                 method.invoke(player, node)
                 player.dispatch(SpellCastEvent(SpellBookManager.SpellBook.valueOf(book.uppercase()), button, node))
             } catch (e: IllegalStateException) {

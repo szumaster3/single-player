@@ -302,20 +302,23 @@ object LoginConfiguration {
     }
 
     private fun setupSpellBook(player: Player) {
-        val currentSpellBook = SpellBookManager.SpellBook.forInterface(player.spellBookManager.spellBook)
-        if (currentSpellBook == SpellBookManager.SpellBook.ANCIENT &&
-            !isQuestComplete(player, Quests.DESERT_TREASURE)
-        ) {
-            sendMessage(player, colorize("%RAs you can no longer use Ancient Magic, you have been set back to Modern."))
-            player.spellBookManager.spellBook = 0
-        } else if (currentSpellBook == SpellBookManager.SpellBook.LUNAR &&
-            !hasRequirement(player, Quests.LUNAR_DIPLOMACY)
-        ) {
-            sendMessage(player, colorize("%RAs you can no longer use Lunar Magic, you have been set back to Modern."))
-            player.spellBookManager.spellBook = 0
+        val manager = player.spellBookManager
+        val currentBook = SpellBookManager.SpellBook.forInterface(manager.spellBook) ?: SpellBookManager.SpellBook.MODERN
+
+        when {
+            currentBook == SpellBookManager.SpellBook.ANCIENT && !isQuestComplete(player, Quests.DESERT_TREASURE) -> {
+                sendMessage(player, colorize("%RAs you can no longer use Ancient Magic, you have been set back to Modern."))
+                manager.setSpellBook(SpellBookManager.SpellBook.MODERN)
+            }
+            currentBook == SpellBookManager.SpellBook.LUNAR && !hasRequirement(player, Quests.LUNAR_DIPLOMACY) -> {
+                sendMessage(player, colorize("%RAs you can no longer use Lunar Magic, you have been set back to Modern."))
+                manager.setSpellBook(SpellBookManager.SpellBook.MODERN)
+            }
         }
-        player.spellBookManager.update(player)
+
+        manager.update(player)
     }
+
 
     private fun setConfigs(player: Player) {
         setVarbit(player, 4322, 1)

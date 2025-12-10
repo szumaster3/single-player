@@ -95,9 +95,9 @@ class MakingHistoryPlugin : InteractionListener, LogoutListener {
             sendOptions(player, "There's a great variety of books. Which shall you choose?", "The History of the Outpost.", "The Times of Lathas.", "The Mysterious Adventurer.")
             addDialogueAction(player) { p, button ->
                 when (button) {
-                    1 -> closeDialogue(player).also { OutpostHistory.openBook(p) }
-                    2 -> closeDialogue(player).also { openDialogue(player, TimeOfLathasBookcaseDialogue()) }
-                    3 -> closeDialogue(player).also { TheMysteriousAdventurer.openBook(p) }
+                    2 -> closeDialogue(player).also { OutpostHistory.openBook(p) }
+                    3 -> closeDialogue(player).also { openDialogue(player, TimeOfLathasBookcaseDialogue()) }
+                    4 -> closeDialogue(player).also { TheMysteriousAdventurer.openBook(p) }
                 }
             }
             return@on true

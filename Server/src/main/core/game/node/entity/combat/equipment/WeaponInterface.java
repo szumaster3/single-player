@@ -488,6 +488,14 @@ public final class WeaponInterface extends Component {
         if (current != WeaponInterfaces.STAFF) {
             return false;
         }
+
+        if (player.getAttribute("spell:swap", 0) != 0) {
+            if (message) {// Inauthentic message.
+                player.getPacketDispatch().sendMessage("You cannot set autocast while your spellbook is temporarily swapped.");
+            }
+            return false;
+        }
+
         if (player.getSpellBookManager().getSpellBook() == SpellBookManager.SpellBook.LUNAR.getInterfaceId()) {
             if (message) {
                 player.getPacketDispatch().sendMessage("You can't autocast Lunar magic.");
@@ -495,7 +503,6 @@ public final class WeaponInterface extends Component {
             return false;
         }
         boolean ancientStaff = player.getEquipment().getNew(3).getName().contains("ncient staff") || player.getEquipment().getNew(3).getName().contains("uriel's staff");
-        ;
         if ((player.getSpellBookManager().getSpellBook() == Components.MAGIC_ZAROS_193 && !ancientStaff)) {
             if (message) {
                 player.getPacketDispatch().sendMessage("You can only autocast ancient magicks with an Ancient or Zuriel's staff.");
