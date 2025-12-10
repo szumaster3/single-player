@@ -69,12 +69,14 @@ class OrdanPlugin : InteractionListener {
                         npcl(FaceAnim.OLD_HAPPY, "I can un-note those for $unnotePrice gold pieces, is that okay?").also { stage++ }
                     }
 
-                    4 -> sendInputDialogue(player!!, true, "Enter amount:") { value ->
-                        unnoteAmount = value as Int
-                        if (unnoteAmount > freeSlots(player!!)) { unnoteAmount = freeSlots(player!!) }
-                        unnotePrice = unnoteAmount * ITEM_PRICE_MAP[noteTypeId]!!
-                        npcl(FaceAnim.OLD_HAPPY, "I can un-note $unnoteAmount $noteTypeName for $unnotePrice gold pieces, is that okay?").also { stage++ }
-                        return@sendInputDialogue
+                    4 -> {
+                        sendInputDialogue(player!!, true, "Enter amount:") { value ->
+                            unnoteAmount = (value as Int).coerceAtMost(freeSlots(player!!))
+                            unnotePrice = unnoteAmount * ITEM_PRICE_MAP[noteTypeId]!!
+
+                            npcl(FaceAnim.OLD_HAPPY, "I can un-note $unnoteAmount $noteTypeName for $unnotePrice gold pieces, is that okay?")
+                            stage = 2
+                        }
                     }
                 }
                 2 -> showTopics(
