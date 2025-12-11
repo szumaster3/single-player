@@ -15889,7 +15889,6 @@
     "defence_animation": "0",
     "magic_animation": "0",
     "death_animation": "0",
-    "name": "RuneScape guide",
     "defence_level": "1",
     "safespot": null,
     "lifepoints": "10",
@@ -15918,7 +15917,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "An official representative from the First National Bank of RuneScape.",
+    "examine": "An official representative from the First National Bank of Gielinor.",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -22211,7 +22210,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "He guards the Draynor Market stalls from thieves.",
+    "examine": "Keeps the stalls secure.",
     "melee_animation": "390",
     "range_animation": "0",
     "combat_audio": "",
@@ -51727,7 +51726,7 @@
     "attack_level": "28"
   },
   {
-    "examine": "One of RuneScape's many citizens, currently incapacitated by alcohol.",
+    "examine": "One of Gielinor's many citizens, currently incapacitated by alcohol.",
     "melee_animation": "422",
     "range_animation": "0",
     "attack_speed": "4",
