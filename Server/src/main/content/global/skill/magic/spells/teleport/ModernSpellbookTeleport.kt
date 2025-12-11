@@ -73,7 +73,6 @@ class ModernSpellbookTeleport : SpellListener("modern") {
                     inEquipment(player, Items.SEERS_HEADBAND_3_14641)
             val dest = if (alternateTeleport) {
                 Location.create(2731, 3485, 0)
-                    .transform(Location.getRandomLocation(player.location, 1, true))
             } else {
                 Location.create(2758, 3478, 0)
             }

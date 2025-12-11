@@ -36,32 +36,23 @@ class CavernCutscene(
             }
 
             1 -> {
-                fadeFromBlack()
-                timedUpdate(-1)
-            }
-
-            2 -> {
                 teleport(player, 31, 39)
                 moveCamera(34, 35, 700)
                 rotateCamera(31, 39, 100)
-                timedUpdate(1)
+                fadeFromBlack()
+                timedUpdate(3)
             }
-
-            3 -> {
+            2 -> {
                 playerDialogueUpdate(FaceAnim.WORRIED, "What the...! It's Bouncer, Khazard's hell hound.")
             }
 
-            4 -> {
+            3 -> {
                 moveCamera(34, 34)
                 rotateCamera(31, 30)
                 timedUpdate(1)
             }
-
-            5 ->
-                playerDialogueUpdate(FaceAnim.ANGRY, "Khazard tricked me! This is no reward, he's trying to get me killed...AGAIN!")
-
-            6 -> {
-                end()
+            4 -> playerDialogueUpdate(FaceAnim.ANGRY, "Khazard tricked me! This is no reward, he's trying to get me killed...AGAIN!")
+            5 -> end {
                 sendMessage(player, "An evil presence in the cave prevents your prayers from being heard.", 10)
                 spawnGhostBouncer(player)
                 unlock(player)
