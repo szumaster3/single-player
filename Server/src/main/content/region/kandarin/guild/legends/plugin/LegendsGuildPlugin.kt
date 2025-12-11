@@ -48,8 +48,13 @@ class LegendsGuildPlugin : InteractionListener {
          * Handles interaction with staircase.
          */
 
-        on(Scenery.STAIRCASE_32048, IntType.SCENERY, "climb-up", "open") { player, _ ->
-            teleport(player, Location.create(2723, 3375, 0), TeleportManager.TeleportType.INSTANT)
+        on(Scenery.STAIRCASE_32048, IntType.SCENERY, "climb-up", "open") { player, node ->
+            // Wilderness
+            if(node.location == Location(3043, 10328)){
+                teleport(player, Location(3045, 3927, 0), TeleportManager.TeleportType.INSTANT)
+            } else {
+                teleport(player, Location(2723, 3375, 0), TeleportManager.TeleportType.INSTANT)
+            }
             return@on true
         }
 
