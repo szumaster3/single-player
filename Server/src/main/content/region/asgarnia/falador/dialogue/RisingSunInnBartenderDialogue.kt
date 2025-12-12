@@ -1,24 +1,24 @@
 package content.region.asgarnia.falador.dialogue
 
 import core.api.*
-import core.game.dialogue.DialogueFile
-import core.game.dialogue.FaceAnim
-import core.game.dialogue.IfTopic
-import core.game.dialogue.Topic
+import core.game.dialogue.*
+import core.game.node.entity.player.Player
 import core.game.node.item.Item
+import core.plugin.Initializable
 import core.tools.END_DIALOGUE
+import core.tools.START_DIALOGUE
 import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * Dialogue handler for the bartenders in the Rising Sun Inn.
  */
-class RisingSunInnBartenderDialogue : DialogueFile() {
+@Initializable
+class RisingSunInnBartenderDialogue(player: Player? = null) : Dialogue(player) {
 
-    override fun handle(componentID: Int, buttonID: Int) {
-        if (player == null || npc == null) return
-
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 -> npc(FaceAnim.HAPPY, "Hi! What can I get you?").also { stage++ }
+            START_DIALOGUE -> npc(FaceAnim.HAPPY, "Hi! What can I get you?").also { stage++ }
             1 -> showTopics(
                 Topic(FaceAnim.ASKING, "What ales are you serving?", 2),
                 IfTopic(FaceAnim.HAPPY, "I've got some beer glasses...", 7, hasAnyBeerGlasses())
@@ -45,7 +45,12 @@ class RisingSunInnBartenderDialogue : DialogueFile() {
             }
             10 -> player(FaceAnim.FRIENDLY, "Thanks, ${npc!!.name}.").also { stage = END_DIALOGUE }
         }
+        return true
     }
+
+    override fun getIds(): IntArray = intArrayOf(
+        NPCs.EMILY_736, NPCs.KAYLEE_3217, NPCs.TINA_3218
+    )
 
     /**
      * Attempts to purchase a brew if the player has enough coins.
