@@ -23,11 +23,7 @@ class RevenantCombatHandler(meleeAnimation: Animation?, magicAnimation: Animatio
         SwitchAttack(CombatStyle.MAGIC.swingHandler, magicAnimation, createProjectile(MAGIC_Graphics)),
     ) {
 
-    override fun visualizeImpact(
-        entity: Entity?,
-        victim: Entity?,
-        state: BattleState?,
-    ) {
+    override fun visualizeImpact(entity: Entity?, victim: Entity?, state: BattleState?) {
         if (victim is Player) {
             val attack = current
             if (attack.style == CombatStyle.RANGE) {
@@ -37,18 +33,10 @@ class RevenantCombatHandler(meleeAnimation: Animation?, magicAnimation: Animatio
         super.visualizeImpact(entity, victim, state)
     }
 
-    override fun impact(
-        entity: Entity?,
-        victim: Entity?,
-        state: BattleState?,
-    ) {
+    override fun impact(entity: Entity?, victim: Entity?, state: BattleState?) {
         if (victim is Player) {
             val attack = current
-            if (attack.style == CombatStyle.RANGE && !hasTimerActive(victim, "frozen") && !hasTimerActive(
-                    victim,
-                    "frozen:immunity",
-                )
-            ) {
+            if (attack.style == CombatStyle.RANGE && !hasTimerActive(victim, "frozen") && !hasTimerActive(victim, "frozen:immunity")) {
                 registerTimer(victim, spawnTimer("frozen", 16, true))
                 sendMessage((victim as Player?)!!, "The icy darts freeze your muscles!")
                 playGlobalAudio(victim.getLocation(), 4059, 0, 1, 10)
@@ -70,11 +58,7 @@ class RevenantCombatHandler(meleeAnimation: Animation?, magicAnimation: Animatio
         super.impact(entity, victim, state)
     }
 
-    override fun visualize(
-        entity: Entity,
-        victim: Entity?,
-        state: BattleState?,
-    ) {
+    override fun visualize(entity: Entity, victim: Entity?, state: BattleState?) {
         super.visualize(entity, victim, state)
         if (victim!!.isPlayer) {
             val attack = current

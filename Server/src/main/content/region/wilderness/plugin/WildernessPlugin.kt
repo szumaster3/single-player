@@ -1,6 +1,9 @@
 package content.region.wilderness.plugin
 
 import content.data.GameAttributes
+import content.region.wilderness.dialogue.CapeMerchantDialogue
+import content.region.wilderness.dialogue.FatTonyDialogue
+import content.region.wilderness.dialogue.NoterazzoDialogue
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.global.action.ClimbActionHandler
@@ -183,9 +186,45 @@ class WildernessPlugin : InteractionListener {
             sendMessage(player, "The door doesn't open.")
             return@on true
         }
+
+        /*
+         * Handles talking to npc around Wilderness.
+         */
+
+        on(intArrayOf(
+            NPCs.WILLIAM_1778,
+            NPCs.IAN_1779,
+            NPCs.LARRY_1780,
+            NPCs.DARREN_1781,
+            NPCs.EDWARD_1782,
+            NPCs.RICHARD_1783,
+            NPCs.NEIL_1784,
+            NPCs.EDMOND_1785,
+            NPCs.SIMON_1786,
+            NPCs.SAM_1787,
+        ), IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, CapeMerchantDialogue(), node)
+            return@on true
+        }
+
+        on(NPCs.FAT_TONY_596, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, FatTonyDialogue(), node)
+            return@on true
+        }
+
+        on(NPCs.NOTERAZZO_597, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, NoterazzoDialogue(), node)
+            return@on true
+        }
+
+        on(intArrayOf(NPCs.BLACK_HEATHER_202, NPCs.DONNY_THE_LAD_203, NPCs.SPEEDY_KEITH_204), IntType.NPC, "talk-to") { player, node ->
+            val npc = node.asNpc()
+            sendDialogue(player, "${npc.name} is not interested in talking.")
+            return@on true
+        }
     }
 
-    inner class WildernessLeverDialogue : DialogueFile() {
+    private class WildernessLeverDialogue : DialogueFile() {
 
         init { stage = 0 }
 

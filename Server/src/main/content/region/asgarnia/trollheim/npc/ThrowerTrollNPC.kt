@@ -11,10 +11,8 @@ import core.plugin.Initializable
 import shared.consts.NPCs
 
 @Initializable
-class ThrowerTrollNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
+class ThrowerTrollNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
+
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = ThrowerTrollNPC(id, location)
 
     override fun setDefaultBehavior() {

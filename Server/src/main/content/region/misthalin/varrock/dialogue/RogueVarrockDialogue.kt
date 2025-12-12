@@ -24,7 +24,7 @@ class RogueVarrockDialogue(player: Player? = null) : Dialogue(player) {
         if (!hasRequirement(player, Quests.SUMMERS_END)) return false
         if (inBorders(player, 3282, 3934, 3287, 3942)) {
             end()
-            openDialogue(player, RogueCastleDialogue())
+            openDialogue(player, RogueCastleDialogue(), npc)
             return true
         }
         npcl(FaceAnim.FRIENDLY, "Welcome to my humble abode. What can I do for you?")

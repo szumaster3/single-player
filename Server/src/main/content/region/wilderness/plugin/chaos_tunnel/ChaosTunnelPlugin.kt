@@ -1,4 +1,4 @@
-package content.region.wilderness.plugin.chaos_tunnels
+package content.region.wilderness.plugin.chaos_tunnel
 
 import com.google.gson.JsonObject
 import core.ServerStore.Companion.getArchive
@@ -23,6 +23,7 @@ import core.tools.Log
 import core.tools.RandomFunction
 import core.tools.SystemLogger
 import shared.consts.Items
+import shared.consts.NPCs
 import shared.consts.Quests
 import java.util.*
 import shared.consts.Scenery as Objects
@@ -154,6 +155,31 @@ class ChaosTunnelPlugin : MapArea, InteractionListener {
                 }
             }
         }
+
+        /*
+         * Handles talking to npc around Tunnel.
+         */
+
+        on(NPCs.MISHKALUN_DORN_5839, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, MishkalunDornDialogue(), node)
+            return@on true
+        }
+
+        on(NPCs.DAKHTHOULAN_AEGIS_5840, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, DakhthoulanAegisDialogue(), node)
+            return@on true
+        }
+
+        on(NPCs.SILAS_DAHCSNU_5841, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, SilasDahcsnuDialogue(), node)
+            return@on true
+        }
+
+        on(NPCs.SUROK_MAGIS_7136, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, SurokMagisDialogue(), node)
+            return@on true
+        }
+
     }
 
     override fun areaEnter(entity: Entity) {

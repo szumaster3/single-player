@@ -45,7 +45,7 @@ class RoguesJewelleryPlugin : InteractionListener {
         }
     }
 
-    inner class RogueJewelleryDialogue(private val itemId: Int, private val invAmount: Int, private val itemName: String, private val price: Int) : DialogueFile() {
+    private class RogueJewelleryDialogue(private val itemId: Int, private val invAmount: Int, private val itemName: String, private val price: Int) : DialogueFile() {
 
         init { stage = 0 }
 

@@ -22,13 +22,12 @@ import core.game.world.map.zone.impl.WildernessZone
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
 import core.tools.RandomFunction
+import shared.consts.NPCs
 import shared.consts.Sounds
 import kotlin.math.abs
 
 @Initializable
-class RevenantNPC @JvmOverloads constructor(
-    id: Int = -1, location: Location? = null, val routes: Array<Array<Location>>? = null
-) : AbstractNPC(id, location) {
+class RevenantNPC @JvmOverloads constructor(id: Int = -1, location: Location? = null, val routes: Array<Array<Location>>? = null) : AbstractNPC(id, location) {
 
     private var swingHandler: CombatSwingHandler? = null
     val type: RevenantsType? = RevenantsType.forId(id)
@@ -104,11 +103,7 @@ class RevenantNPC @JvmOverloads constructor(
 
     override fun getAudio(index: Int): Audio? = null
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = RevenantNPC(id, location, null)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = RevenantNPC(id, location, null)
 
     override fun setNextWalk() {
         nextWalk = ticks + RandomFunction.random(7, 15)
@@ -142,17 +137,9 @@ class RevenantNPC @JvmOverloads constructor(
 
     override fun getWalkRadius(): Int = 20
 
-    override fun continueAttack(
-        target: Entity,
-        style: CombatStyle,
-        message: Boolean,
-    ): Boolean = if (target is Player) hasAcceptableCombatLevel(target.asPlayer()) else true
+    override fun continueAttack(target: Entity, style: CombatStyle, message: Boolean): Boolean = if (target is Player) hasAcceptableCombatLevel(target.asPlayer()) else true
 
-    override fun isAttackable(
-        entity: Entity,
-        style: CombatStyle,
-        message: Boolean,
-    ): Boolean {
+    override fun isAttackable(entity: Entity, style: CombatStyle, message: Boolean): Boolean {
         if (entity is Player) {
             if (!hasAcceptableCombatLevel(entity.asPlayer()) && !entity.asPlayer().isAdmin) {
                 if (message) {
@@ -180,135 +167,32 @@ class RevenantNPC @JvmOverloads constructor(
     }
 
     override fun getIds(): IntArray = intArrayOf(
-        6604,
-        6635,
-        6655,
-        6666,
-        6677,
-        6697,
-        6703,
-        6715,
-        6605,
-        6612,
-        6616,
-        6620,
-        6636,
-        6637,
-        6638,
-        6639,
-        6651,
-        6656,
-        6657,
-        6658,
-        6667,
-        6678,
-        6679,
-        6680,
-        6681,
-        6693,
-        6698,
-        6699,
-        6704,
-        6705,
-        6706,
-        6707,
-        6716,
-        6717,
-        6718,
-        6719,
-        6606,
-        6621,
-        6628,
-        6640,
-        6659,
-        6682,
-        6694,
-        6708,
-        6720,
-        6622,
-        6631,
-        6641,
-        6660,
-        6668,
-        6683,
-        6709,
-        6721,
-        6608,
-        6642,
-        6661,
-        6684,
-        6710,
-        6722,
-        6727,
-        6613,
-        6623,
-        6643,
-        6652,
-        6662,
-        6669,
-        6671,
-        6674,
-        6685,
-        6695,
-        6700,
-        6711,
-        6723,
-        6607,
-        6609,
-        6614,
-        6617,
-        6625,
-        6632,
-        6644,
-        6663,
-        6675,
-        6686,
-        6701,
-        6712,
-        6724,
-        6728,
-        6645,
-        6687,
-        6646,
-        6688,
-        6647,
-        6689,
-        6610,
-        6615,
-        6618,
-        6624,
-        6626,
-        6629,
-        6633,
-        6648,
-        6653,
-        6664,
-        6670,
-        6672,
-        6690,
-        6696,
-        6702,
-        6713,
-        6725,
-        6729,
-        6649,
-        6691,
-        6611,
-        6619,
-        6627,
-        6630,
-        6634,
-        6650,
-        6654,
-        6665,
-        6673,
-        6676,
-        6692,
-        6714,
-        6726,
-        6730,
-        6998,
-        6999,
+        // Imps.
+        NPCs.REVENANT_IMP_6604, NPCs.REVENANT_IMP_6635, NPCs.REVENANT_IMP_6655, NPCs.REVENANT_IMP_6666, NPCs.REVENANT_IMP_6677, NPCs.REVENANT_IMP_6697, NPCs.REVENANT_IMP_6703, NPCs.REVENANT_IMP_6715,
+        // Goblins.
+        NPCs.REVENANT_GOBLIN_6605, NPCs.REVENANT_GOBLIN_6612, NPCs.REVENANT_GOBLIN_6616, NPCs.REVENANT_GOBLIN_6620, NPCs.REVENANT_GOBLIN_6636, NPCs.REVENANT_GOBLIN_6637, NPCs.REVENANT_GOBLIN_6638, NPCs.REVENANT_GOBLIN_6639, NPCs.REVENANT_GOBLIN_6651, NPCs.REVENANT_GOBLIN_6656, NPCs.REVENANT_GOBLIN_6657, NPCs.REVENANT_GOBLIN_6658, NPCs.REVENANT_GOBLIN_6667, NPCs.REVENANT_GOBLIN_6678, NPCs.REVENANT_GOBLIN_6679, NPCs.REVENANT_GOBLIN_6680, NPCs.REVENANT_GOBLIN_6681, NPCs.REVENANT_GOBLIN_6693, NPCs.REVENANT_GOBLIN_6698, NPCs.REVENANT_GOBLIN_6699, NPCs.REVENANT_GOBLIN_6704, NPCs.REVENANT_GOBLIN_6705, NPCs.REVENANT_GOBLIN_6706, NPCs.REVENANT_GOBLIN_6707, NPCs.REVENANT_GOBLIN_6716, NPCs.REVENANT_GOBLIN_6717, NPCs.REVENANT_GOBLIN_6718, NPCs.REVENANT_GOBLIN_6719,
+        // Icefiends.
+        NPCs.REVENANT_ICEFIEND_6606, NPCs.REVENANT_ICEFIEND_6621, NPCs.REVENANT_ICEFIEND_6628, NPCs.REVENANT_ICEFIEND_6640, NPCs.REVENANT_ICEFIEND_6659, NPCs.REVENANT_ICEFIEND_6682, NPCs.REVENANT_ICEFIEND_6694, NPCs.REVENANT_ICEFIEND_6708, NPCs.REVENANT_ICEFIEND_6720,
+        // Pyrefiends.
+        NPCs.REVENANT_PYREFIEND_6622, NPCs.REVENANT_PYREFIEND_6631, NPCs.REVENANT_PYREFIEND_6641, NPCs.REVENANT_PYREFIEND_6660, NPCs.REVENANT_PYREFIEND_6668, NPCs.REVENANT_PYREFIEND_6683, NPCs.REVENANT_PYREFIEND_6709, NPCs.REVENANT_PYREFIEND_6721,
+        // Hobgoblins.
+        NPCs.REVENANT_HOBGOBLIN_6608, NPCs.REVENANT_HOBGOBLIN_6642, NPCs.REVENANT_HOBGOBLIN_6661, NPCs.REVENANT_HOBGOBLIN_6684, NPCs.REVENANT_HOBGOBLIN_6710, NPCs.REVENANT_HOBGOBLIN_6722, NPCs.REVENANT_HOBGOBLIN_6727,
+        // Vampires.
+        NPCs.REVENANT_VAMPIRE_6613, NPCs.REVENANT_VAMPIRE_6623, NPCs.REVENANT_VAMPIRE_6643, NPCs.REVENANT_VAMPIRE_6652, NPCs.REVENANT_VAMPIRE_6662, NPCs.REVENANT_VAMPIRE_6669, NPCs.REVENANT_VAMPIRE_6671, NPCs.REVENANT_VAMPIRE_6674, NPCs.REVENANT_VAMPIRE_6685, NPCs.REVENANT_VAMPIRE_6695, NPCs.REVENANT_VAMPIRE_6700, NPCs.REVENANT_VAMPIRE_6711, NPCs.REVENANT_VAMPIRE_6723,
+        // Werewolfs.
+        NPCs.REVENANT_WEREWOLF_6607, NPCs.REVENANT_WEREWOLF_6609, NPCs.REVENANT_WEREWOLF_6614, NPCs.REVENANT_WEREWOLF_6617, NPCs.REVENANT_WEREWOLF_6625, NPCs.REVENANT_WEREWOLF_6632, NPCs.REVENANT_WEREWOLF_6644, NPCs.REVENANT_WEREWOLF_6663, NPCs.REVENANT_WEREWOLF_6675, NPCs.REVENANT_WEREWOLF_6686, NPCs.REVENANT_WEREWOLF_6701, NPCs.REVENANT_WEREWOLF_6712, NPCs.REVENANT_WEREWOLF_6724, NPCs.REVENANT_WEREWOLF_6728,
+        // Cyclops.
+        NPCs.REVENANT_CYCLOPS_6645, NPCs.REVENANT_CYCLOPS_6687,
+        // Hellhounds.
+        NPCs.REVENANT_HELLHOUND_6646, NPCs.REVENANT_HELLHOUND_6688,
+        // Demons.
+        NPCs.REVENANT_DEMON_6647, NPCs.REVENANT_DEMON_6689,
+        // Orks.
+        NPCs.REVENANT_ORK_6610, NPCs.REVENANT_ORK_6615, NPCs.REVENANT_ORK_6618, NPCs.REVENANT_ORK_6624, NPCs.REVENANT_ORK_6626, NPCs.REVENANT_ORK_6629, NPCs.REVENANT_ORK_6633, NPCs.REVENANT_ORK_6648, NPCs.REVENANT_ORK_6653, NPCs.REVENANT_ORK_6664, NPCs.REVENANT_ORK_6670, NPCs.REVENANT_ORK_6672, NPCs.REVENANT_ORK_6690, NPCs.REVENANT_ORK_6696, NPCs.REVENANT_ORK_6702, NPCs.REVENANT_ORK_6713, NPCs.REVENANT_ORK_6725, NPCs.REVENANT_ORK_6729,
+        // Dark beasts.
+        NPCs.REVENANT_DARK_BEAST_6649, NPCs.REVENANT_DARK_BEAST_6691,
+        // Knights.
+        NPCs.REVENANT_KNIGHT_6611, NPCs.REVENANT_KNIGHT_6619, NPCs.REVENANT_KNIGHT_6627, NPCs.REVENANT_KNIGHT_6630, NPCs.REVENANT_KNIGHT_6634, NPCs.REVENANT_KNIGHT_6650, NPCs.REVENANT_KNIGHT_6654, NPCs.REVENANT_KNIGHT_6665, NPCs.REVENANT_KNIGHT_6673, NPCs.REVENANT_KNIGHT_6676, NPCs.REVENANT_KNIGHT_6692, NPCs.REVENANT_KNIGHT_6714, NPCs.REVENANT_KNIGHT_6726, NPCs.REVENANT_KNIGHT_6730, NPCs.REVENANT_DRAGON_6998, NPCs.REVENANT_DRAGON_6999,
     )
 
     private fun configureBonuses() {
