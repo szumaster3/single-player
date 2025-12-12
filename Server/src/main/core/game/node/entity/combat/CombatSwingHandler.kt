@@ -24,6 +24,7 @@ import core.game.world.map.path.Pathfinder.*
 import core.game.world.update.flag.context.Animation
 import core.tools.Log
 import core.tools.RandomFunction
+import shared.consts.Items
 import shared.consts.Sounds
 
 /**
@@ -565,7 +566,7 @@ abstract class CombatSwingHandler(var type: CombatStyle?) {
         if (victim is Player) {
             val player = victim.asPlayer()
             val shield = player.equipment[EquipmentContainer.SLOT_SHIELD]
-            if (shield != null && shield.id == 13742) {
+            if (shield != null && shield.id == Items.ELYSIAN_SPIRIT_SHIELD_13742) {
                 if (RandomFunction.random(100) < 71) {
                     hit -= (hit.toDouble() * 0.25).toInt()
                     if (hit < 1) {
@@ -573,7 +574,7 @@ abstract class CombatSwingHandler(var type: CombatStyle?) {
                     }
                 }
             }
-            if (shield != null && shield.id == 13740) {
+            if (shield != null && shield.id == Items.DIVINE_SPIRIT_SHIELD_13740) {
                 val reduce = hit.toDouble() * 0.30
                 var drain = hit * 0.15
                 if (player.skills.prayerPoints > drain && drain > 0) {
@@ -690,5 +691,9 @@ abstract class CombatSwingHandler(var type: CombatStyle?) {
 }
 
 enum class SwingHandlerFlag {
-    IGNORE_STAT_BOOSTS_DAMAGE, IGNORE_STAT_BOOSTS_ACCURACY, IGNORE_PRAYER_BOOSTS_DAMAGE, IGNORE_PRAYER_BOOSTS_ACCURACY, IGNORE_STAT_REDUCTION
+    IGNORE_STAT_BOOSTS_DAMAGE,
+    IGNORE_STAT_BOOSTS_ACCURACY,
+    IGNORE_PRAYER_BOOSTS_DAMAGE,
+    IGNORE_PRAYER_BOOSTS_ACCURACY,
+    IGNORE_STAT_REDUCTION
 }

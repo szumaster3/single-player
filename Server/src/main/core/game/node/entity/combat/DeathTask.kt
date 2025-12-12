@@ -102,36 +102,36 @@ class DeathTask private constructor() : NodeTask(1) {
             val keptItems = Container(count, ContainerType.NEVER_STACK)
             containers[0] = keptItems
 
-                for (i in 0 until count) {
-                    for (j in 0..41) {
-                        var item = wornItems[j]
-                        if (item != null) {
-                            var x = 0
-                            while (x < count) {
-                                var kept = keptItems[x]
-                                if (kept == null || kept != null && kept.definition.getAlchemyValue(true) <= item!!.definition.getAlchemyValue(
-                                        true
-                                    )
-                                ) {
-                                    keptItems.replace(Item(item!!.id, 1, item.charge), x)
-                                    x++
-                                    while (x < count) {
-                                        val newKept = keptItems[x]
-                                        keptItems.replace(kept, x++)
-                                        kept = newKept
-                                    }
-                                    if (kept != null) {
-                                        wornItems.add(kept, false)
-                                    }
-                                    item = wornItems[j]
-                                    wornItems.replace(Item(item.id, item.amount - 1, item.charge), j)
-                                    break
-                                }
+            for (i in 0 until count) {
+                for (j in 0..41) {
+                    var item = wornItems[j]
+                    if (item != null) {
+                        var x = 0
+                        while (x < count) {
+                            var kept = keptItems[x]
+                            if (kept == null || kept != null && kept.definition.getAlchemyValue(true) <= item!!.definition.getAlchemyValue(
+                                    true
+                                )
+                            ) {
+                                keptItems.replace(Item(item!!.id, 1, item.charge), x)
                                 x++
+                                while (x < count) {
+                                    val newKept = keptItems[x]
+                                    keptItems.replace(kept, x++)
+                                    kept = newKept
+                                }
+                                if (kept != null) {
+                                    wornItems.add(kept, false)
+                                }
+                                item = wornItems[j]
+                                wornItems.replace(Item(item.id, item.amount - 1, item.charge), j)
+                                break
                             }
+                            x++
                         }
                     }
                 }
+            }
 
             containers[1] = Container(42, ContainerType.DEFAULT)
             containers[1]!!.addAll(wornItems)
@@ -165,8 +165,7 @@ class DeathTask private constructor() : NodeTask(1) {
         @JvmStatic
         fun isDead(e: Entity): Boolean {
             return if (e is NPC) e.respawnTick > ticks || e.getAttribute(
-                "state:death",
-                false
+                "state:death", false
             )
             else e.getAttribute("state:death", false)
         }

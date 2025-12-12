@@ -145,7 +145,7 @@ class KingBlackDragonNPC : AbstractNPC {
             when (style) {
                 CombatStyle.MELEE -> entity.animate(MELEE_ATTACK)
                 CombatStyle.RANGE -> {
-                    Projectile.ranged(entity, victim, fireType.projectileId, 20, 36, 50, 15).send()
+                    Projectile.ranged(entity, victim, fireType.projectileId, 40, 36, 90, 5).send()
                     entity.animate(fireType.animation)
                 }
 
@@ -163,7 +163,7 @@ class KingBlackDragonNPC : AbstractNPC {
 
         companion object {
             private val DRAGONFIRE = DragonfireSwingHandler(false, 56, null, true)
-            private val MELEE_ATTACK = Animation(80, Priority.HIGH)
+            private val MELEE_ATTACK = Animation(91, Priority.HIGH)
         }
     }
 }
