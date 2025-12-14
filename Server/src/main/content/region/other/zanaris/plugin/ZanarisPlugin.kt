@@ -1,6 +1,7 @@
 package content.region.other.zanaris.plugin
 
 import content.global.travel.FairyRingInterface
+import content.region.other.zanaris.dialogue.FairyShopkeeperDialogue
 import content.region.other.zanaris.dialogue.MagicDoorDialogue
 import core.api.*
 import core.game.global.action.ClimbActionHandler
@@ -12,10 +13,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
-import shared.consts.Animations
-import shared.consts.Items
-import shared.consts.Quests
-import shared.consts.Scenery
+import shared.consts.*
 
 class ZanarisPlugin : InteractionListener {
 
@@ -160,6 +158,15 @@ class ZanarisPlugin : InteractionListener {
 
         on(Scenery.ROPE_12255, IntType.SCENERY, "climb-up") { player, _ ->
             ClimbActionHandler.climb(player, Animation(Animations.HUMAN_BURYING_BONES_827), Location(2457, 4380, 0))
+            return@on true
+        }
+
+        /*
+         * Handles talking to shopkeeper around Zanaris.
+         */
+
+        on(intArrayOf(NPCs.FAIRY_SHOPKEEPER_534, NPCs.FAIRY_SHOP_ASSISTANT_535), IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, FairyShopkeeperDialogue(), node.asNpc())
             return@on true
         }
     }
