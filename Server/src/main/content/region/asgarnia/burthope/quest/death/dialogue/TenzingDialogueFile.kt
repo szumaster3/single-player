@@ -150,7 +150,6 @@ class TenzingDialogueFile : DialogueFile() {
                 22 -> playerl(FaceAnim.FRIENDLY, "Oh yes, of course! Thanks!").also { stage = END_DIALOGUE }
                 30 -> npcl(FaceAnim.FRIENDLY, "Go in peace traveller.").also { stage = END_DIALOGUE }
             }
-
         }
     }
 }

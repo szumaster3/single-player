@@ -6,23 +6,18 @@ import core.api.removeItem
 import core.api.sendMessage
 import core.game.dialogue.DialogueFile
 import core.game.global.action.DoorActionHandler
-import core.game.node.entity.npc.NPC
 import core.game.node.item.Item
 import core.tools.END_DIALOGUE
 import shared.consts.Items
-import shared.consts.NPCs
 import shared.consts.Quests
 
 /**
  * Represents the Border Guard dialogue.
  */
 class BorderGuardDialogue : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+
+    override fun handle(componentID: Int, buttonID: Int) {
         val gates = if (player!!.location.y == 3227) getScenery(3268, 3227, 0) else getScenery(3268, 3227, 0)
-        npc = NPC(NPCs.BORDER_GUARD_7912)
         when (stage) {
             0 -> player("Can I come through this gate?").also { stage++ }
             1 -> if (getQuestStage(player!!, Quests.PRINCE_ALI_RESCUE) < 50) {

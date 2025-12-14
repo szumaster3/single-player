@@ -1,37 +1,25 @@
 package content.region.asgarnia.taverley.dialogue
 
 import core.api.openNpcShop
-import core.game.dialogue.Dialogue
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.node.entity.npc.NPC
-import core.game.node.entity.player.Player
-import core.plugin.Initializable
-import shared.consts.NPCs
+import core.game.dialogue.Topic
+import core.tools.END_DIALOGUE
 
 /**
  * Represents the Gaius dialogue.
  */
-@Initializable
-class GaiusDialogue(player: Player? = null) : Dialogue(player) {
+class GaiusDialogue : DialogueFile() {
 
-    override fun open(vararg args: Any?): Boolean {
-        npc = args[0] as NPC
-        npcl(FaceAnim.FRIENDLY, "Welcome to my two-handed sword shop.")
-        return true
-    }
-
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
-            0 -> options("Let's trade.", "Thanks, but not today.").also { stage++ }
-            1 -> when (buttonId) {
-                1 -> end().also { openNpcShop(player, npc.id) }
-                2 -> end()
-            }
+            0 -> npcl(FaceAnim.FRIENDLY, "Welcome to my two-handed sword shop.").also { stage++ }
+            1 -> showTopics(
+                Topic("Let's trade.",2),
+                Topic(  "Thanks, but not today.", 3),
+            )
+            2 -> end().also { openNpcShop(player!!, npc!!.id) }
+            3 -> npcl(FaceAnim.FRIENDLY, "Very well, but do please call again.").also { stage = END_DIALOGUE }
         }
-        return true
     }
-
-    override fun newInstance(player: Player?): Dialogue = GaiusDialogue(player)
-
-    override fun getIds(): IntArray = intArrayOf(NPCs.GAIUS_586)
 }

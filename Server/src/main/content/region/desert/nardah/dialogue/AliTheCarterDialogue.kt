@@ -45,6 +45,7 @@ class AliTheCarterDialogue(player: Player? = null) : Dialogue(player) {
                 } else {
                     end()
                     addItemOrDrop(player, Items.WATERSKIN4_1823, 1)
+                    stage = END_DIALOGUE
                 }
             }
 

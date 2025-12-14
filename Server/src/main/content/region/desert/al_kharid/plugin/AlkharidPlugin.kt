@@ -1,7 +1,6 @@
 package content.region.desert.al_kharid.plugin
 
-import content.region.desert.al_kharid.dialogue.AlKharidHealDialogue
-import content.region.desert.al_kharid.dialogue.BorderGuardDialogue
+import content.region.desert.al_kharid.dialogue.*
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -17,15 +16,6 @@ import shared.consts.Scenery
 class AlkharidPlugin : InteractionListener {
 
     override fun defineListeners() {
-
-        /*
-         * Handles talking to border guards.
-         */
-
-        on(BORDER_GUARD, IntType.NPC, "talk-to") { player, _ ->
-            openDialogue(player, BorderGuardDialogue())
-            return@on true
-        }
 
         /*
          * Handles crossing the tollgate.
@@ -48,15 +38,6 @@ class AlkharidPlugin : InteractionListener {
             } else {
                 openDialogue(player, BorderGuardDialogue())
             }
-            return@on true
-        }
-
-        /*
-         * Handles healing.
-         */
-
-        on(HEALERS_NPC, IntType.NPC, "heal") { player, _ ->
-            openDialogue(player, AlKharidHealDialogue(false))
             return@on true
         }
 
@@ -95,6 +76,100 @@ class AlkharidPlugin : InteractionListener {
                     }
                 }
             }
+            return@on true
+        }
+
+        /*
+         * Handles talking to NPCs around city.
+         */
+
+        on(BORDER_GUARD, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, BorderGuardDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(HEALERS_NPC, IntType.NPC, "heal") { player, node ->
+            openDialogue(player, AlKharidHealDialogue(false), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.AABLA_959, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, AablaDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.ALI_MORRISANE_1862, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, AliMorrisaneDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.ALI_THE_FARMER_2821, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, AliTheFarmerDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.ALI_THE_GUARD_2823, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, AliTheGuardDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.ALI_THE_LEAFLET_DROPPER_3680, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, AliTheLeafletDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.ALI_THE_SMITH_2820, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, AliTheSmithDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.ALI_THE_TAILOR_2822, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, AliTheTailorDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.CAPTAIN_NINTO_4594, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, CaptainNintoDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.CAPTAIN_DAERKIN_4595, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, CaptainDaerkinDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.DOMMIK_545, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, DommikDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.FADLI_958, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, FadliDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.JARAAH_962, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, JaraahDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.LOUIE_LEGS_542, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, LouieLegsDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.RANAEL_544, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, RanaelDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.SABREEN_960, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, SabreenDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.ZEKE_541, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, ZekeDialogue(), node.asNpc())
             return@on true
         }
     }

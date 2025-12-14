@@ -22,11 +22,12 @@ class SabaDialogue(player: Player? = null) : Dialogue(player) {
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         if (!isQuestComplete(player, Quests.DEATH_PLATEAU)) {
+            end()
             openDialogue(player!!, SabaDialogueFile(), npc)
         } else if (isQuestComplete(player, Quests.DEATH_PLATEAU)) {
             playerl(FaceAnim.HALF_GUILTY, "Hello.").also { stage = 1 }
         } else {
-            playerl(FaceAnim.HALF_GUILTY, "Hi!").also { stage = 0 }
+            playerl(FaceAnim.HALF_GUILTY, "Hi!")
         }
         return true
     }

@@ -1,37 +1,26 @@
 package content.region.desert.al_kharid.dialogue
 
 import core.api.openBankAccount
-import core.game.dialogue.Dialogue
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic
-import core.game.node.entity.npc.NPC
-import core.game.node.entity.player.Player
-import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import shared.consts.NPCs
 
 /**
  * Represents the Fadli dialogue.
  */
-@Initializable
-class FadliDialogue(player: Player? = null) : Dialogue(player) {
+class FadliDialogue : DialogueFile() {
 
-    override fun open(vararg args: Any?): Boolean {
-        npc = args[0] as NPC
-        player(FaceAnim.FRIENDLY, "Hi!")
-        return true
-    }
-
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
-            0 -> npcl(FaceAnim.HALF_ASKING, "What?").also { stage++ }
-            1 -> showTopics(
+            0 -> player(FaceAnim.FRIENDLY, "Hi!").also { stage++ }
+            1 -> npcl(FaceAnim.ASKING, "What?").also { stage++ }
+            2 -> showTopics(
                 Topic("What do you do?", 101),
                 Topic("What is this place?", 201),
                 Topic(FaceAnim.FRIENDLY, "I'd like to store some items, please.", 301),
                 Topic("Do you watch any matches?", 401),
             )
-
             101 -> npcl(FaceAnim.FRIENDLY, "You can store your stuff here if you want. You can dump anything you don't want to carry whilst your fighting duels and then pick it up again on the way out.").also { stage++ }
             102 -> npcl(FaceAnim.SAD, "To be honest I'm wasted here.").also { stage++ }
             103 -> npcl(FaceAnim.EVIL_LAUGH, "I should be winning duels in an arena! I'm the best warrior in Al-Kharid!").also { stage++ }
@@ -41,14 +30,10 @@ class FadliDialogue(player: Player? = null) : Dialogue(player) {
             301 -> npcl(FaceAnim.FRIENDLY, "Sure.").also { stage++ }
             302 -> {
                 end()
-                openBankAccount(player)
+                openBankAccount(player!!)
+                stage = END_DIALOGUE
             }
             401 -> npcl(FaceAnim.LAUGH, "Most aren't any good so I throw rotten fruit at them!").also { stage = END_DIALOGUE }
         }
-        return true
     }
-
-    override fun newInstance(player: Player?): Dialogue = FadliDialogue(player)
-
-    override fun getIds(): IntArray = intArrayOf(NPCs.FADLI_958)
 }

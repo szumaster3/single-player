@@ -141,7 +141,6 @@ class PortSarimPlugin : InteractionListener {
 
         on(NPCs.GUARD_2704, IntType.NPC, "talk-to") { player, node ->
             sendChat((node as NPC), GUARD_FORCE_CHAT[RandomFunction.random(GUARD_FORCE_CHAT.size)])
-            lock(player, 2)
             runTask(player, 1) {
                 sendPlayerDialogue(player, "Maybe I should let him sleep.")
             }
@@ -166,11 +165,8 @@ class PortSarimPlugin : InteractionListener {
          */
 
         on(Scenery.ICY_CAVERN_33174, IntType.SCENERY, "enter") { player, _ ->
-            queueScript(player, 1, QueueStrength.SOFT) {
-                player.properties.teleportLocation = Location(3056, 9562, 0)
-                sendMessage(player, "You leave the icy cavern.")
-                return@queueScript stopExecuting(player)
-            }
+            player.properties.teleportLocation = Location(3056, 9562, 0)
+            sendMessage(player, "You leave the icy cavern.")
             return@on true
         }
 
@@ -188,32 +184,32 @@ class PortSarimPlugin : InteractionListener {
          */
 
         on(NPCs.BELLEMORDE_2942, IntType.NPC, "talk-to") { player, node ->
-            openDialogue(player, CatBellemordeDialogue(), node.id)
+            openDialogue(player, CatBellemordeDialogue(), node.asNpc())
             return@on true
         }
 
         on(NPCs.GRUM_556, IntType.NPC, "talk-to") { player, node ->
-            openDialogue(player, GrumDialogue(), node.id)
+            openDialogue(player, GrumDialogue(), node.asNpc())
             return@on true
         }
 
         on(NPCs.GERRANT_558, IntType.NPC, "talk-to") { player, node ->
-            openDialogue(player, GerrantDialogue(), node.id)
+            openDialogue(player, GerrantDialogue(), node.asNpc())
             return@on true
         }
 
         on(NPCs.JACK_SEAGULL_2690, IntType.NPC, "talk-to") { player, node ->
-            openDialogue(player, JackSeagullDialogue(), node.id)
+            openDialogue(player, JackSeagullDialogue(), node.asNpc())
             return@on true
         }
 
         on(NPCs.LONGBOW_BEN_2691, IntType.NPC, "talk-to") { player, node ->
-            openDialogue(player, LongbowBenDialogue(), node.id)
+            openDialogue(player, LongbowBenDialogue(), node.asNpc())
             return@on true
         }
 
         on(NPCs.MALIGNIUS_MORTIFER_2713, IntType.NPC, "talk-to") { player, node ->
-            openDialogue(player, MaligniusMortiferDialogue(), node.id)
+            openDialogue(player, MaligniusMortiferDialogue(), node.asNpc())
             return@on true
         }
 
@@ -225,12 +221,12 @@ class PortSarimPlugin : InteractionListener {
             NPCs.MONK_OF_ENTRANA_2730,
             NPCs.MONK_OF_ENTRANA_2731,
         ), IntType.NPC, "talk-to") { player, node ->
-            openDialogue(player, MonkOfEntranaDialogue(), node.id)
+            openDialogue(player, MonkOfEntranaDialogue(), node.asNpc())
             return@on true
         }
 
         on(NPCs.THAKI_THE_DELIVERY_DWARF_7115, IntType.NPC, "talk-to") { player, node ->
-            openDialogue(player, ThakiTheDeliveryDwarfDialogue(), node.id)
+            openDialogue(player, ThakiTheDeliveryDwarfDialogue(), node.asNpc())
             return@on true
         }
 

@@ -1,50 +1,32 @@
 package content.region.asgarnia.falador.plugin.temple_knights
 
 import core.api.hasRequirement
-import core.game.dialogue.Dialogue
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.node.entity.npc.NPC
-import core.game.node.entity.player.Player
+import core.game.dialogue.Topic
 import core.game.shops.Shops
-import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import shared.consts.NPCs
 import shared.consts.Quests
 
 /**
  * Represents the Sir Vyvin dialogue.
  */
-@Initializable
-class SirVyvinDialogue(player: Player? = null) : Dialogue(player) {
+class SirVyvinDialogue: DialogueFile() {
 
-    override fun open(vararg args: Any?): Boolean {
-        npc = args[0] as NPC
-        player("Hello.")
-        return true
-    }
-
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
-        val rank = WhiteKnightRankManager.getRank(player)
-
+    override fun handle(componentID: Int, buttonID: Int) {
+        val rank = WhiteKnightRankManager.getRank(player!!)
         when (stage) {
-            0 -> npc("Greetings traveller.").also { stage++ }
-
-            1 -> options(
-                "Do you have anything to trade?",
-                "Why are there so many knights in this city?",
-                "Can I just distract you for a minute?"
-            ).also { stage++ }
-
-            2 -> when (buttonId) {
-                1 -> playerl(FaceAnim.HALF_ASKING, "Do you have anything to trade?").also { stage = 10 }
-                2 -> playerl(FaceAnim.HALF_ASKING, "Why are there so many knights in this city?").also { stage = 30 }
-                3 -> playerl(FaceAnim.FRIENDLY, "Can I just talk to you very slowly for a few minutes,").also { stage = 40 }
-            }
-
+            0 -> player("Hello.").also { stage++ }
+            1 -> npc("Greetings traveller.").also { stage++ }
+            2 -> showTopics(
+                Topic("Do you have anything to trade?",10),
+                Topic("Why are there so many knights in this city?",30),
+                Topic("Can I just distract you for a minute?", 40, true),
+            )
             // Trade.
             10 -> {
                 when {
-                    !hasRequirement(player, Quests.WANTED) -> npc("No, I'm sorry.").also { stage = END_DIALOGUE }
+                    !hasRequirement(player!!, Quests.WANTED) -> npc("No, I'm sorry.").also { stage = END_DIALOGUE }
                     rank == WhiteKnightsRank.UNRANKED -> {
                         npcl(FaceAnim.NEUTRAL,"Well, maybe I do, but you need to prove yourself worthy as a White Knight before I will sell you anything.")
                         stage++
@@ -65,12 +47,12 @@ class SirVyvinDialogue(player: Player? = null) : Dialogue(player) {
             }
             16 -> {
                 end()
-                Shops.openId(player, getShopForRank(rank))
+                Shops.openId(player!!, getShopForRank(rank))
             }
 
             // Why so many knights?
             30 -> npcl(FaceAnim.FRIENDLY, "We are the White Knights of Falador. We are the most powerful order of knights in the land.").also { stage++ }
-            31 -> npcl(FaceAnim.FRIENDLY,"We are helping King Vallance rule the kingdom as he is getting old and tired.")
+            31 -> npcl(FaceAnim.FRIENDLY,"We are helping King Vallance rule the kingdom as he is getting old and tired.").also { stage = 2 }
 
             // Distraction.
             40 -> playerl(FaceAnim.HALF_ASKING, "while I distract you, so that my friend over there can do something while you're busy being distracted by me?").also { stage++ }
@@ -82,7 +64,6 @@ class SirVyvinDialogue(player: Player? = null) : Dialogue(player) {
             46 -> npcl(FaceAnim.NEUTRAL,"... ...I don't think I want to talk to you anymore.").also { stage++ }
             47 -> player(FaceAnim.HALF_GUILTY, "Ok. My work here is done. 'Bye!").also { stage = END_DIALOGUE }
         }
-        return true
     }
 
     /**
@@ -111,5 +92,4 @@ class SirVyvinDialogue(player: Player? = null) : Dialogue(player) {
         else -> 269
     }
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.SIR_VYVIN_605)
 }

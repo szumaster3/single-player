@@ -6,6 +6,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
+import core.tools.END_DIALOGUE
 import shared.consts.Items
 import shared.consts.NPCs
 
@@ -15,7 +16,7 @@ import shared.consts.NPCs
 @Initializable
 class SimonTempletonDialogue(player: Player? = null) : Dialogue(player) {
 
-    val ARTIFACTS = arrayOf(
+    private val ARTIFACTS = arrayOf(
         arrayOf(Item(Items.POTTERY_SCARAB_9032), Item(Items.POTTERY_STATUETTE_9036), Item(Items.IVORY_COMB_9026)),
         arrayOf(Item(Items.STONE_SEAL_9042), Item(Items.STONE_SCARAB_9030), Item(Items.STONE_STATUETTE_9038)),
         arrayOf(Item(Items.GOLD_SEAL_9040), Item(Items.GOLDEN_SCARAB_9028), Item(Items.GOLDEN_STATUETTE_9034)),
@@ -26,11 +27,7 @@ class SimonTempletonDialogue(player: Player? = null) : Dialogue(player) {
 
         if (args.size == 4) {
             if (args[3] as Int == 9044 || args[3] as Int == 9046 || args[3] as Int == 9048 || args[3] as Int == 9050) {
-                npc(
-                    "You sellin' me this gold colored",
-                    "stick thing. Looks fake to me.",
-                    "I'll give you 100 gold for it."
-                )
+                npc("You sellin' me this gold colored", "stick thing. Looks fake to me.", "I'll give you 100 gold for it.")
                 stage = 30
                 return true
             }
@@ -70,82 +67,33 @@ class SimonTempletonDialogue(player: Player? = null) : Dialogue(player) {
                 stage = 3
             }
 
-            1 -> {
-                npc("Excellent! I would like to buy them.")
-                stage = 2
-            }
-
-            2 -> {
-                interpreter.sendOptions("Sell artefacts?", "Yes, I need money!!", "No, I'll hang onto them.")
-                stage = 10
-            }
-
-            3 -> {
-                npc("Well, keep my offer in mind", "if you do find one.")
-                stage = 4
-            }
-
-            4 -> {
-                player("I will. Goodbye, Simon.")
-                stage = 5
-            }
-
-            5 -> {
-                npc("Bye, mate.")
-                stage = 999
-            }
-
-            6 -> {
-                npc("Hmmm, very nice. I'll buy them for $goldReward each.")
-                stage = 7
-            }
-
-            7 -> {
-                options("Sounds good!", "No thanks.")
-                stage = 8
-            }
-
+            1 -> npc("Excellent! I would like to buy them.").also { stage++ }
+            2 -> sendOptions(player, "Sell artefacts?", "Yes, I need money!!", "No, I'll hang onto them.").also { stage = 10 }
+            3 -> npc("Well, keep my offer in mind", "if you do find one.").also { stage++ }
+            4 -> player("I will. Goodbye, Simon.").also { stage++ }
+            5 -> npc("Bye, mate.").also { stage = END_DIALOGUE }
+            6 -> npc("Hmmm, very nice. I'll buy them for $goldReward each.").also { stage++ }
+            7 -> options("Sounds good!", "No thanks.").also { stage++ }
             8 -> when (buttonId) {
                 1 -> {
                     val pyramidTopsInInv = amountInInventory(player, Items.PYRAMID_TOP_6970)
-                    if (removeItem<Item>(
-                            player,
-                            Item(Items.PYRAMID_TOP_6970, pyramidTopsInInv),
-                            Container.INVENTORY,
-                        )
-                    ) {
+                    if (removeItem(player, Item(Items.PYRAMID_TOP_6970, pyramidTopsInInv), Container.INVENTORY)) {
                         addItem(player, Items.COINS_995, goldReward * pyramidTopsInInv, Container.INVENTORY)
                     }
                     end()
                 }
-
-                2 -> {
-                    npc("Have it your way.")
-                    stage = 9
-                }
+                2 -> npc("Have it your way.").also { stage = END_DIALOGUE }
             }
-
-            9 -> end()
             10 -> when (buttonId) {
                 1 -> {
                     setTitle(player, 4)
-                    interpreter.sendOptions(
-                        "Which ones do you want to sell?",
-                        "Clay and Ivory",
-                        "Stone",
-                        "Gold",
-                        "Sell them all!",
-                    )
+                    sendOptions(player, "Which ones do you want to sell?", "Clay and Ivory", "Stone", "Gold", "Sell them all!")
                     stage = 20
                 }
-
-                2 -> {
-                    npc("Aww, alright. Well, keep my", "offer in mind, will ya?")
-                    player("Sure thing, Simon.")
-                    npc("Thanks, mate.")
-                    stage = 999
-                }
+                2 -> npc("Aww, alright. Well, keep my", "offer in mind, will ya?").also { stage++ }
             }
+            11 -> player("Sure thing, Simon.").also { stage++ }
+            12 -> npc("Thanks, mate.").also { stage = END_DIALOGUE }
 
             20 -> when (buttonId) {
                 1 -> {
@@ -278,49 +226,12 @@ class SimonTempletonDialogue(player: Player? = null) : Dialogue(player) {
                     stage = 999
                 }
             }
-
-            30 -> {
-                player(
-                    "What! This is a genuine pharaoh's scepter - made out of",
-                    "solid gold and finely jewelled with precious gems",
-                    " by the finest craftsmen in the area.",
-                )
-                stage = 31
-            }
-
-            31 -> {
-                npc(
-                    "Strewth! I can tell a pile of croc when I hear it!",
-                    "You've got the patter mate, but I'm no mug.",
-                    "That's a fake.",
-                )
-                stage = 32
-            }
-
-            32 -> {
-                player("It has magical powers!")
-                stage = 33
-            }
-
-            33 -> {
-                npc(
-                    "Oh, magical powers... yeah yeah yeah. Heard it all before",
-                    "mate. I'll give you 100 gold, or some 'magic beans'.",
-                    "Take it or leave it.",
-                )
-                stage = 34
-            }
-
-            34 -> {
-                player("I don't think so! I'll find someone who'll give me", "what it's worth.")
-                stage = 35
-            }
-
-            35 -> {
-                npc("Suit yerself...")
-                stage = 999
-            }
-
+            30 -> player("What! This is a genuine pharaoh's scepter - made out of", "solid gold and finely jewelled with precious gems", " by the finest craftsmen in the area.").also { stage++ }
+            31 -> npc("Strewth! I can tell a pile of croc when I hear it!", "You've got the patter mate, but I'm no mug.", "That's a fake.").also { stage++ }
+            32 -> player("It has magical powers!").also { stage++ }
+            33 -> npc("Oh, magical powers... yeah yeah yeah. Heard it all before", "mate. I'll give you 100 gold, or some 'magic beans'.", "Take it or leave it.").also { stage++ }
+            34 -> player("I don't think so! I'll find someone who'll give me", "what it's worth.").also { stage++ }
+            35 -> npc("Suit yerself...").also { stage = END_DIALOGUE }
             999 -> end()
         }
         return true

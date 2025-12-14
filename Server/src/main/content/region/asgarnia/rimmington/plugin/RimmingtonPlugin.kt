@@ -1,24 +1,19 @@
 package content.region.asgarnia.rimmington.plugin
 
-import content.region.asgarnia.rimmington.dialogue.CustomsSergeantDialogue
+import content.region.asgarnia.rimmington.dialogue.*
 import core.api.openDialogue
 import core.api.replaceScenery
 import core.api.sendMessage
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import shared.consts.NPCs
 import shared.consts.Scenery
 
 class RimmingtonPlugin : InteractionListener {
 
 
     override fun defineListeners() {
-        on(Scenery.CUSTOMS_SERGEANT_31459, IntType.SCENERY, "talk-to") { player, _ ->
-            if (player.location.x >= 2963) {
-                openDialogue(player, CustomsSergeantDialogue())
-            }
-            return@on true
-        }
 
         /*
          * Handles Rimmik store doors.
@@ -47,5 +42,35 @@ class RimmingtonPlugin : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles talking to NPCs around village.
+         */
+
+        on(NPCs.ANJA_2684, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, AnjaDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.BRIAN_1860, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, BrianDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.HENGEL_2683, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, HengelDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(Scenery.CUSTOMS_SERGEANT_31459, IntType.SCENERY, "talk-to") { player, node ->
+            if (player.location.x >= 2963) {
+                openDialogue(player, CustomsSergeantDialogue(), node.asNpc())
+            }
+            return@on true
+        }
+
+        on(NPCs.ROMMIK_585, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, RommikDialogue(), node.asNpc())
+            return@on true
+        }
     }
 }

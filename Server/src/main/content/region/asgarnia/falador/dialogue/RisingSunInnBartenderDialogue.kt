@@ -1,7 +1,10 @@
 package content.region.asgarnia.falador.dialogue
 
 import core.api.*
-import core.game.dialogue.*
+import core.game.dialogue.Dialogue
+import core.game.dialogue.FaceAnim
+import core.game.dialogue.IfTopic
+import core.game.dialogue.Topic
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable

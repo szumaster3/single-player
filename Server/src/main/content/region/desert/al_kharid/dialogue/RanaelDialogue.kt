@@ -1,41 +1,28 @@
 package content.region.desert.al_kharid.dialogue
 
 import core.api.openNpcShop
-import core.game.dialogue.Dialogue
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.node.entity.npc.NPC
-import core.game.node.entity.player.Player
-import core.plugin.Initializable
+import core.game.dialogue.Topic
 import core.tools.END_DIALOGUE
 import shared.consts.NPCs
 
 /**
  * Represents the Ranael dialogue.
  */
-@Initializable
-class RanaelDialogue(player: Player? = null) : Dialogue(player) {
+class RanaelDialogue : DialogueFile() {
 
-    override fun open(vararg args: Any?): Boolean {
-        npc = args[0] as NPC
-        npc(FaceAnim.HAPPY, "Do you want to buy any armoured skirts? Designed", "especially for ladies who like to fight.")
-        return true
-    }
-
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
-            0 -> options("Yes, please.", "No, thank you, that's not my scene.").also { stage++ }
-            1 -> when (buttonId) {
-                1 -> {
-                    end()
-                    openNpcShop(player, NPCs.RANAEL_544)
-                }
-                2 -> player(FaceAnim.HALF_GUILTY, "No, thank you, that's not my scene.").also { stage = END_DIALOGUE }
+            0 -> npc(FaceAnim.HAPPY, "Do you want to buy any armoured skirts? Designed", "especially for ladies who like to fight.").also { stage++ }
+            1 -> showTopics(
+                Topic("Yes, please.", 2),
+                Topic("No, thank you, that's not my scene.", END_DIALOGUE),
+            )
+            2 -> {
+                end()
+                openNpcShop(player!!, NPCs.RANAEL_544)
             }
         }
-        return true
     }
-
-    override fun newInstance(player: Player?): Dialogue = RanaelDialogue(player)
-
-    override fun getIds(): IntArray = intArrayOf(NPCs.RANAEL_544)
 }

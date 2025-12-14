@@ -1,4 +1,4 @@
-package content.region.asgarnia.falador.dialogue
+package content.region.desert.al_kharid.dialogue
 
 import core.api.openNpcShop
 import core.game.dialogue.DialogueFile
@@ -7,9 +7,9 @@ import core.game.dialogue.Topic
 import core.tools.END_DIALOGUE
 
 /**
- * Represents the Falador Shopkeeper dialogue.
+ * Represents the Al-Kharid shopkeeper dialogue.
  */
-class FaladorShopkeeperDialogue : DialogueFile() {
+class AlKharidShopkeeperDialogue : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {

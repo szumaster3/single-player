@@ -1,5 +1,6 @@
 package content.region.desert.pollniveach.plugin
 
+import content.region.desert.pollniveach.dialogue.AliTheBarmanDialogue
 import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
@@ -13,15 +14,6 @@ import shared.consts.Scenery
 class PollnivneahPlugin : InteractionListener {
 
     override fun defineListeners() {
-
-        /*
-         * Handles talking to camels.
-         */
-
-        on(NPCs.ALI_THE_CAMEL_1873, IntType.NPC, "talk-to") { player, node ->
-            openDialogue(player, NPCs.ALI_THE_CAMEL_1873, node)
-            return@on true
-        }
 
         /*
          * Handles talking to bandits.
@@ -60,5 +52,17 @@ class PollnivneahPlugin : InteractionListener {
             }
             return@onUseWith true
         }
+
+
+        /*
+         * Handles talking to npc around city.
+         */
+
+        on(NPCs.ALI_THE_BARMAN_1864, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, AliTheBarmanDialogue(), node.asNpc())
+            return@on true
+        }
+
+
     }
 }

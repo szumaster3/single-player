@@ -2,10 +2,7 @@ package content.region.desert.pollniveach.dialogue
 
 import core.api.getQuestStage
 import core.api.openNpcShop
-import core.game.dialogue.Dialogue
-import core.game.dialogue.FaceAnim
-import core.game.dialogue.IfTopic
-import core.game.dialogue.Topic
+import core.game.dialogue.*
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
@@ -15,10 +12,9 @@ import shared.consts.Quests
 /**
  * Represents the Ali The Barman dialogue.
  */
-@Initializable
-class AliTheBarmanDialogue(player: Player? = null) : Dialogue(player) {
+class AliTheBarmanDialogue : DialogueFile() {
 
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
             0 -> player("Hello there.").also { stage++ }
             1 -> npc("Good day. Can I help you with anything?").also { stage++ }
@@ -34,7 +30,7 @@ class AliTheBarmanDialogue(player: Player? = null) : Dialogue(player) {
             6 -> npcl(FaceAnim.FRIENDLY, "Nothing much to say really about them. They're all paying customers so I won't rock the boat if you don't mind.").also { stage++ }
             7 -> npcl(FaceAnim.FRIENDLY, "Is there anything else I can help you with?").also { stage++ }
             8 -> options("No thanks I'm ok.", "Yes, I'd like to talk about something else.").also { stage++ }
-            9 -> when (buttonId) {
+            9 -> when (buttonID) {
                 1 -> playerl(FaceAnim.FRIENDLY, "No thanks I'm ok. Thanks for your time.").also { stage = END_DIALOGUE }
                 2 -> playerl(FaceAnim.FRIENDLY, "Yes, I'd like to talk about something else.").also { stage = 2 }
             }
@@ -50,10 +46,5 @@ class AliTheBarmanDialogue(player: Player? = null) : Dialogue(player) {
             19 -> npcl(FaceAnim.HALF_ASKING, "I admit it is a little confusing, but neither 'The Asp' nor 'The Snake' have quite the same ring to them.").also { stage++ }
             20 -> player("I get your point. I quite like the name.").also { stage = END_DIALOGUE }
         }
-        return true
     }
-
-    override fun newInstance(player: Player?): Dialogue = AliTheBarmanDialogue(player)
-
-    override fun getIds(): IntArray = intArrayOf(NPCs.ALI_THE_BARMAN_1864)
 }

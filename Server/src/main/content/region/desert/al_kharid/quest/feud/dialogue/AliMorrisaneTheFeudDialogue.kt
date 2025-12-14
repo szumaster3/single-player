@@ -14,7 +14,7 @@ import shared.consts.Vars
 /**
  * Represents the Ali Morrisane dialogue (The Feud quest).
  */
-class AliMorrisaneFeudDialogue : DialogueFile() {
+class AliMorrisaneTheFeudDialogue : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.ALI_MORRISANE_1862)

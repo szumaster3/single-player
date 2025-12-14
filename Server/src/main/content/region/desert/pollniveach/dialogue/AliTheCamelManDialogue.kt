@@ -18,21 +18,9 @@ class AliTheCamelManDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun handle(
-        interaceId: Int,
-        buttonId: Int,
-    ): Boolean {
+    override fun handle(interaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 -> sendOptions(
-                player,
-                "Select one.",
-                "A discount camel store?",
-                "Tell me about this town.",
-                "Lovely day isn't it?",
-                "Are those camels around the side for sale?",
-                "I'm looking for Ali from Pollnivneach.",
-            ).also { stage++ }
-
+            0 -> sendOptions(player, "Select one.", "A discount camel store?", "Tell me about this town.", "Lovely day isn't it?", "Are those camels around the side for sale?", "I'm looking for Ali from Pollnivneach.").also { stage++ }
             1 -> when (buttonId) {
                 1 -> player(FaceAnim.ASKING, "A discount camel store?").also { stage = 20 }
                 2 -> player(FaceAnim.THINKING, "Tell me about this town.").also { stage = 30 }
@@ -40,25 +28,8 @@ class AliTheCamelManDialogue(player: Player? = null) : Dialogue(player) {
                 4 -> player(FaceAnim.ASKING, "Are those camels around the side for sale?").also { stage = 50 }
                 5 -> player(FaceAnim.ASKING, "I'm looking for Ali from Pollnivneach.").also { stage = 60 }
             }
-
-            20 -> npc(
-                FaceAnim.JOLLY,
-                "Yes- a great idea - selling camels at discounted",
-                "prices so that the common man can experience",
-                "the joys of owning a camel too. They're not just",
-                "a source of kebab meat you know!"
-            ).also { stage++ }
-
-            21 -> sendOptions(
-                player,
-                "Select one.",
-                "So can I buy a camel then? I'm hungry!",
-                "Yes camels are beautiful creatures.",
-                "Filthy animals all they do is spit and...",
-                "Actually I think I was a camel in a previous existence.",
-                "So is business good then?"
-            ).also { stage++ }
-
+            20 -> npc(FaceAnim.JOLLY, "Yes- a great idea - selling camels at discounted", "prices so that the common man can experience", "the joys of owning a camel too. They're not just", "a source of kebab meat you know!").also { stage++ }
+            21 -> sendOptions(player, "Select one.", "So can I buy a camel then? I'm hungry!", "Yes camels are beautiful creatures.", "Filthy animals all they do is spit and...", "Actually I think I was a camel in a previous existence.", "So is business good then?").also { stage++ }
             22 -> when (buttonId) {
                 1 -> {
                     player(FaceAnim.ASKING, "So can I buy a camel then? I'm hungry!")
@@ -87,22 +58,12 @@ class AliTheCamelManDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             230 -> {
-                npc(
-                    FaceAnim.DISGUSTED,
-                    "I would never sell to the likes of you,",
-                    "they are beautiful majestic creatures not sandwich",
-                    "fillers! Get ouf my shop."
-                )
+                npc(FaceAnim.DISGUSTED, "I would never sell to the likes of you,", "they are beautiful majestic creatures not sandwich", "fillers! Get ouf my shop.")
                 stage = 100
             }
 
             240 -> {
-                npc(
-                    FaceAnim.LAUGH,
-                    "Ah, wondrous creatures, ships of the desert, far",
-                    "more useful than any horse or donkey.",
-                    "A man's best friend."
-                )
+                npc(FaceAnim.LAUGH, "Ah, wondrous creatures, ships of the desert, far", "more useful than any horse or donkey.", "A man's best friend.")
                 stage = 25
             }
 
@@ -112,12 +73,7 @@ class AliTheCamelManDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             26 -> {
-                sendOptions(
-                    player,
-                    "Select one.",
-                    "Well yes actually I'd like to ask about something else.",
-                    "No but thanks for your time."
-                )
+                sendOptions(player, "Select one.", "Well yes actually I'd like to ask about something else.", "No but thanks for your time.")
                 stage = 27
             }
 
@@ -134,22 +90,12 @@ class AliTheCamelManDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             250 -> {
-                npc(
-                    FaceAnim.ANGRY,
-                    "Pah! You just do not know how to treat them.",
-                    "If you abuse them and treat them badly of",
-                    "course they are going to spit and bite."
-                )
+                npc(FaceAnim.ANGRY, "Pah! You just do not know how to treat them.", "If you abuse them and treat them badly of", "course they are going to spit and bite.")
                 stage = 25
             }
 
             260 -> {
-                npc(
-                    FaceAnim.LAUGH,
-                    "You're teasing me now! You rogue! Everyone has",
-                    "a laugh at my expense, I'm just more",
-                    "enlightened than you!"
-                )
+                npc(FaceAnim.LAUGH, "You're teasing me now! You rogue! Everyone has", "a laugh at my expense, I'm just more", "enlightened than you!")
                 stage = 25
             }
 
@@ -159,21 +105,12 @@ class AliTheCamelManDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             271 -> {
-                npc(
-                    FaceAnim.THINKING,
-                    "In fact I'm thinking of expanding and trying to break",
-                    "into the camel hire market.",
-                )
+                npc(FaceAnim.THINKING, "In fact I'm thinking of expanding and trying to break", "into the camel hire market.")
                 stage = 25
             }
 
             30 -> {
-                npc(
-                    FaceAnim.THINKING,
-                    "Well Polvnivneach is a funny little place. It's a",
-                    "small town and you'd think it would be a",
-                    "quiet place.",
-                )
+                npc(FaceAnim.THINKING, "Well Polvnivneach is a funny little place. It's a", "small town and you'd think it would be a", "quiet place.")
                 stage = 300
             }
 
@@ -183,13 +120,7 @@ class AliTheCamelManDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             310 -> {
-                sendOptions(
-                    player,
-                    "Select one.",
-                    "In what way?",
-                    "Well the weak will always be trodden on. Why not stand up to them?",
-                    "Perhaps I can help.",
-                )
+                sendOptions(player, "Select one.", "In what way?", "Well the weak will always be trodden on. Why not stand up to them?", "Perhaps I can help.")
                 stage = 311
             }
 
@@ -211,12 +142,7 @@ class AliTheCamelManDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             320 -> {
-                npc(
-                    FaceAnim.ANGRY,
-                    "Well one group is just as bad as the other, stealing from each other",
-                    "and the locals, fighting, and just the last dayone of the",
-                    "bandits came looking for protection money.",
-                )
+                npc(FaceAnim.ANGRY, "Well one group is just as bad as the other, stealing from each other", "and the locals, fighting, and just the last dayone of the", "bandits came looking for protection money.")
                 stage = 321
             }
 
@@ -226,22 +152,12 @@ class AliTheCamelManDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             322 -> {
-                npc(
-                    FaceAnim.SAD,
-                    "If you haven't noticed this is a remote town, half way between",
-                    "Menaphos and Al Kharid, a place where neither",
-                    "exert any power.",
-                )
+                npc(FaceAnim.SAD, "If you haven't noticed this is a remote town, half way between", "Menaphos and Al Kharid, a place where neither", "exert any power.")
                 stage = 323
             }
 
             323 -> {
-                npc(
-                    FaceAnim.SAD,
-                    "To tell the truth we live in hope that an objective",
-                    "outsider could broker a deal to halt the hostilities",
-                    "between them.",
-                )
+                npc(FaceAnim.SAD, "To tell the truth we live in hope that an objective", "outsider could broker a deal to halt the hostilities", "between them.")
                 stage = 324
             }
 
@@ -251,21 +167,12 @@ class AliTheCamelManDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             330 -> {
-                npc(
-                    "That's a little unfair my friend. We can't all be brave",
-                    "adventurers. If we were, where would you go to get camels",
-                    "at discounted prices?",
-                )
+                npc("That's a little unfair my friend. We can't all be brave", "adventurers. If we were, where would you go to get camels", "at discounted prices?")
                 stage = 331
             }
 
             331 -> {
-                npc(
-                    FaceAnim.ASKING,
-                    "You might think about that. Anyways isn't it the job of the brave",
-                    "adventurer to deliver the weak and innocent from",
-                    "evil and harm?",
-                )
+                npc(FaceAnim.ASKING, "You might think about that. Anyways isn't it the job of the brave", "adventurer to deliver the weak and innocent from", "evil and harm?")
                 stage = 25
             }
 
@@ -300,11 +207,7 @@ class AliTheCamelManDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             500 -> {
-                npc(
-                    FaceAnim.FRIENDLY,
-                    "I've got new stock coming very soon though.",
-                    "Come back later if you're still interested.",
-                )
+                npc(FaceAnim.FRIENDLY, "I've got new stock coming very soon though.", "Come back later if you're still interested.")
                 stage = 25
             }
 

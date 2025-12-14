@@ -2,12 +2,9 @@ package content.region.asgarnia.rimmington.dialogue
 
 import core.api.hasRequirement
 import core.api.sendDialogue
-import core.api.sendNPCDialogue
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
-import shared.consts.NPCs
 import shared.consts.Quests
 
 /**
@@ -16,10 +13,9 @@ import shared.consts.Quests
 class CustomsSergeantDialogue : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {
-        npc = NPC(NPCs.CUSTOMS_SERGEANT_7831)
         when (stage) {
-            0 -> if (!hasRequirement(player!!, Quests.ROCKING_OUT)) {
-                sendNPCDialogue(player!!, NPCs.CUSTOMS_SERGEANT_7831, "Zzzzzzzzzzzzzzzzzzz.", FaceAnim.SLEEPING).also { stage++ }
+            0 -> if (!hasRequirement(player!!, Quests.ROCKING_OUT, false)) {
+                npc(FaceAnim.SLEEPING, "Zzzzzzzzzzzzzzzzzzz.").also { stage++ }
             } else {
                 sendDialogue(player!!, "Customs Sergeant seems too busy to talk.").also { stage = END_DIALOGUE }
             }

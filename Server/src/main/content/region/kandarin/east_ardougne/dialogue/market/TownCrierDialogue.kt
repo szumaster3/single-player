@@ -6,6 +6,8 @@ import core.api.runTask
 import core.api.stopWalk
 import core.api.visualize
 import core.game.dialogue.Dialogue
+import core.game.dialogue.DialogueFile
+import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.world.GameWorld.settings
@@ -13,43 +15,34 @@ import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import shared.consts.NPCs
 
-@Initializable
-class TownCrierDialogue(player: Player? = null) : Dialogue(player) {
+class TownCrierDialogue : DialogueFile() {
 
-    override fun open(vararg args: Any?): Boolean {
-        npc = args[0] as NPC
-        npc("Oh, hello citizen. Are you here to find out about Player", "Moderators? Or perhaps would you like to know about the", "laws of the land?").also { stage = 1 }
-        return true
-    }
-
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
+            0 -> npc(FaceAnim.HALF_ASKING, "Oh, hello citizen. Are you here to find out about Player", "Moderators? Or perhaps would you like to know about the", "laws of the land?").also { stage++ }
             1 -> options("Tell me about Player Moderators.", "Tell me about the Rules of " + settings!!.name + ".", "Can you give me a handy tip please?", "Bye!").also { stage++ }
-            2 -> when (buttonId) {
-                1 -> player("Tell me about Player Moderators.").also { stage = 50 }
-                2 -> player("Tell me about the Rules of " + settings!!.name + ".").also { stage = 70 }
-                3 -> player("Can you give me a handy tip please?").also { stage = 100 }
+            2 -> when (buttonID) {
+                1 -> npc(FaceAnim.HALF_ASKING,"Of course. What would you like to know?").also { stage = 50 }
+                2 -> npc("At once. Take a look at my book here.").also { stage = 70 }
+                3 -> player(FaceAnim.HALF_ASKING,"Can you give me a handy tip please?").also { stage = 100 }
                 4 -> player("Bye!").also { stage++ }
             }
             3 -> npc("Nice meeting you.").also { stage = END_DIALOGUE }
-            50 -> npc("Of course. What would you like to know?").also { stage++ }
-            51 -> options("What is a Player Moderator?", "What can Player Moderators do?", "How do I become a Player Moderator?", "What can Player Moderators not do?").also { stage++ }
-            52 -> when (buttonId) {
+            50 -> options("What is a Player Moderator?", "What can Player Moderators do?", "How do I become a Player Moderator?", "What can Player Moderators not do?").also { stage++ }
+            51 -> when (buttonID) {
                 1 -> player("What is a Player Moderator?").also { stage = 150 }
-                2 -> npc("What can Player Moderators do?").also { stage = 160 }
-                3 -> player("How do I become a Player Moderator?").also { stage = 170 }
-                4 -> player("What can Player Moderators not do?").also { stage = 180 }
+                2 -> npc(FaceAnim.HALF_ASKING,"What can Player Moderators do?").also { stage = 160 }
+                3 -> player(FaceAnim.HALF_ASKING,"How do I become a Player Moderator?").also { stage = 170 }
+                4 -> player(FaceAnim.HALF_ASKING,"What can Player Moderators not do?").also { stage = 180 }
             }
-
-            70 -> npc("At once. Take a look at my book here.").also { stage++ }
-            71 -> {
+            70 -> {
                 end()
                 stopWalk(npc!!)
-                lock(player, 5)
-                lock(npc, 5)
-                visualize(npc, 6866, 1178)
-                runTask(player, 3) {
-                    GeneralRuleBook.Companion.openBook(player)
+                lock(player!!, 5)
+                lock(npc!!, 5)
+                visualize(npc!!, 6866, 1178)
+                runTask(player!!, 3) {
+                    GeneralRuleBook.openBook(player!!)
                 }
             }
             100 -> when ((0..4).random()) {
@@ -76,16 +69,5 @@ class TownCrierDialogue(player: Player? = null) : Dialogue(player) {
             182 -> npc("who give their all to help the community, out of the", "goodness of their hearts! P-mods do not work for " + settings!!.name + "", "and so cannot make you a Moderator, or recommend", "other accounts to become Moderators. If you wish yo").also { stage++ }
             183 -> npc("become a Moderator, feel free to ask me!").also { stage = 153 }
         }
-        return true
     }
-
-    override fun newInstance(player: Player?): Dialogue = TownCrierDialogue(player)
-
-    override fun getIds(): IntArray = intArrayOf(
-        NPCs.TOWN_CRIER_6135,
-        NPCs.TOWN_CRIER_6136,
-        NPCs.TOWN_CRIER_6137,
-        NPCs.TOWN_CRIER_6138,
-        NPCs.TOWN_CRIER_6139,
-    )
 }

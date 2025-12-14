@@ -1,43 +1,29 @@
 package content.region.desert.al_kharid.dialogue
 
 import core.api.openNpcShop
-import core.game.dialogue.Dialogue
+import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.node.entity.npc.NPC
-import core.game.node.entity.player.Player
-import core.plugin.Initializable
+import core.game.dialogue.Topic
 import core.tools.END_DIALOGUE
 import shared.consts.NPCs
 
 /**
  * Represents the Louie Legs dialogue.
  */
-@Initializable
-class LouieLegsDialogue(player: Player? = null) : Dialogue(player) {
+class LouieLegsDialogue : DialogueFile() {
 
-    override fun open(vararg args: Any?): Boolean {
-        npc = args[0] as NPC
-        npc(FaceAnim.HAPPY, "Hey, wanna buy some armour?")
-        return true
-    }
-
-    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
-            0 -> options("What have you got?", "No, thank you.").also { stage++ }
-            1 -> when (buttonId) {
-                1 -> player(FaceAnim.THINKING, "What have you got?").also { stage++ }
-                2 -> player(FaceAnim.FRIENDLY, "No, thank you.").also { stage = END_DIALOGUE }
-            }
+            0 -> npc(FaceAnim.HAPPY, "Hey, wanna buy some armour?").also { stage++ }
+            1 -> showTopics(
+                Topic("What have you got?", 2),
+                Topic("No, thank you.", END_DIALOGUE),
+            )
             2 -> npc(FaceAnim.HAPPY, "I provide items to help you keep your legs!").also { stage++ }
             3 -> {
                 end()
-                openNpcShop(player, NPCs.LOUIE_LEGS_542)
+                openNpcShop(player!!, NPCs.LOUIE_LEGS_542)
             }
         }
-        return true
     }
-
-    override fun newInstance(player: Player?): Dialogue = LouieLegsDialogue(player)
-
-    override fun getIds(): IntArray = intArrayOf(NPCs.LOUIE_LEGS_542)
 }

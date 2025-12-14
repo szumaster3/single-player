@@ -1,7 +1,9 @@
 package content.region.asgarnia.falador.dialogue
 
 import core.api.teleport
-import core.game.dialogue.*
+import core.game.dialogue.DialogueFile
+import core.game.dialogue.FaceAnim
+import core.game.dialogue.Topic
 import core.game.node.entity.player.link.TeleportManager
 import core.game.world.map.Location
 import core.tools.END_DIALOGUE

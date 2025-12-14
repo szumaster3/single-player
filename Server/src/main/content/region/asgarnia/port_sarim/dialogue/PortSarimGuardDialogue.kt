@@ -30,7 +30,7 @@ class PortSarimGuardDialogue(player: Player? = null) : Dialogue(player) {
             ).also { stage++ }
             1 -> when (buttonId) {
                 1 -> player("Don't worry, I'm not going to cause trouble.").also { stage++ }
-                2 -> player(FaceAnim.JOLLY, "I am Player the Mighty!").also { stage = 4 }
+                2 -> player(FaceAnim.JOLLY, "I am ${player.username} the Mighty!").also { stage = 4 }
                 3 -> player("No-one, there's no-one here.").also { stage = 11 }
             }
             2 -> npc("But you shouldn't be here - be off with you!").also { stage++ }

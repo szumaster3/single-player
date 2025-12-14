@@ -18,7 +18,7 @@ class SylasDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (!hasRequirement(player, Quests.GRIM_TALES)) {
+        if (!hasRequirement(player, Quests.GRIM_TALES, false)) {
             player("Hello!")
         } else {
             player("Hello there. My name's ${player.username}.").also { stage = 2 }

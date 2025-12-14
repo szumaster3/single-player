@@ -1,10 +1,15 @@
 package content.region.asgarnia.white_wolf_mountain.plugin
 
 import content.data.skill.SkillingTool
+import content.region.asgarnia.white_wolf_mountain.dialogue.HoloyDialogue
+import content.region.asgarnia.white_wolf_mountain.dialogue.KhorvakDialogue
+import content.region.asgarnia.white_wolf_mountain.dialogue.RohakDialogue
 import core.api.*
+import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.skill.Skills
+import shared.consts.NPCs
 import shared.consts.Scenery
 
 class WhiteWolfMountainPlugin : InteractionListener {
@@ -64,5 +69,25 @@ class WhiteWolfMountainPlugin : InteractionListener {
 
             return@on true
         }
+
+        /*
+         * Handles talking to NPCs around bar.
+         */
+
+        on(NPCs.HOLOY_4559, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, HoloyDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.KHORVAK_A_DWARVEN_ENGINEER_1842, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, KhorvakDialogue(), node.asNpc())
+            return@on true
+        }
+
+        on(NPCs.ROHAK_3403, IntType.NPC, "talk-to") { player, node ->
+            openDialogue(player, RohakDialogue(), node.asNpc())
+            return@on true
+        }
+
     }
 }
