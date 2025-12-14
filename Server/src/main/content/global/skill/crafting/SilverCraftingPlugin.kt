@@ -17,6 +17,18 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
     private val OP_MAKE_FIVE = 196
     private val OP_MAKE_ALL = 124
     private val OP_MAKE_X = 199
+    private val REQUIRED_ITEM_IDS = intArrayOf(
+        Items.SILVER_BAR_2355,
+        Items.HOLY_MOULD_1599,
+        Items.UNHOLY_MOULD_1594,
+        Items.SICKLE_MOULD_2976,
+        Items.TIARA_MOULD_5523,
+        Items.CHAIN_LINK_MOULD_13153,
+        Items.CONDUCTOR_MOULD_4200,
+        Items.ROD_CLAY_MOULD_7649,
+        Items.BOLT_MOULD_9434,
+        Items.DEMONIC_SIGIL_MOULD_6747
+    )
 
     override fun defineListeners() {
 
@@ -24,7 +36,7 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
          * Handles use of silver bar on furnace.
          */
 
-        onUseWith(IntType.SCENERY, Items.SILVER_BAR_2355, *CraftingObject.FURNACES) { player, _, with ->
+        onUseWith(IntType.SCENERY, REQUIRED_ITEM_IDS, *CraftingObject.FURNACES) { player, _, with ->
             val hasLevel = getStatLevel(player, Skills.CRAFTING) >= 16
             if (!hasLevel) {
                 sendDialogue(player, "You need a Crafting level of at least 16 to do this.")
@@ -72,6 +84,12 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
 
     override fun defineInterfaceListeners() {
         onOpen(Components.CRAFTING_SILVER_CASTING_438) { p, c ->
+
+            val hasSilverBar = inInventory(p, Items.SILVER_BAR_2355)
+            val hasMithrilBar = inInventory(p, Items.MITHRIL_BAR_2359)
+            val hasQuestReq = hasRequirement(p, Quests.LEGACY_OF_SEERGAZE, false)
+            val craftingLevel = getStatLevel(p, Skills.CRAFTING)
+
             val slots = listOf(
                 17 to CraftingDefinition.Silver.HOLY,
                 24 to CraftingDefinition.Silver.UNHOLY,
@@ -85,21 +103,19 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
             )
 
             slots.forEach { (slot, silver) ->
-                val hasBar = inInventory(p, Items.SILVER_BAR_2355)
-                val hasMithrilBar = inInventory(p, Items.MITHRIL_BAR_2359)
                 val hasMould = inInventory(p, silver.required)
+                val hasLevel = craftingLevel >= silver.level
+                val hasMaterials = hasSilverBar && hasMould
 
-                val itemId = if (hasMould) silver.product else silver.required
-                sendItemOnInterface(p, c.id, slot, itemId, 1)
+                val itemToShow = if (hasMould) silver.product else silver.required
+                sendItemOnInterface(p, c.id, slot, itemToShow, 1)
 
-                val hasMaterials = hasBar && hasMould
-                val hasRequiredLevel = getStatLevel(p, Skills.CRAFTING) >= silver.level
-
-                if (!hasRequiredLevel) {
+                if (!hasLevel) {
                     sendInterfaceConfig(p, c.id, slot - 1, true)
                 }
+
                 if (!hasMaterials) {
-                    if(!hasMithrilBar && !hasRequirement(p, Quests.LEGACY_OF_SEERGAZE, false)) {
+                    if (!hasMithrilBar && !hasQuestReq) {
                         sendInterfaceConfig(p, c.id, 72, true)
                     }
                     if (slot != 74) {
@@ -107,10 +123,8 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
                     }
                     sendInterfaceConfig(p, c.id, slot + 2, false)
                 }
-                /*
-                 * sendString(p, "<col=ffaa44>You need a<br><col=ffaa44>chain mould<br><col=ffaa44>to make<br><col=ffaa44>this item.", c.id, 75)
-                 */
             }
+
             return@onOpen true
         }
 
@@ -118,6 +132,7 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
             if (!clockReady(player, Clocks.SKILLING)) return@on true
             val product = CraftingDefinition.Silver.forButton(buttonID) ?: return@on true
             val productName = getItemName(product.product).lowercase()
+
             if (!inInventory(player, Items.SILVER_BAR_2355)) {
                 sendDialogue(player, "You need silver bar to make $productName.")
                 return@on true
@@ -130,23 +145,25 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
                 sendMessage(player, "You need mithril bar to make chain.")
                 return@on true
             }
-            val amount =
-                when (opcode) {
-                    OP_MAKE_ONE -> 1
-                    OP_MAKE_FIVE -> 5
-                    OP_MAKE_ALL -> amountInInventory(player, Items.SILVER_BAR_2355)
-                    OP_MAKE_X -> {
-                        sendInputDialogue(player, InputType.AMOUNT, "Enter the amount:") { value ->
-                            val amount = value.toString().toIntOrNull() ?: 1
-                            handleSilverCrafting(player, product, amount)
-                        }
-                        return@on true
+            when (opcode) {
+                OP_MAKE_ONE  -> make(player, product, 1)
+                OP_MAKE_FIVE -> make(player, product, 5)
+                OP_MAKE_ALL  -> make(player, product, amountInInventory(player, Items.SILVER_BAR_2355))
+                OP_MAKE_X    -> {
+                    sendInputDialogue(player, InputType.AMOUNT, "Enter the amount:") { value ->
+                        make(player, product, Integer.parseInt(value.toString()))
                     }
-                    else -> return@on true
                 }
-            handleSilverCrafting(player, product, amount)
+                else -> return@on true
+            }
+
             return@on true
         }
+    }
+
+    private fun make(player: Player, product: CraftingDefinition.Silver, amount: Int) {
+        closeInterface(player)
+        handleSilverCrafting(player, product, amount)
     }
 
     private fun handleSilverCrafting(player: Player, product: CraftingDefinition.Silver, amount: Int) {
@@ -201,8 +218,6 @@ class SilverCraftingPlugin : InteractionListener, InterfaceListener {
             } else {
                 return@queueScript stopExecuting(player)
             }
-
-            return@queueScript true
         }
     }
 }

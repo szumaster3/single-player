@@ -145,7 +145,7 @@ class GemCutPlugin : InteractionListener {
          * @param level The player crafting level.
          * @return The chance `(0.0 to 100.0)` that the gem will be crushed.
          */
-        fun getGemCrushChance(low: Double, high: Double, level: Int): Double {
+        private fun getGemCrushChance(low: Double, high: Double, level: Int): Double {
             if (level >= 50) return 0.0
             val clamped = level.coerceIn(1, 49)
             val chance = low * ((50 - clamped) / 49.0) + high * ((clamped - 1) / 49.0)

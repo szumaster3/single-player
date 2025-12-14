@@ -1,15 +1,16 @@
-package content.region.kandarin.seers_village.hemenster.quest.plugin
+package content.region.kandarin.seers_village.hemenster.quest.fishingcompo
 
 import content.data.GameAttributes
 import core.api.*
-import core.game.component.CloseEvent
+import core.game.component.Component
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
+import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
-import shared.consts.Components
+import core.tools.END_DIALOGUE
 import shared.consts.Items
 import shared.consts.Quests
 
@@ -21,9 +22,6 @@ import shared.consts.Quests
 @Initializable
 class FishingContest : Quest(Quests.FISHING_CONTEST, 62, 61, 1, 11, 0, 1, 5) {
 
-    /**
-     * Draws the quest journal.
-     */
     override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 11
@@ -48,7 +46,7 @@ class FishingContest : Quest(Quests.FISHING_CONTEST, 62, 61, 1, 11, 0, 1, 5) {
 
                 if (stage >= 20) {
                     line(player, "I should take the !!Trophy?? back to the !!Dwarf?? at the side of", line++, false)
-                    line(player, "!!White Wolf Mountain?? and claim my !!reward??.", line++, false)
+                    line(player, "!!White Wolf Mountain?? and claim my !!reward??.", line, false)
                 }
             }
 
@@ -62,36 +60,33 @@ class FishingContest : Quest(Quests.FISHING_CONTEST, 62, 61, 1, 11, 0, 1, 5) {
                 line++
                 line(player, "As a reward for getting the Fishing Competition Trophy the", line++, false)
                 line(player, "Dwarves will let me use their tunnel to travel quickly and", line++, false)
-                line(player, "safely under White Wolf Mountain anytime I wish.", line++, false)
+                line(player, "safely under White Wolf Mountain anytime I wish.", line, false)
             }
         }
     }
 
-    /**
-     * Finishes the quest.
-     *
-     * @param player the player completing the quest.
-     */
     override fun finish(player: Player) {
         super.finish(player)
         var ln = 10
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.FISHING_TROPHY_26, 230)
+        displayQuestItem(player, Items.FISHING_TROPHY_26)
         drawReward(player, "1 Quest Point", ln++)
         drawReward(player, "2437 Fishing XP.", ln++)
         drawReward(player, "Access to the White Wolf Mountain shortcut.", ln)
         rewardXP(player, Skills.FISHING, 2437.0)
         removeAttributes(player, GameAttributes.QUEST_FISHINGCOMPO_STASH_GARLIC)
+    }
 
-        player.interfaceManager.getComponent(Components.QUEST_COMPLETE_SCROLL_277)?.closeEvent = CloseEvent { p, _ ->
-            val npcId = getAttribute(player, "temp-npc", 0)
-            openDialogue(player, FishingQuestCompleteDialogue(npcId))
-            return@CloseEvent true
+    override fun questCloseEvent(player: Player?, component: Component?) {
+        queueScript(player!!, 1, QueueStrength.SOFT) {
+            val npc = getAttribute(player, "temp-npc", -1)
+            openDialogue(player, FishingQuestCompleteDialogue(npc))
+            return@queueScript stopExecuting(player)
         }
     }
 
     override fun newInstance(`object`: Any?): Quest = this
 
-    inner class FishingQuestCompleteDialogue(private val npcId: Int) : DialogueFile() {
+    class FishingQuestCompleteDialogue(private val npcId: Int) : DialogueFile() {
 
         init { stage = 0 }
 
@@ -100,31 +95,11 @@ class FishingContest : Quest(Quests.FISHING_CONTEST, 62, 61, 1, 11, 0, 1, 5) {
                 0 -> {
                     val isMale = player!!.isMale
                     val gender = if (isMale) "lad" else "lass"
-                    sendNPCDialogueLines(
-                        player!!, npcId, FaceAnim.OLD_DEFAULT, false,
-                        "You've done us proud. Thank you $gender. I think we can",
-                        "now trust you enough to let you in..."
-                    )
-                    stage = 1
+                    sendNPCDialogueLines(player!!, npcId, FaceAnim.OLD_DEFAULT, false, "You've done us proud. Thank you $gender. I think we can", "now trust you enough to let you in...").also { stage++ }
                 }
-                1 -> {
-                    sendPlayerDialogue(player!!, "In where?", FaceAnim.HALF_ASKING)
-                    stage = 2
-                }
-                2 -> {
-                    sendNPCDialogueLines(
-                        player!!, npcId, FaceAnim.OLD_NORMAL, false,
-                        "Why, the tunnel of course! You may now come and go",
-                        "freely, avoiding the wolves and dangers of the cold, high",
-                        "mountain. You could even stop in for a beer or two!"
-                    )
-                    stage = 3
-                }
-                3 -> {
-                    sendPlayerDialogue(player!!, "Excellent. That will come in most handy.")
-                    stage = 4
-                }
-                4 -> end()
+                1 -> sendPlayerDialogue(player!!, "In where?", FaceAnim.HALF_ASKING).also { stage++ }
+                2 -> sendNPCDialogueLines(player!!, npcId, FaceAnim.OLD_NORMAL, false, "Why, the tunnel of course! You may now come and go", "freely, avoiding the wolves and dangers of the cold, high", "mountain. You could even stop in for a beer or two!").also { stage++ }
+                3 -> sendPlayerDialogue(player!!, "Excellent. That will come in most handy.").also { stage = END_DIALOGUE }
             }
         }
     }

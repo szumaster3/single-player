@@ -34,7 +34,7 @@ enum class Fish(val id: Int, val level: Int, val experience: Double, val lowChan
     SEAWEED(Items.SEAWEED_401, 16, 1.0, 0.63, 0.219),
     CASKET(Items.CASKET_405, 16, 10.0, 0.63, 0.219),
     OYSTER(Items.OYSTER_407, 16, 10.0, 0.63, 0.219),
-    GIANT_CARP(Items.RAW_GIANT_CARP_338, 10, 0.0, 0.63, 0.219)
+    GIANT_CARP(Items.RAW_GIANT_CARP_338, 10, 0.0, 0.098, 0.5)
     ;
 
     companion object {

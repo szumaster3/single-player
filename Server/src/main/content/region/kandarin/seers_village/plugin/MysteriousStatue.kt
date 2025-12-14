@@ -10,48 +10,81 @@ import core.game.node.entity.player.link.diary.DiaryType
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.tools.Vector3d
+import kotlin.math.abs
+import kotlin.math.sign
 
 /**
  * Handles the logic for the Mysterious Statue area in Seers' Village.
  */
 class MysteriousStatue : MapArea {
 
-    /**
-     * Represents the central position of the Mysterious Statue.
-     */
     private val origin = Vector3d(2740.5, 3490.5, 0.0)
+    private val axis = Vector3d(0.0, 0.0, 1.0)
 
-    /**
-     * Represents the axis vector for signed angle calculation (Z-axis).
-     */
-    private val n = Vector3d(0.0, 0.0, 1.0)
+    private companion object {
+        const val ATTR_START = "diary:seers:statue-start"
+        const val ATTR_LAST = "diary:seers:statue-last"
+        const val ATTR_ROTATION = "diary:seers:statue-rotation"
+        const val ATTR_DIRECTION = "diary:seers:statue-direction"
+
+        const val MIN_RADIUS = 1.2
+        const val MAX_RADIUS = 2.5
+        const val FINISH_EPSILON = 0.25
+        const val FULL_CIRCLE = 360.0
+    }
 
     override fun entityStep(entity: Entity, location: Location, lastLocation: Location) {
         val player = entity as? Player ?: return
 
-        var start = player.getAttribute<Vector3d>("diary:seers:statue-start")
-        var last = player.getAttribute<Vector3d>("diary:seers:statue-last")
-        var rotation = player.getAttribute<Double>("diary:seers:statue-rotation") ?: 0.0
-
         val current = Vector3d(location).sub(origin)
 
+        val radius = Math.sqrt(
+            current.x * current.x + current.y * current.y
+        )
+
+        // Ignore movement too close or too far from the statue.
+        if (radius !in MIN_RADIUS..MAX_RADIUS) {
+            return
+        }
+
+
+        var start = player.getAttribute<Vector3d>(ATTR_START)
+        val last = player.getAttribute<Vector3d>(ATTR_LAST)
+        var rotation = player.getAttribute<Double>(ATTR_ROTATION) ?: 0.0
+        var direction = player.getAttribute<Double>(ATTR_DIRECTION)
+
+        // Initialize run.
         if (start == null) {
-            start = current
-            setAttribute(player, "diary:seers:statue-start", start)
-            setAttribute(player, "diary:seers:statue-last", current)
-            setAttribute(player, "diary:seers:statue-rotation", 0.0)
-            player.debug ("${player.username}: Starting statue run at $current")
+            setAttribute(player, ATTR_START, current)
+            setAttribute(player, ATTR_LAST, current)
+            setAttribute(player, ATTR_ROTATION, 0.0)
             return
         }
 
         if (last != null) {
-            val delta = Vector3d.signedAngle(last, current, n)
-            rotation += Math.toDegrees(delta)
-            setAttribute(player, "diary:seers:statue-rotation", rotation)
+            val delta = Vector3d.signedAngle(last, current, axis)
+            val deltaDeg = Math.toDegrees(delta)
+
+            // Set direction on first valid movement.
+            if (direction == null && abs(deltaDeg) > 0.5) {
+                direction = sign(deltaDeg)
+                setAttribute(player, ATTR_DIRECTION, direction)
+            }
+
+            // Accept rotation only in the chosen direction.
+            if (direction != null && sign(deltaDeg) == direction) {
+                rotation += abs(deltaDeg)
+                setAttribute(player, ATTR_ROTATION, rotation)
+            }
         }
 
-        setAttribute(player, "diary:seers:statue-last", current)
-        if (rotation >= 360.0 && current.epsilonEquals(start, 0.5)) {
+        setAttribute(player, ATTR_LAST, current)
+
+        // Check completion.
+        if (
+            rotation >= FULL_CIRCLE &&
+            current.epsilonEquals(start, FINISH_EPSILON)
+        ) {
             clearProgress(player)
             finishDiaryTask(player, DiaryType.SEERS_VILLAGE, 0, 1)
         }
@@ -67,11 +100,12 @@ class MysteriousStatue : MapArea {
         arrayOf(ZoneBorders(2739, 3489, 2742, 3492))
 
     /**
-     * Clears saved run progress attributes.
+     * Clears all saved statue progress attributes.
      */
     private fun clearProgress(player: Player) {
-        removeAttribute(player, "diary:seers:statue-start")
-        removeAttribute(player, "diary:seers:statue-last")
-        removeAttribute(player, "diary:seers:statue-rotation")
+        removeAttribute(player, ATTR_START)
+        removeAttribute(player, ATTR_LAST)
+        removeAttribute(player, ATTR_ROTATION)
+        removeAttribute(player, ATTR_DIRECTION)
     }
 }

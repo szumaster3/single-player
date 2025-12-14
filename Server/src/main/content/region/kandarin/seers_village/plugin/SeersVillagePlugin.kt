@@ -13,12 +13,6 @@ import shared.consts.NPCs
 import shared.consts.Scenery
 
 class SeersVillagePlugin : InteractionListener {
-    companion object {
-        private const val COURTHOUSE_STAIRS = Scenery.STAIRS_26017
-        private const val CAGE = Scenery.CAGE_6836
-        private const val CRATE = Scenery.CRATE_6839
-        private const val TICKET_MERCHANT = NPCs.TICKET_MERCHANT_694
-    }
 
     override fun defineListeners() {
         /*

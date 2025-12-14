@@ -13,16 +13,24 @@ import core.plugin.Initializable
 import core.tools.RandomFunction
 import shared.consts.Animations
 import shared.consts.NPCs
+import shared.consts.Scenery as Objects
 
+/**
+ * Handles Ignatius Vulcan NPC.
+ */
 @Initializable
 class IgnatiusVulcanNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
+
+    /**
+     * The game tick after which the next fire can be created.
+     */
     private var lastFire = 0
 
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = IgnatiusVulcanNPC(id, location)
 
     override fun tick() {
         if (lastFire < ticks) {
-            createFire(this, getLocation())
+            createFire(this, location)
             lastFire = ticks + RandomFunction.random(50, 200)
         }
         super.tick()
@@ -31,16 +39,25 @@ class IgnatiusVulcanNPC(id: Int = 0, location: Location? = null) : AbstractNPC(i
     override fun getIds(): IntArray = intArrayOf(NPCs.IGNATIUS_VULCAN_4946)
 
     companion object {
-        private val ANIMATION = Animation(Animations.HUMAN_LIGHT_FIRE_WITH_TINDERBOX_733, Priority.HIGH)
 
-        fun createFire(
-            npc: NPC,
-            location: Location?,
-        ) {
+        /**
+         * Represents the animation used when creating a fire.
+         */
+        private val ANIMATION =
+            Animation(
+                Animations.HUMAN_LIGHT_FIRE_WITH_TINDERBOX_733,
+                Priority.HIGH
+            )
+
+        /**
+         * Creates a temporary fire scenery at the given location.
+         */
+        fun createFire(npc: NPC, location: Location?) {
             npc.walkingQueue.reset()
             npc.animator.forceAnimation(ANIMATION)
-            if (getObject(location!!) == null) {
-                val fire = Scenery(2732, location)
+
+            if (location != null && getObject(location) == null) {
+                val fire = Scenery(Objects.FIRE_2732, location)
                 SceneryBuilder.add(fire, RandomFunction.random(100, 130))
                 npc.faceLocation(fire.location)
             }

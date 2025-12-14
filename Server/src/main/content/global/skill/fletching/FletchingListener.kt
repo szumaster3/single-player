@@ -632,8 +632,6 @@ class FletchingListener : InteractionListener {
                             setCurrentScriptState(player, 0)
                             delayScript(player, 2)
                         } else stopExecuting(player)
-
-                        true
                     }
                 }
             }

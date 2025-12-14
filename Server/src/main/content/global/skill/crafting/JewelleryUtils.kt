@@ -110,6 +110,8 @@ object JewelleryUtils {
      * Handles crafting the jewellery.
      */
     private fun handleJewelleryCrafting(player: Player, type: CraftingDefinition.JewelleryItem, amount: Int) {
+        if (!clockReady(player, Clocks.SKILLING)) return
+
         var remaining = amount
 
         queueScript(player, 0, QueueStrength.NORMAL) {

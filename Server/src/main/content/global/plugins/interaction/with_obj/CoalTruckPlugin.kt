@@ -58,5 +58,14 @@ class CoalTruckPlugin : InteractionListener {
                     "The truck has space for ${availableSpace(player, coalInTruck)} more coal.")
             return@on true
         }
+
+        /*
+         * Handles chest in Galahad house.
+         */
+
+        on(Scenery.CLOSED_CHEST_375, IntType.SCENERY, "open") { player, _ ->
+            sendMessage(player, "The chest is locked.")
+            return@on true
+        }
     }
 }

@@ -15,12 +15,7 @@ class CourtHouse : MapArea {
 
     override fun areaEnter(entity: Entity) {
         if (entity is Player && !entity.isArtificial) {
-            if (!hasDiaryTaskComplete(entity, DiaryType.SEERS_VILLAGE, 2, 3) &&
-                isPrayerActive(
-                    entity.asPlayer(),
-                    PrayerType.PIETY,
-                )
-            ) {
+            if (!hasDiaryTaskComplete(entity, DiaryType.SEERS_VILLAGE, 2, 3) && isPrayerActive(entity.asPlayer(), PrayerType.PIETY)) {
                 finishDiaryTask(entity, DiaryType.SEERS_VILLAGE, 2, 3)
             }
         }

@@ -39,7 +39,7 @@ class StoneCircle : MapZone(STONE_CIRCLE, true), Plugin<Any> {
     }
 
     companion object {
-        val STONE_CIRCLE = "stone circle"
-        val STONE_CIRCLE_ENTER_VARBIT = 4833
+        const val STONE_CIRCLE = "stone circle"
+        const val STONE_CIRCLE_ENTER_VARBIT = 4833
     }
 }

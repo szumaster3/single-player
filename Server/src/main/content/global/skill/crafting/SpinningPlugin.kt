@@ -111,8 +111,9 @@ class SpinningPlugin : InteractionListener, InterfaceListener {
             }
 
             if (remaining > 0) {
-                delayScript(player, delay)
+                delayClock(player, Clocks.SKILLING, delay)
                 setCurrentScriptState(player, 0)
+                delayScript(player, delay)
                 true
             } else false
         }

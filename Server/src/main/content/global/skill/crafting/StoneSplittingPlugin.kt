@@ -57,43 +57,43 @@ class StoneSplittingPlugin : InteractionListener {
                     var remaining = min(amountInInventory(player, with.id), amountInInventory(player, with.id))
 
                     queueScript(player, 0, QueueStrength.WEAK) {
-            if (!clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
-            if (remaining <= 0) return@queueScript stopExecuting(player)
-            if (!inInventory(player, Items.CHISEL_1755) || !inInventory(player, with.id)) {
-                sendMessage(player, "You have ran out of granite.")
-                return@queueScript stopExecuting(player)
-            }
+                        if (!clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
+                        if (remaining <= 0) return@queueScript stopExecuting(player)
+                        if (!inInventory(player, Items.CHISEL_1755) || !inInventory(player, with.id)) {
+                            sendMessage(player, "You have ran out of granite.")
+                            return@queueScript stopExecuting(player)
+                        }
 
-            val requiredSlots = 4
-            if (freeSlots(player) < requiredSlots) {
-                sendDialogue(player, "You'll need $requiredSlots empty inventory spaces to hold the granite.")
-                return@queueScript stopExecuting(player)
-            }
+                        val requiredSlots = 4
+                        if (freeSlots(player) < requiredSlots) {
+                            sendDialogue(player, "You'll need $requiredSlots empty inventory spaces to hold the granite.")
+                            return@queueScript stopExecuting(player)
+                        }
 
-            animate(player, Animations.HUMAN_CHISEL_GRANITE_11146)
-            playAudio(player, Sounds.CHISEL_2586)
-            delayClock(player, Clocks.SKILLING, 2)
-            delayScript(player, 2)
+                        animate(player, Animations.HUMAN_CHISEL_GRANITE_11146)
+                        playAudio(player, Sounds.CHISEL_2586)
+                        delayClock(player, Clocks.SKILLING, 2)
+                        delayScript(player, 2)
 
-            if (removeItem(player, Item(with.id, 1))) {
-                when (with.id) {
-                    Items.GRANITE_5KG_6983 -> {
-                        addItem(player, Items.GRANITE_2KG_6981, 2)
-                        addItem(player, Items.GRANITE_500G_6979, 2)
+                        if (removeItem(player, Item(with.id, 1))) {
+                            when (with.id) {
+                                Items.GRANITE_5KG_6983 -> {
+                                    addItem(player, Items.GRANITE_2KG_6981, 2)
+                                    addItem(player, Items.GRANITE_500G_6979, 2)
+                                }
+                                else -> addItem(player, Items.GRANITE_500G_6979, 4)
+                            }
+                        }
+
+                        remaining--
+
+                        if (remaining > 0 && inInventory(player, with.id)) {
+                            setCurrentScriptState(player, 0)
+                            delayScript(player, 2)
+                        } else stopExecuting(player)
                     }
-                    else -> addItem(player, Items.GRANITE_500G_6979, 4)
-                }
+                } else closeDialogue(player)
             }
-
-            remaining--
-
-            if (remaining > 0 && inInventory(player, with.id)) {
-                setCurrentScriptState(player, 0)
-                delayScript(player, 2)
-            } else stopExecuting(player)
-        }
-        } else closeDialogue(player)
-    }
 
             return@onUseWith true
         }

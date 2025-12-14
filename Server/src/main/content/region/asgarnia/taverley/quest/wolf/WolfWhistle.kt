@@ -149,7 +149,7 @@ class WolfWhistle : Quest(Quests.WOLF_WHISTLE, 146, 145, 1) {
         drawReward(player, "Access to the Summoning", 12)
         drawReward(player, "skill.", 13)
         drawReward(player, "275 gold charms.", 14)
-        sendItemOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.SPIRIT_WOLF_POUCH_12047)
+        displayQuestItem(player, Items.SPIRIT_WOLF_POUCH_12047)
         rewardXP(player, Skills.SUMMONING, 276.0)
         addItemOrBank(player, Items.GOLD_CHARM_12158, 275)
         removeAttribute(player, GameAttributes.WOLF_WHISTLE_STIKKLEBRIX)
