@@ -24,8 +24,8 @@ class TreeGnomeVillage : Quest(Quests.TREE_GNOME_VILLAGE, 125, 124, 2, Vars.VARP
         super.drawJournal(player, stage)
         var line = 12
         if (stage == 0) {
-            line(player, "You can start this quest by speaking to !!King Bolren?? in the", line++, true)
-            line(player, "!!Tree Gnome Village??.", line++, true)
+            line(player, "You can start this quest by speaking to !!King Bolren?? in the", line++)
+            line(player, "!!Tree Gnome Village??.", line++)
             line++
         }
         if (stage >= 10) {
