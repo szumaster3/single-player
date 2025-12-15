@@ -29,7 +29,7 @@ class MuseumWorkerNPC : NPCBehavior(*archelogistsNPCs) {
         delay++
         if (delay >= 10) {
             delay = 0
-            if (RandomFunction.random(100) < 15) {
+            if (RandomFunction.random(100) < 3) {
                 sendChat(self, forceChat.random())
             }
         }

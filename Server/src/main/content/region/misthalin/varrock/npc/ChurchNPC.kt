@@ -4,6 +4,7 @@ import core.api.visualize
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.tools.RandomFunction
+import shared.consts.Graphics
 import shared.consts.NPCs
 
 /**
@@ -24,8 +25,8 @@ class ChurchNPC : NPCBehavior(NPCs.MARTINA_SCORSBY_3326, NPCs.JEREMY_CLERKSIN_33
         }
         tickDelay = 0
 
-        if (RandomFunction.random(300) < 15) {
-            visualize(self, -1, 1056)
+        if (RandomFunction.random(300) < 3) {
+            visualize(self, -1, Graphics.SLEEPING_ZZZ_1056)
         }
         return true
     }

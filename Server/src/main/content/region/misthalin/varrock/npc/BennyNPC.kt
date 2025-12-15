@@ -30,7 +30,7 @@ class BennyNPC : NPCBehavior(NPCs.BENNY_5925) {
         if (delay < 20) return true
         delay = 0
 
-        if (RandomFunction.random(100) < 15) {
+        if (RandomFunction.random(100) < 3) {
             sendChat(self, forceChat.random())
         }
         return true
