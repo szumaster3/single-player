@@ -28,7 +28,7 @@ class HofuthandNPC @JvmOverloads constructor(
     }
 
     override fun tick() {
-        if (RandomFunction.random(100) < 10) {
+        if (RandomFunction.random(100) < 3) {
             sendChat(forceChat.random())
         }
     }

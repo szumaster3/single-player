@@ -12,15 +12,9 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 @Initializable
-class MonkOfZamorakNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = MonkOfZamorakNPC(id, location)
+class MonkOfZamorakNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
+
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = MonkOfZamorakNPC(id, location)
 
     override fun finalizeDeath(killer: Entity?) {
         if (killer is Player) {

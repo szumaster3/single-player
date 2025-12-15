@@ -14,15 +14,9 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 @Initializable
-class TempleGuardianNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = TempleGuardianNPC(id, location)
+class TempleGuardianNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
+
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = TempleGuardianNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.TEMPLE_GUARDIAN_7711)
 

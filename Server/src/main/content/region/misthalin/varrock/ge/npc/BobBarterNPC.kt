@@ -25,7 +25,7 @@ class BobBarterNPC @JvmOverloads constructor(id: Int = NPCs.BOB_BARTER_HERBS_652
     }
 
     override fun tick() {
-        if (RandomFunction.random(100) < 10) {
+        if (RandomFunction.random(100) < 3) {
             sendChat(forceChat.random())
         }
     }

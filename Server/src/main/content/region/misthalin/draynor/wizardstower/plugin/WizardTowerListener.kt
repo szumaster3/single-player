@@ -18,6 +18,7 @@ import shared.consts.Quests
 import shared.consts.Scenery
 
 class WizardTowerListener : InteractionListener {
+
     private val WIZARD_BOOKCASE = intArrayOf(Scenery.BOOKCASE_12539, Scenery.BOOKCASE_12540)
     private val WIZARD_PORTAL = intArrayOf(
         Scenery.MAGIC_PORTAL_2156,

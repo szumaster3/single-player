@@ -12,10 +12,8 @@ import shared.consts.Vars
 
 @Initializable
 class ImpCatcher : Quest(Quests.IMP_CATCHER, 21, 20, 1, Vars.VARP_QUEST_IMP_CATCHER_PROGRESS_160, 0, 1, 2) {
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
+
+    override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 11
         if (stage == 0) {

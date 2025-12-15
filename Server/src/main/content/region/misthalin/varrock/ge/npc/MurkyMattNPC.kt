@@ -25,7 +25,7 @@ class MurkyMattNPC @JvmOverloads constructor(id: Int = NPCs.MURKY_MATT_RUNES_652
     }
 
     override fun tick() {
-        if (RandomFunction.random(100) < 10) {
+        if (RandomFunction.random(100) < 3) {
             sendChat(forceChat.random())
         }
     }

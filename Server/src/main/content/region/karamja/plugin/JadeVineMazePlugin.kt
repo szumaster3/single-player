@@ -373,7 +373,9 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
 
         on(intArrayOf(Scenery.LOOSE_SOIL_27058, Scenery.ROOTS_27059), IntType.SCENERY, "dig", "cut") { player, node ->
             val option = getUsedOption(player)
-            val objectData = SceneryDefinition.forId(node.id)
+            val def = SceneryDefinition.forId(node.id)
+
+            if (def.varbitID <= 0) return@on true
 
             when (option) {
                 "dig" -> {
@@ -382,8 +384,13 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
                         return@on true
                     }
 
+                    if (getVarbit(player, def.varbitID) != 0) {
+                        sendMessage(player, "You've already dug here.")
+                        return@on true
+                    }
+
                     lock(player, 2)
-                    setVarbit(player, objectData.varbitID, 1) // Replace scenery (+1) and enable cut option.
+                    setVarbit(player, def.varbitID, 1)
                     player.animate(Animation(Animations.DIG_SPADE_830))
                     sendDialogue(player, "You dig at the soil and expose the vine's root.")
                 }
@@ -394,13 +401,18 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
                         return@on true
                     }
 
-                    if(getVarbit(player, objectData.varbitID) == 1) {
-                        lock(player, 2)
-                        setVarbit(player, objectData.varbitID, 2) // Removes options.
-                        player.animate(Animation(Animations.GARDENING_TROWEL_2272))
-                        sendDialogue(player, "You carefully take a root cutting.")
-                        addItem(player, Items.ROOT_CUTTING_11770)
+
+                    if (getVarbit(player, def.varbitID) != 1) {
+                        sendMessage(player, "There's nothing here to cut.")
+                        return@on true
                     }
+
+                    lock(player, 2)
+                    setVarbit(player, def.varbitID, 2)
+                    player.animate(Animation(Animations.GARDENING_TROWEL_2272))
+                    sendDialogue(player, "You carefully take a root cutting.")
+
+                    addItem(player, ROOT_CUTTINGS.random())
                 }
             }
 
@@ -417,37 +429,43 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
             if (!inInventory(player, used.id) || !inInventory(player, with.id))
                 return@onUseWith false
 
-            val fails = "root_fail_count"
-            val failCount = player.getAttribute(fails, 0)
 
-            if (removeItem(player, used.id) && removeItem(player, with.id)) {
-                addItem(player, Items.POTTED_ROOT_11776, 1)
-                player.dialogueInterpreter.sendItemMessage(
-                    Items.POTTED_ROOT_11776,
-                    "You carefully plant the cutting in the pot. Now to wait",
-                    "and see if it grows!"
-                )
+            val failKey = "root_fail_count"
+            val failCount = player.getAttribute(failKey, 0)
 
-                queueScript(player, 6, QueueStrength.SOFT) {
-                    val guaranteedSuccess = failCount >= 4
-                    val randomSuccess = RandomFunction.random(1, 5) == 1
-                    val success = guaranteedSuccess || randomSuccess
 
-                    if (success) {
-                        player.removeAttribute(fails)
-                        sendDialogue(player, "Your cutting seems to have taken successfully.")
-                    } else {
-                        player.setAttribute(fails, failCount + 1)
-                        removeItem(player, Items.POTTED_ROOT_11776)
-                        sendDialogueLines(player, "The cutting fails to take properly and wilts. You remove it from the", "plant pot.")
-                        sendMessage(player, "The cutting fails to take properly and wilts. You remove it from the plant pot.")
-                        addItemOrDrop(player, Items.PLANT_POT_5357, 1)
-                        addItemOrDrop(player, Items.WILTED_CUTTING_11775, 1)
-                    }
+            if (!removeItem(player, used.id) || !removeItem(player, with.id))
+                return@onUseWith true
 
-                    return@queueScript stopExecuting(player)
+
+            addItem(player, Items.POTTED_ROOT_11776)
+            player.dialogueInterpreter.sendItemMessage(
+                Items.POTTED_ROOT_11776,
+                "You carefully plant the cutting in the pot.",
+                "Now to wait and see if it grows!"
+            )
+
+
+            queueScript(player, 6, QueueStrength.SOFT) {
+                val guaranteed = failCount >= 4
+                val success = guaranteed || RandomFunction.random(1, 5) == 1
+
+
+                if (success) {
+                    player.removeAttribute(failKey)
+                    sendDialogue(player, "Your cutting seems to have taken successfully.")
+                } else {
+                    player.setAttribute(failKey, failCount + 1)
+                    removeItem(player, Items.POTTED_ROOT_11776)
+                    addItemOrDrop(player, Items.PLANT_POT_5357)
+                    addItemOrDrop(player, Items.WILTED_CUTTING_11775)
+                    sendDialogue(player, "The cutting fails to take and wilts.")
                 }
+
+
+                stopExecuting(player)
             }
+
 
             return@onUseWith true
         }
@@ -458,17 +476,23 @@ class JadeVineMazePlugin : MapArea, InteractionListener {
          */
 
         onUseWith(IntType.ITEM, Items.POTTED_ROOT_11776, Items.EMPTY_POT_1931) { player, used, with ->
-            if(!inInventory(player, Items.POT_LID_4440)) {
-                sendMessage(player, "You don't have required item to do this.")
+            if (!inInventory(player, Items.POT_LID_4440)) {
+                sendMessage(player, "You need a pot lid to seal this.")
                 return@onUseWith false
             }
 
-            if(removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
+
+            if (
+                removeItem(player, used.asItem()) &&
+                removeItem(player, with.asItem()) &&
                 removeItem(player, Items.POT_LID_4440)
+            ) {
                 addItemOrDrop(player, Items.SEALED_POT_11777)
                 setVarbit(player, Vars.VARBIT_QUEST_BACK_TO_MY_ROOTS_PROGRESS_4055, 50)
                 setQuestStage(player, Quests.BACK_TO_MY_ROOTS, 7)
             }
+
+
             return@onUseWith true
         }
     }
