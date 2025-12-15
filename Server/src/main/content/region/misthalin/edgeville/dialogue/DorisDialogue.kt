@@ -25,7 +25,7 @@ class DorisDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (!hasRequirement(player, Quests.RECIPE_FOR_DISASTER)) {
+        if (!hasRequirement(player, Quests.RECIPE_FOR_DISASTER, false)) {
             npc("What are you doing in my house?")
         } else {
             npc("Hello again dearie. How are you doing?").also { stage = 5 }
@@ -77,6 +77,8 @@ class DorisDialogue(player: Player? = null) : Dialogue(player) {
             }
             22 -> {
                 end()
+                player.lock(3)
+                npc.lock(3)
                 npc("Here puss...")
                 npc.animate(Animation(Animations.HUMAN_BURYING_BONES_827))
                 val familiar = player.familiarManager.familiar

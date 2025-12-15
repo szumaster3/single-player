@@ -13,6 +13,7 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
+import core.tools.END_DIALOGUE
 import shared.consts.*
 
 /*
@@ -232,6 +233,18 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
             return@on true
         }
 
+        on(NPCs.WIZARD_GRAYZAG_707, IntType.NPC, "talk-to") { player, node ->
+            sendNPCDialogueLines(
+                player,
+                node.id,
+                FaceAnim.SILENT,
+                false,
+                "Not now, I'm trying to concentrate on a",
+                "very difficult spell!"
+            )
+            return@on true
+        }
+
         /*
          * Handles dialogue interaction with Wizard Vief.
          */
@@ -247,7 +260,7 @@ class RunecraftingGuildPlugin : InteractionListener, InterfaceListener, MapArea 
             if (player.viewport.region!!.regionId == 12337) {
                 return@setDest node.asScenery().location
             } else {
-                return@setDest Location.create(1696, 5461, 2)
+                return@setDest Location(1696, 5461, 2)
             }
         }
     }

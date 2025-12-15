@@ -133,35 +133,13 @@ class OddOldManDialogueFile : DialogueFile() {
                     20 -> playerl(FaceAnim.FRIENDLY, "Not at the moment. Can you just give me a run down on which bones I have left to get?").also { stage++ }
                     21 -> npcl(FaceAnim.FRIENDLY, "Sure.").also { stage = 30 }
                     30, 40, 50, 60, 70, 80, 90, 100, 110 -> {
-                        if (!getAttribute(player!!, RagAndBoneMan.attributeGoblinBone, false) && stage <= 30) {
+                        val step = RagBoneStep.values().firstOrNull {
+                            stage <= it.maxStage && !getAttribute(player!!, it.attribute, false)
+                        }
+
+                        if (step != null) {
                             npcl(NPCs.BONES_3674, "Sack", FaceAnim.OLD_HAPPY, "Mumblemumble")
-                            stage = 31
-                        } else if (!getAttribute(player!!, RagAndBoneMan.attributeBearBone, false) && stage <= 40) {
-                            npcl(NPCs.BONES_3674, "Sack", FaceAnim.OLD_HAPPY, "Mumblemumble")
-                            stage = 41
-                        } else if (!getAttribute(player!!, RagAndBoneMan.attributeBigFrogBone, false) && stage <= 50) {
-                            npcl(NPCs.BONES_3674, "Sack", FaceAnim.OLD_HAPPY, "Mumblemumble")
-                            stage = 51
-                        } else if (!getAttribute(player!!, RagAndBoneMan.attributeRamBone, false) && stage <= 60) {
-                            npcl(NPCs.BONES_3674, "Sack", FaceAnim.OLD_HAPPY, "Mumblemumble")
-                            stage = 61
-                        } else if (!getAttribute(player!!, RagAndBoneMan.attributeUnicornBone, false) && stage <= 70) {
-                            npcl(NPCs.BONES_3674, "Sack", FaceAnim.OLD_HAPPY, "Mumblemumble")
-                            stage = 71
-                        } else if (!getAttribute(player!!, RagAndBoneMan.attributeMonkeyBone, false) && stage <= 80) {
-                            npcl(NPCs.BONES_3674, "Sack", FaceAnim.OLD_HAPPY, "Mumblemumble")
-                            stage = 81
-                        } else if (!getAttribute(player!!, RagAndBoneMan.attributeGiantRatBone, false) && stage <= 90) {
-                            npcl(NPCs.BONES_3674, "Sack", FaceAnim.OLD_HAPPY, "Mumblemumble")
-                            stage = 91
-                        } else if (!getAttribute(
-                                player!!,
-                                RagAndBoneMan.attributeGiantBatBone,
-                                false,
-                            ) && stage <= 100
-                        ) {
-                            npcl(NPCs.BONES_3674, "Sack", FaceAnim.OLD_HAPPY, "Mumblemumble")
-                            stage = 101
+                            stage = step.nextStage
                         } else {
                             npcl(FaceAnim.FRIENDLY, "Did you get all that?")
                             stage = 111
@@ -201,6 +179,12 @@ class OddOldManDialogueFile : DialogueFile() {
         }
     }
 
+    /**
+     * Checks whether the player has at least one required quest bone
+     * in their inventory.
+     *
+     * @return true if any required bone is found, false otherwise
+     */
     private fun checkBonesInInventory(player: Player): Boolean {
         var hasBone = false
         RagAndBoneMan.requiredBonesMap.forEach {
@@ -211,6 +195,9 @@ class OddOldManDialogueFile : DialogueFile() {
         return hasBone
     }
 
+    /**
+     * Submits all required bones currently held in the inventory.
+     */
     private fun submitBonesInInventory(player: Player) {
         RagAndBoneMan.requiredBonesMap.forEach {
             if (!getAttribute(player, it.value, false) && removeItem(player, it.key)) {
@@ -219,6 +206,10 @@ class OddOldManDialogueFile : DialogueFile() {
         }
     }
 
+    /**
+     * Checks whether the player has submitted all required bones.
+     * @return true if all bone attributes are completed, false otherwise.
+     */
     private fun hasAllBones(player: Player): Boolean {
         var hasBoneAllBones = true
         RagAndBoneMan.requiredBonesMap.values.forEach {
@@ -227,5 +218,19 @@ class OddOldManDialogueFile : DialogueFile() {
             }
         }
         return hasBoneAllBones
+    }
+
+    /**
+     * Represents a single dialogue progression.
+     */
+    private enum class RagBoneStep(val attribute: String, val maxStage: Int, val nextStage: Int) {
+        GOBLIN(RagAndBoneMan.attributeGoblinBone, 30, 31),
+        BEAR(RagAndBoneMan.attributeBearBone, 40, 41),
+        BIG_FROG(RagAndBoneMan.attributeBigFrogBone, 50, 51),
+        RAM(RagAndBoneMan.attributeRamBone, 60, 61),
+        UNICORN(RagAndBoneMan.attributeUnicornBone, 70, 71),
+        MONKEY(RagAndBoneMan.attributeMonkeyBone, 80, 81),
+        GIANT_RAT(RagAndBoneMan.attributeGiantRatBone, 90, 91),
+        GIANT_BAT(RagAndBoneMan.attributeGiantBatBone, 100, 101)
     }
 }

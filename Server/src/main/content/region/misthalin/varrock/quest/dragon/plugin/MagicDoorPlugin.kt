@@ -9,6 +9,7 @@ import core.game.interaction.UseWithHandler
 import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
+import core.plugin.Initializable
 import core.plugin.Plugin
 import shared.consts.Items
 import shared.consts.Quests

@@ -1,4 +1,4 @@
-package content.region.misthalin.silvarea.dialogue
+package content.region.misthalin.silvarea.quest.priest.dialogue
 
 import core.api.getQuestStage
 import core.api.sendDialogue
@@ -14,9 +14,10 @@ import core.tools.RED
 import shared.consts.Quests
 
 /**
- * Represents the Mysterious Voice dialogue.
+ * Represents the Mysterious Voice dialogue used in Priest in Peril quest.
  */
 class MysteriousVoiceDialogue(private val doors: Scenery) : DialogueFile() {
+
     override fun handle(componentID: Int, buttonID: Int) {
         val questStage = getQuestStage(player!!, Quests.PRIEST_IN_PERIL)
         when (stage) {
@@ -49,12 +50,8 @@ class MysteriousVoiceDialogue(private val doors: Scenery) : DialogueFile() {
                 "${BLUE}Aw man... Hey, you deal with this okay?) He's just coming! Wait a",
                 "${BLUE}second!$RED Hello, my name is Drevil.${BLUE} (Drezel!)$RED I mean Drezel.",
             ).also { stage++ }
-            4 -> player(
-                FaceAnim.HALF_GUILTY, "Well, as I say, the King sent me to make sure", "everything's okay with you."
-            ).also { stage++ }
-            5 -> sendDialogue(
-                player!!, "${RED}And, uh, what would you do if everything wasn't okay with me?"
-            ).also { stage++ }
+            4 -> player(FaceAnim.HALF_GUILTY, "Well, as I say, the King sent me to make sure", "everything's okay with you.").also { stage++ }
+            5 -> sendDialogue(player!!, "${RED}And, uh, what would you do if everything wasn't okay with me?").also { stage++ }
             6 -> player(FaceAnim.HALF_GUILTY, "I'm not sure. Ask you what help you need I suppose.").also { stage++ }
             7 -> sendDialogueLines(
                 player!!,

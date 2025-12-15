@@ -43,9 +43,12 @@ class EdgevilleMonkDialogue(player: Player? = null) : Dialogue(player) {
             10 -> npc(FaceAnim.HALF_GUILTY, "Ok.").also { stage++ }
             11 -> {
                 end()
-                visualize(npc!!, Animations.CAST_SPELL_WISE_OLD_710, Graphics.MONK_CAST_HEAL_84)
-                heal(player, (getStatLevel(player, Skills.HITPOINTS) * 0.20).toInt())
-                sendMessage(player, "You feel a little better.")
+                runTask(player, 1) {
+                    visualize(npc!!, Animations.CAST_SPELL_WISE_OLD_710, Graphics.MONK_CAST_HEAL_84)
+                    heal(player, (getStatLevel(player, Skills.HITPOINTS) * 0.20).toInt())
+                    sendMessage(player, "You feel a little better.")
+                    stage = END_DIALOGUE
+                }
             }
             20 -> npc(FaceAnim.HALF_GUILTY, "We like it that way actually! We get disturbed less. We still", "get rather a large amount of travellers looking for", "sanctuary and healing here as it is!").also { stage = END_DIALOGUE }
             30 -> npc(FaceAnim.HALF_GUILTY, "You'll need to talk to Abbot Langley about that. He's", "usually to be found walking the halls of the monastery.").also { stage = END_DIALOGUE }

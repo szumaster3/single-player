@@ -1,12 +1,14 @@
 package content.region.asgarnia.rimmington.plugin
 
 import content.region.asgarnia.rimmington.dialogue.*
+import core.api.animate
 import core.api.openDialogue
 import core.api.replaceScenery
 import core.api.sendMessage
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import shared.consts.Animations
 import shared.consts.NPCs
 import shared.consts.Scenery
 
@@ -32,12 +34,14 @@ class RimmingtonPlugin : InteractionListener {
          * Handles opening wardrobe at Melzar's Maze.
          */
 
-        on(Scenery.WARDROBE_33963, IntType.SCENERY, "open") { _, node ->
+        on(Scenery.WARDROBE_33963, IntType.SCENERY, "open") { player, node ->
+            animate(player, Animations.OPEN_WARDROBE_545)
             replaceScenery(node.asScenery(), Scenery.WARDROBE_35133, -1)
             return@on true
         }
 
-        on(Scenery.WARDROBE_35133, IntType.SCENERY, "close") { _, node ->
+        on(Scenery.WARDROBE_35133, IntType.SCENERY, "close") { player, node ->
+            animate(player, Animations.CLOSE_WARDROBE_541)
             replaceScenery(node.asScenery(), Scenery.WARDROBE_33963, -1)
             return@on true
         }
