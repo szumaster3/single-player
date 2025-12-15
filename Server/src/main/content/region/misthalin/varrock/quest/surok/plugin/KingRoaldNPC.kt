@@ -7,17 +7,11 @@ import core.plugin.Initializable
 import shared.consts.NPCs
 
 @Initializable
-class KingRoaldNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
+class KingRoaldNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
+
     private var cutscene: WhatLiesBelowCutscene? = null
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = KingRoaldNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = KingRoaldNPC(id, location)
 
     override fun checkImpact(state: BattleState) {
         val lp = getSkills().lifepoints

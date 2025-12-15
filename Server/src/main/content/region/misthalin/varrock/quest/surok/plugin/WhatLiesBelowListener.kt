@@ -13,6 +13,7 @@ import core.game.world.update.flag.context.Animation
 import shared.consts.*
 
 class WhatLiesBelowListener : InteractionListener {
+
     override fun defineListeners() {
         on(Scenery.PORTAL_23095, IntType.SCENERY, "use") { player, _ ->
             player.teleport(Location(2270, 4836, 1))
@@ -41,12 +42,7 @@ class WhatLiesBelowListener : InteractionListener {
             if (getQuestStage(player, Quests.WHAT_LIES_BELOW) > 70) {
                 sendMessage(player, "Zaff has removed the summon charges from the ring. It will not summon him again.")
             } else {
-                if (getQuestStage(
-                        player,
-                        Quests.WHAT_LIES_BELOW,
-                    ) == 70 &&
-                    player.zoneMonitor.isInZone(Quests.WHAT_LIES_BELOW)
-                ) {
+                if (getQuestStage(player, Quests.WHAT_LIES_BELOW) == 70 && player.zoneMonitor.isInZone(Quests.WHAT_LIES_BELOW)) {
                     val cutscene = player.getAttribute<WhatLiesBelowCutscene>("cutscene", null)
                     cutscene.summonZaff()
                     return@on true
@@ -59,26 +55,10 @@ class WhatLiesBelowListener : InteractionListener {
         on(QUEST_ITEMS, IntType.ITEM, "read") { player, node ->
             when (node.id) {
                 11003 -> sendMessage(player, "The folder is empty at the moment so there is nothing inside to read!")
-                11008, 11007, 11006 ->
-                    sendDialogueLines(
-                        player,
-                        "The piece of papers appears to contain lots of facts and figures.",
-                        "They look like accounts and lists of items. You're",
-                        "not sure what they all mean.",
-                    )
-
+                11008, 11007, 11006 -> sendDialogueLines(player, "The piece of papers appears to contain lots of facts and figures.", "They look like accounts and lists of items. You're", "not sure what they all mean.")
                 11009, 11010 -> {
                     sendMessage(player, "You read the letter.")
-                    openInterface(
-                        player,
-                        if (node.id ==
-                            Items.RATS_LETTER_11009
-                        ) {
-                            Components.SUROK_LETTER1_249
-                        } else {
-                            Components.SUROK_LETTER2_250
-                        },
-                    )
+                    openInterface(player, if (node.id == Items.RATS_LETTER_11009) Components.SUROK_LETTER1_249 else  Components.SUROK_LETTER2_250)
                 }
             }
             return@on true
@@ -90,10 +70,7 @@ class WhatLiesBelowListener : InteractionListener {
                 sendMessage(player, "and find a book named 'Dagon'hai history'")
                 addItemOrDrop(player, Items.DAGONHAI_HISTORY_11001, 1)
             } else {
-                sendMessage(
-                    player,
-                    "You search the " + node.name.lowercase() + " and you find nothing of interest to you.",
-                )
+                sendMessage(player, "You search the " + node.name.lowercase() + " and you find nothing of interest to you.")
             }
             return@on true
         }

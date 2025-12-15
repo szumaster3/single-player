@@ -8,6 +8,7 @@ import core.game.interaction.UseWithHandler
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.plugin.Plugin
+import shared.consts.Items
 
 
 @Initializable
@@ -24,7 +25,7 @@ class FolderHandler : UseWithHandler(WhatLiesBelowListener.EMPTY_FOLDER, WhatLie
         var folder = event.usedWith.asItem()
 
         if (removeItem(player, paper)) {
-            if (folder.id == 11003) {
+            if (folder.id == Items.AN_EMPTY_FOLDER_11003) {
                 player.inventory.replace(Item(WhatLiesBelowListener.USED_FOLDER), folder.slot)
                 folder = player.inventory[folder.slot]
             }
