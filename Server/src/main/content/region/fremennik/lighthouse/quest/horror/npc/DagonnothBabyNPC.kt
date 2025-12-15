@@ -15,15 +15,9 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 @Initializable
-class DagonnothBabyNPC(
-    id: Int = 0,
-    location: Location? = null,
-) : AbstractNPC(id, location) {
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = DagonnothBabyNPC(id, location)
+class DagonnothBabyNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
+
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = DagonnothBabyNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.DAGANNOTH_3591)
 
@@ -41,7 +35,7 @@ class DagonnothBabyNPC(
             }
             dag.isActive = true
             GameWorld.Pulser.submit(
-                object : Pulse(2, dag) {
+                object : Pulse(1, dag) {
                     override fun pulse(): Boolean {
                         if (player.location.withinDistance(dag.location, 20)) {
                             dag.init()
@@ -57,7 +51,6 @@ class DagonnothBabyNPC(
 
     override fun finalizeDeath(killer: Entity?) {
         if (killer is Player) {
-            lock(killer, 2)
             setQuestStage(killer, Quests.HORROR_FROM_THE_DEEP, 60)
             clearHintIcon(killer)
             queueScript(killer, 1, QueueStrength.SOFT) {

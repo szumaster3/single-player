@@ -9,6 +9,7 @@ import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.TeleportManager
 import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
@@ -109,10 +110,8 @@ class DagannothMotherNPC(id: Int = 0, location: Location? = null, session: Dagan
             val hasCasket = hasAnItem(killer, Items.RUSTY_CASKET_3849).container != null
 
             queueScript(killer, 1, QueueStrength.SOFT) {
-                teleport(killer, Location.create(2515, 10000, 1))
+                teleport(killer, Location(2515, 10000, 1), TeleportManager.TeleportType.INSTANT)
                 finishQuest(killer, Quests.HORROR_FROM_THE_DEEP)
-                lock(killer, 10)
-                lockInteractions(killer, 10)
                 if (!hasCasket) {
                     addItemOrDrop(killer, Items.RUSTY_CASKET_3849)
                 }

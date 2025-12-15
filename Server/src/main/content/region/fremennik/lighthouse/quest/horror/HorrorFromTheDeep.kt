@@ -3,7 +3,8 @@ package content.region.fremennik.lighthouse.quest.horror
 import content.data.GameAttributes
 import content.region.fremennik.lighthouse.quest.horror.dialogue.JossikLighthouseDialogue
 import core.api.*
-import core.game.component.CloseEvent
+import core.game.component.Component
+import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
@@ -126,12 +127,12 @@ class HorrorFromTheDeep : Quest(Quests.HORROR_FROM_THE_DEEP, 77, 76, 2, Vars.VAR
         rewardXP(player, Skills.RANGE, 4662.0)
         rewardXP(player, Skills.MAGIC, 4662.0)
         rewardXP(player, Skills.STRENGTH, 4662.0)
+    }
 
-        player.interfaceManager.getComponent(Components.QUEST_COMPLETE_SCROLL_277)?.closeEvent = CloseEvent { player, _ ->
-            runTask(player, 1) {
-                openDialogue(player, JossikLighthouseDialogue())
-            }
-            return@CloseEvent true
+    override fun questCloseEvent(player: Player?, component: Component?) {
+        queueScript(player!!, 1, QueueStrength.SOFT) {
+            openDialogue(player, JossikLighthouseDialogue())
+            return@queueScript stopExecuting(player)
         }
     }
 

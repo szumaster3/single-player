@@ -18,7 +18,6 @@ import proto.management.ClanMessage
 import java.nio.ByteBuffer
 import java.util.*
 
-
 /**
  * Handles the sending of quick chat messages and string-replacement for specific messages.
  * @author Ceikry
@@ -82,7 +81,7 @@ object QCRepository {
         if (qcString.contains("to get my next")) {
             val split = qcString.split(" ")
             val skillName = split[split.size - 2]
-            val skill = Skills.getSkillByName(skillName.toUpperCase())
+            val skill = Skills.getSkillByName(skillName.uppercase())
             val playerXP = player?.skills?.getExperience(skill)
             val playerLevel = player?.skills?.getStaticLevel(skill)
             val nextXP = player?.skills?.getExperienceByLevel(playerLevel?.plus(1) ?: 1)
@@ -92,7 +91,7 @@ object QCRepository {
         //My X level is
         else if (qcString.contains("level is")) {
             val skillName = qcString.split(" ")[1]
-            val skill = Skills.getSkillByName(skillName.toUpperCase())
+            val skill = Skills.getSkillByName(skillName.uppercase())
             val level = player?.skills?.getStaticLevel(skill)
             qcString = qcString.replace("<", level.toString())
         }
@@ -100,8 +99,8 @@ object QCRepository {
         //My current slayer assignment is
         else if (qcString.contains("My current Slayer assignment is")) {
             val amount = SlayerManager.getInstance(player!!).amount
-            val taskName = getSlayerTask(player)?.name?.toLowerCase() ?: "None"
-            if (amount ?: 0 > 0) {
+            val taskName = getSlayerTask(player)?.name?.lowercase() ?: "None"
+            if (amount > 0) {
                 qcString = qcString.replace("complete", "$amount $taskName")
             }
         }
@@ -296,7 +295,7 @@ object QCRepository {
         return qcString
     }
 
-    fun getFromMap(map: Int, index: Int): String {
+    private fun getFromMap(map: Int, index: Int): String {
         return DataMap.get(map).getString(index)
     }
 

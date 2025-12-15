@@ -13,19 +13,17 @@ import shared.consts.Items
  * - [Horror from the Deep][content.region.fremennik.lighthouse.quest.horror.HorrorFromTheDeep]
  */
 class StrangeWallDialogue(private val items: Int) : DialogueFile() {
+
     private val itemAttributes = mapOf(
-        Items.BRONZE_ARROW_882 to GameAttributes.QUEST_HFTD_USE_ARROW,
+        Items.BRONZE_ARROW_882  to GameAttributes.QUEST_HFTD_USE_ARROW,
         Items.BRONZE_SWORD_1277 to GameAttributes.QUEST_HFTD_USE_SWORD,
-        Items.AIR_RUNE_556 to GameAttributes.QUEST_HFTD_USE_AIR_RUNE,
-        Items.FIRE_RUNE_554 to GameAttributes.QUEST_HFTD_USE_FIRE_RUNE,
-        Items.EARTH_RUNE_557 to GameAttributes.QUEST_HFTD_USE_EARTH_RUNE,
-        Items.WATER_RUNE_555 to GameAttributes.QUEST_HFTD_USE_WATER_RUNE,
+        Items.AIR_RUNE_556      to GameAttributes.QUEST_HFTD_USE_AIR_RUNE,
+        Items.FIRE_RUNE_554     to GameAttributes.QUEST_HFTD_USE_FIRE_RUNE,
+        Items.EARTH_RUNE_557    to GameAttributes.QUEST_HFTD_USE_EARTH_RUNE,
+        Items.WATER_RUNE_555    to GameAttributes.QUEST_HFTD_USE_WATER_RUNE,
     )
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+    override fun handle(componentID: Int, buttonID: Int) {
         val player = player ?: return
         when (stage) {
             0 -> {

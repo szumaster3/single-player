@@ -100,7 +100,7 @@ class TearsOfGuthixListener : InteractionListener {
         /**
          * Handles the player cross the chasm with the help of a light creature.
          */
-        fun crossTheChasm(player: Player, npc: NPC) {
+        private fun crossTheChasm(player: Player, npc: NPC) {
             sendMessage(player, "The light-creature is attracted to your beam and comes towards you...")
             LightCreatureBehavior.moveLightCreature(npc, player.location)
             val destination = if (player.location.y > 9516) {

@@ -124,7 +124,7 @@ class HorrorFromTheDeepPlugin : InteractionListener {
          * Handles the light mechanism fix.
          */
 
-        onUseWith(IntType.SCENERY, Items.SWAMP_TAR_1939, Scenery.LIGHTING_MECHANISM_4588) { player, used, with ->
+        onUseWith(IntType.SCENERY, Items.SWAMP_TAR_1939, Scenery.LIGHTING_MECHANISM_4588) { player, used, _ ->
             val swampTarVarbit = Vars.VARBIT_HORROR_FROM_THE_DEEP_SWAMP_TAR_LIGHTING_MECHANISM_46
             if (getVarbit(player, swampTarVarbit) == 1) {
                 sendMessage(player, "The torch is already flammable.")
@@ -135,7 +135,7 @@ class HorrorFromTheDeepPlugin : InteractionListener {
             return@onUseWith true
         }
 
-        onUseWith(IntType.SCENERY, Items.TINDERBOX_590, Scenery.LIGHTING_MECHANISM_4588) { player, used, with ->
+        onUseWith(IntType.SCENERY, Items.TINDERBOX_590, Scenery.LIGHTING_MECHANISM_4588) { player, _, _ ->
             val swampTarVarbit = Vars.VARBIT_HORROR_FROM_THE_DEEP_SWAMP_TAR_LIGHTING_MECHANISM_46
             val litVarbit = Vars.VARBIT_HORROR_FROM_THE_DEEP_LIT_LIGHTING_MECHANISM_48
 
