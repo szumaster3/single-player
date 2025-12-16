@@ -79,15 +79,15 @@ object BalloonHelper {
             1 -> {
                 val next = 2
                 setAttribute(player, "zep_current_step_$routeId", next)
-                drawBaseBalloon(player, routeId, next)
                 routeData.secondOverlay(player, Components.ZEP_INTERFACE_470)
+                drawBaseBalloon(player, routeId, next)
             }
 
             2 -> {
                 val next = 3
                 setAttribute(player, "zep_current_step_$routeId", next)
-                drawBaseBalloon(player, routeId, next)
                 routeData.thirdOverlay(player, Components.ZEP_INTERFACE_470)
+                drawBaseBalloon(player, routeId, next)
             }
 
             3 -> {

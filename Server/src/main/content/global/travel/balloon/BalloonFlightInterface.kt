@@ -1,5 +1,6 @@
 package content.global.travel.balloon
 
+import content.global.travel.balloon.BalloonHelper.clearBalloonState
 import content.global.travel.balloon.routes.BalloonRoutes
 import core.api.*
 import core.game.interaction.InterfaceListener
@@ -47,6 +48,10 @@ class BalloonFlightInterface : InterfaceListener {
 
             setVarbit(player, 2880, amountInInventory(player, Items.SANDBAG_9943))
             setVarbit(player, 2881, amountInInventory(player, Items.LOGS_1511))
+
+            registerLogoutListener(player, "balloon-control-panel") {
+                clearBalloonState(player, routeId, step)
+            }
 
             val sequence = when (step) {
                 1 -> routeData.firstSequence
