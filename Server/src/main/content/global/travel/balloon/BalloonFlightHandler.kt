@@ -1,6 +1,7 @@
 package content.global.travel.balloon
 
 import content.data.GameAttributes
+import content.global.travel.balloon.dialogue.AssistantDialogue
 import core.api.*
 import core.cache.def.impl.ItemDefinition
 import core.game.interaction.IntType
@@ -9,11 +10,12 @@ import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.info.Rights
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
-import shared.consts.*
+import shared.consts.Components
+import shared.consts.NPCs
+import shared.consts.Quests
+import shared.consts.Scenery
 
-/**
- * Handles the balloon travel system.
- */
+/** Handles the balloon travel system. */
 class BalloonFlightHandler : InterfaceListener, InteractionListener {
 
     companion object {
@@ -42,7 +44,10 @@ class BalloonFlightHandler : InterfaceListener, InteractionListener {
             }
 
             if (player.settings.weight > 40.0) {
-                sendDialogue(player, "You're carrying too much weight to fly. Try reducing your weight below 40 kg.")
+                sendDialogue(
+                    player,
+                    "You're carrying too much weight to fly. Try reducing your weight below 40 kg."
+                )
                 return@on true
             }
 
@@ -55,21 +60,19 @@ class BalloonFlightHandler : InterfaceListener, InteractionListener {
             }
 
             if (isAdmin) {
-                BalloonHelper.startFlight(player, destination)
+                BalloonUtils.startFlight(player, destination)
                 return@on true
             }
 
             if (!removeItem(player, Item(destination.logId, 1))) {
-                val requiredItem = getItemName(destination.logId)
-                    .lowercase()
-                    .removeSuffix("s")
-                    .trim()
+                val requiredItem =
+                    getItemName(destination.logId).lowercase().removeSuffix("s").trim()
 
                 sendDialogue(player, "You need at least one $requiredItem.")
                 return@on true
             }
 
-            BalloonHelper.startFlight(player, destination)
+            BalloonUtils.startFlight(player, destination)
             return@on true
         }
     }
@@ -84,7 +87,7 @@ class BalloonFlightHandler : InterfaceListener, InteractionListener {
             val sceneryId = node.asScenery().wrapper.id
             val location = BalloonDefinition.fromSceneryId(sceneryId)
             if (location != null) {
-                BalloonHelper.openBalloonFlightMap(player, location)
+                BalloonUtils.openBalloonFlightMap(player, location)
             }
             return@on true
         }
@@ -110,7 +113,7 @@ class BalloonFlightHandler : InterfaceListener, InteractionListener {
 
             val location = BalloonDefinition.fromNpcId(node.id)
             if (location != null) {
-                BalloonHelper.openBalloonFlightMap(player, location)
+                BalloonUtils.openBalloonFlightMap(player, location)
             }
             return@on true
         }

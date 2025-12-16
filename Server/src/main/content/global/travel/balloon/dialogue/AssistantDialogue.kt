@@ -1,4 +1,4 @@
-package content.global.travel.balloon
+package content.global.travel.balloon.dialogue
 
 import core.api.openInterface
 import core.game.dialogue.DialogueFile
@@ -31,10 +31,10 @@ class AssistantDialogue : DialogueFile() {
             5 -> npcl(FaceAnim.OLD_LAUGH1, "They said I was too full of hot air.").also { stage = 3 }
 
             NPCs.ASSISTANT_SERF_5053 -> npcl(faceExpression, "I am a Serf. Assistant Serf to you! Auguste freed me and gave me this job.").also { stage = 3 }
+            NPCs.ASSISTANT_BROCK_5054 -> npcl(faceExpression, "I am Assistant Brock. I serve under Auguste as his number two assistant.").also { stage = 3 }
             NPCs.ASSISTANT_MARROW_5055 -> npcl(faceExpression, "I am Assistant Marrow. I'm working here part time while I study to be a doctor.").also { stage = 3 }
             NPCs.ASSISTANT_LE_SMITH_5056 -> npcl(faceExpression, "I am Assistant Le Smith. I used to work as a glider pilot, but they kicked me off.").also { stage = 4 }
             NPCs.ASSISTANT_STAN_5057 -> npcl(faceExpression, "I am Stan. Auguste hired me to look after this balloon. I make sure people are prepared to fly.").also { stage = 3 }
-            NPCs.ASSISTANT_BROCK_5054 -> npcl(faceExpression, "I am Assistant Brock. I serve under Auguste as his number two assistant.").also { stage = 3 }
         }
     }
 }
