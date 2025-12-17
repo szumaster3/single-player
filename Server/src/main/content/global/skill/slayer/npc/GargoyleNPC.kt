@@ -4,21 +4,26 @@ import content.global.skill.slayer.Tasks
 import core.api.sendMessage
 import core.game.interaction.NodeUsageEvent
 import core.game.interaction.UseWithHandler
+import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.combat.ImpactHandler.HitsplatType
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.npc.NPC
 import core.game.world.map.Location
+import core.game.world.update.flag.context.Animation
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
 import shared.consts.Items
+import shared.consts.NPCs
 
 /**
  * The type Gargoyle npc.
  */
 @Initializable
 class GargoyleNPC : AbstractNPC {
+    private var originalId: Int = -1
+
     /**
      * Instantiates a new Gargoyle npc.
      *
@@ -68,7 +73,17 @@ class GargoyleNPC : AbstractNPC {
     }
 
     override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC {
-        return GargoyleNPC(id, location)
+        val npc = GargoyleNPC(id, location)
+        npc.originalId = id
+        return npc
+    }
+
+    override fun finalizeDeath(killer: Entity?) {
+        if (originalId != -1 && id != originalId) {
+            this.id = originalId
+        }
+
+        super.finalizeDeath(killer)
     }
 
     override fun getIds(): IntArray {
@@ -76,9 +91,16 @@ class GargoyleNPC : AbstractNPC {
     }
 
     /**
-     * The type Rock hammer handler.
+     * The Rock hammer handler.
+     * @author Vexia
      */
-    inner class RockHammerHandler : UseWithHandler(Items.ROCK_HAMMER_4162) {
+    private class RockHammerHandler: UseWithHandler(Items.ROCK_HAMMER_4162) {
+        /**
+         * Represents the smash animation.
+         */
+        private val SMASH_ANIMATION = Animation(9513)
+
+        @Throws(Throwable::class)
         override fun newInstance(arg: Any?): Plugin<Any> {
             for (id in Tasks.GARGOYLES.npcs) {
                 addHandler(id, NPC_TYPE, this)
@@ -92,8 +114,15 @@ class GargoyleNPC : AbstractNPC {
             if (npc.getSkills().lifepoints > 10) {
                 sendMessage(player, "The gargoyle isn't weak enough to be harmed by the hammer.")
             } else {
+                val hp = npc.skills.lifepoints
+
+                npc.transform(NPCs.GARGOYLE_1827)
+                npc.skills.lifepoints = hp
+
+                npc.animator.animate(SMASH_ANIMATION)
+                npc.impactHandler.manualHit(player, npc.skills.lifepoints + 1, HitsplatType.NORMAL)
+
                 sendMessage(player, "The gargoyle cracks apart.")
-                npc.impactHandler.manualHit(player, npc.getSkills().lifepoints, HitsplatType.NORMAL)
             }
             return true
         }
