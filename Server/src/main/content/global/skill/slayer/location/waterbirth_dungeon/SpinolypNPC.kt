@@ -8,6 +8,7 @@ import core.game.node.entity.combat.spell.CombatSpell
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.link.SpellBookManager
 import core.game.world.map.Location
+import core.plugin.Initializable
 import core.tools.RandomFunction
 import shared.consts.NPCs
 

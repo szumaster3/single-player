@@ -14,10 +14,10 @@ import shared.consts.NPCs
  */
 class DagannothKingNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
 
-    private var type: DagType? = null
+    private var type: DagannothKingType? = null
 
     override fun init() {
-        type = DagType.forId(id)
+        type = DagannothKingType.forId(id)
         super.init()
     }
 
@@ -31,11 +31,8 @@ class DagannothKingNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id
         }
     }
 
-    override fun getLevelMod(
-        entity: Entity,
-        victim: Entity,
-    ): Double {
-        if (type == DagType.PRIME) {
+    override fun getLevelMod(entity: Entity, victim: Entity): Double {
+        if (type == DagannothKingType.PRIME) {
             return 3.5
         }
         return 0.0
@@ -45,7 +42,7 @@ class DagannothKingNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id
         if (state.estimatedHit > type!!.maxHit) {
             state.estimatedHit = RandomFunction.random(type!!.maxHit - 5, type!!.maxHit)
         }
-        if (type != DagType.REX && RandomFunction.random(5) <= 2) {
+        if (type != DagannothKingType.REX && RandomFunction.random(5) <= 2) {
             val players = RegionManager.getLocalPlayers(this, 9)
             if (players.size <= 1) {
                 return
@@ -59,11 +56,7 @@ class DagannothKingNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id
         }
     }
 
-    override fun construct(
-        id: Int,
-        location: Location,
-        vararg objects: Any,
-    ): AbstractNPC = DagannothKingNPC(id, location)
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = DagannothKingNPC(id, location)
 
     override fun getIds(): IntArray = intArrayOf(
         NPCs.DAGANNOTH_SUPREME_2881,
@@ -75,40 +68,15 @@ class DagannothKingNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id
         super.finalizeDeath(killer)
     }
 
-    enum class DagType(
-        val id: Int,
-        val style: CombatStyle,
-        val weakStyle: CombatStyle,
-        val immuneStyle: CombatStyle,
-        val maxHit: Int,
-    ) {
-        SUPREME(
-            id = NPCs.DAGANNOTH_SUPREME_2881,
-            style = CombatStyle.RANGE,
-            weakStyle = CombatStyle.MELEE,
-            immuneStyle = CombatStyle.MAGIC,
-            maxHit = 30,
-        ),
-        PRIME(
-            id = NPCs.DAGANNOTH_PRIME_2882,
-            style = CombatStyle.MAGIC,
-            weakStyle = CombatStyle.RANGE,
-            immuneStyle = CombatStyle.MELEE,
-            maxHit = 61,
-        ),
-        REX(
-            id = NPCs.DAGANNOTH_REX_2883,
-            style = CombatStyle.MELEE,
-            weakStyle = CombatStyle.MAGIC,
-            immuneStyle = CombatStyle.RANGE,
-            maxHit = 28,
-        ),
-        ;
+    enum class DagannothKingType(val id: Int, val style: CombatStyle, val weakStyle: CombatStyle, val immuneStyle: CombatStyle, val maxHit: Int) {
+        SUPREME(id = NPCs.DAGANNOTH_SUPREME_2881, style = CombatStyle.RANGE, weakStyle = CombatStyle.MELEE, immuneStyle = CombatStyle.MAGIC, maxHit = 30),
+        PRIME(id = NPCs.DAGANNOTH_PRIME_2882, style = CombatStyle.MAGIC, weakStyle = CombatStyle.RANGE, immuneStyle = CombatStyle.MELEE, maxHit = 61),
+        REX(id = NPCs.DAGANNOTH_REX_2883, style = CombatStyle.MELEE, weakStyle = CombatStyle.MAGIC, immuneStyle = CombatStyle.RANGE, maxHit = 28), ;
 
         fun isImmune(style: CombatStyle): Boolean = style == immuneStyle || style == this.style
 
         companion object {
-            fun forId(id: Int): DagType? {
+            fun forId(id: Int): DagannothKingType? {
                 for (type in values()) {
                     if (type.id == id) {
                         return type

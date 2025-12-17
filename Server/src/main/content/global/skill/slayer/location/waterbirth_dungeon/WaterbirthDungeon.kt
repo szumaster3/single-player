@@ -1,5 +1,6 @@
 package content.global.skill.slayer.location.waterbirth_dungeon
 
+import core.api.replaceScenery
 import core.api.sendMessage
 import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.SceneryDefinition
@@ -9,43 +10,37 @@ import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.npc.AbstractNPC
-import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
-import core.game.node.entity.skill.Skills
 import core.game.node.scenery.SceneryBuilder
-import core.game.system.task.Pulse
-import core.game.world.GameWorld.Pulser
-import core.game.world.GameWorld.settings
 import core.game.world.GameWorld.ticks
 import core.game.world.map.Location
-import core.game.world.map.RegionManager.getLocalNpcs
-import core.game.world.map.RegionManager.getLocalPlayers
-import core.game.world.map.RegionManager.getObject
-import core.game.world.map.RegionManager.getRegionPlane
-import core.game.world.map.zone.MapZone
-import core.game.world.map.zone.ZoneBorders
-import core.game.world.map.zone.ZoneBuilder
-import core.game.world.map.zone.ZoneRestriction
-import core.game.world.repository.Repository.findNPC
+import core.game.world.map.RegionManager
+import core.game.world.map.zone.*
 import core.game.world.update.flag.context.Animation
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.plugin.Plugin
+import core.tools.minutesToTicks
 import shared.consts.Items
 import shared.consts.NPCs
+import shared.consts.Scenery
 
 @Initializable
-class WaterbirthDungeon : MapZone("Waterbirth dungeon", true, ZoneRestriction.RANDOM_EVENTS), Plugin<Any?> {
+class WaterbirthDungeon : MapZone(
+    "Waterbirth dungeon",
+    true,
+    ZoneRestriction.RANDOM_EVENTS
+), Plugin<Any?> {
 
     init {
-        definePlugin(DagannothKingNPC())
+        definePlugin(WaterbirthDungeonOptionHandler())
         definePlugin(DoorSupportNPC())
-        definePlugin(DungeonOptionHandler())
         definePlugin(SpinolypNPC())
+        definePlugin(DagannothKingNPC())
+        definePlugin(DagannothSpawnEggNPC())
     }
 
-    @Throws(Throwable::class)
-    override fun newInstance(arg: Any?): Plugin<Any?>? {
+    override fun newInstance(arg: Any?): Plugin<Any?> {
         ZoneBuilder.configure(this)
         return this
     }
@@ -53,88 +48,15 @@ class WaterbirthDungeon : MapZone("Waterbirth dungeon", true, ZoneRestriction.RA
     override fun fireEvent(identifier: String, vararg args: Any): Any? = null
 
     override fun move(e: Entity, from: Location, to: Location): Boolean {
-        for (location in DOOR_SUPPORTS) {
-            if (location == to) {
-                val npcs: List<NPC> = getLocalNpcs(location, 0)
-                var npc: NPC? = null
-                if (npcs.size != 0) {
-                    npc = npcs[0]
-                }
-                if (npc != null && npc is DoorSupportNPC) {
-                    val door = npc
-                    return door.id != door.originalId
-                }
-                return false
-            }
+        if (to !in DoorSupportLocation.ALL) {
+            return super.move(e, from, to)
         }
-        if (e is Player) {
-            val p = e.asPlayer()
-            if (p.location == Location(2545, 10144, 0) || p.location == Location(2545, 10142, 0)) {
-                val eggs: MutableList<NPC> = ArrayList(20)
-                var n = findNPC(Location(2546, 10142, 0))
-                if (n != null && n.id == 2449) {
-                    eggs.add(n)
-                }
-                n = findNPC(Location(2546, 10144, 0))
-                if (n != null && n.id == 2449) {
-                    eggs.add(n)
-                }
-                if (eggs.size == 0) {
-                    return true
-                }
-                for (npc in eggs) {
-                    if (npc.getAttribute("transforming", 0) > ticks) {
-                        return true
-                    }
-                    npc.setAttribute("transforming", ticks + 3)
-                }
-                Pulser.submit(
-                    object : Pulse(1) {
-                        var counter = 0
 
-                        override fun pulse(): Boolean {
-                            when (++counter) {
-                                1 -> for (n in eggs) {
-                                    n.transform(n.id + 1)
-                                }
+        val door = RegionManager.getLocalNpcs(to, 0)
+            .firstOrNull { it is DoorSupportNPC } as? DoorSupportNPC
+            ?: return false
 
-                                3 -> {
-                                    val spawns: MutableList<NPC> = ArrayList(20)
-                                    for (n in eggs) {
-                                        n.transform(n.id + 1)
-                                        val spawn =
-                                            NPC.create(NPCs.DAGANNOTH_SPAWN_2454, n.location.transform(-1, 0, 0))
-                                        spawn.init()
-                                        spawn.isWalks = true
-                                        spawn.isAggressive = true
-                                        spawn.isRespawn = false
-                                        spawn.attack(p)
-                                        spawns.add(spawn)
-                                    }
-                                    Pulser.submit(
-                                        object : Pulse(if (settings!!.isDevMode) 10 else 45) {
-                                            override fun pulse(): Boolean {
-                                                for (n in eggs) {
-                                                    n.reTransform()
-                                                }
-                                                for (spawn in spawns) {
-                                                    if (spawn.isActive && !spawn.inCombat()) {
-                                                        spawn.clear()
-                                                    }
-                                                }
-                                                return true
-                                            }
-                                        },
-                                    )
-                                }
-                            }
-                            return counter == 3
-                        }
-                    },
-                )
-            }
-        }
-        return super.move(e, from, to)
+        return door.id != door.originalId
     }
 
     override fun configure() {
@@ -144,165 +66,168 @@ class WaterbirthDungeon : MapZone("Waterbirth dungeon", true, ZoneRestriction.RA
         registerRegion(7748)
         registerRegion(11589)
     }
+}
 
-    class DungeonOptionHandler : OptionHandler() {
-        @Throws(Throwable::class)
-        override fun newInstance(arg: Any?): Plugin<Any> {
-            SceneryDefinition.forId(8958).handlers["option:open"] = this
-            SceneryDefinition.forId(8959).handlers["option:open"] = this
-            SceneryDefinition.forId(8960).handlers["option:open"] = this
-            NPCDefinition.forId(2440).handlers["option:destroy"] = this
-            NPCDefinition.forId(2443).handlers["option:destroy"] = this
-            NPCDefinition.forId(2446).handlers["option:destroy"] = this
-            for (l in DOOR_SUPPORTS) {
-                SceneryBuilder.remove(getObject(l!!))
-            }
-            return this
+/**
+ * Handles interactions around dungeon.
+ */
+class WaterbirthDungeonOptionHandler : OptionHandler() {
+
+    override fun newInstance(arg: Any?): Plugin<Any> {
+        listOf(
+            Scenery.DOOR_8958,
+            Scenery.DOOR_8959,
+            Scenery.DOOR_8960
+        ).forEach { id ->
+            SceneryDefinition.forId(id).handlers["option:open"] = this
         }
 
-        private fun pressurePadActivated(
-            player: Player,
-            location: Location,
-        ): Boolean = if (getLocalPlayers(location, 0).size > 0) {
-            true
-        } else {
-            getRegionPlane(location).getItem(Items.PET_ROCK_3695, location, player) != null
+        DoorSupportNPC.IDS.forEach { id ->
+            NPCDefinition.forId(id).handlers["option:destroy"] = this
         }
 
-        override fun handle(player: Player, node: Node, option: String): Boolean {
-            when (node.id) {
-                8958, 8959, 8960 -> {
-                    val behind = player.location.x >= 2492
-                    if (!behind) {
-                        if (!pressurePadActivated(player, node.location.transform(-1, 0, 0)) || !pressurePadActivated(
-                                player,
-                                node.location.transform(-1, 2, 0),
-                            )
-                        ) {
-                            sendMessage(player, "You cannot see a way to open this door...")
-                            return true
-                        }
-                    }
-                    if (!node.isActive) {
-                        return true
-                    }
-                    SceneryBuilder.replace(node.asScenery(), node.asScenery().transform(8962), 30)
-                }
-
-                2440, 2443, 2446 -> {
-                    val x = node.location.x
-                    val y = node.location.y
-                    var canAttack = true
-                    if (x == 2545 && y == 10145 && player.location.y > y) {
-                        canAttack = false
-                    } else if (x == 2543 && y == 10143 && player.location.x < x) {
-                        canAttack = false
-                    } else if (x == 2545 && y == 10141 && player.location.y < y) {
-                        canAttack = false
-                    }
-                    if (!canAttack) {
-                        sendMessage(player, "The door is propped securely shut from this side...")
-                        return true
-                    }
-                    player.attack(node)
-                }
-            }
-            return true
+        DoorSupportLocation.ALL.forEach { location ->
+            SceneryBuilder.remove(RegionManager.getObject(location))
         }
 
-        override fun getDestination(node: Node, n: Node): Location? {
-            if (n.name == "Door-support") {
-                val player = node.asPlayer()
-                if (player.properties.combatPulse.style !== CombatStyle.MELEE) {
-                    return node.location
-                }
-            }
-            return null
+        return this
+    }
+
+    override fun handle(player: Player, node: Node, option: String): Boolean {
+        when (node.id) {
+            Scenery.DOOR_8958,
+            Scenery.DOOR_8959,
+            Scenery.DOOR_8960 -> handleDungeonDoor(player, node)
+
+            in DoorSupportNPC.IDS -> handleDoorSupport(player, node)
+        }
+        return true
+    }
+
+    private fun handleDungeonDoor(player: Player, door: Node) {
+        if (!canOpenDoor(player, door)) {
+            sendMessage(player, "You cannot see a way to open this door...")
+            return
+        }
+
+        if (door.isActive) {
+            replaceScenery(door.asScenery(), Scenery.DOOR_8962, 30)
         }
     }
 
-    class DoorSupportNPC : AbstractNPC {
-        private var deathSpawn: Long = -1
-
-        constructor() : super(-1, null)
-
-        constructor(id: Int, location: Location?) : super(id, location)
-
-        override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC = DoorSupportNPC(id, location)
-
-        override fun init() {
-            lock()
-            super.init()
-            getSkills().setStaticLevel(Skills.HITPOINTS, 1)
-            getSkills().setLevel(Skills.HITPOINTS, 1)
-            getSkills().lifepoints = 1
-            properties.deathAnimation = Animation(-1)
+    private fun handleDoorSupport(player: Player, node: Node) {
+        if (!canAttackFromSide(player, node)) {
+            sendMessage(player, "This door does not seem to be openable from this side...")
+            return
         }
-
-        override fun handleTickActions() {
-            if (deathSpawn != -1L && deathSpawn < ticks) {
-                deathSpawn = -1
-                transform(originalId)
-                getSkills().setStaticLevel(Skills.HITPOINTS, 1)
-                getSkills().setLevel(Skills.HITPOINTS, 1)
-                getSkills().lifepoints = 1
-                fullRestore()
-                getSkills().heal(100)
-            }
-        }
-
-        override fun face(entity: Entity?): Boolean = false
-
-        override fun faceLocation(locatin: Location?): Boolean = false
-
-        override fun checkImpact(state: BattleState) {
-            getSkills().setStaticLevel(Skills.HITPOINTS, 1)
-            getSkills().setLevel(Skills.HITPOINTS, 1)
-            getSkills().lifepoints = 1
-            getSkills().lifepoints = 1
-            state.estimatedHit = 1
-            lock()
-            walkingQueue.reset()
-        }
-
-        override fun canStartCombat(victim: Entity): Boolean = false
-
-        override fun commenceDeath(killer: Entity) {
-            animator.reset()
-            transform(originalId + 1)
-            lock()
-        }
-
-        override fun finalizeDeath(killer: Entity) {
-            animator.reset()
-            transform(originalId + 2)
-            deathSpawn = (ticks + 55).toLong()
-            lock()
-        }
-
-        override fun isAttackable(entity: Entity, style: CombatStyle, message: Boolean): Boolean {
-            if (id != originalId) {
-                return false
-            }
-
-            if (entity.location.getDistance(getLocation()) <= 3) {
-                if (entity is Player) {
-                    val player = entity.asPlayer()
-                    if (message) {
-                        sendMessage(player, "The door is propped securely shut from this side...")
-                    }
-                }
-                return false
-            }
-
-            return style !== CombatStyle.MELEE
-        }
-
-        override fun getIds(): IntArray = intArrayOf(NPCs.DOOR_SUPPORT_2440, NPCs.DOOR_SUPPORT_2443, NPCs.DOOR_SUPPORT_2446)
+        player.attack(node)
     }
+
+    private fun canOpenDoor(player: Player, door: Node): Boolean {
+        if (player.location.x >= 2492) return true
+
+        val leftPad  = door.location.transform(-1, 0, 0)
+        val rightPad = door.location.transform(-1, 2, 0)
+
+        return isPressurePadActive(player, leftPad)
+                && isPressurePadActive(player, rightPad)
+    }
+
+    private fun isPressurePadActive(player: Player, location: Location): Boolean =
+        RegionManager.getLocalPlayers(location, 0).isNotEmpty() ||
+                RegionManager.getRegionPlane(location).getItem(Items.PET_ROCK_3695, location, player) != null
+
+    private fun canAttackFromSide(player: Player, node: Node): Boolean = when (node.location) {
+        DoorSupportLocation.NORTH -> player.location.y <= node.location.y
+        DoorSupportLocation.WEST  -> player.location.x >= node.location.x
+        DoorSupportLocation.SOUTH -> player.location.y >= node.location.y
+        else -> true
+    }
+
+    override fun getDestination(node: Node, target: Node): Location? {
+        if (target.name == "Door-support") {
+            val player = node.asPlayer()
+            if (player.properties.combatPulse.style != CombatStyle.MELEE) {
+                return node.location
+            }
+        }
+        return null
+    }
+}
+
+/**
+ * Handles door support NPC logic.
+ */
+class DoorSupportNPC : AbstractNPC {
+
+    private var respawnTick: Long? = null
+
+    constructor() : super(-1, null)
+    constructor(id: Int, location: Location?) : super(id, location)
+
+    override fun construct(id: Int, location: Location, vararg objects: Any): AbstractNPC =
+        DoorSupportNPC(id, location)
+
+    override fun init() {
+        lock()
+        properties.deathAnimation = Animation(-1)
+        super.init()
+    }
+
+    override fun handleTickActions() {
+        respawnTick?.takeIf { it < ticks }?.let {
+            respawnTick = null
+            transform(originalId)
+        }
+    }
+
+    override fun face(entity: Entity?): Boolean = false
+    override fun faceLocation(location: Location?): Boolean = false
+    override fun canStartCombat(victim: Entity): Boolean = false
+
+    override fun checkImpact(state: BattleState) {
+        state.estimatedHit = 1
+        lock()
+        walkingQueue.reset()
+    }
+
+    override fun finalizeDeath(killer: Entity) {
+        animator.reset()
+        transform(originalId + 1)
+        respawnTick = ticks + minutesToTicks(1).toLong()
+        lock()
+    }
+
+    override fun isAttackable(entity: Entity, style: CombatStyle, message: Boolean): Boolean {
+        if (id != originalId) return false
+
+        if (entity.location.getDistance(location) <= 3) {
+            if (message && entity is Player) {
+                sendMessage(entity, "This door does not seem to be openable from this side...")
+            }
+            return false
+        }
+        return style != CombatStyle.MELEE
+    }
+
+    override fun getIds(): IntArray = IDS
 
     companion object {
-        private val DOOR_SUPPORTS = arrayOf(Location.create(2545, 10145, 0), Location.create(2543, 10143, 0), Location.create(2545, 10141, 0))
+        val IDS = intArrayOf(
+            NPCs.DOOR_SUPPORT_2440,
+            NPCs.DOOR_SUPPORT_2443,
+            NPCs.DOOR_SUPPORT_2446
+        )
     }
+}
 
+/**
+ * Represents the door support locations.
+ */
+object DoorSupportLocation {
+    val NORTH: Location  = Location.create(2545, 10145, 0)
+    val WEST:  Location  = Location.create(2542, 10143, 0)
+    val SOUTH: Location  = Location.create(2545, 10141, 0)
+
+    val ALL = setOf(NORTH, WEST, SOUTH)
 }

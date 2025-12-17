@@ -17,6 +17,7 @@ import core.game.world.update.flag.context.Graphics;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
 import core.tools.RandomFunction;
+import shared.consts.NPCs;
 import shared.consts.Sounds;
 
 import java.util.Iterator;
@@ -30,12 +31,12 @@ import static core.api.ContentAPIKt.playGlobalAudio;
  * @author Emperor
  */
 @Initializable
-public final class ChainhitSpecialHandler extends RangeSwingHandler implements Plugin<Object> {
+public final class ChainHitSpecialHandler extends RangeSwingHandler implements Plugin<Object> {
 
     /**
      * Constructs a new {@code ChainhitSpecialHandler} {@code Object}.
      */
-    public ChainhitSpecialHandler() {
+    public ChainHitSpecialHandler() {
         super(SwingHandlerFlag.IGNORE_PRAYER_BOOSTS_DAMAGE);
     }
 
@@ -57,7 +58,7 @@ public final class ChainhitSpecialHandler extends RangeSwingHandler implements P
     /**
      * The door support locations.
      */
-    private static final Location[] DOOR_SUPPORTS = new Location[]{Location.create(2545, 10145, 0), Location.create(2545, 10141, 0), Location.create(2543, 10143, 0)};
+    private static final Location[] DOOR_SUPPORTS = new Location[]{Location.create(2545, 10145, 0), Location.create(2545, 10141, 0), Location.create(2542, 10143, 0)};
 
     @Override
     public Object fireEvent(String identifier, Object... args) {
@@ -83,7 +84,7 @@ public final class ChainhitSpecialHandler extends RangeSwingHandler implements P
         state.setStyle(CombatStyle.RANGE);
         if (victim instanceof NPC) {
             NPC npc = victim.asNpc();
-            if (npc.getId() == 2440) {
+            if (npc.getId() == NPCs.DOOR_SUPPORT_2440) {
                 for (Location l : DOOR_SUPPORTS) {
                     final NPC n = Repository.findNPC(l);
                     if (n == null) {
@@ -92,8 +93,7 @@ public final class ChainhitSpecialHandler extends RangeSwingHandler implements P
                     if (DeathTask.Companion.isDead(n) || n.getId() != n.getOriginalId()) {
                         continue;
                     }
-                    int speed = (int) (32 + (victim.getLocation().getDistance(n.getLocation()) * 5));
-                    Projectile.create(victim, n, 258, 40, 36, 32, speed, 5, 11).send();
+                    Projectile.ranged(victim, n, 258, 40, 36, 32, 11).send();
                     n.getSkills().heal(100);
                     GameWorld.getPulser().submit(new Pulse(3) {
 
@@ -114,8 +114,7 @@ public final class ChainhitSpecialHandler extends RangeSwingHandler implements P
     public void visualize(Entity entity, Entity victim, BattleState state) {
         playGlobalAudio(entity.getLocation(), Sounds.CHAINSHOT_2528);
         entity.visualize(ANIMATION, GRAPHIC);
-        int speed = (int) (32 + (entity.getLocation().getDistance(victim.getLocation()) * 5));
-        Projectile.create(entity, victim, 258, 40, 36, 32, speed, 5, 11).send();
+        Projectile.ranged(entity, victim, 258, 40, 36, 32, 11).send();
     }
 
     @Override
@@ -141,12 +140,12 @@ public final class ChainhitSpecialHandler extends RangeSwingHandler implements P
         GameWorld.getPulser().submit(new Pulse(1, player, victim) {
             @Override
             public boolean pulse() {
-                ChainhitSpecialHandler.super.onImpact(player, victim, state);
-                ChainhitSpecialHandler.super.impact(entity, victim, state);
+                ChainHitSpecialHandler.super.onImpact(player, victim, state);
+                ChainHitSpecialHandler.super.impact(entity, victim, state);
                 return true;
             }
         });
-        if (victim.getId() == 2440 || victim.getId() == 2446 || victim.getId() == 2443) {
+        if (victim.getId() == NPCs.DOOR_SUPPORT_2440 || victim.getId() == NPCs.DOOR_SUPPORT_2446 || victim.getId() == NPCs.DOOR_SUPPORT_2443) {
             return;
         }
         if (victim.getProperties().isMultiZone() && player.getSettings().getSpecialEnergy() >= SPECIAL_ENERGY) {
@@ -158,8 +157,7 @@ public final class ChainhitSpecialHandler extends RangeSwingHandler implements P
                     continue;
                 }
                 double distance = victim.getLocation().getDistance(e.getLocation());
-                int speed = (int) (32 + (distance * 5));
-                Projectile.create(victim, e, 258, 40, 36, 32, speed, 5, 11).send();
+                Projectile.ranged(victim, e, shared.consts.Graphics.THROWING_AXE_SPECIAL_258, 40, 36, 32, 11).send();
                 GameWorld.getPulser().submit(new Pulse((int) (distance / 3), entity, victim, e) {
                     @Override
                     public boolean pulse() {
@@ -167,7 +165,7 @@ public final class ChainhitSpecialHandler extends RangeSwingHandler implements P
                         bs.setMaximumHit(calculateHit(player, e, 1.0));
                         bs.setEstimatedHit(RandomFunction.random(bs.getMaximumHit() + 1));
                         handleHit(victim, e, player, bs);
-                        ChainhitSpecialHandler.super.visualizeImpact(player, e, bs);
+                        ChainHitSpecialHandler.super.visualizeImpact(player, e, bs);
                         return true;
                     }
                 });
