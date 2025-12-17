@@ -163,13 +163,6 @@ class GrandExchange : StartupListener, Commands {
         }
 
         /**
-         * Gets the configured price for an item from its item definition.
-         * @param itemID the id of the item.
-         * @return the highest available price between GE price config and item value.
-         */
-        private fun getItemDefPrice(itemID: Int): Int = max(itemDefinition(itemID).getConfiguration(ItemConfigParser.GE_PRICE) ?: 0, itemDefinition(itemID).value,)
-
-        /**
          * Gets statistics about current offers for a given item.
          * @param itemID the id of the item.
          * @param sale true to get sell offers, false to get buy offers.
