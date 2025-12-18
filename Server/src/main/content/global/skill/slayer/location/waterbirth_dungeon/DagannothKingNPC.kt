@@ -15,11 +15,12 @@ import shared.consts.NPCs
  */
 class DagannothKingNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, location) {
 
-    private val type: DagannothKingType = DagannothKingType.forId(id)
-        ?: throw IllegalArgumentException("Invalid Dagannoth King ID: $id")
+    private lateinit var type: DagannothKingType
 
     override fun init() {
         super.init()
+
+        type = DagannothKingType.forId(id)
     }
 
     override fun checkImpact(state: BattleState) {
@@ -37,7 +38,6 @@ class DagannothKingNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id
     }
 
     override fun sendImpact(state: BattleState) {
-        // Ograniczenie maksymalnego obrażenia
         if (state.estimatedHit > type.maxHit) {
             state.estimatedHit = RandomFunction.random(type.maxHit - 5, type.maxHit)
         }
@@ -80,7 +80,7 @@ class DagannothKingNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id
 
         companion object {
             fun forId(id: Int): DagannothKingType =
-                values().firstOrNull { it.id == id } ?: throw IllegalArgumentException("Invalid Dagannoth King ID: $id")
+                values().firstOrNull { it.id == id } ?: throw IllegalArgumentException("Invalid Dagannoth King ID: [$id]")
         }
     }
 }

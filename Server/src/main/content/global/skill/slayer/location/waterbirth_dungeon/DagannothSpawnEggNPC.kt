@@ -1,5 +1,6 @@
 package content.global.skill.slayer.location.waterbirth_dungeon
 
+import core.api.playAudio
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.npc.NPC
@@ -46,7 +47,10 @@ class DagannothSpawnEggNPC : AbstractNPC {
             override fun pulse(): Boolean {
                 stage++
                 when (stage) {
-                    1 -> transform(id + 1)
+                    1 -> {
+                        playAudio(target, 1063)
+                        transform(id + 1)
+                    }
                     3 -> {
                         transform(id + 1)
                         spawn.init()

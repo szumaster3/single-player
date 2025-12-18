@@ -1,5 +1,7 @@
 package content.global.skill.slayer.location.waterbirth_dungeon
 
+import core.api.playAudio
+import core.api.playGlobalAudio
 import core.api.replaceScenery
 import core.api.sendMessage
 import core.cache.def.impl.NPCDefinition
@@ -110,6 +112,7 @@ class WaterbirthDungeon : MapZone(
             }
 
             if (door.isActive) {
+                playGlobalAudio(player.location, 1065)
                 replaceScenery(door.asScenery(), Scenery.DOOR_8962, 30)
             }
         }
@@ -192,6 +195,7 @@ class WaterbirthDungeon : MapZone(
 
         override fun finalizeDeath(killer: Entity) {
             animator.reset()
+            playAudio(killer.asPlayer(), 1071)
             transform(originalId + 1)
             respawnTick = ticks + minutesToTicks(1).toLong()
             lock()
