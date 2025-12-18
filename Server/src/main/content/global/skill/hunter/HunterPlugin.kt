@@ -30,8 +30,12 @@ import shared.consts.Animations
 import shared.consts.Items
 import java.util.*
 
+/**
+ * Main plugin for Hunter skill interactions.
+ */
 @Initializable
 class HunterPlugin : OptionHandler() {
+
     override fun newInstance(arg: Any?): Plugin<Any> {
         var definition: Definition<*>? = null
         for (trap in Traps.values()) {
@@ -76,11 +80,7 @@ class HunterPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         val trap = forNode(node)
         when (option) {
             "lay", "activate", "set-trap", "trap" -> {
@@ -101,10 +101,10 @@ class HunterPlugin : OptionHandler() {
         return true
     }
 
-    override fun getDestination(
-        node: Node,
-        n: Node,
-    ): Location? {
+    /**
+     * Gets the destination for walking to a trap node.
+     */
+    override fun getDestination(node: Node, n: Node): Location? {
         if (n.name.startsWith("Bird")) {
             if (node.location == n.location) {
                 return n.location.transform(node.direction, 1)
@@ -113,14 +113,15 @@ class HunterPlugin : OptionHandler() {
         return null
     }
 
-    override fun isWalk(
-        player: Player,
-        node: Node,
-    ): Boolean = node is GroundItem || node !is Item
+    override fun isWalk(player: Player, node: Node): Boolean = node is GroundItem || node !is Item
 
     override fun isWalk(): Boolean = false
 
+    /**
+     * Handles using items on traps (e.g., baiting or smoking).
+     */
     class HuntingItemUseWithHandler : UseWithHandler(*ids) {
+
         override fun newInstance(arg: Any?): Plugin<Any> {
             for (trap in Traps.values()) {
                 for (objectId in trap.settings.objectIds) {
@@ -148,6 +149,9 @@ class HunterPlugin : OptionHandler() {
         }
 
         companion object {
+            /**
+             * Returns all item ids that can be used on traps (bait or torch).
+             */
             val ids: IntArray
                 get() {
                     val list: MutableList<Int> = ArrayList(10)
@@ -166,31 +170,25 @@ class HunterPlugin : OptionHandler() {
         }
     }
 
+    /**
+     * Handles hunter item interactions such as releasing pets or looting implings.
+     */
     class HunterItemPlugin : OptionHandler() {
+
         override fun newInstance(arg: Any?): Plugin<Any?> {
-            // val toys = intArrayOf(NPCs.TOY_MOUSE_3597, NPCs.TOY_DOLL_3596, NPCs.TOY_SOLDIER_3595)
-            // if (arg is Int && arg !in toys) {
             ItemDefinition.setOptionHandler("release", this)
-            // }
             for (i in BNetTypes.BABY_IMPLING.ordinal - 1 until BNetTypes.values().size) {
-                BNetTypes
-                    .values()[i]
-                    .node.reward.definition.handlers["option:loot"] = this
+                BNetTypes.values()[i].node.reward.definition.handlers["option:loot"] = this
             }
             return this
         }
 
-        override fun handle(
-            player: Player,
-            node: Node,
-            option: String,
-        ): Boolean {
+        override fun handle(player: Player, node: Node, option: String): Boolean {
             when (option) {
                 "release" -> {
                     val type = ReleaseType.forId(node.id)
                     type?.release(player, node as Item)
                 }
-
                 "loot" -> (BNetTypes.forItem(node as Item) as ImplingNode).loot(player, node)
             }
             return true
@@ -198,40 +196,23 @@ class HunterPlugin : OptionHandler() {
 
         override fun isWalk(): Boolean = false
 
-        enum class ReleaseType(
-            vararg val ids: Int,
-        ) {
-            TRAPS(
-                Items.CHINCHOMPA_10033,
-                Items.RED_CHINCHOMPA_10034,
-                Items.FERRET_10092,
-                Items.ORANGE_SALAMANDER_10146,
-                Items.RED_SALAMANDER_10147,
-                Items.BLACK_SALAMANDER_10148,
-                Items.SWAMP_LIZARD_10149,
-            ),
-            BUTTERFLY(
-                Items.RUBY_HARVEST_10020,
-                Items.SAPPHIRE_GLACIALIS_10018,
-                Items.SNOWY_KNIGHT_10016,
-                Items.BLACK_WARLOCK_10014,
-            ) {
-                override fun release(
-                    player: Player,
-                    item: Item,
-                ) {
+        /**
+         * Enum representing different types of releasable items for Hunter skill.
+         */
+        enum class ReleaseType(vararg val ids: Int) {
+            TRAPS(Items.CHINCHOMPA_10033, Items.RED_CHINCHOMPA_10034, Items.FERRET_10092, Items.ORANGE_SALAMANDER_10146, Items.RED_SALAMANDER_10147, Items.BLACK_SALAMANDER_10148, Items.SWAMP_LIZARD_10149),
+            BUTTERFLY(Items.RUBY_HARVEST_10020, Items.SAPPHIRE_GLACIALIS_10018, Items.SNOWY_KNIGHT_10016, Items.BLACK_WARLOCK_10014) {
+
+                override fun release(player: Player, item: Item) {
                     val node = BNetTypes.forItem(item)
                     if (removeItem(player, item)) {
                         visualize(player, Animations.RELEASE_BUTTERFLY_FROM_JAR_5213, node!!.graphics[1])
                         addItem(player, Items.BUTTERFLY_JAR_10012)
                     }
                 }
-            }, ;
+            };
 
-            open fun release(
-                player: Player,
-                item: Item,
-            ) {
+            open fun release(player: Player, item: Item) {
                 val multiple = item.amount > 1
                 removeItem(player, item)
                 sendMessage(
@@ -261,7 +242,11 @@ class HunterPlugin : OptionHandler() {
         }
     }
 
+    /**
+     * Handles catching hunter NPCs using nets.
+     */
     class HunterNetPlugin : OptionHandler() {
+
         override fun newInstance(arg: Any?): Plugin<Any?> {
             for (type in BNetTypes.values()) {
                 for (id in type.node.npcs) {
@@ -271,11 +256,7 @@ class HunterPlugin : OptionHandler() {
             return this
         }
 
-        override fun handle(
-            player: Player,
-            node: Node,
-            option: String,
-        ): Boolean {
+        override fun handle(player: Player, node: Node, option: String): Boolean {
             val type = BNetTypes.forNpc(node as NPC)
             if (type == null) {
                 sendMessage(player, "There seems to be something wrong with this catch option.")

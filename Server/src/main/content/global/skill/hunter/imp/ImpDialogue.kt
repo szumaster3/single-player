@@ -5,6 +5,7 @@ import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
+import shared.consts.Components
 import shared.consts.NPCs
 
 class ImpDialogue : DialogueFile() {
@@ -39,7 +40,7 @@ class ImpDialogue : DialogueFile() {
             20 -> when (buttonID) {
                 1 -> playerl(FaceAnim.HALF_GUILTY, "Okay, that sounds fair.").also {
                     end()
-                    openInterface(player!!, 478)
+                    openInterface(player!!, Components.IMP_BOX_478)
                 }
                 2 -> playerl(FaceAnim.HALF_GUILTY, "Surely it should be three items? Then it's one item per wish.").also { stage++ }
                 3 -> playerl(FaceAnim.ASKING, "I've got nothing I need banking right now.").also { stage = 22 }
@@ -63,7 +64,7 @@ class ImpDialogueExtension : DialogueFile() {
                 2 -> playerl(FaceAnim.FRIENDLY, "No, I'm afraid you're going to have to wait a bit longer.").also { stage++ }
             }
             4 -> npcl(FaceAnim.FRIENDLY, "Dat's alright guv'nor. I'll get back to me luvverly dream about beads. Big shiny beads. Love it!").also { stage = END_DIALOGUE }
-            5 -> end().also { openInterface(player!!, 478) }
+            5 -> end().also { openInterface(player!!, Components.IMP_BOX_478) }
         }
     }
 }

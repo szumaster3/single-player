@@ -15,6 +15,8 @@ import core.game.node.item.Item
 import core.game.world.map.path.ClipMaskSupplier
 import core.tools.Log
 import core.tools.RandomFunction
+import shared.consts.Graphics
+import shared.consts.NPCs
 
 class ImplingNPC : NPCBehavior(*Implings.getIds()) {
 
@@ -34,15 +36,10 @@ class ImplingNPC : NPCBehavior(*Implings.getIds()) {
         if (!isPuroImpling(self)) {
             log(this::class.java, Log.ERR, "Non-puro impling has respawned!")
         }
-        sendGraphics(1119, self.properties.teleportLocation!!)
+        sendGraphics(Graphics.IMPLING_TP_WHITE_SMOKE_PUFF_1119, self.properties.teleportLocation!!)
     }
 
-    override fun canBeAttackedBy(
-        self: NPC,
-        attacker: Entity,
-        style: CombatStyle,
-        shouldSendMessage: Boolean,
-    ): Boolean {
+    override fun canBeAttackedBy(self: NPC, attacker: Entity, style: CombatStyle, shouldSendMessage: Boolean): Boolean {
         if (attacker !is Player) return false
 
         if (style != CombatStyle.MAGIC) {
@@ -71,10 +68,7 @@ class ImplingNPC : NPCBehavior(*Implings.getIds()) {
         return true
     }
 
-    override fun onDeathFinished(
-        self: NPC,
-        killer: Entity,
-    ) {
+    override fun onDeathFinished(self: NPC, killer: Entity) {
         if (!isPuroImpling(self)) {
             ImplingController.deregister(self)
         } else if (self.originalId != self.id) {
@@ -84,16 +78,22 @@ class ImplingNPC : NPCBehavior(*Implings.getIds()) {
         }
     }
 
-    override fun onDropTableRolled(
-        self: NPC,
-        killer: Entity,
-        drops: ArrayList<Item>,
-    ) {
+    override fun onDropTableRolled(self: NPC, killer: Entity, drops: ArrayList<Item>) {
         drops.clear()
     }
 
     override fun getClippingSupplier(self: NPC): ClipMaskSupplier = ImplingClipper
 
     private fun isPuroImpling(self: NPC): Boolean =
-        self.id in intArrayOf(6055, 6057, 6058, 6059, 6060, 6063, 6064, 6061, 7846)
+        self.id in intArrayOf(
+            NPCs.BABY_IMPLING_6055,
+            NPCs.GOURMET_IMPLING_6057,
+            NPCs.EARTH_IMPLING_6058,
+            NPCs.ESSENCE_IMPLING_6059,
+            NPCs.ECLECTIC_IMPLING_6060,
+            NPCs.NINJA_IMPLING_6063,
+            NPCs.DRAGON_IMPLING_6064,
+            NPCs.NATURE_IMPLING_6061,
+            NPCs.PIRATE_IMPLING_7846
+        )
 }

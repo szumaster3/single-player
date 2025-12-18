@@ -151,10 +151,7 @@ class FalconryPlugin : ActivityPlugin(FALCONRY_ZONE, false, false, false), MapAr
 
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(ZoneBorders(2363, 3574, 2395, 3620))
 
-    override fun areaLeave(
-        entity: Entity,
-        logout: Boolean,
-    ) {
+    override fun areaLeave(entity: Entity, logout: Boolean) {
         super.areaLeave(entity, logout)
         if (entity is Player && !entity.isArtificial) {
             val player = entity.asPlayer()

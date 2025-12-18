@@ -9,11 +9,8 @@ import core.game.node.entity.skill.Skills
 import core.game.node.scenery.Scenery
 import shared.consts.Sounds
 
-class TrapDismantlePulse(
-    player: Player?,
-    node: Scenery?,
-    wrapper: TrapWrapper,
-) : SkillPulse<Scenery?>(player, node) {
+class TrapDismantlePulse(player: Player?, node: Scenery?, wrapper: TrapWrapper) : SkillPulse<Scenery?>(player, node) {
+
     val wrapper: TrapWrapper = wrapper
     val trap: Traps = wrapper.type
 
@@ -43,8 +40,7 @@ class TrapDismantlePulse(
                     playAudio(player, Sounds.HUNTING_DISMANTLE_2632, 80)
                 }
 
-                Traps.IMP_BOX -> {
-                }
+                Traps.IMP_BOX -> {}
             }
         }
     }

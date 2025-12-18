@@ -7,6 +7,12 @@ import core.game.world.map.build.RegionFlags
 import core.game.world.map.path.ClipMaskSupplier
 import shared.consts.NPCs
 
+/**
+ * Represents the different types of implings.
+ *
+ * @property npcId the NPC id of the impling in normal areas
+ * @property puroId the NPC id of the impling in the Puro-Puro area
+ */
 enum class Implings(val npcId: Int, val puroId: Int) {
     BABY(NPCs.BABY_IMPLING_1028, NPCs.BABY_IMPLING_6055),
     YOUNG(NPCs.YOUNG_IMPLING_1029, NPCs.YOUNG_IMPLING_6056),
@@ -22,6 +28,9 @@ enum class Implings(val npcId: Int, val puroId: Int) {
     ;
 
     companion object {
+        /**
+         * Returns an array containing all NPC ids (both normal and Puro-Puro) for all implings.
+         */
         fun getIds(): IntArray {
             val list = ArrayList<Int>()
             for (imp in values()) {
@@ -33,6 +42,12 @@ enum class Implings(val npcId: Int, val puroId: Int) {
     }
 }
 
+/**
+ * Represents different impling spawners and the weighted chance for each impling to spawn.
+ *
+ * @property npcId the NPC id of the spawner
+ * @property table the weighted table of implings that this spawner can generate
+ */
 enum class ImplingSpawner(val npcId: Int, val table: WeightedTable<Implings>) {
     LOW_TIER(
         npcId = NPCs.VAMPIRE_1024,
@@ -100,18 +115,34 @@ enum class ImplingSpawner(val npcId: Int, val table: WeightedTable<Implings>) {
             Pair(Implings.DRAGON, 10.0),
         ),
     ),
-    NULL(npcId = -1, WeightedTable()),
+    NULL(npcId = -1, WeightedTable());
     ;
 
     companion object {
         private val idMap = values().map { it.npcId to it }.toMap()
 
+        /**
+         * Returns the spawner associated with the given NPC id.
+         *
+         * @param id the NPC id
+         * @return the [ImplingSpawner], or null if not found
+         */
         fun forId(id: Int): ImplingSpawner? = idMap[id]
 
+        /**
+         * Returns an array of all spawner NPC IDs.
+         */
         fun getIds(): IntArray = idMap.keys.toIntArray()
     }
+
 }
 
+/**
+ * Defines weighted spawn types for impling spawners.
+ *
+ * @property table the weighted table of [ImplingSpawner]s for this spawn type
+ * @property spawnRolls the number of spawn rolls per location
+ */
 enum class ImplingSpawnTypes(val table: WeightedTable<ImplingSpawner>, val spawnRolls: Int) {
     DEFAULT_ONLY(
         WeightedTable.create(
@@ -119,7 +150,8 @@ enum class ImplingSpawnTypes(val table: WeightedTable<ImplingSpawner>, val spawn
             Pair(ImplingSpawner.MID_TIER, 7.0),
             Pair(ImplingSpawner.HIGH_TIER, 4.0),
             Pair(ImplingSpawner.NULL, 75.0)
-        ), 3,
+        ),
+        3,
     ),
     LOW_TIER_ONLY(WeightedTable.create(Pair(ImplingSpawner.LOW_TIER, 100.0)), 1),
     MID_TIER_ONLY(WeightedTable.create(Pair(ImplingSpawner.MID_TIER, 100.0)), 1),
@@ -127,6 +159,12 @@ enum class ImplingSpawnTypes(val table: WeightedTable<ImplingSpawner>, val spawn
     PURO_HIGH_TIER_ONLY(WeightedTable.create(Pair(ImplingSpawner.PURO_HIGH_TIER, 100.0)), 1),
 }
 
+/**
+ * Represents specific spawn locations for implings.
+ *
+ * @property type the spawn type controlling which spawners appear here
+ * @property locations the exact [Location]s where implings can spawn
+ */
 enum class ImplingSpawnLocations(val type: ImplingSpawnTypes, vararg val locations: Location) {
     DEFAULT_SPAWN(
         ImplingSpawnTypes.DEFAULT_ONLY,
@@ -176,6 +214,9 @@ enum class ImplingSpawnLocations(val type: ImplingSpawnTypes, vararg val locatio
     ),
 }
 
+/**
+ * Supplies clipping flags for impling spawns, ignoring solid tiles and objects.
+ */
 object ImplingClipper : ClipMaskSupplier {
     override fun getClippingFlag(z: Int, x: Int, y: Int): Int {
         var flag = RegionManager.getClippingFlag(z, x, y)

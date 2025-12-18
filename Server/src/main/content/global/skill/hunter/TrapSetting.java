@@ -21,7 +21,7 @@ import shared.consts.Sounds;
 import static core.api.ContentAPIKt.playAudio;
 
 /**
- * The type Trap setting.
+ * The trap setting.
  */
 public class TrapSetting {
     private final int[] nodeIds;

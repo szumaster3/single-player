@@ -10,20 +10,22 @@ import core.game.node.scenery.Scenery
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
+import shared.consts.Animations
 
 class DeadfallSetting :
     TrapSetting(
-        intArrayOf(28935, 19205),
-        arrayOf(Item(946)),
-        intArrayOf(28937, 19206),
-        intArrayOf(10138, 6006, 12574, 341, 2132),
-        "set-trap",
-        23,
-        -1,
-        Animation(5208),
-        Animation(9726),
-        true,
-    ) {
+        /* nodeIds = */             intArrayOf(28935, 19205),
+        /* items = */               arrayOf(Item(946)),
+        /* objectIds = */           intArrayOf(28937, 19206),
+        /* baitIds = */             intArrayOf(10138, 6006, 12574, 341, 2132),
+        /* option = */              "set-trap",
+        /* level = */               23,
+        /* failId = */              -1,
+        /* setupAnimation = */      Animation(Animations.SET_UP_HUNTER_TRAP_5208),
+        /* dismantleAnimation = */  Animation(9726),
+        /* objectTrap = */          true
+    )
+{
     override fun hasItems(player: Player): Boolean {
         if (!super.hasItems(player)) {
             sendMessage(player, "You need a knife in order to set a deadfall trap.")

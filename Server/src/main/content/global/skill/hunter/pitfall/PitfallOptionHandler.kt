@@ -15,11 +15,7 @@ class PitfallOptionHandler : OptionHandler() {
     val graahkIds = 5105
     val levelRequirements = 41
 
-    override fun handle(
-        player: Player?,
-        node: Node?,
-        option: String?,
-    ): Boolean {
+    override fun handle(player: Player?, node: Node?, option: String?): Boolean {
         node ?: return true
         player ?: return true
         when (option) {

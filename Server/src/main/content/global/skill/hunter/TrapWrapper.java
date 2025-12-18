@@ -13,46 +13,76 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Trap wrapper.
+ * Represents a wrapper around a Hunter trap.
  */
 public final class TrapWrapper {
+
+    /** List of items currently in the trap. */
     private final List<Item> items = new ArrayList<>(10);
+
+    /** The player who owns this trap. */
     private final Player player;
+
+    /** The trap type (BIRD_SNARE, BOX_TRAP, etc.). */
     private final Traps type;
+
+    /** The net trap type if applicable. */
     private NetTrapSetting.NetTrap netType;
+
+    /** The original scenery ID when the trap was placed. */
     private final int originalId;
+
+    /** The main scenery object representing the trap. */
     private Scenery scenery;
+
+    /** A secondary scenery object if used (e.g., nets). */
     private Scenery secondary;
+
+    /** Associated trap hook for NPC interactions. */
     private TrapHook hook;
+
+    /** The trap node representing the reward when caught. */
     private TrapNode reward;
+
+    /** Whether the trap has been smoked. */
     private boolean smoked;
+
+    /** Whether the trap has been baited. */
     private boolean baited;
+
+    /** Whether the trap has failed. */
     private boolean failed;
+
+    /** Ticks until the trap becomes busy. */
     private int busyTicks;
+
+    /** The game tick when the trap expires. */
     private int ticks;
+
+    /** The HunterManager instance for the owning player. */
     private final HunterManager instance;
 
     /**
-     * Instantiates a new Trap wrapper.
+     * Creates a new TrapWrapper for a given player, trap type, and scenery.
      *
-     * @param player  the player
-     * @param type    the type
-     * @param scenery the scenery
+     * @param player  the owner of the trap
+     * @param type    the trap type
+     * @param scenery the scenery object representing the trap
      */
     public TrapWrapper(final Player player, Traps type, Scenery scenery) {
         this.player = player;
         this.type = type;
         this.scenery = scenery;
         this.originalId = scenery.getId();
-        this.ticks = GameWorld.getTicks() + (100);
+        this.ticks = GameWorld.getTicks() + 100;
         this.instance = HunterManager.getInstance(player);
         this.scenery.getAttributes().setAttribute("trap-uid", instance.getUid());
     }
 
     /**
-     * Cycle boolean.
+     * Checks if the trap cycle has expired and handles clearing.
      *
-     * @return the boolean
+     * @return true if the trap was cleared, false otherwise
      */
     public boolean cycle() {
         if (isTimeUp() && type.settings.clear(this, 0)) {
@@ -65,9 +95,9 @@ public final class TrapWrapper {
     }
 
     /**
-     * Sets object.
+     * Replaces the trap's scenery object with a new object id.
      *
-     * @param id the id
+     * @param id the new object id
      */
     public void setObject(final int id) {
         Scenery newScenery = scenery.transform(id);
@@ -77,7 +107,7 @@ public final class TrapWrapper {
     }
 
     /**
-     * Smoke.
+     * Smokes the trap to remove the player's scent.
      */
     public void smoke() {
         if (smoked) {
@@ -95,9 +125,9 @@ public final class TrapWrapper {
     }
 
     /**
-     * Bait.
+     * Baits the trap with the specified item.
      *
-     * @param bait the bait
+     * @param bait the item used as bait
      */
     public void bait(Item bait) {
         if (baited) {
@@ -114,9 +144,9 @@ public final class TrapWrapper {
     }
 
     /**
-     * Gets chance rate.
+     * Calculates the current chance modifier for catching.
      *
-     * @return the chance rate
+     * @return the chance rate modifier
      */
     public double getChanceRate() {
         double chance = 0.0;
@@ -131,9 +161,9 @@ public final class TrapWrapper {
     }
 
     /**
-     * Add item.
+     * Adds multiple items to the trap's reward list.
      *
-     * @param items the items
+     * @param items the items to add
      */
     public void addItem(Item... items) {
         for (Item item : items) {
@@ -142,252 +172,171 @@ public final class TrapWrapper {
     }
 
     /**
-     * Add item.
+     * Adds a single item to the trap's reward list.
      *
-     * @param item the item
+     * @param item the item to add
      */
     public void addItem(Item item) {
         items.add(item);
     }
 
-    private boolean isTimeUp() {
-        return ticks < GameWorld.getTicks();
-    }
-
     /**
-     * Gets type.
-     *
-     * @return the type
+     * @return the trap type
      */
     public Traps getType() {
         return type;
     }
 
     /**
-     * Gets object.
-     *
-     * @return the object
+     * @return the primary scenery object
      */
     public Scenery getObject() {
         return scenery;
     }
 
     /**
-     * Gets original id.
-     *
-     * @return the original id
+     * @return the original object ID when the trap was placed
      */
     public int getOriginalId() {
         return originalId;
     }
 
     /**
-     * Gets player.
-     *
-     * @return the player
+     * @return the player who owns this trap
      */
     public Player getPlayer() {
         return player;
     }
 
     /**
-     * Gets ticks.
-     *
-     * @return the ticks
+     * @return the game tick when the trap expires
      */
     public int getTicks() {
         return ticks;
     }
 
     /**
-     * Sets ticks.
-     *
-     * @param ticks the ticks
+     * Sets the expiration tick for the trap
      */
     public void setTicks(int ticks) {
         this.ticks = ticks;
     }
 
     /**
-     * Is smoked boolean.
-     *
-     * @return the boolean
+     * @return whether the trap has been smoked
      */
     public boolean isSmoked() {
         return smoked;
     }
 
-    /**
-     * Sets smoked.
-     *
-     * @param smoked the smoked
-     */
     public void setSmoked(boolean smoked) {
         this.smoked = smoked;
     }
 
     /**
-     * Gets hook.
-     *
-     * @return the hook
+     * @return the associated trap hook
      */
     public TrapHook getHook() {
         return hook;
     }
 
-    /**
-     * Sets hook.
-     *
-     * @param hook the hook
-     */
     public void setHook(TrapHook hook) {
         this.hook = hook;
     }
 
     /**
-     * Is baited boolean.
-     *
-     * @return the boolean
+     * @return whether the trap has been baited
      */
     public boolean isBaited() {
         return baited;
     }
 
-    /**
-     * Sets baited.
-     *
-     * @param baited the baited
-     */
     public void setBaited(boolean baited) {
         this.baited = baited;
     }
 
     /**
-     * Is caught boolean.
-     *
-     * @return the boolean
+     * @return whether the trap has caught an NPC
      */
     public boolean isCaught() {
         return getReward() != null;
     }
 
     /**
-     * Gets reward.
-     *
-     * @return the reward
+     * @return the trap node representing the reward
      */
     public TrapNode getReward() {
         return reward;
     }
 
-    /**
-     * Sets reward.
-     *
-     * @param reward the reward
-     */
     public void setReward(TrapNode reward) {
         this.reward = reward;
         this.addItem(reward.rewards);
     }
 
     /**
-     * Is busy boolean.
-     *
-     * @return the boolean
+     * @return whether the trap is busy
      */
     public boolean isBusy() {
         return getBusyTicks() > GameWorld.getTicks();
     }
 
     /**
-     * Gets busy ticks.
-     *
-     * @return the busy ticks
+     * @return the busy ticks counter
      */
     public int getBusyTicks() {
         return busyTicks;
     }
 
-    /**
-     * Sets busy ticks.
-     *
-     * @param busyTicks the busy ticks
-     */
     public void setBusyTicks(int busyTicks) {
         this.busyTicks = GameWorld.getTicks() + busyTicks;
     }
 
     /**
-     * Gets items.
-     *
-     * @return the items
+     * @return the list of items in the trap
      */
     public List<Item> getItems() {
         return items;
     }
 
     /**
-     * Gets secondary.
-     *
-     * @return the secondary
+     * @return the secondary scenery object, if any
      */
     public Scenery getSecondary() {
         return secondary;
     }
 
-    /**
-     * Sets secondary.
-     *
-     * @param secondary the secondary
-     */
     public void setSecondary(Scenery secondary) {
         this.secondary = secondary;
         this.secondary.getAttributes().setAttribute("trap-uid", player.getName().hashCode());
     }
 
-    /**
-     * Gets net type.
-     *
-     * @return the net type
-     */
+    /** @return the net trap type, if applicable */
     public NetTrapSetting.NetTrap getNetType() {
         return netType;
     }
 
-    /**
-     * Sets net type.
-     *
-     * @param netType the net type
-     */
     public void setNetType(NetTrapSetting.NetTrap netType) {
         this.netType = netType;
     }
 
-    /**
-     * Sets object.
-     *
-     * @param scenery the scenery
-     */
     public void setObject(Scenery scenery) {
         this.scenery = scenery;
     }
 
-    /**
-     * Is failed boolean.
-     *
-     * @return the boolean
-     */
+    /** @return whether the trap has failed */
     public boolean isFailed() {
         return failed;
     }
 
-    /**
-     * Sets failed.
-     *
-     * @param failed the failed
-     */
     public void setFailed(boolean failed) {
         this.failed = failed;
     }
 
+    /**
+     * @return true if the trap's time has expired
+     */
+    private boolean isTimeUp() {
+        return ticks < GameWorld.getTicks();
+    }
 }

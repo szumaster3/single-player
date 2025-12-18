@@ -8,6 +8,7 @@ import core.tools.Log
 import core.tools.secondsToTicks
 
 class ImplingSpawnerBehavior : NPCBehavior(*ImplingSpawner.getIds()) {
+
     override fun onCreation(self: NPC) {
         val isPuro = isPuroSpawner(self)
         val delay = if (isPuro) 120 else 180

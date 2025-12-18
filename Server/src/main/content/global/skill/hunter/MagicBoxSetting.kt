@@ -5,14 +5,14 @@ import core.game.node.entity.player.Player
 import core.game.world.update.flag.context.Animation
 
 class MagicBoxSetting : TrapSetting(
-    10025,
-    intArrayOf(19223),
-    intArrayOf(1470, 1472, 1476, 1474),
-    "activate",
-    19224,
-    Animation.create(5208),
-    Animation.create(9726),
-    27
+    /* nodeId = */              10025,
+    /* objectIds = */           intArrayOf(19223),
+    /* baitIds = */             intArrayOf(1470, 1472, 1476, 1474),
+    /* option = */              "activate",
+    /* failId = */              19224,
+    /* setupAnimation = */      Animation.create(5208),
+    /* dismantleAnimation = */  Animation.create(9726),
+    /* level = */               27
 ) {
     override fun handleCatch(counter: Int, wrapper: TrapWrapper, node: TrapNode, npc: NPC, success: Boolean) {
         when (counter) {

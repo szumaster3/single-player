@@ -39,9 +39,11 @@ public class BNetNode {
 
     /**
      * The experience rewards:
+     * <pre>
      * [0] = regular catch
      * [1] = bare-hand Hunter XP
      * [2] = bare-hand Agility XP
+     * </pre>
      */
     private final double[] experience;
 

@@ -12,16 +12,16 @@ import core.game.world.update.flag.context.Animation
 import shared.consts.Scenery
 
 class NetTrapSetting : TrapSetting(
-    intArrayOf(19652, 19663, 19671, 19679, 28564),
-    arrayOf(Item(303), Item(954)),
-    NetTrap.ids,
-    intArrayOf(10142, 10143, 10144, 10145),
-    "set-trap",
-    29,
-    -1,
-    Animation(5215),
-    Animation.create(5207),
-    true,
+    /* nodeIds = */             intArrayOf(19652, 19663, 19671, 19679, 28564),
+    /* items = */               arrayOf(Item(303), Item(954)),
+    /* objectIds = */           NetTrap.ids,
+    /* baitIds = */             intArrayOf(10142, 10143, 10144, 10145),
+    /* option = */              "set-trap",
+    /* level = */               29,
+    /* failId = */              -1,
+    /* setupAnimation = */      Animation(5215),
+    /* dismantleAnimation = */  Animation.create(5207),
+    /* objectTrap = */          true,
 ) {
     override fun hasItems(player: Player): Boolean {
         if (!super.hasItems(player)) {
@@ -121,15 +121,7 @@ class NetTrapSetting : TrapSetting(
     }
 
     enum class NetTrap(val original: Int, @JvmField val bent: Int, val failing: Int, @JvmField val failed: Int, val catching: Int, @JvmField val caught: Int, @JvmField val net: Int) {
-        GREEN(
-            original = Scenery.YOUNG_TREE_19679,
-            bent = Scenery.YOUNG_TREE_19678,
-            failing = Scenery.NET_TRAP_19676,
-            failed = Scenery.NET_TRAP_19677,
-            catching = Scenery.NET_TRAP_19674,
-            caught = Scenery.NET_TRAP_19675,
-            net = Scenery.NET_TRAP_19651,
-        ),
+        GREEN(Scenery.YOUNG_TREE_19679, Scenery.YOUNG_TREE_19678, Scenery.NET_TRAP_19676, Scenery.NET_TRAP_19677, Scenery.NET_TRAP_19674, Scenery.NET_TRAP_19675, Scenery.NET_TRAP_19651),
         SQUIRREL(Scenery.YOUNG_TREE_28564, Scenery.YOUNG_TREE_28563, Scenery.NET_TRAP_28752, Scenery.NET_TRAP_28753, Scenery.NET_TRAP_28750, Scenery.NET_TRAP_28751, Scenery.NET_TRAP_28566),
         ORANGE(Scenery.YOUNG_TREE_19652, Scenery.YOUNG_TREE_19650, Scenery.NET_TRAP_19657, Scenery.NET_TRAP_19656, Scenery.NET_TRAP_19655, Scenery.NET_TRAP_19654, Scenery.NET_TRAP_19665),
         RED(Scenery.YOUNG_TREE_19663, Scenery.YOUNG_TREE_19662, Scenery.NET_TRAP_19660, Scenery.NET_TRAP_19661, Scenery.NET_TRAP_19658, Scenery.NET_TRAP_19659, Scenery.NET_TRAP_19673),

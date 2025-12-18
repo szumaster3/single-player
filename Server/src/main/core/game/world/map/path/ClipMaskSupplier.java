@@ -7,12 +7,12 @@ package core.game.world.map.path;
 public interface ClipMaskSupplier {
 
     /**
-     * Gets clipping flag.
+     * Gets the clipping flag at a given coordinate.
      *
-     * @param z the z
-     * @param x the x
-     * @param y the y
-     * @return the clipping flag
+     * @param z the plane
+     * @param x the X coordinate
+     * @param y the Y coordinate
+     * @return the clipping flag for the tile
      */
     int getClippingFlag(int z, int x, int y);
 }

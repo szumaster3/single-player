@@ -19,16 +19,22 @@ import java.util.List;
 import static core.api.ContentAPIKt.setAttribute;
 
 /**
- * The type Hunter manager.
+ * Manages Hunter traps and related functionality.
  */
 public final class HunterManager implements LoginListener, LogoutListener, EventHook<TickEvent> {
 
+    /**
+     * List of traps currently owned by the player.
+     */
     private final List<TrapWrapper> traps = new ArrayList<>(20);
 
+    /**
+     * The player associated with this HunterManager.
+     */
     private final Player player;
 
     /**
-     * Instantiates a new Hunter manager.
+     * Creates a new HunterManager for a player.
      *
      * @param player the player
      */
@@ -37,12 +43,17 @@ public final class HunterManager implements LoginListener, LogoutListener, Event
     }
 
     /**
-     * Instantiates a new Hunter manager.
+     * Default constructor. The player is null.
      */
     public HunterManager() {
         this.player = null;
     }
 
+    /**
+     * Initializes a HunterManager on player login.
+     *
+     * @param player the logging-in player
+     */
     @Override
     public void login(@NotNull Player player) {
         HunterManager instance = new HunterManager(player);
@@ -50,29 +61,39 @@ public final class HunterManager implements LoginListener, LogoutListener, Event
         setAttribute(player, "hunter-manager", instance);
     }
 
+    /**
+     * Cleans up traps on player logout.
+     *
+     * @param player the logging-out player
+     */
     @Override
     public void logout(@NotNull Player player) {
         HunterManager instance = getInstance(player);
         if (instance == null) return;
+
         Iterator<TrapWrapper> iterator = instance.traps.iterator();
-        TrapWrapper wrapper = null;
         while (iterator.hasNext()) {
-            wrapper = iterator.next();
+            TrapWrapper wrapper = iterator.next();
             if (wrapper.getType().settings.clear(wrapper, 0)) {
                 iterator.remove();
             }
         }
     }
 
+    /**
+     * Processes trap cycles on each game tick.
+     *
+     * @param entity the entity for the tick
+     * @param event  the tick event
+     */
     @Override
     public void process(@NotNull Entity entity, @NotNull TickEvent event) {
-        if (traps.size() == 0) {
+        if (traps.isEmpty()) {
             return;
         }
         Iterator<TrapWrapper> iterator = traps.iterator();
-        TrapWrapper wrapper = null;
         while (iterator.hasNext()) {
-            wrapper = iterator.next();
+            TrapWrapper wrapper = iterator.next();
             if (wrapper.cycle()) {
                 iterator.remove();
             }
@@ -80,12 +101,12 @@ public final class HunterManager implements LoginListener, LogoutListener, Event
     }
 
     /**
-     * Register boolean.
+     * Registers a new trap for the player.
      *
-     * @param trap    the trap
-     * @param node    the node
-     * @param scenery the scenery
-     * @return the boolean
+     * @param trap    the trap type
+     * @param node    the node the trap is placed on
+     * @param scenery the scenery object representing the trap
+     * @return true if registration was successful
      */
     public boolean register(Traps trap, Node node, final Scenery scenery) {
         final TrapWrapper wrapper = new TrapWrapper(player, trap, scenery);
@@ -95,30 +116,30 @@ public final class HunterManager implements LoginListener, LogoutListener, Event
     }
 
     /**
-     * Deregister boolean.
+     * Deregisters a trap.
      *
-     * @param wrapper the wrapper
-     * @return the boolean
+     * @param wrapper the trap wrapper to remove
+     * @return true if successfully removed
      */
     public boolean deregister(final TrapWrapper wrapper) {
         return traps.remove(wrapper);
     }
 
     /**
-     * Is owner boolean.
+     * Checks if the player owns a specific trap.
      *
-     * @param scenery the scenery
-     * @return the boolean
+     * @param scenery the scenery object
+     * @return true if the player is the owner
      */
     public boolean isOwner(Scenery scenery) {
         return getUid(scenery) == getUid();
     }
 
     /**
-     * Gets wrapper.
+     * Gets the trap wrapper associated with a scenery object.
      *
-     * @param scenery the scenery
-     * @return the wrapper
+     * @param scenery the scenery object
+     * @return the trap wrapper, or null if not found
      */
     public TrapWrapper getWrapper(Scenery scenery) {
         for (TrapWrapper wrapper : traps) {
@@ -130,10 +151,10 @@ public final class HunterManager implements LoginListener, LogoutListener, Event
     }
 
     /**
-     * Exceeds trap limit boolean.
+     * Checks if the player exceeds the trap limit for a given trap type.
      *
-     * @param trap the trap
-     * @return the boolean
+     * @param trap the trap type
+     * @return true if the trap limit is exceeded
      */
     public boolean exceedsTrapLimit(Traps trap) {
         if (trap.settings.exceedsLimit(player)) {
@@ -143,18 +164,18 @@ public final class HunterManager implements LoginListener, LogoutListener, Event
     }
 
     /**
-     * Gets trap amount.
+     * Gets the current number of traps the player has placed.
      *
-     * @return the trap amount
+     * @return the number of traps
      */
     public int getTrapAmount() {
         return traps.size();
     }
 
     /**
-     * Gets maximum traps.
+     * Calculates the maximum number of traps a player can place based on Hunter level.
      *
-     * @return the maximum traps
+     * @return the maximum trap count
      */
     public int getMaximumTraps() {
         final int level = getStaticLevel();
@@ -162,17 +183,17 @@ public final class HunterManager implements LoginListener, LogoutListener, Event
     }
 
     /**
-     * Gets uid.
+     * Gets the id of a scenery object.
      *
-     * @param scenery the scenery
-     * @return the uid
+     * @param scenery the scenery object
+     * @return the id
      */
     public int getUid(Scenery scenery) {
         return scenery.getAttributes().getAttribute("trap-uid", 0);
     }
 
     /**
-     * Gets uid.
+     * Gets the uid of the player.
      *
      * @return the uid
      */
@@ -181,37 +202,33 @@ public final class HunterManager implements LoginListener, LogoutListener, Event
     }
 
     /**
-     * Gets static level.
+     * Gets the player hunter level.
      *
-     * @return the static level
+     * @return the Hunter level
      */
     public int getStaticLevel() {
         return player.getSkills().getStaticLevel(Skills.HUNTER);
     }
 
     /**
-     * Gets player.
-     *
-     * @return the player
+     * @return the player associated with this HunterManager
      */
     public Player getPlayer() {
         return player;
     }
 
     /**
-     * Gets traps.
-     *
-     * @return the traps
+     * @return the list of traps owned by the player
      */
     public List<TrapWrapper> getTraps() {
         return traps;
     }
 
     /**
-     * Gets instance.
+     * Gets the HunterManager instance for a player.
      *
      * @param player the player
-     * @return the instance
+     * @return the HunterManager instance
      */
     public static HunterManager getInstance(Player player) {
         return player.getAttribute("hunter-manager");

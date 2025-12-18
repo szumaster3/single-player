@@ -9,9 +9,8 @@ import shared.consts.Components
 import kotlin.math.ceil
 import kotlin.math.min
 
-class ImplingController :
-    TickListener,
-    Commands {
+class ImplingController : TickListener, Commands {
+
     override fun tick() {
         if (--nextCycle > getTicksBeforeNextCycleToDespawn()) {
             return
@@ -52,11 +51,27 @@ class ImplingController :
     }
 
     companion object {
+
+        /**
+         * Number of implings to clear per server tick.
+         */
         val implingsClearedPerTick = 5
 
+        /**
+         * Ticks until the next despawn cycle.
+         */
         var nextCycle = 0
+
+        /**
+         * List of currently active impling NPCs in the world.
+         */
         var activeImplings = ArrayList<NPC>()
 
+        /**
+         * Clears a specific number of active implings from the world.
+         *
+         * @param amount the number of implings to clear
+         */
         fun clearSomeImplings(amount: Int) {
             for (i in 0 until amount) {
                 val impling = activeImplings.removeAt(0)
@@ -64,6 +79,9 @@ class ImplingController :
             }
         }
 
+        /**
+         * Generates spawner NPCs for all impling spawn locations.
+         */
         fun generateSpawners() {
             val typeLocations = ImplingSpawnLocations.values()
             for (set in typeLocations) {
@@ -73,10 +91,13 @@ class ImplingController :
             }
         }
 
-        fun generateSpawnersAt(
-            location: Location,
-            type: ImplingSpawnTypes,
-        ) {
+        /**
+         * Generates impling spawners at a specific location.
+         *
+         * @param location the location to spawn implings
+         * @param type the type of impling to spawn
+         */
+        fun generateSpawnersAt(location: Location, type: ImplingSpawnTypes) {
             for (i in 0 until type.spawnRolls) {
                 val spawner = type.table.roll() ?: continue
                 if (spawner == ImplingSpawner.NULL) continue
@@ -86,13 +107,22 @@ class ImplingController :
             }
         }
 
+        /**
+         * Calculates how many ticks are remaining before the next despawn cycle.
+         *
+         * @return number of ticks until the next cycle
+         */
         fun getTicksBeforeNextCycleToDespawn(): Int =
             ceil(activeImplings.size / implingsClearedPerTick.toDouble()).toInt()
 
-        fun deregister(
-            impling: NPC,
-            graceful: Boolean = false,
-        ): Boolean {
+        /**
+         * Deregisters an impling from the active list and optionally despawns it.
+         *
+         * @param impling the NPC to deregister
+         * @param graceful if true, perform a special poof despawn effect; otherwise, remove normally
+         * @return always returns true after deregistration
+         */
+        fun deregister(impling: NPC, graceful: Boolean = false): Boolean {
             activeImplings.remove(impling)
             if (graceful) {
                 poofClear(impling)
@@ -102,4 +132,5 @@ class ImplingController :
             return true
         }
     }
+
 }
