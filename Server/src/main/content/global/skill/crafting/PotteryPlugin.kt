@@ -146,7 +146,6 @@ class PotteryPlugin : InteractionListener {
                             delayClock(player, Clocks.SKILLING, 5)
                             setCurrentScriptState(player, 0)
                             delayScript(player, 5)
-                            return@queueScript true
                         }
 
                         return@queueScript false

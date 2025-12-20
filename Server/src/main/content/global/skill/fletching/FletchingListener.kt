@@ -513,7 +513,6 @@ class FletchingListener : InteractionListener {
                             delayClock(player, Clocks.SKILLING, 2)
                             setCurrentScriptState(player, 0)
                             delayScript(player, 2)
-                            return@queueScript true
                         } else {
                             return@queueScript false
                         }

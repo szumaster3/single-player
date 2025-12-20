@@ -143,7 +143,6 @@ class StoneSplittingPlugin : InteractionListener {
                             delayClock(player, Clocks.SKILLING, 2)
                             setCurrentScriptState(player, 0)
                             delayScript(player, 2)
-                            true
                         } else {
                             false
                         }
