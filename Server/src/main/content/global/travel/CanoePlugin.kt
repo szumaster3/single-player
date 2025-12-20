@@ -174,18 +174,18 @@ class CanoePlugin : InteractionListener, InterfaceListener {
             if (!clockReady(player, Clocks.SKILLING)) return@on true
 
             player.animate(Animation.create(axe.animation))
-            val varbit = node.asScenery().definition.configFile
+            val varbit = station.varbit
             queueScript(player, chopDuration(getStatLevel(player, Skills.WOODCUTTING)), QueueStrength.WEAK) { stage ->
                 when (stage) {
                     0 -> {
                         playGlobalAudio(player.location, Sounds.TREE_FALLING_2734)
-                        setVarbit(player, varbit!!, Station.TREE_FALLING.varbit)
+                        setVarbit(player, varbit, Station.TREE_FALLING.varbit)
                         animateScenery(player, node.asScenery(), TREE_FALLING_ANIM.id)
                         return@queueScript delayScript(player, TREE_FALLING_ANIM.duration)
                     }
 
                     1 -> {
-                        setVarbit(player, varbit!!, Station.TREE_FALLEN.varbit)
+                        setVarbit(player, varbit, Station.TREE_FALLEN.varbit)
                         face(player, station.chopLocation.transform(station.facing))
                         return@queueScript stopExecuting(player)
                     }
