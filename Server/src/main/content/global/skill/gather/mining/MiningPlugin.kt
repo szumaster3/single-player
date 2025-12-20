@@ -151,53 +151,55 @@ class MiningPlugin : InteractionListener {
      * Handles mining a rock [node] by the [player].
      */
     private fun handleMining(player: Player, node: Node, state: Int): Boolean {
-        val resource = MiningNode.forId(node.id)
-        val tool = SkillingTool.getPickaxe(player)
+        val resource = MiningNode.forId(node.id) ?: return true
+        val tool = SkillingTool.getPickaxe(player) ?: return true
 
-        val isEssence = resource!!.id in intArrayOf(
-            Objects.RUNE_ESSENCE_2491,
-            /*
-             * Lunar essence rock.
-             */
-            Objects.ROCK_16684
-        )
+        val isEssence    = resource.id in intArrayOf(Objects.RUNE_ESSENCE_2491, Objects.ROCK_16684)
         val isGems       = resource.identifier == MiningNode.GEM_ROCK_0.identifier
         val isGranite    = resource.identifier == MiningNode.GRANITE.identifier
         val isSandstone  = resource.identifier == MiningNode.SANDSTONE.identifier
         val isMagicStone = resource.identifier == MiningNode.MAGIC_STONE_0.identifier
         val isObsidian   = resource.identifier == MiningNode.OBSIDIAN_0.identifier
 
-        if (!finishedMoving(player)) return true
+        if (!finishedMoving(player)) {
+            return restartScript(player)
+        }
 
         if (state == 0) {
             if (!checkRequirements(player, resource, node)) {
-                player.scripts.reset()
-                return true
+                return clearScripts(player)
             }
 
-            if (!isEssence) sendMessage(player,
-                if (isObsidian) "You swing your pick at the wall." else "You swing your pickaxe at the rock."
-            )
+            if (!isEssence) {
+                sendMessage(
+                    player,
+                    if (isObsidian) "You swing your pick at the wall."
+                    else "You swing your pickaxe at the rock."
+                )
+            }
 
-            anim(player, resource, tool!!)
-            return delayScript(player, getDelay(player, resource, tool))
+            anim(player, resource, tool)
+            return delayScript(player, getDelay(resource, tool))
         }
 
-        anim(player, resource, tool!!)
+        anim(player, resource, tool)
+
         if (!checkReward(player, resource, tool)) {
-            return delayScript(player, getDelay(player, resource, tool))
+            return delayScript(player, getDelay(resource, tool))
         }
 
-        var reward = calculateReward(player, resource, isEssence, isGems, resource.reward)
-        val rewardAmount = calculateRewardAmount(player, isEssence, reward)
-        player.dispatch(ResourceProducedEvent(reward, rewardAmount, node))
-        rewardXP(player, Skills.MINING, resource.experience * rewardAmount)
+        val reward = calculateReward(player, resource, isEssence, isGems, resource.reward)
+        val amount = calculateRewardAmount(player, isEssence, reward)
 
-        // Special rewards: bracelet of clay, Witchaven gold, etc.
-        handleSpecialRewards(player, resource, reward, rewardAmount, isEssence)
+        player.dispatch(ResourceProducedEvent(reward, amount, node))
+        rewardXP(player, Skills.MINING, resource.experience * amount)
 
-        // Send messages to player.
-        val rewardName = getItemName(if (reward == Items.PERFECT_GOLD_ORE_446) Items.GOLD_ORE_444 else reward).lowercase()
+        handleSpecialRewards(player, resource, reward, amount, isEssence)
+
+        val rewardName =
+            getItemName(if (reward == Items.PERFECT_GOLD_ORE_446) Items.GOLD_ORE_444 else reward)
+                .lowercase()
+
         when {
             isGems       -> sendMessage(player, "You get ${prependArticle(rewardName)}.")
             isGranite    -> sendMessage(player, "You manage to quarry some granite.")
@@ -207,15 +209,11 @@ class MiningPlugin : InteractionListener {
             !isEssence   -> sendMessage(player, "You manage to mine some $rewardName.")
         }
 
-        addItemOrDrop(player, reward, rewardAmount)
-
-        // Chance-based gem rewards.
+        addItemOrDrop(player, reward, amount)
         handleGemFinds(player, isEssence)
-
-        // Resource respawn logic.
         handleRespawn(player, node, resource, isEssence, isGems)
 
-        return true
+        return delayScript(player, getDelay(resource, tool))
     }
 
     /**
@@ -275,26 +273,22 @@ class MiningPlugin : InteractionListener {
     /**
      * Gets the mining delay.
      */
-    fun getDelay(player: Player, resource: MiningNode, pickaxe: SkillingTool): Int {
-        if (resource.id in intArrayOf(Objects.RUNE_ESSENCE_2491, Objects.ROCK_16684)) {
-            return 1
+    fun getDelay(resource: MiningNode, tool: SkillingTool) : Int {
+        if (resource == MiningNode.RUNE_ESSENCE_0 || resource == MiningNode.RUNE_ESSENCE_1) {
+            return when (tool) {
+                SkillingTool.BRONZE_PICKAXE -> 7
+                SkillingTool.IRON_PICKAXE -> 6
+                SkillingTool.STEEL_PICKAXE -> 5
+                SkillingTool.MITHRIL_PICKAXE -> 4
+                SkillingTool.ADAMANT_PICKAXE -> 3
+                SkillingTool.RUNE_PICKAXE -> 2
+                SkillingTool.INFERNO_ADZE2 -> if (RandomFunction.random(2) == 0) 1 else 2
+                else -> 4
+            }
         }
-
-        val playerLevel = player.getSkills().getLevel(Skills.MINING)
-        val oreLevel = resource.level
-
-        var delay = pickaxe.getMiningDelay()
-
-        val levelDifference = playerLevel - oreLevel
-        if (levelDifference > 0) {
-            delay -= levelDifference / 10
-        }
-
-        if (delay < 1) delay = 1
-
-        player.debug(colorize("Resource Level: [%DG$oreLevel</col>], Mining Level: [%B$playerLevel</col>], Delay: [%R$delay</col>]"))
-        return delay
+        return 4
     }
+
 
     /**
      * Plays the mining animation for [player] on [resource] with [tool].
