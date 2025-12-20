@@ -141,6 +141,7 @@ object InterfaceContainer {
      * @param key The container key (default incremented).
      * @return The container key used for this interface.
      */
+    @JvmStatic
     fun generateItems(player: Player, items: List<Item?>, options: List<String> = emptyList(), interfaceIndex: Int, childIndex: Int, x: Int = 7, y: Int = 3, key: Int = increment()): Int = generate(player, items, options, interfaceIndex, childIndex, x, y, key)
 
     /**
@@ -154,6 +155,7 @@ object InterfaceContainer {
      * @param key Container key (default 0 → auto-incremented).
      * @return The container key used for this interface.
      */
+    @JvmStatic
     fun Player.generateItems(interfaceId: Int, childId: Int, options: List<String> = emptyList(), x: Int = 7, y: Int = 3, key: Int = 0): Int {
         val actualKey = if (key == 0) increment() else key
         return generateItems(this, inventory.toList(), options, interfaceId, childId, x, y, actualKey)
@@ -171,6 +173,7 @@ object InterfaceContainer {
      * @param key Container key (default 0 → auto-incremented).
      * @return The container key used for this interface.
      */
+    @JvmStatic
     fun Player.generateItems(items: List<Item?>, interfaceId: Int, childId: Int, options: List<String> = emptyList(), x: Int = 7, y: Int = 3, key: Int = 0): Int {
         val actualKey = if (key == 0) increment() else key
         return generateItems(this, items, options, interfaceId, childId, x, y, actualKey)

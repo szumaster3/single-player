@@ -310,52 +310,52 @@ public class Region {
     /**
      * Loads the flags for a region.
      *
-     * @param region The region.
+     * @param r The region.
      * @param build  if all objects in this region should be stored (rather than just the ones with options).
      */
-    public static void load(Region region, boolean build) {
+    public static void load(Region r, boolean build) {
         try {
-            if (region.isLoaded() && region.isBuild() == build) {
+            if (r.isLoaded() && r.isBuild() == build) {
                 return;
             }
-            region.build = build;
-            boolean dynamic = region instanceof DynamicRegion;
-            int regionId = dynamic ? ((DynamicRegion) region).getRegionId() : region.getId();
+            r.build = build;
+            boolean dynamic = r instanceof DynamicRegion;
+            int regionId = dynamic ? ((DynamicRegion) r).getRegionId() : r.getId();
             int regionX = regionId >> 8 & 0xFF;
             int regionY = regionId & 0xFF;
-            int mapscapeId = Cache.getIndexes()[5].getArchiveId("m" + regionX + "_" + regionY);
+            int mapscapeId = Cache.getIndexes()[5].getArchiveId("m" + regionX + "_"+ regionY);
 
             if (mapscapeId < 0 && !dynamic) {
-                region.setLoaded(true);
+                r.setLoaded(true);
                 return;
             }
 
             byte[][][] mapscapeData = new byte[4][SIZE][SIZE];
-            for (RegionPlane plane : region.planes) {
+            for (RegionPlane plane : r.planes) {
                 plane.getFlags().setLandscape(new boolean[SIZE][SIZE]);
                 //plane.getFlags().setClippingFlags(new int[SIZE][SIZE]);
                 //plane.getProjectileFlags().setClippingFlags(new int[SIZE][SIZE]);
             }
             if (mapscapeId > -1) {
-                ByteBuffer mapscape = ByteBuffer.wrap(Cache.getIndexes()[5].getCacheFile().getContainerUnpackedData(mapscapeId,null));
-                MapscapeParser.parse(region, mapscapeData, mapscape);
+                ByteBuffer mapscape = ByteBuffer.wrap(Cache.getIndexes()[5].getCacheFile().getContainerUnpackedData(mapscapeId));
+                MapscapeParser.parse(r, mapscapeData, mapscape);
             }
-            region.hasFlags = dynamic;
-            region.setLoaded(true);
+            r.hasFlags = dynamic;
+            r.setLoaded(true);
             int landscapeId = Cache.getIndexes()[5].getArchiveId("l" + regionX + "_" + regionY);
             if (landscapeId > -1) {
                 byte[] landscape = Cache.getIndexes()[5].getFileData(landscapeId, 0, XteaParser.Companion.getRegionXTEA(regionId));
                 if (landscape == null || landscape.length < 4) {
                     return;
                 }
-                region.hasFlags = true;
+                r.hasFlags = true;
                 try {
-                    LandscapeParser.parse(region, mapscapeData, ByteBuffer.wrap(landscape), build);
+                    LandscapeParser.parse(r, mapscapeData, ByteBuffer.wrap(landscape), build);
                 } catch (Throwable t) {
                     new Throwable("Failed parsing region " + regionId + "!", t).printStackTrace();
                 }
             }
-            MapscapeParser.clipMapscape(region, mapscapeData);
+            MapscapeParser.clipMapscape(r, mapscapeData);
         } catch (Throwable e) {
             e.printStackTrace();
         }

@@ -91,7 +91,7 @@ object TestUtils {
                 this::class.java
                     .getResource("cache")
                     .path
-                    .toString(),true
+                    .toString()
             )
             ConfigParser().prePlugin()
             ConfigParser().postPlugin()

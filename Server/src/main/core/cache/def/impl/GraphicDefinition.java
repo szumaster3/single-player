@@ -64,7 +64,7 @@ public class GraphicDefinition {
 	 */
 	public static final void main(String... s) {
 		try {
-			Cache.init(ServerConstants.CACHE_PATH, false);
+			Cache.init(ServerConstants.CACHE_PATH);
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
