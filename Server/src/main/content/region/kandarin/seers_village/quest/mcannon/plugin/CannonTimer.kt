@@ -7,7 +7,7 @@ import core.game.system.timer.RSTimer
 import core.tools.colorize
 
 class CannonTimer : RSTimer(1, "dmc:timer") {
-    lateinit var dmcHandler: content.region.kandarin.seers_village.quest.mcannon.plugin.DMCHandler
+    lateinit var dmcHandler: DMCHandler
     var ticksUntilDecay = 2500
     var isFiring = false
 
@@ -15,7 +15,7 @@ class CannonTimer : RSTimer(1, "dmc:timer") {
         if (entity !is Player) {
             return false
         }
-        if (!dmcHandler.cannon.isActive) {
+        if (!dmcHandler.cannon!!.isActive) {
             return false
         }
         if (isFiring) {
@@ -26,12 +26,12 @@ class CannonTimer : RSTimer(1, "dmc:timer") {
         } else if (ticksUntilDecay == 0) {
             dmcHandler.explode(true)
         }
-        return ticksUntilDecay > 0 && dmcHandler.cannon.isActive
+        return ticksUntilDecay > 0 && dmcHandler.cannon!!.isActive
     }
 
     override fun getTimer(vararg args: Any): RSTimer {
         val t = retrieveInstance() as CannonTimer
-        t.dmcHandler = args[0] as content.region.kandarin.seers_village.quest.mcannon.plugin.DMCHandler
+        t.dmcHandler = args[0] as DMCHandler
         return t
     }
 }
