@@ -79,7 +79,8 @@ class SirSpishyusRoomListeners : InteractionListener {
                 getVarbit(player, grainToVarbit) == 1
             ) {
                 sendMessage(player, "Congratulations! You have solved this room's puzzle!")
-                setAttribute(player, RecruitmentDrive.stageFail, true)
+                setAttribute(player, RecruitmentDrive.stageFail, false)
+                setAttribute(player, RecruitmentDrive.stagePass, true)
             }
         }
 
