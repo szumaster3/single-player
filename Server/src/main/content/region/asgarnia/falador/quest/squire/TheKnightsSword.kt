@@ -1,8 +1,6 @@
 package content.region.asgarnia.falador.quest.squire
 
-import core.api.displayQuestItem
-import core.api.rewardXP
-import core.api.updateQuestTab
+import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
@@ -19,7 +17,7 @@ import shared.consts.Vars
 @Initializable
 class TheKnightsSword : Quest(Quests.THE_KNIGHTS_SWORD, 22, 21, 1, Vars.VARP_QUEST_KNIGHTS_SWORD_PROGRESS_122, 0, 1, 7) {
 
-    override fun newInstance(`object`: Any): Quest {
+    override fun newInstance(`object`: Any?): Quest {
         return this
     }
 
@@ -75,7 +73,7 @@ class TheKnightsSword : Quest(Quests.THE_KNIGHTS_SWORD, 22, 21, 1, Vars.VARP_QUE
                 line(player, "<str>information provided by Reldo. He wasn't very talkative", 7 + 7)
                 line(player, "<str>until I gave him a Redberry pie, which he gobbled up.", 8 + 7)
                 line(player, "<str>Thurgo needed a picture of the sword to replace.", 9 + 7)
-                if (!player.inventory.containsItem(PORTRAIT)) {
+                if (!inInventory(player, PORTRAIT)) {
                     line(player, BLUE + "The Squire told me about a " + RED + "portrait ", 10 + 7)
                     line(player, BLUE + "which has a " + RED + "picture of the sword " + BLUE + "in " + RED + "Sir Vyvin's room", 11 + 7)
                 } else {
@@ -92,7 +90,7 @@ class TheKnightsSword : Quest(Quests.THE_KNIGHTS_SWORD, 22, 21, 1, Vars.VARP_QUE
                 line(player, "<str>until I gave him a Redberry pie, which he gobbled up.", 8 + 7)
                 line(player, "<str>Thurgo needed a picture of the sword before he could", 9 + 7)
                 line(player, "<str>start work on a replacement. I took him a portrait of it.", 10 + 7)
-                if (player.inventory.contains(Items.BLURITE_SWORD_667, 1) || player.equipment.contains(Items.BLURITE_SWORD_667, 1) || player.bank.contains(Items.BLURITE_SWORD_667, 1)) {
+                if (inInventory(player, Items.BLURITE_SWORD_667, 1) || inEquipment(player, Items.BLURITE_SWORD_667, 1) || inBank(player, Items.BLURITE_SWORD_667, 1)) {
                     line(player, "<str>Thurgo has now smithed me a replica of Sir Vyvin's sword.", 11 + 7)
                     line(player, BLUE + "I should return it to the " + RED + "Squire " + BLUE + "for my " + RED + "reward", 13 + 7)
                 } else {
@@ -125,6 +123,6 @@ class TheKnightsSword : Quest(Quests.THE_KNIGHTS_SWORD, 22, 21, 1, Vars.VARP_QUE
     }
 
     companion object {
-        private val PORTRAIT = Item(Items.PORTRAIT_666)
+        private const val PORTRAIT = Items.PORTRAIT_666
     }
 }
