@@ -96,6 +96,10 @@ class PortalChamberPlugin : OptionHandler() {
                     return
                 }
 
+                if(location == Locations.ARDOUGNE && isQuestComplete(player, Quests.PLAGUE_CITY) && !getAttribute(player, GameAttributes.ARDOUGNE_TELEPORT, false)) {
+                    sendMessage(player, "You have not yet learned how to cast this spell.")
+                }
+
                 if (!player.inventory.containsItems(*location.runes)) {
                     sendMessage(player, "You do not have the required runes to build this portal.")
                     return
