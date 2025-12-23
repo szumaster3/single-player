@@ -29,6 +29,8 @@ import core.game.world.GameWorld.Pulser
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.game.world.update.flag.context.Animation
+import core.tools.RandomFunction
+import core.tools.secondsToTicks
 import shared.consts.Animations
 import shared.consts.Items
 import shared.consts.NPCs
@@ -116,6 +118,24 @@ class FremennikTrialsPlugin : InteractionListener {
                 addItem(player, LIT_BOMB)
                 sendMessage(player, "You light the string of the strange object. It starts to hiss slightly.")
             }
+
+            submitWorldPulse(
+                object : Pulse(
+                    RandomFunction.random(secondsToTicks(70), secondsToTicks(100))
+                ){
+                    override fun pulse(): Boolean {
+                        if(inInventory(player, LIT_BOMB))
+                        {
+                            removeItem(player, LIT_BOMB)
+                            val damage = maxOf((player.skills.lifepoints * 0.04).toInt(), 2)
+                            player.skills.lifepoints = (player.skills.lifepoints - damage).coerceAtLeast(0)
+                            sendMessage(player, "The strange object you lit earlier explodes in your inventory!")
+                            sendChat(player, "Ow!")
+                            return true
+                        }
+                        return false
+                    }
+                })
             return@onUseWith true
         }
 
