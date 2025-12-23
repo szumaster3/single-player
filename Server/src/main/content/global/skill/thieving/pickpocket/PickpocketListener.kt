@@ -51,7 +51,6 @@ class PickpocketListener : InteractionListener {
             if (blackjackState != null && blackjackState.isUnconscious(GameWorld.ticks)) {
                 if (blackjackState.pickpocketsLeft > 0) {
                     blackjackState.pickpocketsLeft--
-                    sendMessage(player, "You successfully pickpocket the ${npc.name.lowercase()} (guaranteed).")
                     BlackjackService.updateBlackjackState(npc)
                     return@on true
                 }

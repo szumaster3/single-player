@@ -65,7 +65,6 @@ object BlackjackService {
 
         player.animate(Animation(393))
         npc.animator.animate(Animation(838))
-        npc.sendChat("Arghh my head.")
         npc.sendChat("Zzzzzzz")
 
         val maxHit = calculateHit(player, npc, 1.0)
@@ -115,6 +114,7 @@ object BlackjackService {
         if (!state.isUnconscious(ticks) && state.pickpocketsLeft <= 0) {
             npc.attributes.remove("blackjack")
             npc.animator.reset()
+            npc.sendChat("Arghh my head.")
         }
     }
 
