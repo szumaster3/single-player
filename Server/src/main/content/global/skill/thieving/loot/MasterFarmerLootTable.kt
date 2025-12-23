@@ -16,11 +16,11 @@ object MasterFarmerLootTable {
     private val ALLOTMENTS = WeightBasedTable.create(
         WeightedItem(Items.POTATO_SEED_5318, 1, 4, 177.0),
         WeightedItem(Items.ONION_SEED_5319, 1, 3, 133.0),
-        WeightedItem(Items.CABBAGE_SEED_5324, 1, 3, 69.4),
-        WeightedItem(Items.TOMATO_SEED_5322, 1, 2, 63.7),
         WeightedItem(Items.SWEETCORN_SEED_5320, 1, 2, 28.3),
+        WeightedItem(Items.WATERMELON_SEED_5321, 1, 1, 6.7),
+        WeightedItem(Items.TOMATO_SEED_5322, 1, 2, 63.7),
         WeightedItem(Items.STRAWBERRY_SEED_5323, 1, 1, 14.2),
-        WeightedItem(Items.WATERMELON_SEED_5321, 1, 1, 6.7)
+        WeightedItem(Items.CABBAGE_SEED_5324, 1, 3, 69.4),
     )
 
     private val HOPS = WeightBasedTable.create(
