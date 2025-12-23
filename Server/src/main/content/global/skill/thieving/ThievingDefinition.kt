@@ -1,5 +1,6 @@
 package content.global.skill.thieving
 
+import content.global.skill.thieving.loot.*
 import core.api.*
 import core.api.utils.WeightBasedTable
 import core.game.event.ResourceProducedEvent
@@ -138,14 +139,14 @@ object ThievingDefinition {
                         if (stall == CANDLES) {
                             stun(player, 15, false)
                             impact(player, 3, ImpactHandler.HitsplatType.NORMAL)
-                            player.sendMessage("A higher power smites you.")
+                            sendMessage(player, "A higher power smites you.")
                         }
 
                         return@queueScript stopExecuting(player)
                     }
 
 
-                    player.inventory.add(item)
+                    addItem (player, item.id, item.amount)
                     rewardXP(player, Skills.THIEVING, stall.experience)
 
                     player.savedData.globalData.setStallSteal(
@@ -218,27 +219,28 @@ object ThievingDefinition {
      * Represents pickpocket data.
      */
     enum class Pickpocket(val ids: IntArray, val requiredLevel: Int, val low: Double, val high: Double, val experience: Double, val stunDamageMin: Int, val stunDamageMax: Int, val stunTime: Int, val message: String?, val table: WeightBasedTable) {
-        MAN(ThievingLootTable.MAN_IDS, 1, 180.0, 240.0, 8.0, 1, 1, 5, "What do you think you're doing?", ThievingLootTable.MAN_PICKPOCKET_LOOT),
-        CURATOR_HAIG_HELEN(ThievingLootTable.CURATOR_HAIG_HELEN_IDS, 1, 180.0, 240.0, 8.0, 1, 1, 5, null, ThievingLootTable.CURATOR_HAIG_HELEN_PICKPOCKET_LOOT),
-        GANG_OF_THIEVE(ThievingLootTable.GANG_OF_THIEVE_IDS, 1, 180.0, 240.0, 8.0, 1, 1, 5, "What do you think you're doing?", ThievingLootTable.GANG_OF_THIEVE_PICKPOCKET_LOOT),
-        FARMER(ThievingLootTable.FARMER_IDS, 10, 180.0, 240.0, 14.5, 1, 1, 5, "What do you think you're doing?", ThievingLootTable.FARMER_PICKPOCKET_LOOT),
-        MALE_HAM_MEMBER(ThievingLootTable.HAM_MALE_IDS, 20, 117.0, 240.0, 22.5, 1, 3, 4, "What do you think you're doing?", ThievingLootTable.HAM_PICKPOCKET_LOOT),
-        FEMALE_HAM_MEMBER(ThievingLootTable.HAM_FEMALE_IDS, 15, 135.0, 240.0, 18.5, 1, 3, 4, "Stop! @name is a thief!", ThievingLootTable.HAM_PICKPOCKET_LOOT),
-        WARRIOR(ThievingLootTable.WARRIOR_IDS, 25, 84.0, 240.0, 26.0, 2, 2, 5, "What do you think you're doing?", ThievingLootTable.WARRIOR_PICKPOCKET_LOOT),
-        VILLAGER(ThievingLootTable.VILLAGER_IDS, 30, 74.0, 240.0, 8.0, 2, 2, 5, "Thief! Thief! Get away from me.", ThievingLootTable.VILLAGER_PICKPOCKET_LOOT),
-        ROGUE(ThievingLootTable.ROGUE_IDS, 32, 74.0, 240.0, 35.5, 2, 2, 5, "What do you think you're doing?", ThievingLootTable.ROGUE_PICKPOCKET_LOOT),
-        CAVE_GOBLIN(ThievingLootTable.CAVE_GOBLIN_IDS, 36, 72.0, 240.0, 40.0, 1, 1, 5, null, ThievingLootTable.CAVE_GOBLIN_PICKPOCKET_LOOT),
-        MASTER_FARMER(ThievingLootTable.MASTER_FARMER_IDS, 38, 90.0, 240.0, 43.0, 3, 3, 5, "Cor blimey, mate! What are ye doing in me pockets?", ThievingLootTable.MASTER_FARMER_PICKPOCKET_LOOT),
-        GUARD(ThievingLootTable.GUARD_IDS , 40, 50.0, 240.0, 46.5, 2, 2, 5, "What do you think you're doing?", ThievingLootTable.GUARD_PICKPOCKET_LOOT),
-        FREMENNIK_CITIZEN(ThievingLootTable.FREMENNIK_IDS, 45, 65.0, 240.0, 65.0, 2, 2, 5, "You stay away from me Outlander!", ThievingLootTable.FREMENNIK_PICKPOCKET_LOOT),
-        BEARDED_BANDIT(ThievingLootTable.BEARDED_BANDIT_IDS, 45, 50.0, 240.0, 65.0, 5, 5, 5, "What do you think you're doing?", ThievingLootTable.BEARDED_BANDIT_PICKPOCKET_LOOT),
-        DESERT_BANDIT(ThievingLootTable.DESERT_BANDIT_IDS, 53, 50.0, 240.0, 79.5, 3, 3, 5, "I'll kill you for that!", ThievingLootTable.DESERT_BANDIT_PICKPOCKET_LOOT),
-        KNIGHT_OF_ADROUGNE(ThievingLootTable.KNIGHT_OF_ADROUGNE_IDS, 55, 50.0, 240.0, 84.3, 3, 3, 6, null, ThievingLootTable.KNIGHT_OF_ADROUGNE_PICKPOCKET_LOOT),
-        YANILLE_WATCHMAN(ThievingLootTable.YANILLE_WATCHMAN_IDS, 65, 50.0, 240.0, 137.5, 3, 3, 5, "What do you think you're doing?", ThievingLootTable.YANILLE_WATCHMAN_PICKPOCKET_LOOT),
-        MENAPHITE_THUG(ThievingLootTable.MENAPHITE_THUG_IDS, 65, 50.0, 240.0, 137.5, 5, 5, 5, "I'll kill you for that!", ThievingLootTable.MENAPHITE_THUG_PICKPOCKET_LOOT),
-        PALADIN(ThievingLootTable.PALADIN_IDS, 70, 50.0, 150.0, 151.75, 3, 3, 5, "Hey! Get your hands off there!", ThievingLootTable.PALADIN_PICKPOCKET_LOOT),
-        GNOME(ThievingLootTable.GNOME_IDS, 75, 8.0, 120.0, 198.5, 1, 1, 5, "What do you think you're doing?", ThievingLootTable.GNOME_PICKPOCKET_LOOT),
-        HERO(ThievingLootTable.HERO_IDS, 80, 6.0, 100.0, 273.3, 6, 6, 6, "What do you think you're doing?", ThievingLootTable.HERO_PICKPOCKET_LOOT);
+        HUMAN(HumanLootTable.NPC_ID, 1, 180.0, 240.0, 8.0, 1, 1, 5, "What do you think you're doing?", HumanLootTable.LOOT),
+        CURATOR_HAIG_HELEN(CuratorHaigHelenLootTable.NPC_ID, 1, 180.0, 240.0, 8.0, 1, 1, 5, null, CuratorHaigHelenLootTable.LOOT),
+        FARMER(FarmerLootTable.NPC_ID, 10, 180.0, 240.0, 14.5, 1, 1, 5, "What do you think you're doing?", FarmerLootTable.LOOT),
+        MALE_HAM_MEMBER(HamMemberLootTable.NPC_ID_MALE, 20, 117.0, 240.0, 22.2, 1, 3, 4, "What do you think you're doing?", HamMemberLootTable.LOOT),
+        FEMALE_HAM_MEMBER(HamMemberLootTable.NPC_ID_FEMALE, 15, 135.0, 240.0, 18.5, 1, 3, 4, "Stop! @name is a thief!", HamMemberLootTable.LOOT),
+        WARRIOR(WarriorLootTable.NPC_ID, 25, 84.0, 240.0, 26.0, 2, 2, 5, "What do you think you're doing?", WarriorLootTable.LOOT),
+        VILLAGER(VillagerLootTable.NPC_ID, 30, 74.0, 240.0, 8.0, 2, 2, 5, "Thief! Thief! Get away from me.", VillagerLootTable.LOOT),
+        ROGUE(RogueLootTable.NPC_ID, 32, 74.0, 240.0, 35.5, 2, 2, 5, "What do you think you're doing?", RogueLootTable.LOOT),
+        CAVE_GOBLIN(CaveGoblinLootTable.NPC_ID, 36, 72.0, 240.0, 40.0, 1, 1, 5, null, CaveGoblinLootTable.LOOT),
+        MASTER_FARMER(MasterFarmerLootTable.NPC_ID, 38, 90.0, 240.0, 43.0, 3, 3, 5, "Cor blimey, mate! What are ye doing in me pockets?", MasterFarmerLootTable.LOOT),
+        GUARD(GuardLootTable.NPC_ID, 40, 50.0, 240.0, 46.8, 2, 2, 5, "What do you think you're doing?", GuardLootTable.LOOT),
+        FREMENNIK_CITIZEN(FremennikCitizenLootTable.NPC_ID, 45, 65.0, 240.0, 65.0, 2, 2, 5, "You stay away from me Outlander!", FremennikCitizenLootTable.LOOT),
+        BEARDED_BANDIT(BeardedBanditLootTable.NPC_ID, 45, 50.0, 240.0, 65.0, 2, 2, 5, "What do you think you're doing?", BeardedBanditLootTable.LOOT),
+        DESERT_BANDIT(DesertBanditLootTable.NPC_ID, 53, 50.0, 240.0, 79.4, 3, 3, 5, "I'll kill you for that!", DesertBanditLootTable.LOOT),
+        POLLNIVNIAN_BANDIT(PollnivnianBanditLootTable.NPC_ID, 55, 50.0, 240.0, 84.3, 5, 5, 5, "I'll kill you for that!", PollnivnianBanditLootTable.LOOT),
+        KNIGHT_OF_ADROUGNE(KnightLootTable.NPC_ID, 55, 50.0, 240.0, 84.3, 3, 3, 6, null, KnightLootTable.LOOT),
+        YANILLE_WATCHMAN(WatchmanLootTable.NPC_ID, 65, 50.0, 240.0, 137.5, 3, 3, 5, "What do you think you're doing?", WatchmanLootTable.LOOT),
+        MENAPHITE_THUG(MenaphiteThugLootTable.NPC_ID, 65, 50.0, 240.0, 137.5, 5, 5, 5, "I'll kill you for that!", MenaphiteThugLootTable.LOOT),
+        PALADIN(PaladinLootTable.NPC_ID, 70, 50.0, 150.0, 151.8, 3, 3, 5, "Hey! Get your hands off there!", PaladinLootTable.LOOT),
+        GNOME(GnomeLootTable.NPC_ID, 75, 8.0, 120.0, 198.3, 1, 1, 5, "What do you think you're doing?", GnomeLootTable.LOOT),
+        HERO(HeroLootTable.NPC_ID, 80, 6.0, 100.0, 273.3, 6, 6, 6, "What do you think you're doing?", HeroLootTable.LOOT),
+        ELF(ElfLootTable.NPC_ID, 85, 4.0, 80.0, 353.3, 5, 5, 6, "What do you think you're doing?", ElfLootTable.LOOT);
 
         companion object {
             /**
@@ -296,7 +298,7 @@ object ThievingDefinition {
                 animate(player, Animation(Animations.HUMAN_PICKPOCKETING_881, Animator.Priority.HIGH))
                 sendMessage(player, "You attempt to pick the $npcName's pocket.")
 
-                if (npc.id in ThievingLootTable.FREMENNIK_IDS && !isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
+                if (npc.id in FremennikCitizenLootTable.NPC_ID && !isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
                     npc.sendChat("You stay away from me outerlander!")
                     sendMessage(player, "They are too suspicious of you for you to get close enough to steal from them.")
                     return true
