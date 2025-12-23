@@ -6,7 +6,7 @@ import core.game.interaction.InteractionListener
 import core.game.world.map.zone.impl.DarkZone.Companion.checkDarkArea
 import shared.consts.Items
 
-class SeersHeadbandsOptionPlugin : InteractionListener {
+class SeersHeadbandPlugin : InteractionListener {
 
     companion object {
         val HEADBAND_ITEM_IDS = intArrayOf(
