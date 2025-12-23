@@ -17,4 +17,5 @@ object FarmerLootTable {
         WeightedItem(Items.COINS_995, 9, 9, 1.0, true),
         WeightedItem(Items.POTATO_SEED_5318, 1, 1, 1.0, true)
     )
+
 }

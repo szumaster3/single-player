@@ -77,19 +77,17 @@ class PickpocketListener : InteractionListener {
                 playAudio(player, Sounds.PICK_2581)
                 lootTable.forEach { player.inventory.add(it) }
 
-                if (getStatLevel(player, Skills.THIEVING) >= 40) {
-                    when {
-                        inBorders(player, ZoneBorders(3201, 3456, 3227, 3468)) && npc.id == NPCs.GUARD_5920 -> {
-                            finishDiaryTask(player, DiaryType.VARROCK, 1, 12)
-                        }
-                        inBorders(player, ZoneBorders(2934, 3399, 3399, 3307)) && npc.id in intArrayOf(NPCs.GUARD_9, NPCs.GUARD_3230, NPCs.GUARD_3228, NPCs.GUARD_3229) -> {
-                            finishDiaryTask(player, DiaryType.FALADOR, 1, 6)
-                        }
-                    }
-                }
-
                 sendMessage(player, if (npc.id == NPCs.CURATOR_HAIG_HALEN_646) "You steal a tiny key." else "You pick the $npcName's pocket.")
                 rewardXP(player, Skills.THIEVING, pocketData.xp)
+
+                when {
+                    inBorders(player, ZoneBorders(3201, 3456, 3227, 3468)) && npc.id == NPCs.GUARD_5920 -> {
+                        finishDiaryTask(player, DiaryType.VARROCK, 1, 12)
+                    }
+                    inBorders(player, ZoneBorders(2934, 3399, 3399, 3307)) && npc.id in intArrayOf(NPCs.GUARD_9, NPCs.GUARD_3230, NPCs.GUARD_3228, NPCs.GUARD_3229) -> {
+                        finishDiaryTask(player, DiaryType.FALADOR, 1, 6)
+                    }
+                }
             }
 
             return@on true

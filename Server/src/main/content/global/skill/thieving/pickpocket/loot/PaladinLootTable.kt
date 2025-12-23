@@ -15,5 +15,5 @@ object PaladinLootTable {
     val LOOT = WeightBasedTable.create(
         WeightedItem(Items.COINS_995, 80, 80, 1.0, true),
         WeightedItem(Items.CHAOS_RUNE_562, 2, 2, 1.0, true)
-    ).insertHardClue(1.0 / 1000.0)
+    ).insertHardClue(1.0)
 }

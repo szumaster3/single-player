@@ -31,5 +31,5 @@ object GnomeLootTable {
         WeightedItem(Items.EARTH_RUNE_557, 1, 1, 5.0),
         WeightedItem(Items.KING_WORM_2162, 1, 1, 3.0),
         WeightedItem(Items.FIRE_ORB_569, 1, 1, 2.0)
-    ).insertMediumClue(128.0 / 150.0)
+    ).insertMediumClue(2.0)
 }
