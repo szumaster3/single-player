@@ -27,40 +27,32 @@ enum class JungleObject(val objectId: Int, private val herbId: Int, val productI
         val anim = Animation.create(animationId)
         val successChance = if (scenery.id == Scenery.FUNGUS_COVERED_CAVERN_WALL_32106) 4 else 3
 
-        queueScript(player, 1, QueueStrength.WEAK)
-        { stage ->
-            if (!clockReady(player, Clocks.SKILLING))
-                return@queueScript stopExecuting(player)
+        queueScript(player, 0, QueueStrength.WEAK) {
+            if (!clockReady(player, Clocks.SKILLING)) return@queueScript false
 
             if (freeSlots(player) < 1) {
-                sendMessage(player,"You don't have enough inventory space.")
-                return@queueScript stopExecuting(player)
+                sendMessage(player, "You don't have enough inventory space.")
+                return@queueScript false
             }
 
-            when (stage) {
-                0 -> {
-                    player.animate(anim)
-                    delayClock(player, Clocks.SKILLING, 2)
-                    delayScript(player, 2)
-                }
+            player.animate(anim)
+            delayClock(player, Clocks.SKILLING, 2)
+            delayScript(player, 2)
 
-                else -> {
-                    sendMessage(player, "You search the area...")
-                    if (RandomFunction.random(successChance) == 1)
-                    {
-                        if (scenery.isActive)
-                        {
-                            replaceScenery(scenery.asScenery(), scenery.id + 1, 80)
-                        }
-                        addItem(player, herbId)
-                        sendItemDialogue(player, herbId, "You find a grimy herb.")
-                        return@queueScript stopExecuting(player)
-                    }
+            sendMessage(player, "You search the area...")
 
-                    setCurrentScriptState(player, 0)
-                    delayScript(player, 2)
+            if (RandomFunction.random(successChance) == 1) {
+                if (scenery.isActive) {
+                    replaceScenery(scenery.asScenery(), scenery.id + 1, 80)
                 }
+                addItem(player, herbId)
+                sendItemDialogue(player, herbId, "You find a grimy herb.")
+                return@queueScript false
             }
+
+            delayClock(player, Clocks.SKILLING, 2)
+            setCurrentScriptState(player, 0)
+            delayScript(player, 2)
         }
     }
 
