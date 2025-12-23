@@ -121,21 +121,22 @@ class FremennikTrialsPlugin : InteractionListener {
 
             submitWorldPulse(
                 object : Pulse(
-                    RandomFunction.random(secondsToTicks(70), secondsToTicks(100))
-                ){
-                    override fun pulse(): Boolean {
-                        if(inInventory(player, LIT_BOMB))
-                        {
-                            removeItem(player, LIT_BOMB)
-                            val damage = maxOf((player.skills.lifepoints * 0.04).toInt(), 2)
-                            player.skills.lifepoints = (player.skills.lifepoints - damage).coerceAtLeast(0)
-                            sendMessage(player, "The strange object you lit earlier explodes in your inventory!")
-                            sendChat(player, "Ow!")
-                            return true
-                        }
-                        return false
+                RandomFunction.random(secondsToTicks(70), secondsToTicks(100))
+            ){
+                override fun pulse(): Boolean {
+                    if (inInventory(player, LIT_BOMB))
+                    {
+                        removeItem(player, LIT_BOMB)
+                        val damage = maxOf((player.skills.lifepoints * 0.04).toInt(), 2)
+                        impact(player, damage)
+                        sendMessage(player, "The strange object you lit earlier explodes in your inventory!")
+                        sendChat(player, "Ow!")
+                        return true
                     }
-                })
+                    return false
+                }
+            })
+
             return@onUseWith true
         }
 
