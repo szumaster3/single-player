@@ -350,10 +350,7 @@ object PacketProcessor {
             }
 
             is Packet.TrackingAfkTimeout -> {
-                if (ServerConstants.AFK_LOGOUT_DISABLED) {
-                    return
-                }
-                pkt.player.packetDispatch.sendLogout()
+               // pkt.player.packetDispatch.sendLogout()
             }
 
             is Packet.TrackingCameraPos -> {

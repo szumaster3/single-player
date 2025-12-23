@@ -188,6 +188,34 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
         }
 
         define(
+            name = "dumpquests",
+            privilege = Privilege.ADMIN,
+            usage = "::dumpquests",
+            description = "Dump all registered quests to a text file."
+        ) { player, _ ->
+
+            player.debug("Dumping all quests to file...")
+
+            GlobalScope.launch {
+                try {
+                    val quests = core.game.node.entity.player.link.quest.QuestRepository.getQuests().values
+
+                    val file = java.io.File("dumps/quests_dump.txt")
+                    file.parentFile.mkdirs()
+                    file.writeText("")
+
+                    quests.forEach { _ ->
+                        file.appendText("\n")
+                    }
+
+                    player.debug("All quests have been dumped to: $file")
+                } catch (e: Exception) {
+                    player.debug("Error while dumping quests: ${e.message}")
+                }
+            }
+        }
+
+        define(
             name = "itemformodel",
             privilege = Privilege.ADMIN,
             usage = "::itemformodel <itemId>",

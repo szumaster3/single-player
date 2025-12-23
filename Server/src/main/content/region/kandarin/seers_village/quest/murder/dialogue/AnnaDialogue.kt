@@ -1,10 +1,8 @@
 package content.region.kandarin.seers_village.quest.murder.dialogue
 
-import content.region.kandarin.seers_village.quest.murder.plugin.MurderMysteryUtils
+import content.region.kandarin.seers_village.quest.murder.MurderMystery
 import core.api.*
-import core.game.dialogue.Dialogue
-import core.game.dialogue.FaceAnim
-import core.game.node.entity.npc.NPC
+import core.game.dialogue.*
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
@@ -14,131 +12,71 @@ import shared.consts.Quests
 
 @Initializable
 class AnnaDialogue(player: Player? = null) : Dialogue(player) {
-    
-    override fun open(vararg args: Any?): Boolean {
-        npc = args[0] as NPC
-        if (!isQuestComplete(player, Quests.MURDER_MYSTERY)) {
-            playerl(FaceAnim.FRIENDLY, "I'm here to help the guards with their investigation.")
-        } else {
-            sendMessage(player!!, "She is ignoring you.").also { stage = END_DIALOGUE }
-        }
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+        openDialogue(player, AnnaDialogueFile(), npc)
         return true
     }
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ): Boolean {
-        val threadColor = MurderMysteryUtils.getGuiltyColor(player)
-        val questStage = getQuestStage(player!!, Quests.MURDER_MYSTERY)
-        when (questStage) {
-            in 1..4 ->
-                when (stage) {
-                    0 -> npcl(FaceAnim.ANNOYED, "Oh really? What do you want to know then?").also { stage++ }
-                    1 ->
-                        if (getQuestStage(player, Quests.MURDER_MYSTERY) == 3) {
-                            options(
-                                "Who do you think is responsible?",
-                                "Where were you when the murder happened?",
-                                "Do you recognise this thread?",
-                                "Why'd you buy poison the other day?",
-                            ).also { stage++ }
-                        } else {
-                            options(
-                                "Who do you think is responsible?",
-                                "Where were you when the murder happened?",
-                                "Do you recognise this thread?",
-                            ).also { stage++ }
-                        }
-
-                    2 ->
-                        if (getQuestStage(player, Quests.MURDER_MYSTERY) == 3) {
-                            when (buttonID) {
-                                1 -> playerl(FaceAnim.SUSPICIOUS, "Who do you think is responsible?").also { stage++ }
-                                2 ->
-                                    playerl(FaceAnim.SUSPICIOUS, "Where were you when the murder happened?").also {
-                                        stage =
-                                            6
-                                    }
-                                3 -> playerl(FaceAnim.SUSPICIOUS, "Do you recognise this thread?").also { stage = 7 }
-                            }
-                        } else {
-                            when (buttonID) {
-                                1 -> playerl(FaceAnim.SUSPICIOUS, "Who do you think is responsible?").also { stage++ }
-                                2 ->
-                                    playerl(FaceAnim.SUSPICIOUS, "Where were you when the murder happened?").also {
-                                        stage =
-                                            6
-                                    }
-                                3 -> playerl(FaceAnim.SUSPICIOUS, "Do you recognise this thread?").also { stage = 7 }
-                                4 ->
-                                    playerl(FaceAnim.SUSPICIOUS, "Why'd you buy poison the other day?").also {
-                                        stage =
-                                            9
-                                    }
-                            }
-                        }
-
-                    3 -> npcl(FaceAnim.ANNOYED, "It was clearly an intruder.").also { stage++ }
-                    4 -> playerl(FaceAnim.SUSPICIOUS, "Well, I don't think it was.").also { stage++ }
-                    5 -> npcl(FaceAnim.ANNOYED, "It was one of our lazy servants then.").also { stage = END_DIALOGUE }
-                    6 ->
-                        npcl(
-                            FaceAnim.ANNOYED,
-                            "In the library. No one else was there so you'll just have to take my word for it.",
-                        ).also {
-                            stage =
-                                END_DIALOGUE
-                        }
-
-                    7 -> {
-                        if (inInventory(player!!, Items.CRIMINALS_THREAD_1809)) {
-                            sendItemDialogue(
-                                player!!,
-                                Items.CRIMINALS_THREAD_1809,
-                                "You show Anna the thread from the study.",
-                            ).also { stage++ }
-                        } else {
-                            npcl(FaceAnim.ANNOYED, "Not really, no. Thread is fairly common.").also {
-                                stage =
-                                    END_DIALOGUE
-                            }
-                        }
-                    }
-
-                    8 ->
-                        npcl(
-                            FaceAnim.ANNOYED,
-                            "It's some $threadColor thread. It's not exactly uncommon is it? My trousers are made of the same material.",
-                        ).also {
-                            stage =
-                                END_DIALOGUE
-                        }
-
-                    9 ->
-                        npcl(
-                            FaceAnim.NEUTRAL,
-                            "That useless Gardener Stanford has let his compost heap fester. It's an eyesore to the garden! So I bought some poison from a travelling salesman so that I could kill off some of the wildlife living in it.",
-                        ).also {
-                            stage++
-                        }
-
-                    10 -> {
-                        end()
-                        setQuestStage(player!!, Quests.MURDER_MYSTERY, 4)
-                    }
-                }
-
-            100 ->
-                when (stage) {
-                    0 ->
-                        npcl(FaceAnim.FRIENDLY, "Apparently you aren't as stupid as you look.").also {
-                            stage = END_DIALOGUE
-                        }
-                }
-        }
-        return true
+    override fun newInstance(player: Player): Dialogue {
+        return AnnaDialogue(player)
     }
 
-    override fun getIds(): IntArray = intArrayOf(NPCs.ANNA_814)
+    override fun getIds(): IntArray {
+        return intArrayOf(NPCs.ANNA_814, 6192)
+    }
+}
+
+class AnnaDialogueFile : DialogueFile() {
+    override fun handle(componentID: Int, buttonID: Int) {
+        when (getQuestStage(player!!, Quests.MURDER_MYSTERY)) {
+            0 -> sendDialogue(player!!, "They are ignoring you.").also { stage = END_DIALOGUE }
+            1 -> when (stage) {
+                0 -> playerl(FaceAnim.NEUTRAL, "I'm here to help the guards with their investigation.").also { stage++ }
+                1 -> npcl(FaceAnim.ASKING, "Oh really? What do you want to know then?").also { stage++ }
+                2 -> showTopics(
+                    Topic("Who do you think is responsible?", 3),
+                    Topic("Where were you when the murder happened?", 6),
+                    IfTopic(
+                        "Do you recognise this thread?",
+                        7,
+                        inInventory(player!!, Items.CRIMINALS_THREAD_1808) || inInventory(
+                            player!!,
+                            Items.CRIMINALS_THREAD_1809
+                        ) || inInventory(player!!, Items.CRIMINALS_THREAD_1810)
+                    ),
+                    IfTopic(
+                        "Why'd you buy poison the other day?",
+                        10,
+                        getAttribute(player!!, MurderMystery.attributePoisonClue, 0) > 0
+                    )
+                )
+
+                3 -> npcl("It was clearly an intruder.").also { stage++ }
+                4 -> playerl("Well, I don't think it was.").also { stage++ }
+                5 -> npcl("It was one of our lazy servants then.").also { stage = END_DIALOGUE }
+
+                6 -> npcl("In the library. No one else was there so you'll just have to take my word for it.").also {
+                    stage = END_DIALOGUE
+                }
+
+                7 -> sendDialogue(player!!, "You show Anna the thread from the study.")
+                    .also { if (inInventory(player!!, Items.CRIMINALS_THREAD_1809)) stage++ else stage = 9 }
+
+                8 -> npcl("It's some Green thread. It's not exactly uncommon is it? My trousers are made of the same material.").also {
+                    stage = END_DIALOGUE
+                }
+
+                9 -> npcl("Not really, no. Thread is fairly common.").also { stage = END_DIALOGUE }
+
+                10 -> npcl(
+                    FaceAnim.ANNOYED,
+                    "That useless Gardener Stanford let his compost heap fester. It's an eyesore to the garden! So I bought some poison from a travelling salesman so that I could kill off some of the wildlife living in it."
+                )
+                    .also { setAttribute(player!!, MurderMystery.attributeAskPoisonAnna, true) }
+                    .also { stage = END_DIALOGUE }
+            }
+
+            100 -> npcl("Apparently you aren't as stupid as you look.").also { stage = END_DIALOGUE }
+        }
+    }
 }

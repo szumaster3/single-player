@@ -1,5 +1,6 @@
 package core.game.world.repository
 
+import core.ServerConstants
 import core.api.log
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.info.login.PlayerParser
@@ -36,6 +37,35 @@ class DisconnectionQueue {
             else {
                 //Make sure there's no room for the disconnection queue to stroke out and leave someone logged in for 10 years.
                 queueTimers[it.key] = (queueTimers[it.key] ?: 0) + 3
+                if ((queueTimers[it.key] ?: Int.MAX_VALUE) >= 1500) {
+                    it.value?.player?.let { player ->
+                        player.finishClear()
+                        Repository.removePlayer(player)
+                        remove(it.key)
+                        log(this::class.java, Log.WARN, "Force-clearing ${it.key} after 15 minutes of being in the disconnection queue!")
+                    }
+                }
+            }
+        }
+    }
+
+    /*
+    fun update() {
+        if (queue.isEmpty() || GameWorld.ticks % 3 != 0) {
+            return
+        }
+        //make a copy of current entries as to avoid concurrency exceptions
+        val entries = ArrayList(queue.entries)
+
+        //loop through entries and disconnect each
+        entries.forEach {
+            if (ServerConstants.AFK_LOGOUT_DISABLED) {
+                return@forEach
+            }
+            if(finish(it.value,false)) queue.remove(it.key)
+            else {
+                //Make sure there's no room for the disconnection queue to stroke out and leave someone logged in for 10 years.
+                queueTimers[it.key] = (queueTimers[it.key] ?: 0) + 3
                 val isValidAFKLogout = it.value?.player?.isAfkLogout == true
                 val seconds = if (isValidAFKLogout) 30 else 5 * 60 //30 seconds for AFK logout, 5 minutes for normal logout
                 val ticksNeeded = secondsToTicks(seconds)
@@ -50,6 +80,7 @@ class DisconnectionQueue {
             }
         }
     }
+    */
 
 
     fun isEmpty(): Boolean{

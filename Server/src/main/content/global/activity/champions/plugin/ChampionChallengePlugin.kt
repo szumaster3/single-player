@@ -134,7 +134,7 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
         player.lock(3)
         player.impactHandler.disabledTicks = 3
         animateScenery(node.asScenery(), 2976)
-        playAudio(player, Sounds.PORTCULLIS_OPEN_83)
+        playAudio(player, Sounds.PORTCULLIS_CLOSE_82, 6)
         forceMove(player, player.location, Location.create(3180, 9758, 0), 0, 60, Direction.WEST, 819)
         initChampionSpawn(player)
     }

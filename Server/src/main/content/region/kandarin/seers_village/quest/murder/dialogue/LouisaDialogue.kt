@@ -1,11 +1,10 @@
 package content.region.kandarin.seers_village.quest.murder.dialogue
 
+import content.region.kandarin.seers_village.quest.murder.MurderMystery
+import core.api.getAttribute
 import core.api.getQuestStage
-import core.api.isQuestComplete
-import core.api.sendMessage
-import core.game.dialogue.Dialogue
-import core.game.dialogue.FaceAnim
-import core.game.node.entity.npc.NPC
+import core.api.openDialogue
+import core.game.dialogue.*
 import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
@@ -14,144 +13,65 @@ import shared.consts.Quests
 
 @Initializable
 class LouisaDialogue(player: Player? = null) : Dialogue(player) {
-
-    override fun open(vararg args: Any?): Boolean {
-        npc = args[0] as NPC
-        if (!isQuestComplete(player, Quests.MURDER_MYSTERY)) {
-            playerl(FaceAnim.FRIENDLY, "I'm here to help the guards with their investigation.")
-        } else {
-            sendMessage(player!!, "She is ignoring you.").also { stage = END_DIALOGUE }
-        }
+    override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+        openDialogue(player, LouisaDialogueFile(), npc)
         return true
     }
 
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ): Boolean {
+    override fun newInstance(player: Player): Dialogue {
+        return LouisaDialogue(player)
+    }
+
+    override fun getIds(): IntArray {
+        return intArrayOf(NPCs.LOUISA_809)
+    }
+}
+
+class LouisaDialogueFile : DialogueFile() {
+    override fun handle(componentID: Int, buttonID: Int) {
         when (getQuestStage(player!!, Quests.MURDER_MYSTERY)) {
-            in 1..4 ->
-                when (stage) {
-                    0 -> npcl(FaceAnim.FRIENDLY, "How can I help?").also { stage++ }
-                    1 ->
-                        if (getQuestStage(player, Quests.MURDER_MYSTERY) == 3) {
-                            options(
-                                "Who do you think is responsible?",
-                                "Where were you when the murder happened?",
-                                "Did you hear any suspicious noises at all?",
-                                "Why'd you buy poison the other day?",
-                            ).also { stage++ }
-                        } else {
-                            options(
-                                "Who do you think is responsible?",
-                                "Where were you when the murder happened?",
-                                "Did you hear any suspicious noises at all?",
-                            ).also { stage++ }
-                        }
+            0 -> npcl("I'm far too upset to talk to random people right now.").also { stage = END_DIALOGUE }
+            1 -> when (stage) {
+                0 -> playerl(FaceAnim.NEUTRAL, "I'm here to help the guards with their investigation.").also { stage++ }
+                1 -> npcl(FaceAnim.ASKING, "How can I help?").also { stage++ }
+                2 -> showTopics(
+                    Topic("Who do you think is responsible?", 3),
+                    Topic("Where were you at the time of the murder?", 6),
+                    IfTopic(
+                        "Did you hear any suspicious noises at all?",
+                        7,
+                        getAttribute(player!!, MurderMystery.attributeNoiseClue, false)
+                    ),
+                    IfTopic(
+                        "Do you know why so much poison was bought recently?",
+                        12,
+                        getAttribute(player!!, MurderMystery.attributePoisonClue, 0) > 0
+                    )
+                )
 
-                    2 ->
-                        if (getQuestStage(player, Quests.MURDER_MYSTERY) == 3) {
-                            when (buttonID) {
-                                1 -> playerl(FaceAnim.SUSPICIOUS, "Who do you think is responsible?").also { stage++ }
-                                2 ->
-                                    playerl(FaceAnim.SUSPICIOUS, "Where were you when the murder happened?").also {
-                                        stage =
-                                            4
-                                    }
-                                3 ->
-                                    playerl(FaceAnim.SUSPICIOUS, "Did you hear any suspicious noises at all?").also {
-                                        stage =
-                                            5
-                                    }
-                            }
-                        } else {
-                            when (buttonID) {
-                                1 -> playerl(FaceAnim.SUSPICIOUS, "Who do you think is responsible?").also { stage++ }
-                                2 ->
-                                    playerl(FaceAnim.SUSPICIOUS, "Where were you when the murder happened?").also {
-                                        stage =
-                                            4
-                                    }
-                                3 ->
-                                    playerl(FaceAnim.SUSPICIOUS, "Did you hear any suspicious noises at all?").also {
-                                        stage =
-                                            5
-                                    }
-                                4 ->
-                                    playerl(FaceAnim.SUSPICIOUS, "Why'd you buy poison the other day?").also {
-                                        stage =
-                                            10
-                                    }
-                            }
-                        }
+                3 -> npcl("Elizabeth.").also { stage++ }
+                4 -> npcl("Her father confronted her about her constant petty thieving, and was devastated to find she had stolen a silver needle which had meant a lot to him.").also { stage++ }
+                5 -> npcl("You could hear their argument from Lumbridge!").also { stage = END_DIALOGUE }
 
-                    3 ->
-                        npcl(
-                            FaceAnim.NEUTRAL,
-                            "Elizabeth. Her father confronted her about her constant petty thieving, and was devastated to find she had stolen a silver needle which had meant a lot to him. You could hear their argument from Lumbridge!",
-                        ).also {
-                            stage =
-                                END_DIALOGUE
-                        }
-                    4 ->
-                        npcl(
-                            FaceAnim.NEUTRAL,
-                            "I was right here with Hobbes and Mary. You can't suspect me surely!",
-                        ).also {
-                            stage =
-                                END_DIALOGUE
-                        }
-                    5 -> npcl(FaceAnim.ASKING, "Suspicious? What do you mean suspicious?").also { stage++ }
-                    6 ->
-                        playerl(
-                            FaceAnim.ASKING,
-                            "Any sounds of a struggle with an intruder for example?",
-                        ).also { stage++ }
-                    7 -> npcl(FaceAnim.ASKING, "No, I'm sure I don't recall any such thing.").also { stage++ }
-                    8 -> playerl(FaceAnim.ASKING, "How about the guard dog barking at an intruder?").also { stage++ }
-                    9 ->
-                        npcl(
-                            FaceAnim.HALF_WORRIED,
-                            "No, I didn't. If you don't have anything else to ask can You go and leave me alone now? I have a lot of cooking to do for this evening.",
-                        ).also {
-                            stage =
-                                END_DIALOGUE
-                        }
-                    10 ->
-                        npcl(
-                            FaceAnim.HALF_WORRIED,
-                            "I told Carol to buy some from that strange poison salesman and clean the drains before they began to smell any worse.",
-                        ).also {
-                            stage++
-                        }
-                    11 ->
-                        npcl(
-                            FaceAnim.HALF_WORRIED,
-                            "She was the one who blocked them in the first place with a load of beans that she bought for some reason.",
-                        ).also {
-                            stage++
-                        }
-                    12 ->
-                        npcl(
-                            FaceAnim.HALF_WORRIED,
-                            "There were far too many to eat, and they were almost rotten when she bought them anyway! You'd really have to ask her though.",
-                        ).also {
-                            stage =
-                                END_DIALOGUE
-                        }
+                6 -> npcl("I was right here with Hobbes and Mary. You can't suspect me surely!").also {
+                    stage = END_DIALOGUE
                 }
 
-            100 ->
-                when (stage) {
-                    0 ->
-                        npcl(
-                            FaceAnim.FRIENDLY,
-                            "Apparently you aren't as stupid as you look.",
-                        ).also { stage = END_DIALOGUE }
+                7 -> npcl("Suspicious? What do you mean suspicious?").also { stage++ }
+                8 -> playerl("Any sounds of a struggle with an intruder for example?").also { stage++ }
+                9 -> npcl("No, I'm sure I don't recall any such thing.").also { stage++ }
+                10 -> playerl("How about the guard dog barking at an intruder?").also { stage++ }
+                11 -> npcl("No, I didn't. If you don't have anything else to ask can You go and leave me alone now? I have a lot of cooking to do for this evening.").also {
+                    stage = END_DIALOGUE
                 }
+
+                12 -> npcl("I told Carol to buy some from that strange poison salesman and clean the drains before they began to smell any worse. She was the one who blocked them in the first place with a load").also { stage++ }
+                13 -> npcl("of beans that she bought for some reason. There were far too many to eat, and they were almost rotten when she bought them anyway! You'd really have to ask her though.").also {
+                    stage = END_DIALOGUE
+                }
+            }
+
+            100 -> npcl("Thank you for all your help in solving the murder.").also { stage = END_DIALOGUE }
         }
-        return true
     }
-
-    override fun getIds(): IntArray = intArrayOf(NPCs.LOUISA_809)
 }

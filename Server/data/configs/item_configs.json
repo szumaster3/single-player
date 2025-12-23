@@ -19015,7 +19015,7 @@
     "archery_ticket_price": "0",
     "id": "1795"
   },
-  {
+   {
     "examine": "Anna's shiny silver coated necklace.",
     "durability": null,
     "name": "Silver necklace",
@@ -19025,7 +19025,7 @@
     "equipment_slot": "2"
   },
   {
-    "examine": "Anna's shiny silver coated necklace.",
+    "examine": "Anna's shiny silver coated necklace coated with a thin layer of flour.",
     "durability": null,
     "name": "Silver necklace",
     "weight": "1",
@@ -19043,7 +19043,7 @@
     "id": "1798"
   },
   {
-    "examine": "Bob's shiny silver coated tea cup.",
+    "examine": "Bob's shiny silver coated tea cup coated with a thin layer of flour.",
     "durability": null,
     "name": "Silver cup",
     "tradeable": "false",
@@ -19061,7 +19061,7 @@
     "id": "1800"
   },
   {
-    "examine": "Carol's shiny silver coated bottle.",
+    "examine": "Carol's shiny silver coated bottle coated with a thin layer of flour.",
     "durability": null,
     "name": "Silver bottle",
     "tradeable": "false",
@@ -19079,7 +19079,7 @@
     "id": "1802"
   },
   {
-    "examine": "David's shiny silver coated book.",
+    "examine": "David's shiny silver coated book coated with a thin layer of flour.",
     "durability": null,
     "name": "Silver book",
     "tradeable": "false",
@@ -19097,7 +19097,7 @@
     "id": "1804"
   },
   {
-    "examine": "Elizabeth's shiny silver coated needle.",
+    "examine": "Elizabeth's shiny silver coated needle coated with a thin layer of flour.",
     "durability": null,
     "name": "Silver needle",
     "tradeable": "false",
@@ -19115,7 +19115,7 @@
     "id": "1806"
   },
   {
-    "examine": "Frank's shiny silver coated pot.",
+    "examine": "Frank's shiny silver coated pot coated with a thin layer of flour.",
     "durability": null,
     "name": "Silver pot",
     "tradeable": "false",
@@ -19169,7 +19169,7 @@
     "id": "1812"
   },
   {
-    "examine": "A flimsy-looking dagger found at the crime scene./A flimsy looking dagger found at the crime scene coated with a thin layer of flour.",
+    "examine": "A flimsy-looking dagger found at the crime scene.",
     "attack_audios": "2517,2517,2500,2517",
     "durability": null,
     "name": "Criminal's dagger",
@@ -19177,7 +19177,7 @@
     "id": "1813"
   },
   {
-    "examine": "A flimsy-looking dagger found at the crime scene./A flimsy looking dagger found at the crime scene coated with a thin layer of flour.",
+    "examine": "A flimsy looking dagger found at the crime scene coated with a thin layer of flour.",
     "attack_audios": "2517,2517,2500,2517",
     "durability": null,
     "name": "Criminal's dagger",

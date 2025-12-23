@@ -39,7 +39,7 @@ object DoorActionHandler {
             } else if (d != null && d.isFence) {
                 playAudio(player, Sounds.GATE_CLOSE_66)
             } else {
-                playAudio(player, 60)
+                playAudio(player, 80)
             }
             SceneryBuilder.replace(scenery, o)
             if (second is Constructed && (second.replaced.also { o = it }) != null) {
@@ -60,7 +60,7 @@ object DoorActionHandler {
             } else if (d != null && d.isFence) {
                 playAudio(player, Sounds.GATE_OPEN_67)
             } else {
-                playAudio(player, Sounds.DOOR_OPEN_62)
+                playAudio(player, Sounds.NICEDOOR_OPEN_81)
             }
             if (d == null) {
                 sendMessage(player, "The door appears to be stuck.")
@@ -86,7 +86,7 @@ object DoorActionHandler {
         } else if (d.isFence) {
             playAudio(player, Sounds.GATE_OPEN_67)
         } else {
-            playAudio(player, Sounds.DOOR_OPEN_62)
+            playAudio(player, Sounds.NICEDOOR_OPEN_81)
         }
         if (second != null) {
             val s = forId(second.id)
@@ -122,7 +122,7 @@ object DoorActionHandler {
                 playAudio(entity.asPlayer(), Sounds.GATE_OPEN_67)
                 playAudio(entity.asPlayer(), Sounds.GATE_CLOSE_66, 60)
             } else {
-                playAudio(entity.asPlayer(), Sounds.DOOR_OPEN_62)
+                playAudio(entity.asPlayer(), Sounds.NICEDOOR_OPEN_81)
                 playAudio(entity.asPlayer(), 60, 60)
             }
             entity.asPlayer().logoutListeners["autowalk"] = { player: Player ->

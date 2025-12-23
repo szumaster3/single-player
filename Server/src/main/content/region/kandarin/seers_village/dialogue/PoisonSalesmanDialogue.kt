@@ -1,13 +1,12 @@
 package content.region.kandarin.seers_village.dialogue
 
 import content.region.fremennik.rellekka.quest.viking.FremennikTrials
-import content.region.kandarin.seers_village.quest.murder.dialogue.PoisonSalesmanDialogueFile
-import core.api.addItemOrDrop
-import core.api.getQuestStage
-import core.api.openDialogue
-import core.api.removeItem
+import content.region.kandarin.seers_village.quest.murder.MurderMystery
+import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
+import core.game.dialogue.IfTopic
+import core.game.dialogue.Topic
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import core.plugin.Initializable
@@ -28,8 +27,14 @@ import shared.consts.Quests
 class PoisonSalesmanDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
-        options("Talk about the Murder Mystery Quest", "Talk about the Fremennik Trials")
-        stage = START_DIALOGUE
+        val murderMysteryStage = getQuestStage(player, Quests.MURDER_MYSTERY)
+        val fremennikTrialQuestStage = getQuestStage(player, Quests.THE_FREMENNIK_TRIALS)
+        if(murderMysteryStage == 0 && fremennikTrialQuestStage == 0) {
+            npcl(FaceAnim.SAD, "I'm afraid I'm all sold out of poison at the moment. People know a bargain when they see it!")
+        } else {
+            options("Talk about the Murder Mystery Quest", "Talk about the Fremennik Trials")
+            stage = START_DIALOGUE
+        }
         return true
     }
 
@@ -38,29 +43,33 @@ class PoisonSalesmanDialogue(player: Player? = null) : Dialogue(player) {
         val fremennikTrialQuestStage = getQuestStage(player, Quests.THE_FREMENNIK_TRIALS)
         when (stage) {
             START_DIALOGUE -> when (buttonId) {
-                1 -> player(FaceAnim.FRIENDLY, "Hello.").also { stage = 1 }
+                1 -> when (murderMysteryStage) {
+                    0 -> npcl(FaceAnim.NEUTRAL, "I'm afraid I'm all sold out of poison at the moment. People know a bargain when they see it!").also { stage = END_DIALOGUE }
+                    1 -> playerl(FaceAnim.NEUTRAL, "I'm investigating the murder at the Sinclair house.").also { stage = 50 }
+                    100 -> npcl(FaceAnim.NEUTRAL, "I hear you're pretty smart to have solved the Sinclair Murder!").also { stage = END_DIALOGUE }
+                }
                 2 -> player(FaceAnim.FRIENDLY,"Hello.").also { stage = 10 }
             }
-            1 -> {
-                end()
-                if (murderMysteryStage >= 2) {
-                    openDialogue(player, PoisonSalesmanDialogueFile())
+            10 -> when (fremennikTrialQuestStage) {
+                0 -> {
+                    npc(FaceAnim.HAPPY, "Come see me if you ever need low-alcohol beer!")
+                    stage = END_DIALOGUE
                 }
-            }
-            10 -> {
-                when {
-                    fremennikTrialQuestStage == 0 -> {
-                        npc(FaceAnim.HAPPY, "Come see me if you ever need low-alcohol beer!")
-                        stage = END_DIALOGUE
-                    }
-                    fremennikTrialQuestStage > 30 -> {
-                        npc(FaceAnim.HAPPY, "Thanks for buying out all that low-alcohol beer!")
-                        stage = END_DIALOGUE
-                    }
-                    fremennikTrialQuestStage > 0 -> {
-                        npc(FaceAnim.HALF_ASKING, "Howdy! You seem like someone with discerning taste!", "Howsabout you try my brand new range of alcohol?")
-                        stage++
-                    }
+                in 1..30 -> {
+                    npc(FaceAnim.HALF_ASKING, "Howdy! You seem like someone with discerning taste!", "Howsabout you try my brand new range of alcohol?")
+                    stage++
+                }
+                in 31..99 -> {
+                    npc(FaceAnim.HAPPY, "Thanks for buying out all that low-alcohol beer!")
+                    stage = END_DIALOGUE
+                }
+                100 -> {
+                    npcl(FaceAnim.HALF_ASKING, "Howdy! Thanks for buying all that low alcohol beer from me! Now I have the funds to whip up a new batch of patented multipurpose poison!")
+                    stage = 74
+                }
+                else -> {
+                    npc(FaceAnim.NEUTRAL, "I don't have anything for you right now.")
+                    stage = END_DIALOGUE
                 }
             }
             11 -> player(FaceAnim.HALF_ASKING,"Didn't you used to sell poison?").also { stage++ }
@@ -97,19 +106,58 @@ class PoisonSalesmanDialogue(player: Player? = null) : Dialogue(player) {
             42 -> options("Yes", "No").also { stage++ }
             43 -> when (buttonId) {
                 1 -> player("Yes please!").also { stage++ }
-                2 -> player("No, thanks.").also { stage = END_DIALOGUE }
+                2 -> player("No, not really.").also { stage = END_DIALOGUE }
             }
             44 -> {
+                if(freeSlots(player) == 0) {
+                    end()
+                    npcl(FaceAnim.SAD, "Sorry pal, doesn't look like you have room on you to carry it.")
+                    return true
+                }
                 if (removeItem(player, Item(Items.COINS_995, 250))) {
-                    npc(FaceAnim.FRIENDLY, "Here you go.")
                     addItemOrDrop(player, Items.LOW_ALCOHOL_KEG_3712, 1)
                     stage = END_DIALOGUE
                 } else {
-                    player("I don't seem to have enough.")
+                    npcl(FaceAnim.SAD, "Sorry pal, we do not offer credit for any purchases made of Peter Potter's patented party potion! Come back when you have the cash!")
                     stage++
                 }
             }
             45 -> npc(FaceAnim.FRIENDLY,"Well come back when you do!").also { stage = END_DIALOGUE }
+
+            50 -> npcl(FaceAnim.NEUTRAL, "There was a murder at the Sinclair house??? That's terrible! And I was only there the other day too! They bought the last of my Patented Multi Purpose Poison!").also { stage++ }
+            51 -> showTopics(
+                Topic(FaceAnim.HALF_ASKING,"Patented Multi Purpose Poison?", 52),
+                Topic(FaceAnim.HALF_ASKING,"Who did you sell Poison to at the house?", 61),
+                Topic(FaceAnim.HALF_ASKING,"Can I buy some Poison?", 65),
+                IfTopic("I have this pot I found at the murder scene...", 69, inInventory(player, Items.PUNGENT_POT_1812))
+            )
+            52 -> npcl(FaceAnim.NEUTRAL, "Aaaaah... a miracle of modern apothecaries!").also { stage++ }
+            53 -> npcl(FaceAnim.NEUTRAL, "This exclusive concoction has been tested on all known forms of life and been proven to kill them all in varying dilutions from cockroaches to king dragons!").also { stage++ }
+            54 -> npcl(FaceAnim.NEUTRAL, "So incredibly versatile, it can be used as pest control, a cleansing agent, drain cleaner, metal polish and washes whiter than white,").also { stage++ }
+            55 -> npcl(FaceAnim.NEUTRAL, "all with our uniquely fragrant concoction that is immediately recognisable across the land as Peter Potter's Patented Poison potion!!!").also { stage++ }
+            56 -> sendDialogue("The salesman stops for breath.").also { stage ++ }
+            57 -> npcl(FaceAnim.NEUTRAL, "I'd love to sell you some but I've sold out recently. That's just how good it is! Three hundred and twenty eight people in this area alone cannot be wrong!").also { stage++ }
+            58 -> npcl(FaceAnim.NEUTRAL, "Nine out of Ten poisoners prefer it in controlled tests!").also { stage++ }
+            59 -> npcl(FaceAnim.NEUTRAL, "Can I help you with anything else? Perhaps I can take your name and add it to our mailing list of poison users? We will only send you information related to the use of poison and other Peter Potter Products!").also { stage++ }
+            60 -> playerl(FaceAnim.NEUTRAL, "Uh... no, it's ok. Really.").also { stage = END_DIALOGUE }
+
+            61 -> npcl(FaceAnim.HAPPY, "Well, Peter Potter's Patented Multi Purpose Poison is a product of such obvious quality that I am glad to say I managed to sell a bottle to each of the Sinclairs!").also { stage++ }
+            62 -> npcl(FaceAnim.HAPPY, "Anna, Bob, Carol, David, Elizabeth and Frank all bought a bottle! In fact they bought the last of my supplies!").also { stage++ }
+            63 -> npcl(FaceAnim.HAPPY, "Maybe I can take your name and address and I will personally come and visit you when stocks return?").also { stage++ }
+            64 -> playerl(FaceAnim.THINKING, "Uh...no, it's ok.").also { setAttribute(player, MurderMystery.attributePoisonClue, 1); stage = END_DIALOGUE }
+            65 -> npcl(FaceAnim.NEUTRAL, "I'm afraid I am totally out of stock at the moment after my successful trip to the Sinclairs' House the other day.").also { stage++ }
+            66 -> npcl(FaceAnim.NEUTRAL, "But don't worry! Our factories are working overtime to produce Peter Potter's Patented Multi Purpose Poison!").also { stage++ }
+            67 -> npcl(FaceAnim.NEUTRAL, "Possibly the finest multi purpose poison and cleaner yet available to the general market.").also { stage++ }
+            68 -> npcl(FaceAnim.NEUTRAL, "And its unique fragrance makes it the number one choice for cleaners and exterminators the whole country over!").also { stage = END_DIALOGUE }
+
+            69 -> sendDialogue("You show the poison salesman the pot you found at the murder", "scene with the unusual smell.").also { stage ++ }
+            70 -> npcl(FaceAnim.THINKING, "Hmmm... yes, that smells exactly like my Patented Multi Purpose Poison, but I don't see how it could be. It quite clearly says on the label of all bottles").also { stage++ }
+            71 -> npc(FaceAnim.THINKING, "'Not to be taken internally -","EXTREMELY POISONOUS'.").also { stage++ }
+            72 -> playerl(FaceAnim.THINKING, "Perhaps someone else put it in his wine?").also { stage++ }
+            73 -> npcl(FaceAnim.THINKING, "Yes... I suppose that could have happened...").also { stage = END_DIALOGUE }
+            END_DIALOGUE -> end()
+            74 -> npcl(FaceAnim.FRIENDLY, "Maybe I can take your name and add it to my mailing list for potential purchasers of Peter Potter's patented multipurpose poison?").also { stage++ }
+            75 -> player("Thanks, but no thanks.").also { stage = END_DIALOGUE }
         }
         return true
     }

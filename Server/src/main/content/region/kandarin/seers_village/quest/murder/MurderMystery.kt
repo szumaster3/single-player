@@ -1,81 +1,170 @@
 package content.region.kandarin.seers_village.quest.murder
 
-import content.region.kandarin.seers_village.quest.murder.plugin.MurderMysteryUtils
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
-import shared.consts.Components
 import shared.consts.Items
 import shared.consts.Quests
 import shared.consts.Vars
 
 @Initializable
 class MurderMystery : Quest(Quests.MURDER_MYSTERY, 93, 92, 3, Vars.VARP_QUEST_MURDER_MYSTERY_PROGRESS_192, 0, 1, 2) {
-    override fun drawJournal(
-        player: Player,
-        stage: Int,
-    ) {
-        super.drawJournal(player, stage)
-        var line = 11
-        if (stage == 0) {
-            line(player, "I can start this quest by speaking to one of the !!Guards?? at", line++)
-            line(player, "the !!Sinclar Mansion??, North of the !!Seer's Village.??", line++)
-            line++
-        }
-        if (stage == 1) {
-            line(player, "One of the guards asked me for my help in !!solving the murder??.", line++)
-            line++
-        }
-        if (stage == 2) {
-            line(player, "One of the guards asked me for my help in solving the murder.", line++, true)
-            line++
-            line(player, "After careful examination of the crime scene and", line++)
-            line(player, "interrogating all suspects, I worked out", line++)
-            line(player, "who was !!guilty??.", line++)
-            line++
-        }
-        if (stage == 3) {
-            line(player, "One of the guards asked me for my help in solving the murder.", line++, true)
-            line++
-            line(player, "After careful examination of the crime scene and", line++, true)
-            line(player, "interrogating all suspects, I worked out", line++, true)
-            line(player, "who was !!guilty??.", line++, true)
-            line++
-            line(player, "I took the evidence I had collected to the !!Guards??", line++)
-            line(player, "and explained how it could !!identify the killer??.", line++)
-            line++
-        }
-        if (stage == 100) {
-            line(player, "One of the guards asked me for my help in solving the murder.", line++, true)
-            line++
-            line(player, "After careful examination of the crime scene and", line++, true)
-            line(player, "interrogating all suspects, I worked out", line++, true)
-            line(player, "who was !!guilty??.", line++, true)
-            line++
-            line(player, "I took the evidence I had collected to the !!Guards??", line++, true)
-            line(player, "and explained how it could !!identify the killer??.", line++, true)
-            line++
-            line(player, "Impressed with my deductions, the killer was arrested and", line++, true)
-            line(player, "I was given a fair reward for my help in solving the crime.", line++, true)
 
-            line(player, "<col=FF0000>QUEST COMPLETE!</col>", line, false)
+    companion object {
+        const val attributeRandomMurderer =
+            "/save:quest:murdermystery-randommurderer" //Alphabetical, 0 for Anna, 1 for Bob, 2 for Carol, 3 for David, 4 for Elizabeth, 5 for Frank
+        const val attributeTakenThread =
+            "/save:quest:murdermystery-takenthread" //true after taking thread for the first time from window
+        const val attributeNoiseClue =
+            "/save:quest:murdermystery-noiseclue" //true on learning of the barking dog for the first time
+        const val attributePoisonClue =
+            "/save:quest:murdermystery-poisonclue" //1 after learning poison was bought, 2 after finding liar
+        const val attributeAskPoisonAnna =
+            "/save:quest:murdermystery-askpoisonanna" //true after asking Anna about poison
+        const val attributeAskPoisonBob = "/save:quest:murdermystery-askpoisonbob" //true after asking Bob about poison
+        const val attributeAskPoisonCarol =
+            "/save:quest:murdermystery-askpoisoncarol" //true after asking Carol about poison
+        const val attributeAskPoisonDavid =
+            "/save:quest:murdermystery-askpoisondavid" //true after asking David about poison
+        const val attributeAskPoisonElizabeth =
+            "/save:quest:murdermystery-askpoisonelizabeth" //true after asking Elizabeth about poison
+        const val attributeAskPoisonFrank =
+            "/save:quest:murdermystery-askpoisonfrank" //true after asking Anna about poison
+
+        fun clueCount(player: Player): Int {
+            var count = 0
+            if (inInventory(player, Items.CRIMINALS_THREAD_1808) || inInventory(
+                    player,
+                    Items.CRIMINALS_THREAD_1809
+                ) || inInventory(player, Items.CRIMINALS_THREAD_1810)
+            ) {
+                count++
+            }
+            if (inInventory(player, Items.KILLERS_PRINT_1815)) {
+                count++
+            }
+            if (getAttribute(player, attributePoisonClue, 0) == 2) {
+                count++
+            }
+            return count
         }
+
+        fun solvedMystery(player: Player): Boolean {
+            return (
+                    (inInventory(player, Items.CRIMINALS_THREAD_1808) || inInventory(
+                        player,
+                        Items.CRIMINALS_THREAD_1809
+                    ) || inInventory(player, Items.CRIMINALS_THREAD_1810))
+                            && inInventory(player, Items.KILLERS_PRINT_1815)
+                            && getAttribute(player, attributePoisonClue, 0) == 2
+                            && getAttribute(player, attributeNoiseClue, false)
+                    )
+        }
+    }
+
+    override fun drawJournal(player: Player, stage: Int) {
+        super.drawJournal(player, stage)
+        var line = 12
+        var stage = getStage(player)
+
+        var started = getQuestStage(player, Quests.MURDER_MYSTERY) > 0
+
+        if (!started) {
+            line(player, "I can start this quest by speaking to one of the !!Guards?? at", line++, false)
+            line(player, "the !!Sinclair Mansion??, North of the !!Seer's Village??.", line++, false)
+        } else if (stage < 100) {
+            line(player, "Lord Sinclair, a prominent nobleman, had been horribly", line++, true)
+            line(player, "murdered at his mansion. The guards had been sent to", line++, true)
+            line(player, "investigate his murder, but have been completely stuck.", line++, true)
+
+            if (solvedMystery(player)) {
+                line(player, "One of the guards asked me for my help in solving the", line++, true)
+                line(player, "murder. After careful examination of the crime scene and", line++, true)
+                line(player, "interrogating all suspects, I worked out who was guilty.", line++, true)
+            } else {
+                line(player, "One of the !!guards?? has asked me for my help in solving the", line++, false)
+                line(player, "murder. I should !!examine the crime scene?? very closely for", line++, false)
+                line(player, "evidence, and !!interrogate everybody?? in the area carefully.", line++, false)
+            }
+
+            // This may not be a stage but an attribute when all the evidence is collected.
+            if (solvedMystery(player)) {
+                line(player, "I have !!indisputable evidence?? of who the murderer must be.", line++, false)
+                line(player, "I should take it to one of the !!Guards?? immediately.", line++, false)
+            } else {
+                line++
+                if (inInventory(player, Items.CRIMINALS_THREAD_1808) || inInventory(
+                        player,
+                        Items.CRIMINALS_THREAD_1809
+                    ) || inInventory(player, Items.CRIMINALS_THREAD_1810)
+                ) {
+                    line(player, "I have found some !!coloured thread??. It might be useful.", line++, false)
+                }
+                if (inInventory(player, Items.CRIMINALS_DAGGER_1813) || inInventory(
+                        player,
+                        Items.CRIMINALS_DAGGER_1814
+                    )
+                ) {
+                    line(player, "I have taken the !!murder weapon??. I think it might help me.", line++, false)
+                }
+                if (inInventory(player, Items.PUNGENT_POT_1812)) {
+                    line(player, "I have a !!strange smelling pot??. It seems like a clue.", line++, false)
+                }
+            }
+        } else {
+            line(player, "One of the guards asked me for my help in solving the", line++, true)
+            line(player, "murder. After careful examination of the crime scene and", line++, true)
+            line(player, "interrogating all suspects, I worked out who was guilty.", line++, true)
+            line(player, "I took the evidence I had collected to the Guards and", line++, true)
+            line(player, "explained how it could identify the killer. Impressed", line++, true)
+            line(player, "with my deductions, the killer was arrested and I was", line++, true)
+            line(player, "given a fair reward for my help in solving the crime.", line++, true)
+            line++
+            line(player, "<col=FF0000>QUEST COMPLETE!</col>", line)
+        }
+
+    }
+
+    override fun reset(player: Player) {
+        removeAttribute(player, attributeRandomMurderer)
+        removeAttribute(player, attributeNoiseClue)
+        removeAttribute(player, attributePoisonClue)
+        removeAttribute(player, attributeTakenThread)
+        removeAttribute(player, attributeAskPoisonAnna)
+        removeAttribute(player, attributeAskPoisonBob)
+        removeAttribute(player, attributeAskPoisonCarol)
+        removeAttribute(player, attributeAskPoisonDavid)
+        removeAttribute(player, attributeAskPoisonElizabeth)
+        removeAttribute(player, attributeAskPoisonFrank)
     }
 
     override fun finish(player: Player) {
-        super.finish(player)
         var ln = 10
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, Items.COINS_6964, 230)
+        super.finish(player)
+        player.packetDispatch.sendString("You have completed the Murder Mystery quest!", 277, 4)
+        player.packetDispatch.sendItemZoomOnInterface(Items.COINS_617, 230, 277, 5)
+
         drawReward(player, "3 Quest Points", ln++)
-        drawReward(player, "2000 Coins", ln)
-        drawReward(player, "1406 Crafting XP", ln)
-        rewardXP(player, Skills.CRAFTING, 1406.0)
+        drawReward(player, "2000 coins", ln++)
+        drawReward(player, "1406 Crafting XP", ln++)
+
         addItem(player, Items.COINS_995, 2000)
-        setVarbit(player, 3889, 0, true)
-        removeAttributes(player, MurderMysteryUtils.ATTRIBUTE_ANNA, MurderMysteryUtils.ATTRIBUTE_DAVID, MurderMysteryUtils.ATTRIBUTE_ELIZABETH)
+        rewardXP(player, Skills.CRAFTING, 1406.0)
+
+        removeAttribute(player, attributeNoiseClue)
+        removeAttribute(player, attributePoisonClue)
+        removeAttribute(player, attributeTakenThread)
+        removeAttribute(player, attributeAskPoisonAnna)
+        removeAttribute(player, attributeAskPoisonBob)
+        removeAttribute(player, attributeAskPoisonCarol)
+        removeAttribute(player, attributeAskPoisonDavid)
+        removeAttribute(player, attributeAskPoisonElizabeth)
+        removeAttribute(player, attributeAskPoisonFrank)
     }
 
-    override fun newInstance(`object`: Any?): Quest = this
+    override fun newInstance(`object`: Any?): Quest {
+        return this
+    }
 }
