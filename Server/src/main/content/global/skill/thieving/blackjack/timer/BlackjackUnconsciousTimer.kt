@@ -1,16 +1,17 @@
 package content.global.skill.thieving.blackjack.timer
 
+import content.global.skill.thieving.blackjack.BlackjackService
+import content.global.skill.thieving.blackjack.BlackjackType
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
 import core.game.system.timer.RSTimer
 import core.game.world.update.flag.context.Animation
 
-class BlackjackUnconsciousTimer :
-    RSTimer(
-        runInterval = 1,
-        identifier = BLACKJACK_UNCONSCIOUS,
-        isSoft = false
-    ) {
+class BlackjackUnconsciousTimer : RSTimer(
+    runInterval = 1,
+    identifier = BLACKJACK_UNCONSCIOUS,
+    isSoft = false
+) {
 
     var remainingTicks: Int = 0
     var pickpocketsLeft: Int = 2
@@ -19,7 +20,6 @@ class BlackjackUnconsciousTimer :
 
     override fun onRegister(entity: Entity) {
         if (entity !is NPC) return
-
         entity.animator.animate(Animation(838))
         entity.sendChat("Zzzzzzz")
         entity.walkingQueue.reset()
@@ -38,8 +38,9 @@ class BlackjackUnconsciousTimer :
     }
 
     override fun getTimer(vararg args: Any): RSTimer {
+        val blackjackType = args.getOrNull(0) as? BlackjackType ?: BlackjackType.ORDINARY
         val timer = BlackjackUnconsciousTimer()
-        timer.remainingTicks = args.getOrNull(0) as? Int ?: 8
+        timer.remainingTicks = BlackjackService.getStunTicks(blackjackType)
         timer.pickpocketsLeft = args.getOrNull(1) as? Int ?: 2
         return timer
     }

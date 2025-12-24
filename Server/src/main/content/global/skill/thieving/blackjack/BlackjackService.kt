@@ -144,7 +144,7 @@ object BlackjackService {
     /**
      * Get the number of stun ticks for a blackjack.
      */
-    private fun getStunTicks(blackjack: BlackjackType): Int = when (blackjack) {
+    fun getStunTicks(blackjack: BlackjackType): Int = when (blackjack) {
         BlackjackType.ORDINARY -> 1
         BlackjackType.OFFENSIVE -> 2
         BlackjackType.DEFENSIVE -> 3
