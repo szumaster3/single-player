@@ -16,7 +16,7 @@ class OgreNPCBehavior : NPCBehavior(NPCs.OGRE_2801) {
 
     companion object {
         const val ATTACKED_BY_ATTRIBUTE = "attackedByPlayers"
-        private const val COMBAT_TRAINING_CAMP_AREA = "CombatTrainingCamp"
+        private const val COMBAT_TRAINING_CAMP_AREA = "CombatTrainingCampMapArea"
     }
 
     override fun canBeAttackedBy(self: NPC, attacker: Entity, style: CombatStyle, shouldSendMessage: Boolean): Boolean {
