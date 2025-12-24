@@ -66,9 +66,9 @@ class GhostDiscipleDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             0 -> npc("This is the Ectofuntus, the most marvellous creation of", "Necrovarus, our glorious leader.").also { stage++ }
-            1 -> options("What is the Ectofunuts?", "Where do I get ectoplasm from?", "How do I grind bones?", "How do I receive Ectotokens?", "Thanks for your time.").also { stage++ }
+            1 -> options("What is the Ectofuntus?", "Where do I get ectoplasm from?", "How do I grind bones?", "How do I receive Ectotokens?", "Thanks for your time.").also { stage++ }
             2 -> when (buttonId) {
-                1 -> player("What is the Ectofunuts?").also { stage = 10 }
+                1 -> player("What is the Ectofuntus?").also { stage = 10 }
                 2 -> player("Where do I get ectoplasm from?").also { stage = 20 }
                 3 -> player("How do I grind bones?").also { stage = 30 }
                 4 -> player("How do I receive Ectotokens?").also { stage = 40 }

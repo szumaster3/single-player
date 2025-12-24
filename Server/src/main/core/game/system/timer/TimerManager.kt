@@ -34,8 +34,9 @@ class TimerManager(
      * Registers a new timer for this entity.
      */
     fun registerTimer(timer: RSTimer) {
-        timer.onRegister(entity)
+        timer.beforeRegister(entity)
         newTimers.add(timer)
+        timer.onRegister(entity)
     }
 
     /**

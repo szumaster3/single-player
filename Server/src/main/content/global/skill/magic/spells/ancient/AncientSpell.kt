@@ -61,11 +61,14 @@ class AncientSpell private constructor(private val definition: AncientSpellDefin
                 }
             }
             definition.name.startsWith("ICE") -> {
-                if (!hasTimerActive(victim, "frozen:immunity")) {
-                    val ticks = (definition.type.ordinal - SpellType.RUSH.ordinal + 1) * 8
-                    registerTimer(victim, spawnTimer("frozen", ticks, true))
-                    if (definition.type == SpellType.BARRAGE) state.isFrozen = true
+                val ticks = (type.ordinal - 4) * 8
+                if (hasTimerActive(victim, "frozen") || hasTimerActive(victim, "frozen:immunity")) {
+                    if (type === SpellType.BARRAGE) {
+                        state.isFrozen = true
+                    }
+                    return
                 }
+                registerTimer(victim, spawnTimer("frozen", ticks, true))
             }
             definition.name.startsWith("MIASMIC") -> {
                 if (!hasTimerActive(victim, "miasmic:immunity")) {

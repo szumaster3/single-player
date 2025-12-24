@@ -37,11 +37,11 @@ class Disease :
         hitsLeft = root.get("hitsLeft")?.asInt ?: 25
     }
 
-    override fun onRegister(entity: Entity) {
+    override fun beforeRegister(entity: Entity) {
         if (hasTimerActive<Disease>(entity)) {
             removeTimer(entity, this)
         } else if (entity is Player) {
-            sendMessage(entity, "You have become diseased!")
+            sendMessage(entity, "You've become diseased!")
         }
     }
 

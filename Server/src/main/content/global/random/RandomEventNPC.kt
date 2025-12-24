@@ -5,8 +5,12 @@ import content.global.random.event.surprise_exam.PatternRecognitionNPC
 import core.api.*
 import core.api.utils.WeightBasedTable
 import core.game.interaction.MovementPulse
+import core.game.node.entity.Entity
+import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.impl.PulseType
 import core.game.node.entity.npc.NPC
+import core.game.node.entity.npc.agg.AggressiveBehavior
+import core.game.node.entity.npc.agg.AggressiveHandler
 import core.game.node.entity.player.Player
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
@@ -16,6 +20,8 @@ import core.tools.colorize
 import core.tools.secondsToTicks
 import core.tools.ticksToCycles
 import shared.consts.Sounds
+import kotlin.math.ceil
+import kotlin.math.min
 import kotlin.random.Random
 import kotlin.reflect.full.createInstance
 
@@ -59,14 +65,12 @@ abstract class RandomEventNPC(
 
     open fun follow() {
         pulseManager.run(
-            (
-                object : MovementPulse(this, player, Pathfinder.DUMB) {
-                    override fun pulse(): Boolean {
-                        face(player)
-                        return false
-                    }
+            (object : MovementPulse(this, player, Pathfinder.DUMB) {
+                override fun pulse(): Boolean {
+                    face(player)
+                    return false
                 }
-            ),
+            }),
             PulseType.STANDARD,
         )
     }
@@ -108,6 +112,11 @@ abstract class RandomEventNPC(
         player.interfaceManager.close()
         player.setAttribute("re-npc", this)
         super.init()
+        super.aggressiveHandler = AggressiveHandler(this, object : AggressiveBehavior() {
+            override fun canSelectTarget(entity: Entity, target: Entity): Boolean {
+                return target == player
+            }
+        })
     }
 
     open fun onTimeUp() {
@@ -138,4 +147,19 @@ abstract class RandomEventNPC(
     }
 
     abstract fun talkTo(npc: NPC)
+
+    override fun isAttackable(entity: Entity, style: CombatStyle, message: Boolean): Boolean {
+        if (entity != player) {
+            if (entity is Player) {
+                sendMessage(entity, "It isn't interested in fighting you.") //TODO authentic message
+            }
+            return false
+        }
+        return super.isAttackable(entity, style, message)
+    }
+
+    fun idForCombatLevel(ids: List<Int>, player: Player): Int {
+        val index = min(ids.size, ceil(player.properties.currentCombatLevel / 20.0).toInt()) - 1
+        return ids[index]
+    }
 }

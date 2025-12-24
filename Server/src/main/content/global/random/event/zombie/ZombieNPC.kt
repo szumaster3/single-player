@@ -25,7 +25,7 @@ class ZombieNPC(
         this.transform(id)
         this.setAttribute("no-spawn-return", true)
         this.attack(player)
-        sendChat("Brainsssss!")
+        sendChat("Braaaainssss!")
     }
 
     override fun finalizeDeath(killer: Entity?) {

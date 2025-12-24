@@ -105,7 +105,8 @@ class Shops : StartupListener, TickListener, InteractionListener, InterfaceListe
                             }
                         }
                     } else {
-                        items.add(ShopItem(item, amount.toInt(), tokens.getOrNull(2)?.toIntOrNull() ?: 100))
+                        val restockRate = tokens.getOrNull(2)?.toIntOrNull() ?: 100
+                        items.add(ShopItem(item, amount.toInt(), restockRate))
                         idsInStock[item] = true
                     }
                 } catch (e: Exception) {

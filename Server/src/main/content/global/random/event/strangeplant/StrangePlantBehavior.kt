@@ -37,7 +37,7 @@ class StrangePlantBehavior : NPCBehavior(NPCs.STRANGE_PLANT_408) {
     override fun beforeDamageReceived(
         self: NPC,
         attacker: Entity,
-        state: BattleState,
+        state: BattleState
     ) {
         if (state.estimatedHit > 3) {
             state.estimatedHit = RandomFunction.getRandom(3)
@@ -52,5 +52,9 @@ class StrangePlantBehavior : NPCBehavior(NPCs.STRANGE_PLANT_408) {
         killer: Entity,
     ) {
         AntiMacro.terminateEventNpc(killer.asPlayer())
+    }
+
+    override fun getXpMultiplier(self: NPC, attacker: Entity): Double {
+        return super.getXpMultiplier(self, attacker) / 16.0
     }
 }

@@ -14,10 +14,7 @@ class IncubatorTimer : PersistTimer(500, "incubation") {
 
     override fun getInitialRunDelay(): Int = 50
 
-    override fun parse(
-        root: JsonObject,
-        entity: Entity,
-    ) {
+    override fun parse(root: JsonObject, entity: Entity) {
         val eggs = root.getAsJsonArray("eggs") ?: return
         for (eggElement in eggs) {
             val eggInfo = eggElement.asJsonArray
@@ -31,10 +28,7 @@ class IncubatorTimer : PersistTimer(500, "incubation") {
         }
     }
 
-    override fun save(
-        root: JsonObject,
-        entity: Entity,
-    ) {
+    override fun save(root: JsonObject, entity: Entity) {
         val arr = JsonArray()
         for ((_, eggInfo) in incubatingEggs) {
             val eggArr = JsonArray()
@@ -87,19 +81,12 @@ class IncubatorTimer : PersistTimer(500, "incubation") {
             else -> -1
         }
 
-        fun getEggFor(
-            player: Player,
-            region: Int,
-        ): IncubatingEgg? {
+        fun getEggFor(player: Player, region: Int): IncubatingEgg? {
             val playerTimer = getTimer<IncubatorTimer>(player) ?: return null
             return playerTimer.incubatingEggs[region]
         }
 
-        fun registerEgg(
-            player: Player,
-            region: Int,
-            egg: IncubatorEgg,
-        ) {
+        fun registerEgg(player: Player, region: Int, egg: IncubatorEgg) {
             val timer = getTimer<IncubatorTimer>(player) ?: IncubatorTimer()
             timer.incubatingEggs[region] = IncubatingEgg(
                 region,
@@ -112,10 +99,7 @@ class IncubatorTimer : PersistTimer(500, "incubation") {
             setVarbit(player, varbitForRegion(region), 1, true)
         }
 
-        fun removeEgg(
-            player: Player,
-            region: Int,
-        ): IncubatorEgg? {
+        fun removeEgg(player: Player, region: Int): IncubatorEgg? {
             val egg = getEggFor(player, region) ?: return null
             val timer = getTimer<IncubatorTimer>(player) ?: return null
             timer.incubatingEggs.remove(region)

@@ -65,25 +65,12 @@ class JaldraochtPyramid: MapArea {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     companion object {
         val baseFloors = arrayOf(
             getRegionBorders(11597),
             getRegionBorders(11341),
             getRegionBorders(11085)
         )
-
 
         private val sarcophagusList =
             arrayOf(
