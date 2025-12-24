@@ -107,11 +107,12 @@ object BlackjackService {
      * Handle a failed knockout attempt.
      */
     private fun fail(player: Player, npc: NPC) {
+        val coshingNPC = BlackjackNPC.forId(npc.id)
         player.lock(1)
         npc.faceLocation(player.location)
         npc.sendChat("I'll kill you for that!")
         npc.animator.animate(Animation(Animations.ATTACK_395))
-        impact(player, 2)
+        coshingNPC?.damage?.let { impact(player, it) }
         stun(player, 3, false)
         sendMessage(player, "You blow only glances off the ${npc.name.lowercase()} head.")
     }
