@@ -1,4 +1,4 @@
-package content.region.asgarnia.taverley.quest.druid_quest_2.dialogue
+package content.region.asgarnia.taverley.quest.druid_quest.dialogue
 
 import core.api.getQuestStage
 import core.api.setQuestStage

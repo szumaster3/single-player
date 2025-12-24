@@ -1,4 +1,4 @@
-package content.region.asgarnia.taverley.quest.druid_quest_2
+package content.region.asgarnia.taverley.quest.druid_quest
 
 import core.api.*
 import core.game.component.Component
