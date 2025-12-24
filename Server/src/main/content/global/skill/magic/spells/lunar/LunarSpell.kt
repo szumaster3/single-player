@@ -648,7 +648,7 @@ class LunarSpell : SpellListener("lunar") {
             sendString(player, "Hitpoints: ${(npc.definition.handlers[NPCConfigParser.LIFEPOINTS] as? Int) ?: 0}", Components.DREAM_MONSTER_STAT_522, 2)
             sendString(player, "Max hit: ${npc.getSwingHandler(false)?.calculateHit(npc, player, 1.0) ?: 0}", Components.DREAM_MONSTER_STAT_522, 3)
 
-            val poisonStatus = if (npc.definition.handlers.getOrDefault(NPCConfigParser.POISON_IMMUNE, false) == true) {
+            val poisonStatus = if (npc.isPoisonImmune) {
                 "This creature is immune to poison."
             } else {
                 "This creature is not immune to poison."

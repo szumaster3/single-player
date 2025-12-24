@@ -4705,21 +4705,22 @@ fun isStunned(entity: Entity): Boolean = entity.clocks[Clocks.STUN] >= getWorldT
  * @param source The entity responsible for applying the poison (e.g., attacker or source of poison).
  * @param severity The number of remaining hits for the poison effect.
  */
-fun applyPoison(
-    entity: Entity,
-    source: Entity,
-    severity: Int,
-) {
-    if (hasTimerActive<PoisonImmunity>(entity)) {
+fun applyPoison (entity: Entity, source: Entity, severity: Int) {
+    if(hasTimerActive<PoisonImmunity>(entity)) {
         return
     }
     if(entity.isPoisonImmune()) {
         return
     }
     val existingTimer = getTimer<Poison>(entity)
+
     if (existingTimer != null) {
-        existingTimer.severity = severity
-        existingTimer.damageSource = source
+        if (existingTimer.severity > severity) {
+            return
+        } else {
+            existingTimer.severity = severity
+            existingTimer.damageSource = source
+        }
     } else {
         registerTimer(entity, spawnTimer<Poison>(source, severity))
     }

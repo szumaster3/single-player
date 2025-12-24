@@ -92,6 +92,15 @@ object LoginConfiguration {
         player.interfaceManager.openWindowsPane(lobbyPane)
         player.interfaceManager.opened = lobbyInterface
 
+        // rectangle on the left
+        sendString(player, "0 messages", lobbyInterface.id, 37)
+        sendString(player, "0", lobbyInterface.id, 39)
+
+        // center rectangle
+        sendString(player, "-", lobbyInterface.id, 96)
+        sendString(player, "Your member credit is unlimited.<br>Enjoy without limits!", lobbyInterface.id, 93)
+        sendString(player, "unlimited member credit", lobbyInterface.id, 94)
+
         PacketRepository.send(Interface::class.java, InterfaceContext(player, lobbyPane.id, 2, Components.WELCOME_SCREEN_378, true))
         PacketRepository.send(Interface::class.java, InterfaceContext(player, lobbyPane.id, 3, selectedMessageModel, true))
         sendString(player, GameWorld.settings?.message_string ?: "", selectedMessageModel, getMessageChild(selectedMessageModel))

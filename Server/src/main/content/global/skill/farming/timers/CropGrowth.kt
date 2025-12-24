@@ -35,7 +35,7 @@ class CropGrowth : PersistTimer(500, "farming:crops", isSoft = true) {
                 continue
             }
 
-            if (patch.nextGrowth < (System.currentTimeMillis() + 240_000L) && !patch.isDead) {
+            if(patch.nextGrowth < (System.currentTimeMillis() + 240_000L) && !patch.isDead && !patch.isChoppedFruitTree()){
                 patch.nextGrowth =
                     System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(patch.getStageGrowthMinutes().toLong())
                 patch.update()
@@ -55,7 +55,7 @@ class CropGrowth : PersistTimer(500, "farming:crops", isSoft = true) {
             val type = patch.patch.type
             val shouldPlayCatchup =
                 !patch.isGrown() || (type == PatchType.BUSH_PATCH && patch.getFruitOrBerryCount() < 4) || (type == PatchType.FRUIT_TREE_PATCH && patch.getFruitOrBerryCount() < 6)
-            if (shouldPlayCatchup && !patch.isDead) {
+            if (shouldPlayCatchup && !patch.isDead && !patch.isChoppedFruitTree()) {
                 var stagesToSimulate = if (!patch.isGrown()) {
                     if (patch.isWeedy() || patch.isEmptyAndWeeded()) {
                         patch.currentGrowthStage % 4

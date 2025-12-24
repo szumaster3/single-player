@@ -294,7 +294,7 @@ class UseWithPatchHandler : InteractionListener {
                     }
 
                     val p = patch.getPatchFor(player)
-                    if (p.getCurrentState() < 3 && p.isWeedy() && plantable != Plantable.SCARECROW && plantable != Plantable.ENRICHED_SEED) {
+                    if (p.getCurrentState() < 3 && p.isWeedy()) {
                         sendMessage(player, "This patch needs weeding first.")
                         return@onUseWith true
                     } else if (p.getCurrentState() > 3) {

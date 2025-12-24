@@ -32,11 +32,7 @@ open class MeleeSwingHandler(
         var distance = if (usingHalberd(entity)) 2 else 1
         var type = InteractionType.STILL_INTERACT
         var goodRange = canMelee(entity, victim, distance)
-        if (!goodRange &&
-            victim.properties.combatPulse.getVictim() !== entity &&
-            victim.walkingQueue.isMoving &&
-            entity.size() == 1
-        ) {
+        if (!goodRange && victim.properties.combatPulse.getVictim() !== entity && victim.walkingQueue.isMoving && entity.size() == 1) {
             type = InteractionType.MOVE_INTERACT
             distance += if (entity.walkingQueue.isRunningBoth) 2 else 1
             goodRange = canMelee(entity, victim, distance)
@@ -48,19 +44,16 @@ open class MeleeSwingHandler(
         val enemyRunning = victim.walkingQueue.runDir != -1
         // THX 4 fix tom <333.
         if (super.canSwing(entity, victim) != InteractionType.NO_INTERACT) {
-            val maxDistance =
-                if (isRunning) {
-                    if (enemyRunning) {
-                        3
-                    } else {
-                        4
-                    }
+            val maxDistance = if (isRunning) {
+                if (enemyRunning) {
+                    3
                 } else {
-                    2
+                    4
                 }
-            if (entity.walkingQueue.isMoving &&
-                entity.location.getDistance(victim.location) <= maxDistance
-            ) {
+            } else {
+                2
+            }
+            if (entity.walkingQueue.isMoving && entity.location.getDistance(victim.location) <= maxDistance) {
                 return type
             } else if (goodRange) {
                 if (type == InteractionType.STILL_INTERACT) entity.walkingQueue.reset()
@@ -91,11 +84,8 @@ open class MeleeSwingHandler(
         state.estimatedHit = hit
         if (victim != null) {
             if (state.estimatedHit > victim.skills.lifepoints) state.estimatedHit = victim.skills.lifepoints
-            if (state.estimatedHit + state.secondaryHit >
-                victim.skills.lifepoints
-            ) {
-                state.secondaryHit -=
-                    ((state.estimatedHit + state.secondaryHit) - victim.skills.lifepoints)
+            if (state.estimatedHit + state.secondaryHit > victim.skills.lifepoints) {
+                state.secondaryHit -= ((state.estimatedHit + state.secondaryHit) - victim.skills.lifepoints)
             }
         }
         return 1
@@ -139,49 +129,61 @@ open class MeleeSwingHandler(
     }
 
     override fun adjustBattleState(entity: Entity, victim: Entity, state: BattleState) {
-        if (entity !is Player || state.estimatedHit <= 0) {
-            super.adjustBattleState(entity, victim, state)
-            return
-        }
-
-        entity.equipment.getNew(3)?.let { weapon ->
-            var damage = -1
-            val name = weapon.name
-            if (name.contains("(p++") || name.contains("(s)") || name.contains("(kp)")) damage = 68
-            else if (name.contains("(p+)")) damage = 58
-            else if (name.contains("(p)")) damage = 48
-            if (damage > -1 && RandomFunction.random(10) < 4) {
-                applyPoison(victim, entity, damage)
-            }
-        }
-
-        val shield = entity.equipment[EquipmentContainer.SLOT_SHIELD]
-        val charged = shield?.let { ChargedItem.forId(it.id) }
-
-        if (shield != null && charged != null) {
-            val (skillToReduce, requiredDistance) = when (shield.id) {
-                in ChargedItem.BROODOO_SHIELDA.ids -> Skills.DEFENCE to 1
-                in ChargedItem.BROODOO_SHIELDB.ids -> Skills.ATTACK to 1
-                in ChargedItem.BROODOO_SHIELDC.ids -> Skills.STRENGTH to 1
-                else -> null to 0
-            }
-
-            if (skillToReduce != null &&
-                RandomFunction.random(10) == 0 && // 10% chance
-                canMelee(entity, victim, requiredDistance) &&
-                victim.skills.lifepoints <= victim.skills.maximumLifepoints / 2 && // 50% HP or less
-                victim.skills.getLevel(skillToReduce) >= victim.skills.getStaticLevel(skillToReduce)
-            ) {
-                val currentLevel = victim.skills.getLevel(skillToReduce)
-                val reduction = 1 + (currentLevel * 0.05).toInt()
-                victim.skills.setLevel(skillToReduce, (currentLevel - reduction).coerceAtLeast(0))
-
-                val currentCharge = ChargedItem.getCharge(shield.id) ?: 0
-                if (currentCharge > 0) {
-                    val newId = charged.forCharge(currentCharge - 1)
-                    entity.equipment.replace(Item(newId), EquipmentContainer.SLOT_SHIELD, true)
+        when {
+            entity is Player && state.estimatedHit > 0 -> {
+                entity.equipment.getNew(3)?.let { weapon ->
+                    var damage = -1
+                    val name = weapon.name
+                    if (name.contains("(p++") || name.contains("(s)") || name.contains("(kp)")) damage = 30
+                    else if (name.contains("(p+)")) damage = 25
+                    else if (name.contains("(p)")) damage = 20
+                    if (damage > -1 && RandomFunction.random(10) < 4) {
+                        applyPoison(victim, entity, damage)
+                    }
                 }
-                entity.debug("Broodoo Shield effect reduces enemy [${Skills.SKILL_NAME[skillToReduce]}]")
+
+                val shield = entity.equipment[EquipmentContainer.SLOT_SHIELD]
+                val charged = shield?.let { ChargedItem.forId(it.id) }
+
+                if (shield != null && charged != null) {
+                    val (skillToReduce, requiredDistance) = when (shield.id) {
+                        in ChargedItem.BROODOO_SHIELDA.ids -> Skills.DEFENCE to 1
+                        in ChargedItem.BROODOO_SHIELDB.ids -> Skills.ATTACK to 1
+                        in ChargedItem.BROODOO_SHIELDC.ids -> Skills.STRENGTH to 1
+                        else -> null to 0
+                    }
+
+                    if (skillToReduce != null && RandomFunction.random(10) == 0 &&
+                        canMelee(entity, victim, requiredDistance) &&
+                        victim.skills.lifepoints <= victim.skills.maximumLifepoints / 2 &&
+                        victim.skills.getLevel(skillToReduce) >= victim.skills.getStaticLevel(skillToReduce)
+                    ) {
+                        val currentLevel = victim.skills.getLevel(skillToReduce)
+                        val reduction = 1 + (currentLevel * 0.05).toInt()
+                        victim.skills.setLevel(skillToReduce, (currentLevel - reduction).coerceAtLeast(0))
+
+                        val currentCharge = ChargedItem.getCharge(shield.id) ?: 0
+                        if (currentCharge > 0) {
+                            val newId = charged.forCharge(currentCharge - 1)
+                            entity.equipment.replace(Item(newId), EquipmentContainer.SLOT_SHIELD, true)
+                        }
+                        entity.debug("Broodoo Shield effect reduces enemy [${Skills.SKILL_NAME[skillToReduce]}]")
+                    }
+                }
+            }
+
+            entity is NPC -> {
+                val poisonous = entity.isPoisonous
+                val damage = entity.poisonSeverity()
+
+                if (poisonous && damage > -1 && RandomFunction.random(10) < 4) {
+                    applyPoison(victim, entity, damage)
+                }
+            }
+
+            else -> {
+                super.adjustBattleState(entity, victim, state)
+                return
             }
         }
 
@@ -210,24 +212,15 @@ open class MeleeSwingHandler(
             effectiveAttackLevel *= 64
         }
 
-        val victimName =
-            entity.properties.combatPulse
-                .getVictim()
-                ?.name ?: "none"
+        val victimName = entity.properties.combatPulse.getVictim()?.name ?: "none"
 
         // attack bonus for specialized equipments (salve amulets, slayer equips)
         if (entity is Player) {
             val amuletId = getItemFromEquipment(entity, EquipmentSlot.NECK)?.id ?: 0
-            if ((amuletId == Items.SALVE_AMULET_4081 || amuletId == Items.SALVE_AMULETE_10588) &&
-                checkUndead(victimName)
-            ) {
+            if ((amuletId == Items.SALVE_AMULET_4081 || amuletId == Items.SALVE_AMULETE_10588) && checkUndead(victimName)) {
                 effectiveAttackLevel *= if (amuletId == Items.SALVE_AMULET_4081) 1.15 else 1.2
             } else if (getSlayerTask(entity)?.npcs?.contains(
-                    (
-                        entity.properties.combatPulse
-                            ?.getVictim()
-                            ?.id ?: 0
-                    ),
+                    (entity.properties.combatPulse?.getVictim()?.id ?: 0),
                 ) == true
             ) {
                 effectiveAttackLevel *= getDamAccBonus(entity) // Slayer Helm/ Black Mask/ Slayer cape
@@ -264,13 +257,8 @@ open class MeleeSwingHandler(
 
         cumulativeStr *= getSetMultiplier(entity, Skills.STRENGTH)
 
-        if (entity is Player &&
-            getSlayerTask(entity)?.npcs?.contains(
-                (
-                    entity.properties.combatPulse
-                        ?.getVictim()
-                        ?.id ?: 0
-                ),
+        if (entity is Player && getSlayerTask(entity)?.npcs?.contains(
+                (entity.properties.combatPulse?.getVictim()?.id ?: 0),
             ) == true
         ) {
             cumulativeStr *= getDamAccBonus(entity)
@@ -293,16 +281,13 @@ open class MeleeSwingHandler(
                     floor(effectiveDefenceLevel + (victim.prayer.getSkillBonus(Skills.DEFENCE) * effectiveDefenceLevel))
                 if (victim.properties.attackStyle!!.style == WeaponInterface.STYLE_DEFENSIVE) {
                     effectiveDefenceLevel += 3
-                } else if (victim.properties.attackStyle!!.style ==
-                    WeaponInterface.STYLE_CONTROLLED
-                ) {
+                } else if (victim.properties.attackStyle!!.style == WeaponInterface.STYLE_CONTROLLED) {
                     effectiveDefenceLevel += 1
                 }
                 effectiveDefenceLevel += 8
                 effectiveDefenceLevel = floor(effectiveDefenceLevel)
                 return floor(
-                    effectiveDefenceLevel *
-                        (victim.properties.bonuses[attacker.properties.attackStyle!!.bonusType + 5] + 64),
+                    effectiveDefenceLevel * (victim.properties.bonuses[attacker.properties.attackStyle!!.bonusType + 5] + 64),
                 ).toInt()
             }
 
@@ -323,10 +308,7 @@ open class MeleeSwingHandler(
         if (e!!.properties.armourSet === ArmourSet.DHAROK && skillId == Skills.STRENGTH) {
             return 1.0 + (e!!.skills.maximumLifepoints - e.skills.lifepoints) * 0.01
         }
-        if (e is Player &&
-            e.isWearingVoid(CombatStyle.MELEE) &&
-            (skillId == Skills.ATTACK || skillId == Skills.STRENGTH)
-        ) {
+        if (e is Player && e.isWearingVoid(CombatStyle.MELEE) && (skillId == Skills.ATTACK || skillId == Skills.STRENGTH)) {
             return 1.1
         }
         return 1.0
@@ -350,22 +332,9 @@ open class MeleeSwingHandler(
     }
 
     private fun checkUndead(name: String): Boolean =
-        (
-            name == "Zombie" ||
-                name.contains("rmoured") ||
-                name == "Ankou" ||
-                name == "Crawling Hand" ||
-                name == "Banshee" ||
-                name == "Ghost" ||
-                name == "Ghast" ||
-                name == "Mummy" ||
-                name.contains(
-                    "Revenant",
-                ) ||
-                name == "Skeleton" ||
-                name == "Zogre" ||
-                name == "Spiritual Mage"
-        )
+        (name == "Zombie" || name.contains("rmoured") || name == "Ankou" || name == "Crawling Hand" || name == "Banshee" || name == "Ghost" || name == "Ghast" || name == "Mummy" || name.contains(
+            "Revenant",
+        ) || name == "Skeleton" || name == "Zogre" || name == "Spiritual Mage")
 
     companion object {
         private fun usingHalberd(entity: Entity): Boolean {
@@ -413,13 +382,10 @@ open class MeleeSwingHandler(
                 if (e == victim.location) {
                     return true
                 }
-                return victim.getSwingHandler(false).type == CombatStyle.MELEE &&
-                    e.withinDistance(
-                        victim.location,
-                        1,
-                    ) &&
-                    victim.properties.combatPulse.getVictim() === entity &&
-                    entity.index < victim.index
+                return victim.getSwingHandler(false).type == CombatStyle.MELEE && e.withinDistance(
+                    victim.location,
+                    1,
+                ) && victim.properties.combatPulse.getVictim() === entity && entity.index < victim.index
             }
             return entity.centerLocation.withinDistance(
                 victim.centerLocation,

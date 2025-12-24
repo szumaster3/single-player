@@ -19,7 +19,6 @@ import shared.consts.Sounds
 val livesBased = arrayOf(
     PatchType.HERB_PATCH,
     PatchType.CACTUS_PATCH,
-    PatchType.BELLADONNA_PATCH,
     PatchType.HOPS_PATCH,
     PatchType.ALLOTMENT,
     PatchType.EVIL_TURNIP_PATCH,

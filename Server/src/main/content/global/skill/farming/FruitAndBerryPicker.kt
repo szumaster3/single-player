@@ -6,6 +6,7 @@ import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.system.task.Pulse
@@ -87,6 +88,10 @@ class FruitAndBerryPicker : OptionHandler() {
                     } else {
                         val determiner = if (patch.patch.type == PatchType.BUSH_PATCH) "some" else "a"
                         sendMessage(player, "You pick $determiner ${reward.name.lowercase()}.")
+                    }
+
+                    if (plantable == Plantable.POISON_IVY_SEED && patch.patch == FarmingPatch.CHAMPIONS_GUILD_BUSH) {
+                        player.achievementDiaryManager.finishTask(player, DiaryType.VARROCK, 2, 0)
                     }
 
                     return patch.getFruitOrBerryCount() == 0

@@ -1,8 +1,6 @@
 package content.region.misthalin.draynor.quest.anma.plugin
 
-import content.data.GameAttributes
 import core.api.*
-import core.game.container.impl.EquipmentContainer
 import core.game.event.EventHook
 import core.game.event.TickEvent
 import core.game.interaction.IntType
@@ -20,32 +18,29 @@ import shared.consts.Quests
 class AvasDevice : InteractionListener, EventHook<TickEvent> {
 
     override fun defineListeners() {
-
         onEquip(devices) { player, _ ->
             if (!isQuestComplete(player, Quests.ANIMAL_MAGNETISM)) {
                 sendMessage(player, "You need to complete Animal Magnetism to equip this.")
                 return@onEquip false
             }
 
-            if (attractEnabled(player)) {
-                player.hook(Event.Tick, this)
-            }
+            if (attractEnabled(player)) player.hook(Event.Tick, this)
 
-            setAttribute(player, LAST_TICK, getWorldTicks())
+            setAttribute(player, LAST_TICK, getWorldTicks()) //set this on equip so can't be spam-re-equipped to spawn infinite items.
             return@onEquip true
         }
-
         onUnequip(devices) { player, _ ->
-            if (attractEnabled(player)) {
-                player.unhook(this)
-            }
+            if (attractEnabled(player)) player.unhook(this)
             return@onUnequip true
         }
-
         on(devices, IntType.ITEM, "operate") { player, _ ->
             val attract = !attractEnabled(player)
             setAttribute(player, ATTRACT_ENABLED, attract)
-            sendMessage(player, colorize("Ava's device will ${if (attract) "now" else "no longer"} randomly collect loot for you.", "990000"))
+            sendMessage(
+                player, colorize(
+                    "Ava's device will ${if (attract) "now" else "no longer"} randomly collect loot for you.", "990000"
+                )
+            )
             if (attract) {
                 player.hook(Event.Tick, this)
             } else {
@@ -61,11 +56,8 @@ class AvasDevice : InteractionListener, EventHook<TickEvent> {
             return
         }
 
-        if (getWorldTicks() - getLastTick(entity) < attractDelay) {
-            return
-        } else {
-            setAttribute(entity, LAST_TICK, getWorldTicks())
-        }
+        if (getWorldTicks() - getLastTick(entity) < attractDelay) return
+        else setAttribute(entity, LAST_TICK, getWorldTicks())
 
         if (isInterfered(entity)) {
             sendMessage(entity, "Your armour interferes with Ava's device.")
@@ -91,21 +83,16 @@ class AvasDevice : InteractionListener, EventHook<TickEvent> {
             }
         }
 
-        if (!getAttribute(entity, GameAttributes.ITEM_AVA_DEVICE, false) &&
-            entity.houseManager.isInHouse(entity) &&
-            entity.houseManager.isBuildingMode &&
-            entity.equipment[EquipmentContainer.SLOT_ARROWS] != null && freeSlots(entity) == 0)
-        {
-            sendMessage(entity, "Ava's contraption makes an odd burping sound.")
-            setAttribute(entity, GameAttributes.ITEM_AVA_DEVICE, true)
-        }
-
         addItemOrDrop(entity, reward)
     }
 
-    private fun attractEnabled(entity: Entity): Boolean = getAttribute(entity, ATTRACT_ENABLED, true)
+    private fun attractEnabled(entity: Entity): Boolean {
+        return getAttribute(entity, ATTRACT_ENABLED, true) //defaults to enabled
+    }
 
-    private fun getLastTick(entity: Entity): Int = getAttribute(entity, LAST_TICK, 0)
+    private fun getLastTick(entity: Entity): Int {
+        return getAttribute(entity, LAST_TICK, 0)
+    }
 
     private fun isInterfered(player: Player): Boolean {
         val chestPiece = getItemFromEquipment(player, EquipmentSlot.CHEST)

@@ -52,9 +52,12 @@ class RevenantCombatHandler(meleeAnimation: Animation?, magicAnimation: Animatio
                 }
             }
         }
-        if (!isPoisoned(victim!!) && (WildernessZone.getWilderness(entity!!) >= 50 || entity.id == 6998)) {
-            applyPoison(victim, entity, 6)
+        if (entity?.id == 6998) {
+            applyPoison(victim!!, entity, 40);
+        } else if (WildernessZone.getWilderness(entity!!) >= 50) {
+            applyPoison(victim!!, entity, 30);
         }
+
         super.impact(entity, victim, state)
     }
 

@@ -1,15 +1,13 @@
 package content.region.kandarin.plugin
 
-import core.api.getAttribute
-import core.api.inZone
-import core.api.sendMessage
-import core.api.setAttribute
+import core.api.*
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
 import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
+import shared.consts.Items
 import shared.consts.NPCs
 
 class OgreNPCBehavior : NPCBehavior(NPCs.OGRE_2801) {
@@ -40,7 +38,7 @@ class OgreNPCBehavior : NPCBehavior(NPCs.OGRE_2801) {
         getAttacker(self).add(attacker)
 
         val insideCage = inZone(attacker, COMBAT_TRAINING_CAMP_AREA)
-        if (!insideCage && getAttribute(attacker, "avadevice:attract", false)) {
+        if (!insideCage && (inEquipment(attacker, Items.AVAS_ATTRACTOR_10498) || inEquipment(attacker, Items.AVAS_ACCUMULATOR_10499))) {
             sendMessage(attacker, "Your Ava's device does not work from outside the cage.")
         }
     }

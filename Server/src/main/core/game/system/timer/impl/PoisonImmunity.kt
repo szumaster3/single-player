@@ -43,10 +43,7 @@ class PoisonImmunity :
     override fun run(entity: Entity): Boolean {
         ticksRemaining--
 
-        if (entity is Player && ticksRemaining == secondsToTicks(30)) {
-            sendMessage(entity, colorize("%RYou have 30 seconds remaining on your poison immunity."))
-            playAudio(entity, Sounds.CLOCK_TICK_1_3120, 0, 3)
-        } else if (entity is Player && ticksRemaining == 0) {
+        if (entity is Player && ticksRemaining == 0) {
             sendMessage(entity, colorize("%RYour poison immunity has expired."))
             playAudio(entity, Sounds.DRAGON_POTION_FINISHED_2607)
         }
