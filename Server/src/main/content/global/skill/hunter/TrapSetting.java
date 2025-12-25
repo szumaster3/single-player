@@ -18,7 +18,7 @@ import core.game.world.update.flag.context.Animation;
 import core.tools.RandomFunction;
 import shared.consts.Sounds;
 
-import static core.api.ContentAPIKt.playAudio;
+import static core.api.ContentAPIKt.*;
 
 /**
  * The trap setting.
@@ -312,6 +312,7 @@ public class TrapSetting {
                                     break;
                                 case BOX_TRAP:
                                     playAudio(player, Sounds.HUNTING_BOXTRAP_2627, 0, 1, wrapper.getObject().getLocation(), 10);
+                                    sendMessages(player, "It looks like there is something caught inside this trap.");
                                     break;
                                 case NET_TRAP:
                                     playAudio(player, Sounds.HUNTING_TWITCHNET_2652, 0, 1, wrapper.getObject().getLocation(), 10);

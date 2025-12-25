@@ -42,7 +42,12 @@ class LazyHellcatDialogue : Dialogue {
             }
 
             3 -> {
-                npcl(FaceAnim.CHILD_NORMAL, "Old enough to take life slow, young whippersnapper.")
+                npcl(FaceAnim.CHILD_NORMAL, "Too old to waste time talking to you about the price of fish.")
+                stage++
+            }
+
+            4 -> {
+                player(FaceAnim.THINKING, "Fish?")
                 stage = END_DIALOGUE
             }
         }

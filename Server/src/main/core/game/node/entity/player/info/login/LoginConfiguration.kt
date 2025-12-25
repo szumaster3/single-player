@@ -86,6 +86,10 @@ object LoginConfiguration {
         Repository.lobbyPlayers.removeIf { it.name == player.name }
         Repository.lobbyPlayers.add(player)
 
+        // May 2009 message appear after login to PvP world:
+        // sendMessage(player, "This is a Bounty World, so you've been given a copy of the Bounty World manual.")
+        // addItem(player, Items.BOUNTY_GUIDE_1)
+
         sendString(player, "Welcome to ${GameWorld.settings?.name}", lobbyInterface.id, 115)
         sendString(player, getLastLogin(player), lobbyInterface.id, 116)
 
@@ -93,13 +97,18 @@ object LoginConfiguration {
         player.interfaceManager.opened = lobbyInterface
 
         // rectangle on the left
-        sendString(player, "0 messages", lobbyInterface.id, 37)
+        sendString(player, "0 unread message", lobbyInterface.id, 37)
         sendString(player, "0", lobbyInterface.id, 39)
 
         // center rectangle
-        sendString(player, "-", lobbyInterface.id, 96)
-        sendString(player, "Your member credit is unlimited.<br>Enjoy without limits!", lobbyInterface.id, 93)
-        sendString(player, "unlimited member credit", lobbyInterface.id, 94)
+        if(!GameWorld.settings!!.isMembers) {
+            sendString(player, "0", lobbyInterface.id, 96)
+            sendString(player, "Not a Member.", lobbyInterface.id, 93)
+            sendString(player, "You are not a member. Members get loads of extra benefits and features. Click here to become a member.", lobbyInterface.id, 94)
+        } else {
+            sendString(player, "0", lobbyInterface.id, 96)
+            sendString(player, "Never expires.", lobbyInterface.id, 94)
+        }
 
         PacketRepository.send(Interface::class.java, InterfaceContext(player, lobbyPane.id, 2, Components.WELCOME_SCREEN_378, true))
         PacketRepository.send(Interface::class.java, InterfaceContext(player, lobbyPane.id, 3, selectedMessageModel, true))
