@@ -7,6 +7,7 @@ import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
+import core.game.world.map.zone.ZoneBorders
 import shared.consts.Items
 import shared.consts.NPCs
 
@@ -14,7 +15,8 @@ class OgreNPCBehavior : NPCBehavior(NPCs.OGRE_2801) {
 
     companion object {
         const val ATTACKED_BY_ATTRIBUTE = "attackedByPlayers"
-        private const val COMBAT_TRAINING_CAMP_AREA = "CombatTrainingCampMapArea"
+        const val AVA_WARNING_SHOWN = "ava_warning_shown"
+        private val AVA_EXCEPTION_AREA = ZoneBorders(2523, 3373, 2533, 3377)
     }
 
     override fun canBeAttackedBy(self: NPC, attacker: Entity, style: CombatStyle, shouldSendMessage: Boolean): Boolean {
@@ -37,10 +39,19 @@ class OgreNPCBehavior : NPCBehavior(NPCs.OGRE_2801) {
 
         getAttacker(self).add(attacker)
 
-        val insideCage = inZone(attacker, COMBAT_TRAINING_CAMP_AREA)
-        if (!insideCage && (inEquipment(attacker, Items.AVAS_ATTRACTOR_10498) || inEquipment(attacker, Items.AVAS_ACCUMULATOR_10499))) {
-            sendMessage(attacker, "Your Ava's device does not work from outside the cage.")
-        }
+        val hasAva =
+            inEquipment(attacker, Items.AVAS_ATTRACTOR_10498) ||
+                    inEquipment(attacker, Items.AVAS_ACCUMULATOR_10499)
+
+        if (!hasAva) return
+
+        val inAvaException = inBorders(attacker, AVA_EXCEPTION_AREA)
+        if (inAvaException) return
+
+        if (getAttribute(attacker, AVA_WARNING_SHOWN, false)) return
+
+        setAttribute(attacker, AVA_WARNING_SHOWN, true)
+        sendMessage(attacker, "Your Ava's device does not work here.")
     }
 
     override fun shouldIgnoreMultiRestrictions(self: NPC, victim: Entity): Boolean {

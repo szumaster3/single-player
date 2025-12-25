@@ -81,6 +81,9 @@ private constructor() : MapZone("Multicombat", true) {
         register(ZoneBorders(2673, 3238, 2666, 3250, 1, false))
         // Neitiznot.
         register(ZoneBorders(2381, 3823, 2306, 3843))
+        // Poh.
+        register(ZoneBorders(1885, 5093, 1882, 5090))
+        register(ZoneBorders(1949, 5093, 1946, 5090))
     }
 
     override fun enter(e: Entity): Boolean {
