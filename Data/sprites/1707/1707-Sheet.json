@@ -1,0 +1,26 @@
+{ "frames": {
+   "1707.png": {
+    "frame": { "x": 0, "y": 0, "w": 18, "h": 18 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 18, "h": 18 },
+    "sourceSize": { "w": 18, "h": 18 },
+    "duration": -1
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.6-x64",
+  "image": "1707.png",
+  "format": "I8",
+  "size": { "w": 18, "h": 18 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "guild_icon", "opacity": -1, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
