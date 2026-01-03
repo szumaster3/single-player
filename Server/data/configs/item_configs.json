@@ -133657,5 +133657,97 @@
     "examine": "Oh dear, it's totally burnt!",
     "name": "Burnt turkey drumstick",
     "id": "14544"
+  },
+  {
+    "shop_price": "1",
+    "ge_buy_limit": "1",
+    "examine": "A cape worn by loyal members of the Nardah guild.",
+    "grand_exchange_price": "1",
+    "durability": null,
+    "name": "Guild cape",
+    "tradeable": "false",
+    "weight": "0.5",
+    "archery_ticket_price": "0",
+    "id": "14701",
+    "bonuses": "0,0,0,0,0,0,1,1,0,1,0,0,0,0,0",
+    "equipment_slot": "1"
+  },
+  {
+    "ge_buy_limit": "1",
+    "grand_exchange_price": "1",
+    "durability": null,
+    "name": "Guild cape",
+    "tradeable": "false",
+    "archery_ticket_price": "0",
+    "id": "14702"
+  },
+  {
+    "shop_price": "1",
+    "ge_buy_limit": "1",
+    "examine": "A cape worn by loyal members of the Isafdar guild.",
+    "grand_exchange_price": "1",
+    "durability": null,
+    "name": "Guild cape",
+    "tradeable": "false",
+    "weight": "0.5",
+    "archery_ticket_price": "0",
+    "id": "14703",
+    "bonuses": "0,0,0,0,0,0,1,1,0,1,0,0,0,0,0",
+    "equipment_slot": "1"
+  },
+  {
+    "ge_buy_limit": "1",
+    "grand_exchange_price": "1",
+    "durability": null,
+    "name": "Guild cape",
+    "tradeable": "false",
+    "archery_ticket_price": "0",
+    "id": "14704"
+  },
+  {
+    "shop_price": "1",
+    "ge_buy_limit": "1",
+    "examine": "A cape worn by loyal members of the Falador guild.",
+    "grand_exchange_price": "1",
+    "durability": null,
+    "name": "Guild cape",
+    "tradeable": "false",
+    "weight": "0.5",
+    "archery_ticket_price": "0",
+    "id": "14705",
+    "bonuses": "0,0,0,0,0,0,1,1,0,1,0,0,0,0,0",
+    "equipment_slot": "1"
+  },
+  {
+    "ge_buy_limit": "1",
+    "grand_exchange_price": "1",
+    "durability": null,
+    "name": "Guild cape",
+    "tradeable": "false",
+    "archery_ticket_price": "0",
+    "id": "14706"
+  },
+  {
+    "shop_price": "1",
+    "ge_buy_limit": "1",
+    "examine": "A cape worn by loyal members of the Varrock guild.",
+    "grand_exchange_price": "1",
+    "durability": null,
+    "name": "Guild cape",
+    "tradeable": "false",
+    "weight": "0.5",
+    "archery_ticket_price": "0",
+    "id": "14707",
+    "bonuses": "0,0,0,0,0,0,1,1,0,1,0,0,0,0,0",
+    "equipment_slot": "1"
+  },
+  {
+    "ge_buy_limit": "1",
+    "grand_exchange_price": "1",
+    "durability": null,
+    "name": "Guild cape",
+    "tradeable": "false",
+    "archery_ticket_price": "0",
+    "id": "14708"
   }
 ]
