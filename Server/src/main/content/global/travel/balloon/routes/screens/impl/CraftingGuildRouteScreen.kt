@@ -5,6 +5,7 @@ import core.api.sendAnimationOnInterface
 import core.api.sendModelOnInterface
 import core.game.node.entity.player.Player
 
+//https://gitlab.com/rs-2/Server-530/-/blob/eb1fed942be3311be51f24f4149df43490543fe5/References/530/quest_interfaces.md
 object CraftingGuildRouteScreen {
 
     fun firstStage(p: Player, c: Int) {
@@ -158,6 +159,57 @@ object CraftingGuildRouteScreen {
         sendModelOnInterface(p,c,96,19616) // Stone
 
         sendModelOnInterface(p,c,97,19717) // Shark
+
+        // Eagle
+        sendModelOnInterface(p,c,161,19780)
+        sendAngleOnInterface(p,c,161,2100,300,300)
+        sendAnimationOnInterface(p,341,c,161)
+
+        // Star
+        sendModelOnInterface(p,c,126,19781)
+        sendAngleOnInterface(p,c,126,2100,0,1500)
+        sendAnimationOnInterface(p,373,c,126)
+
+        // Star
+        sendModelOnInterface(p,c,131,19781)
+        sendAngleOnInterface(p,c,131,2100,0,1500)
+        sendAnimationOnInterface(p,373,c,131)
+
+        // Cloud
+        sendModelOnInterface(p,c,166,19525) // Left
+        sendModelOnInterface(p,c,167,19524) // Center
+        sendModelOnInterface(p,c,168,19526) // Right
+
+        // Eagle white
+        sendModelOnInterface(p,c,169,19779)
+        sendAngleOnInterface(p,c,169,2100,300,300)
+        sendAnimationOnInterface(p,341,c,169)
+
+        // Eagle
+        sendModelOnInterface(p,c,185,19780)
+        sendAngleOnInterface(p,c,185,2100,300,300)
+        sendAnimationOnInterface(p,341,c,185)
+
+        sendModelOnInterface(p,c,186,19781)
+        sendAngleOnInterface(p,c,186,2100,0,1500)
+        sendAnimationOnInterface(p,373,c,186)
+
+        // Eagle white
+        sendModelOnInterface(p,c,216,19779)
+        sendAngleOnInterface(p,c,216,2100,300,300)
+        sendAnimationOnInterface(p,341,c,216)
+
+        sendModelOnInterface(p,c,217,19779)
+        sendAngleOnInterface(p,c,217,2100,300,300)
+        sendAnimationOnInterface(p,341,c,217)
+
+        sendModelOnInterface(p,c,200,19525) // Left
+        sendModelOnInterface(p,c,201,19524) // Center
+        sendModelOnInterface(p,c,202,19526) // Right
+
+        sendModelOnInterface(p,c,205,19525) // Left
+        sendModelOnInterface(p,c,206,19524) // Center
+        sendModelOnInterface(p,c,207,19526) // Right
     }
 
     fun thirdStage(p: Player, c: Int) {
