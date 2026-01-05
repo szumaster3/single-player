@@ -1,4 +1,4 @@
-package content.global.plugins.interaction.with_obj
+package content.global.plugins.interaction.with_scenery
 
 import core.api.EquipmentSlot
 import core.api.sendMessage

@@ -1,4 +1,4 @@
-package content.global.plugins.interaction.with_obj
+package content.global.plugins.interaction.with_scenery
 
 import content.global.skill.gather.woodcutting.WoodcuttingNode
 import content.global.skill.gather.woodcutting.WoodcuttingPulse
