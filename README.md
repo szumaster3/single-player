@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://imgur.com/yGvSk2X.png" alt="Project banner" />
+  project-name
 </div>
 
 <div align="center">
