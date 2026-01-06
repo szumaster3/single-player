@@ -15,7 +15,7 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Config</name>
+    <name>Constants</name>
 
     <properties>
         <kotlin.version>1.8.20</kotlin.version>
