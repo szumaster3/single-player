@@ -65,7 +65,7 @@ class WizardTowerListener : InteractionListener {
             }
 
             val animDelay = animationDuration(RASPBERRY_EMOTE)
-            queueScript(player, 1, QueueStrength.WEAK) { stage: Int ->
+            queueScript(player, 1, QueueStrength.SOFT) { stage: Int ->
                 when(stage) {
                     0 -> {
                         player.walkingQueue.reset()
