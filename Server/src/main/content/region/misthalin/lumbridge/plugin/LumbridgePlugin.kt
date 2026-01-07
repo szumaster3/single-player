@@ -256,6 +256,10 @@ class LumbridgePlugin : InteractionListener {
         setDest(IntType.NPC, intArrayOf(NPCs.BANK_TUTOR_7961), "talk-to") { _, npc ->
             return@setDest npc.location.transform(npc.direction, 2)
         }
+
+        setDest(IntType.SCENERY, Objects.BELL_36976) { player, _ ->
+            return@setDest player.location
+        }
     }
 
     private class ArcheryTargetPulse(
