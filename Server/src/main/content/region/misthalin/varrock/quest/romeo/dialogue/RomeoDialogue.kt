@@ -17,6 +17,7 @@ import core.net.packet.PacketRepository
 import core.net.packet.context.CameraContext
 import core.net.packet.out.CameraViewPacket
 import core.plugin.Initializable
+import core.tools.END_DIALOGUE
 import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Quests
@@ -175,40 +176,40 @@ class RomeoDialogue(player: Player? = null) : Dialogue(player) {
 
             20 -> when (buttonId) {
                 1 -> {
-                    player(FaceAnim.HALF_GUILTY, "Yes, ok, I'll let her know.")
+                    playerl(FaceAnim.HALF_GUILTY, "Yes, ok, I'll let her know.")
                     stage = 100
                 }
 
                 2 -> {
-                    player(
+                    playerl(
                         FaceAnim.HALF_GUILTY,
                         "Sorry Romeo, I've got better things to do right now but maybe latter?",
                     )
-                    stage = 50
+                    stage = END_DIALOGUE
                 }
 
                 3 -> end()
             }
 
             100 -> {
-                npc(FaceAnim.HALF_GUILTY, "Oh great! And tell her that I want to kiss her a give.")
+                npcl(FaceAnim.HALF_GUILTY, "Oh great! And tell her that I want to kiss her a give.")
                 setQuestStage(player, Quests.ROMEO_JULIET, 10)
                 updateQuestTab(player)
                 stage = 101
             }
 
             101 -> {
-                player(FaceAnim.HALF_GUILTY, "You mean you want to give her a kiss!")
+                playerl(FaceAnim.HALF_GUILTY, "You mean you want to give her a kiss!")
                 stage = 102
             }
 
             102 -> {
-                npc(FaceAnim.HALF_GUILTY, "Oh you're good...you are good!")
+                npcl(FaceAnim.HALF_GUILTY, "Oh you're good...you are good!")
                 stage = 103
             }
 
             103 -> {
-                npc(
+                npcl(
                     FaceAnim.HALF_GUILTY,
                     "I see I've picked a true professional...!",
                 )
