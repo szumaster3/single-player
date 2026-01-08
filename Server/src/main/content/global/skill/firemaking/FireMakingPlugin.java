@@ -223,4 +223,10 @@ public final class FireMakingPlugin extends SkillPulse<Item> {
                     .sendMessage("The fire catches and the " + name + " begin to burn.");
         }
     }
+
+    public static GroundItem getAsh(final Player player, Log fire, final Scenery scenery) {
+        GroundItem ash = new GroundItem(new Item(Items.ASHES_592), scenery.getLocation(), player);
+        ash.setDecayTime(fire.getLife() + 200);
+        return ash;
+    }
 }
