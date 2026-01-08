@@ -13,7 +13,10 @@ class HerbCleaningPlugin : InteractionListener {
     override fun defineListeners() {
 
         on(IntType.ITEM, "clean") { player, node ->
-            if (!requireQuest(player, Quests.DRUIDIC_RITUAL, "before you can use Herblore.")) return@on true
+            if (!isQuestComplete(player, Quests.DRUIDIC_RITUAL)) {
+                sendMessage(player, "You must complete the ${Quests.DRUIDIC_RITUAL} to use the Herblore skill.")
+                return@on true
+            }
             val herb: HerbItem = HerbItem.forItem(node as Item) ?: return@on true
 
             if (getDynLevel(player, Skills.HERBLORE) < herb.level) {
