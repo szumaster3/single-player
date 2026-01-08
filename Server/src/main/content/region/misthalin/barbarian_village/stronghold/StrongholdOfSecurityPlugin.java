@@ -435,7 +435,7 @@ public final class StrongholdOfSecurityPlugin extends MapZone implements Plugin<
                     end();
                     break;
                 case 100:
-                    sendOptions(player, "Tell them whatever they want to know.", "Politely tell them no.", "Politely tell them no and then use the 'Report Abuse' button.");
+                    sendOptions(player, "Select an Option", "Tell them whatever they want to know.", "Politely tell them no.", "Politely tell them no and then use the 'Report Abuse' button.");
                     stage = 101;
                     break;
                 case 101:
