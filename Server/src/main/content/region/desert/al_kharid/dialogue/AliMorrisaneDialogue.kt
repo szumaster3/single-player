@@ -35,7 +35,7 @@ class AliMorrisaneDialogue : DialogueFile() {
                     stage = END_DIALOGUE
                     return
                 }
-                Shops.openId(player!!, 107)
+                Shops.openId(player!!, 112)
             }
             5 -> {
                 end()

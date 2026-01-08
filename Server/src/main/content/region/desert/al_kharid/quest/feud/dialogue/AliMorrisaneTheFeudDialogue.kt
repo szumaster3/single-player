@@ -42,9 +42,9 @@ class AliMorrisaneTheFeudDialogue : DialogueFile() {
                 1 -> playerl(FaceAnim.FRIENDLY, "No, I'm really too busy.").also { stage = END_DIALOGUE }
                 2 -> {
                     end()
-                    Shops.openId(player!!, 107)
+                    Shops.openId(player!!, 112)
                     sendMessage(player!!, "Despite your best efforts Ali M still manages to sell you some junk.")
-                    setVarbit(player!!, Vars.VARBIT_THE_FEUD_PROGRESS_334, 1, true)
+                    //setVarbit(player!!, Vars.VARBIT_THE_FEUD_PROGRESS_334, 1, true)
                 }
             }
 
