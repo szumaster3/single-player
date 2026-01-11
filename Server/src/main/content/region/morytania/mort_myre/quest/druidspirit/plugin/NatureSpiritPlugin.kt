@@ -159,7 +159,7 @@ class NatureSpiritPlugin : InteractionListener {
         }
 
         on(SPELLCARD, IntType.ITEM, "cast") { player, node ->
-            if (!inBorders(player, getRegionBorders(13620)) || !inBorders(player, getRegionBorders(13621))) {
+            if (!inBorders(player, getRegionBorders(13620)) && !inBorders(player, getRegionBorders(13621))) {
                 sendMessage(player, "This spell has no effect outside of Mort Myre swamp.")
                 return@on false
             }
