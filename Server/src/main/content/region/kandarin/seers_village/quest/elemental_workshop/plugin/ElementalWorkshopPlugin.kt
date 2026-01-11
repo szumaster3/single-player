@@ -46,7 +46,7 @@ class ElementalWorkshopPlugin : InteractionListener {
 
     private val turnWaterControlAnimation = Animation(Animations.HUMAN_TURN_LARGE_VALVE_4861)
     private val fillStoneBowlAnimation = Animation(Animations.HUMAN_FILL_STONE_BOWL_4862)
-    private val fixBellowsAnimation = Animation(Animations.HUMAN_FILL_STONE_BOWL_4862)
+    private val fixBellowsAnimation = Animation(Animations.FIX_BELLOWS_4863)
     private val smeltElementalBar = Animation(Animations.HUMAN_FURNACE_SMELT_3243)
     private val smithElementalShield = Animation(Animations.OLD_COOK_RANGE_896)
 

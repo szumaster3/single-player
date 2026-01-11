@@ -91,6 +91,7 @@ class LeatherCraftingPlugin : InteractionListener, InterfaceListener {
 
             calculateMaxAmount { crafts.firstOrNull()?.let { max(0, amountInInventory(player, it.input)) } ?: 0 }
         }
+        closeInterface(player)
     }
 
     private fun handleLeatherCrafting(player: Player, craft: CraftingDefinition.Leather, amountToMake: Int) {
@@ -128,7 +129,6 @@ class LeatherCraftingPlugin : InteractionListener, InterfaceListener {
                 sendDialogue(player, "You need ${craft.amount} ${if (craft.amount == 1) name else "${name}s"} to make this.")
                 return@queueScript stopExecuting(player)
             }
-
             animate(player, Animations.CRAFT_LEATHER_1249)
             delayClock(player, Clocks.SKILLING, 2)
 

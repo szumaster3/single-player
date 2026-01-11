@@ -512,6 +512,7 @@ object CraftingDefinition {
                     return
                 }
 
+                closeInterface(player)
                 addItem(player, def.product, availableAmount)
                 val itemName = getItemName(def.item).lowercase()
                 sendMessage(
