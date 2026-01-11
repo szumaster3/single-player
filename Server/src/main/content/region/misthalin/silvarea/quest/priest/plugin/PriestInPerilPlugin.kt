@@ -9,6 +9,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.combat.ImpactHandler
+import core.game.node.entity.npc.NPC
 import core.game.node.item.Item
 import core.game.world.map.Location
 import shared.consts.*
@@ -309,7 +310,7 @@ class PriestInPerilPlugin: InteractionListener {
          */
 
         on(Scenery.CELL_DOOR_3463, IntType.SCENERY, "talk-through") { player, _ ->
-            openDialogue(player, NPCs.DREZEL_7690)
+            player.dialogueInterpreter.open(NPCs.DREZEL_7690, NPC(NPCs.DREZEL_7690, player.location))
             return@on true
         }
 

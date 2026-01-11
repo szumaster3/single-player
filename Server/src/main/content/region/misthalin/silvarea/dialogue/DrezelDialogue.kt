@@ -21,7 +21,7 @@ class DrezelDialogue(player: Player? = null) : Dialogue(player) {
         npc = args[0] as NPC
         val quest = player.getQuestRepository().getQuest(Quests.PRIEST_IN_PERIL)
         if (quest.getStage(player) == 13) {
-            npc(FaceAnim.HALF_GUILTY, "Hello.")
+            playerl(FaceAnim.HALF_GUILTY, "Hello.")
             stage = 0
         } else if (quest.getStage(player) == 14) {
             npc(FaceAnim.HALF_GUILTY, "How does it adventurer? Any luck in finding the key to", "the cell or a way of stopping the vampire yet?")
