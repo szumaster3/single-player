@@ -86,7 +86,7 @@ class AlchemySpell : SpellListener("modern") {
         removeRunes(player)
         addXP(player, if (high) 65.0 else 31.0)
         showMagicTab(player)
-        setDelay(player, 5)
+        setDelay(player, if (high) 5 else 3)
 
         return true
     }
