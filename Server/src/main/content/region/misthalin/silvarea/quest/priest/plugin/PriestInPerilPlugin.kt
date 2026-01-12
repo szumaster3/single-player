@@ -10,6 +10,7 @@ import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.npc.NPC
+import core.game.node.entity.player.link.TeleportManager
 import core.game.node.item.Item
 import core.game.world.map.Location
 import shared.consts.*
@@ -163,30 +164,32 @@ class PriestInPerilPlugin: InteractionListener {
          */
 
         on(Scenery.LADDER_30572, IntType.SCENERY, "climb-down", "close") { player, _ ->
-            if (getUsedOption(player) == "climb-down") {
-                animate(player, Animations.HUMAN_BURYING_BONES_827)
-                sendMessage(player, "You climb down through the trapdoor...")
-                if (player.location.y < 3506) {
-                    queueScript(player, 2, QueueStrength.NORMAL) {
-                        teleport(player, Location.create(3440, 9887, 0))
+            val isLowerFloor = player.location.y < 3506
+
+            when (getUsedOption(player)) {
+                "climb-down" -> {
+                    lock(player, 3)
+                    animate(player, Animations.HUMAN_BURYING_BONES_827)
+                    sendMessage(player, "You climb down through the trapdoor...")
+
+                    val targetLocation = if (isLowerFloor) {
+                        Location.create(3440, 9887, 0)
+                    } else {
+                        Location.create(3405, 9906, 0)
                     }
-                } else {
-                    queueScript(player, 2, QueueStrength.NORMAL) {
-                        teleport(player, Location.create(3405, 9906, 0))
-                    }
+                    teleport(player, targetLocation, TeleportManager.TeleportType.INSTANT, 1)
                 }
-            }
-            if (getUsedOption(player) == "close") {
-                if (player.location.y < 3506) {
-                    removeScenery(core.game.node.scenery.Scenery(Scenery.LADDER_30572, Location(3422, 3484, 0)))
-                    addScenery(Scenery.TRAPDOOR_30573, Location.create(3422, 3484, 0), rotation = 3)
-                } else {
-                    removeScenery(core.game.node.scenery.Scenery(Scenery.LADDER_30572, Location(3405, 3507, 0)))
-                    addScenery(Scenery.TRAPDOOR_30573, Location(3405, 3507, 0))
+
+                "close" -> {
+                    val ladderLocation = if (isLowerFloor) Location.create(3422, 3484, 0) else Location.create(3405, 3507, 0)
+                    removeScenery(core.game.node.scenery.Scenery(Scenery.LADDER_30572, ladderLocation))
+                    val trapdoorRotation = if (isLowerFloor) 3 else 0
+                    addScenery(Scenery.TRAPDOOR_30573, ladderLocation, rotation = trapdoorRotation)
                 }
             }
             return@on true
         }
+
 
         /*
          * Handles exit from the dungeon.
@@ -194,9 +197,7 @@ class PriestInPerilPlugin: InteractionListener {
 
         on(Scenery.LADDER_30575, IntType.SCENERY, "climb-up") { player, _ ->
             animate(player, Animations.HUMAN_CLIMB_STAIRS_828)
-            queueScript(player, 2, QueueStrength.NORMAL) {
-                teleport(player, Location(3405, 3506, 0))
-            }
+            teleport(player, Location(3405, 3506, 0), TeleportManager.TeleportType.INSTANT, 1)
             return@on true
         }
 
