@@ -21,7 +21,7 @@ class HeadChefDialogue(player: Player? = null) : Dialogue(player) {
         if (args.size == 2) door = args[1] as Boolean
         if (door) {
             interpreter.sendDialogues(
-                847,
+                NPCs.HEAD_CHEF_847,
                 FaceAnim.NEUTRAL,
                 "You can't come in here unless you're wearing a chef's",
                 "hat or something like that.",
@@ -31,7 +31,7 @@ class HeadChefDialogue(player: Player? = null) : Dialogue(player) {
         }
         if (player.getSkills().getStaticLevel(Skills.COOKING) >= 99) {
             interpreter.sendDialogues(
-                847,
+                NPCs.HEAD_CHEF_847,
                 FaceAnim.HAPPY,
                 "Hello, welcome to the Cooking Guild. It's always great to",
                 "have such an accomplished chef visit. Say would you be",
@@ -42,7 +42,7 @@ class HeadChefDialogue(player: Player? = null) : Dialogue(player) {
             return true
         }
         interpreter.sendDialogues(
-            847,
+            NPCs.HEAD_CHEF_847,
             FaceAnim.HAPPY,
             "Hello, welcome to the Cooking Guild. Only accomplished",
             "chefs and cooks are allowed in here. Feel free to use any",
@@ -75,7 +75,7 @@ class HeadChefDialogue(player: Player? = null) : Dialogue(player) {
             3 -> end()
             10 -> {
                 interpreter.sendDialogues(
-                    847,
+                    NPCs.HEAD_CHEF_847,
                     FaceAnim.HAPPY,
                     "Thank you! It's my most prized possession, it's a Skillcape",
                     "of Cooking; it shows that I've achieved level 99 Cooking",
@@ -103,14 +103,14 @@ class HeadChefDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             110 -> {
-                interpreter.sendDialogues(847, FaceAnim.HAPPY, "Okay, come back to me if you change your mind.")
+                interpreter.sendDialogues(NPCs.HEAD_CHEF_847, FaceAnim.HAPPY, "Okay, come back to me if you change your mind.")
                 stage = 111
             }
 
             111 -> end()
             150 -> {
                 interpreter.sendDialogues(
-                    847,
+                    NPCs.HEAD_CHEF_847,
                     FaceAnim.HALF_GUILTY,
                     "Most certainly, just as soon as you give me 99000 gold",
                     "coins.",
@@ -136,14 +136,14 @@ class HeadChefDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             160 -> {
-                interpreter.sendDialogues(847, FaceAnim.HALF_GUILTY, "I'm sorry you feel that way.")
+                interpreter.sendDialogues(NPCs.HEAD_CHEF_847, FaceAnim.HALF_GUILTY, "I'm sorry you feel that way.")
                 stage = 161
             }
 
             161 -> end()
             200 -> {
                 if (Skillcape.purchase(player, Skills.COOKING)) {
-                    interpreter.sendDialogues(847, FaceAnim.HAPPY, "Now you can use the title Master Chef.")
+                    interpreter.sendDialogues(NPCs.HEAD_CHEF_847, FaceAnim.HAPPY, "Now you can use the title Master Chef.")
                 }
                 stage = 202
             }

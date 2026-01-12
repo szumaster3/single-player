@@ -22,7 +22,7 @@ import shared.consts.NPCs
  * Represents the Romily Weaklax dialogue.
  *
  * # Relations
- * [Varrock Achievement Diary][content.region.misthalin.handlers.varrock.VarrockAchievementDiary]
+ * [Varrock Achievement Diary][content.region.misthalin.varrock.diary.VarrockAchievementDiary]
  */
 @Initializable
 class RomilyWeaklaxDialogue(player: Player? = null) : Dialogue(player) {

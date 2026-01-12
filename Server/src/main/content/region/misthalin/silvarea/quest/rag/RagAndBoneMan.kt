@@ -1,10 +1,7 @@
 package content.region.misthalin.silvarea.quest.rag
 
 import content.region.misthalin.silvarea.quest.rag.plugin.BoneBoiler
-import core.api.getAttribute
-import core.api.inInventory
-import core.api.removeAttributes
-import core.api.rewardXP
+import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.entity.skill.Skills
@@ -134,8 +131,7 @@ class RagAndBoneMan : Quest(Quests.RAG_AND_BONE_MAN, 100, 99, 2, 714, 0, 1, 4) {
         var ln = 10
         super.finish(player)
         player.packetDispatch.sendString("You have completed ${Quests.RAG_AND_BONE_MAN}!", 277, 4)
-        player.packetDispatch.sendItemZoomOnInterface(Items.BONE_IN_VINEGAR_7813, 240, 277, 5)
-
+        displayQuestItem(player, Items.BONE_IN_VINEGAR_7813, 240)
         drawReward(player, "2 Quest Points", ln++)
         drawReward(player, "500 Cooking XP and 500", ln++)
         drawReward(player, "Prayer XP", ln)

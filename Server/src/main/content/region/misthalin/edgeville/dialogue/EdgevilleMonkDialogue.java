@@ -25,7 +25,7 @@ public final class EdgevilleMonkDialogue extends Dialogue {
 	/**
 	 * Represents the graphics to use.
 	 */
-	private static final Graphics GRAPHIC = new Graphics(84);
+	private static final Graphics GRAPHIC = new Graphics(84, 46);
 
 	/**
 	 * Constructs a new {@code EdgevilleMonkDialogue} {@code Object}.
@@ -55,7 +55,7 @@ public final class EdgevilleMonkDialogue extends Dialogue {
 			if (args[0] instanceof NPC) {
 				npc = (NPC) args[0];
 			} else {
-				interpreter.sendDialogues(7727, null, "Only members of our order can go up there. You'll", "need to talk to Abbot Langley if you want to explore", "the monastery further.");
+				interpreter.sendDialogues(NPCs.MONK_7727, null, "Only members of our order can go up there. You'll", "need to talk to Abbot Langley if you want to explore", "the monastery further.");
 				stage = 21;
 				return true;
 			}
@@ -95,6 +95,8 @@ public final class EdgevilleMonkDialogue extends Dialogue {
 			break;
 		case 11:
 			end();
+			npc.getWalkingQueue().reset();
+			npc.lock(ANIMATION.getDuration());
 			npc.animate(ANIMATION);
 			npc.graphics(GRAPHIC);
 			player.getPacketDispatch().sendMessage("You feel a little better.");
