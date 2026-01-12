@@ -44,13 +44,13 @@ class WaterSourcePlugin : InteractionListener {
                 return@onUseWith false
             }
 
+            sendMessage(player, buildMessage(used.name, with.name,  "You fill the @ from the #."))
+
             if (vessel == WaterVessel.BUCKET && with.id == 11661) {
                 player.achievementDiaryManager.getDiary(DiaryType.FALADOR)?.let { diary ->
                     if (!diary.isComplete(0, 7)) diary.updateTask(player, 0, 7, true)
                 }
             }
-
-            sendMessage(player, buildMessage(used.name, with.name,  "You fill the @ from the #."))
 
             submitIndividualPulse(
                 player,
