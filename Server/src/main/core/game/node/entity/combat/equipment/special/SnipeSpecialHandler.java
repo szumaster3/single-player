@@ -57,7 +57,7 @@ public final class SnipeSpecialHandler extends RangeSwingHandler implements Plug
         int hit = 0;
         if (!victim.getProperties().getCombatPulse().isAttacking() || isAccurateImpact(entity, victim, CombatStyle.RANGE)) {
             hit = RandomFunction.random(calculateHit(entity, victim, 1.0) + 1);
-            if (victim.getSkills().getStaticLevel(Skills.DEFENCE) >= victim.getSkills().getDynamicLevels()[Skills.DEFENCE])
+            if (victim.getSkills().getStaticLevel(Skills.DEFENCE) >= victim.getSkills().dynamicLevels[Skills.DEFENCE])
                 victim.getSkills().updateLevel(Skills.DEFENCE, -hit, 0);
         }
         Companion.useAmmo(entity, state, victim.getLocation());

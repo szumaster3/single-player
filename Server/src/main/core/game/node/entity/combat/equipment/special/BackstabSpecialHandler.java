@@ -53,7 +53,7 @@ public final class BackstabSpecialHandler extends MeleeSwingHandler implements P
         int hit = 0;
         if (!victim.getProperties().getCombatPulse().isAttacking() || isAccurateImpact(entity, victim, CombatStyle.MELEE)) {
             hit = RandomFunction.random(calculateHit(entity, victim, 1.0) + 1);
-            if (victim.getSkills().getStaticLevel(Skills.DEFENCE) >= victim.getSkills().getDynamicLevels()[Skills.DEFENCE])
+            if (victim.getSkills().getStaticLevel(Skills.DEFENCE) >= victim.getSkills().dynamicLevels[Skills.DEFENCE])
                 victim.getSkills().updateLevel(Skills.DEFENCE, -hit, 0);
         }
         state.setEstimatedHit(hit);
