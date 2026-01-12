@@ -22,7 +22,7 @@ enum class Pickpocket(
     CURATOR_HAIG_HELEN(CuratorHaigHelenLootTable.NPC_ID, 1, 180.0, 240.0, 8.0, 1, 1, 5, null, CuratorHaigHelenLootTable.LOOT),
     FARMER(FarmerLootTable.NPC_ID, 10, 180.0, 240.0, 14.5, 1, 1, 5, "What do you think you're doing?", FarmerLootTable.LOOT),
     MALE_HAM_MEMBER(HamMemberLootTable.NPC_ID_MALE, 20, 117.0, 240.0, 22.2, 1, 3, 4, "What do you think you're doing?", HamMemberLootTable.LOOT),
-    FEMALE_HAM_MEMBER(HamMemberLootTable.NPC_ID_FEMALE, 15, 135.0, 240.0, 18.5, 1, 3, 4, "Stop! @name is a thief!", HamMemberLootTable.LOOT),
+    FEMALE_HAM_MEMBER(HamMemberLootTable.NPC_ID_FEMALE, 15, 135.0, 240.0, 18.5, 1, 3, 4, "What do you think you're doing?", HamMemberLootTable.LOOT),
     WARRIOR(WarriorLootTable.NPC_ID, 25, 84.0, 240.0, 26.0, 2, 2, 5, "What do you think you're doing?", WarriorLootTable.LOOT),
     VILLAGER(VillagerLootTable.NPC_ID, 30, 74.0, 240.0, 8.0, 2, 2, 5, "Thief! Thief! Get away from me.", VillagerLootTable.LOOT),
     ROGUE(RogueLootTable.NPC_ID, 32, 74.0, 240.0, 35.5, 2, 2, 5, "What do you think you're doing?", RogueLootTable.LOOT),
