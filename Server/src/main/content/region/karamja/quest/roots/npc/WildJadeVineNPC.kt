@@ -91,7 +91,7 @@ class WildJadeVineNPC(
     }
 
     companion object {
-        private val WILD_JADE_NPC = intArrayOf(
+        val WILD_JADE_NPC = intArrayOf(
             NPCs.WILD_JADE_VINE_3409,
             NPCs.WILD_JADE_VINE_3410,
             NPCs.WILD_JADE_VINE_3411,
