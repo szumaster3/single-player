@@ -40,20 +40,20 @@ class ChaosDruidNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, l
 
         override fun canSwing(entity: Entity, victim: Entity): InteractionType {
             val type = super.canSwing(entity, victim)
-            return if (type == InteractionType.MOVE_INTERACT) InteractionType.NO_INTERACT else type ?: InteractionType.NO_INTERACT
+            return if (type == InteractionType.MOVE_INTERACT) InteractionType.NO_INTERACT else type
+                ?: InteractionType.NO_INTERACT
         }
 
         override fun swing(entity: Entity?, victim: Entity?, state: BattleState?): Int {
-            val swing = super.swing(entity, victim, state)
-            if (entity == null || victim == null || state == null) return swing
+            if (entity == null || victim == null || state == null) {
+                return super.swing(entity, victim, state)
+            }
 
             val distance = entity.location.getDistance(victim.location)
 
-            if (distance > 8.0) {
-                entity.properties.combatPulse.style = CombatStyle.MELEE
-            }
+            val useMagic = distance <= 8.0 && RandomFunction.random(4) == 0
 
-            if (RandomFunction.random(4) == 0) {
+            if (useMagic) {
                 entity.properties.combatPulse.style = CombatStyle.MAGIC
 
                 val spellId = if (RandomFunction.random(2) == 0)
@@ -61,7 +61,9 @@ class ChaosDruidNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, l
                 else
                     ModernSpells.CONFUSE
 
-                val spell = SpellBookManager.SpellBook.MODERN.getSpell(spellId) as? CombatSpell
+                val spell = SpellBookManager.SpellBook.MODERN
+                    .getSpell(spellId) as? CombatSpell
+
                 if (spell != null) {
                     state.spell = spell
                     entity.properties.spell = spell
@@ -71,8 +73,9 @@ class ChaosDruidNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, l
                         ModernSpells.BIND -> {
                             entity.animator.forceAnimation(Animation(Animations.CAST_SPELL_707))
                             entity.graphics(BindSpellDefinition.BIND.start)
-                            SpellProjectile.create(BindSpellDefinition.BIND.projectile.projectileId)
+                            SpellProjectile.create(BindSpellDefinition.BIND.projectile.projectileId,)
                         }
+
                         ModernSpells.CONFUSE -> {
                             entity.animator.forceAnimation(CurseSpellDefinition.CONFUSE.animation)
                             entity.graphics(CurseSpellDefinition.CONFUSE.start)
@@ -84,7 +87,7 @@ class ChaosDruidNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, l
                 entity.properties.combatPulse.style = CombatStyle.MELEE
             }
 
-            return swing
+            return super.swing(entity, victim, state)
         }
     }
 

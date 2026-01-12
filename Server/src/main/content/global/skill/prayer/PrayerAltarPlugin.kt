@@ -41,10 +41,12 @@ class PrayerAltarPlugin : InteractionListener {
     }
 
     private fun pray(player: Player, node: Node): Boolean {
-        val prayerLevel = getStatLevel(player, Skills.PRAYER).plus(
-            if (node.id in BOOSTED_ALTAR || inEquipment(player, Items.SEERS_HEADBAND_3_14641) &&
-                node.id == Scenery.ALTAR_409) 2 else 0
-        )
+        val hasPrayerBoost =
+            node.id in BOOSTED_ALTAR ||
+                    (inEquipment(player, Items.SEERS_HEADBAND_3_14641) &&
+                            node.id == Scenery.ALTAR_409)
+
+        val prayerLevel = getStatLevel(player, Skills.PRAYER) + if (hasPrayerBoost) 2 else 0
 
         if (player.skills.prayerPoints >= prayerLevel.toDouble()) {
             sendMessage(player, "You already have full Prayer points.")
