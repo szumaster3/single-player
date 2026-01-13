@@ -103,7 +103,6 @@ class GoblinDiplomacy : Quest(Quests.GOBLIN_DIPLOMACY, 20, 19, 5, Vars.VARP_QUES
         drawReward(player, "5 Quests Points", line++)
         drawReward(player, "200 Crafting XP", line++)
         drawReward(player, "A gold bar", line++)
-        drawReward(player, "You have completed the Goblin Diplomacy Quest!", line)
         rewardXP(player, Skills.CRAFTING, 200.0)
         addItemOrDrop(player, Items.GOLD_BAR_2357, 1)
         updateQuestTab(player)
