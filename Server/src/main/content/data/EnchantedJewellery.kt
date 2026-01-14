@@ -69,12 +69,12 @@ enum class EnchantedJewellery(val options: Array<String>, val locations: Array<L
         queueScript(player, 0, QueueStrength.SOFT) { stage ->
             when (stage) {
                 0 -> {
+                    player.impactHandler.disabledTicks = 4
                     visualize(player, ANIMATION, Graphics)
                     playGlobalAudio(player.location, Sounds.TP_ALL_200)
-                    player.impactHandler.disabledTicks = 4
                     return@queueScript delayScript(player, animDuration)
                 }
-                3 -> {
+                1 -> {
                     teleport(player, location)
                     resetAnimator(player)
                     handleJewelleryUsage(player, item, nextJewellery, itemIndex, isEquipped, location)
