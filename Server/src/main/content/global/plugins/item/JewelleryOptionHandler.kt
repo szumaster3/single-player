@@ -29,7 +29,6 @@ class JewelleryOptionHandler : OptionHandler() {
 
     override fun handle(player: Player, node: Node, option: String): Boolean {
         val item = node.asItem()
-
         val isEquipped = option.equals("operate", ignoreCase = true)
 
         player.pulseManager.clear(PulseType.STANDARD)
@@ -40,15 +39,15 @@ class JewelleryOptionHandler : OptionHandler() {
         }
 
         val jewellery = EnchantedJewellery.idMap[item.id] ?: return true
+        val itemIndex = jewellery.getItemIndex(item)
 
-        if (!jewellery.crumbled && jewellery.isLastItemIndex(jewellery.getItemIndex(item))) {
+        if (!jewellery.crumbled && jewellery.isLastItemIndex(itemIndex)) {
             sendMessage(player, "You will need to recharge your ${jewellery.getJewelleryType(item)} before you can use it again.")
             return true
         }
 
         val typeName = jewellery.getJewelleryType(item)
             .replace("combat bracelet", "bracelet", ignoreCase = true)
-
         sendMessage(player, "You rub the $typeName...")
 
         if (jewellery.options.isEmpty()) {
@@ -58,10 +57,12 @@ class JewelleryOptionHandler : OptionHandler() {
             sendOptions(player, "Where would you like to teleport to?", *jewellery.options)
 
             addDialogueAction(player) { p, buttonID ->
-                closeDialogue(p)
-                jewellery.use(p, item, buttonID - 2, isEquipped)
+                val firstButtonId = 2
+                val optionIndex = (buttonID - firstButtonId).coerceIn(0, jewellery.options.lastIndex)
+                jewellery.use(p, item, optionIndex, isEquipped)
             }
         }
+
         return true
     }
 }

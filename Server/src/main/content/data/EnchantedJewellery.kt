@@ -43,6 +43,7 @@ enum class EnchantedJewellery(val options: Array<String>, val locations: Array<L
             }
             return
         }
+        closeDialogue(player)
         attemptTeleport(player, item, buttonID, isEquipped)
     }
 
@@ -91,27 +92,35 @@ enum class EnchantedJewellery(val options: Array<String>, val locations: Array<L
     /**
      * Handles the usage of the jewellery after teleportation.
      */
-    private fun handleJewelleryUsage(player: Player, item: Item, nextID: Item, itemIndex: Int, isEquipped: Boolean, location: Location) {
-        val name = getItemName(item.id).lowercase()
+    private fun handleJewelleryUsage(
+        player: Player,
+        item: Item,
+        nextID: Item,
+        itemIndex: Int,
+        isEquipped: Boolean,
+        location: Location
+    ) {
         val jewelleryName = when {
-            "ring" in name -> "ring's"
-            "combat" in name -> "bracelet's"
-            "necklace" in name -> "necklace's"
+            "ring" in item.name.lowercase() -> "ring's"
+            "combat" in item.name.lowercase() -> "bracelet's"
+            "necklace" in item.name.lowercase() -> "necklace's"
             else -> "amulet's"
         }
 
-        val j = nextID.name.replace("[^\\d-]|-(?=\\D)".toRegex(), "")
-        val message = if (j.isNotEmpty() && nextID.id != Items.RING_OF_SLAYING1_13288) {
-            "Your ${getJewelleryType(item)} has ${Util.convert(j.toInt())} uses left."
-        } else {
+        val isLast = isLastItemIndex(itemIndex)
+        val message = if (isLast) {
             "You use your $jewelleryName last charge."
+        } else {
+            val remainingUses = ids.size - itemIndex - 1
+            "Your ${getJewelleryType(item)} has ${Util.convert(remainingUses)} uses left."
         }
 
-        if (isLastItemIndex(itemIndex)) {
+        if (isLast) {
             if (crumbled) crumbleJewellery(player, item, isEquipped)
         } else {
             replaceJewellery(player, item, nextID, isEquipped)
         }
+
         unlock(player)
         sendMessage(player, message)
         player.dispatch(TeleportEvent(TeleportManager.TeleportType.NORMAL, TeleportMethod.JEWELRY, item, location))
@@ -176,7 +185,7 @@ enum class EnchantedJewellery(val options: Array<String>, val locations: Array<L
     /**
      * Gets the next item in the sequence.
      */
-    private fun getNext(index: Int): Int = if (index + 1 > ids.size - 1) ids.last() else ids[index + 1]
+    fun getNext(index: Int): Int = if (index + 1 > ids.size - 1) ids.last() else ids[index + 1]
 
     /**
      * Gets the location associated with the given index.
