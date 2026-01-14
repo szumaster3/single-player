@@ -581,6 +581,14 @@ abstract class Cutscene(val player: Player) {
     }
 
     /**
+     * Immediately closes the player overlay.
+     */
+    fun closeOverlay() {
+        logCutscene("Close ${player.username}'s overlay.")
+        player.interfaceManager.closeOverlay()
+    }
+
+    /**
      * Logs a message related to the cutscene, if cutscene logging is enabled.
      *
      * @param message The message to log.

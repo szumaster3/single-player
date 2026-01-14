@@ -1,7 +1,5 @@
-package content.region.desert.quest.deserttreasure.npc
+package content.region.desert.quest.deserttreasure
 
-import content.region.desert.quest.deserttreasure.DTUtils
-import content.region.desert.quest.deserttreasure.DesertTreasure
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -36,7 +34,7 @@ class DessousMeleeBehavior : NPCBehavior(NPCs.DESSOUS_1914, NPCs.DESSOUS_1915) {
         return false
     }
 
-    override fun tick(self: NPC): Boolean{
+    override fun tick(self: NPC): Boolean {
         if (disappearing) {
             return true
         }
@@ -52,13 +50,16 @@ class DessousMeleeBehavior : NPCBehavior(NPCs.DESSOUS_1914, NPCs.DESSOUS_1915) {
 
         // Dessous just continually hisses independently of projectile fires.
         if (self.id == NPCs.DESSOUS_1915 && self.properties.combatPulse.isInCombat) {
-            self.animate(Animation(1914))
+            animate(self, Animation(1914))
         }
         // This is probably the prayer flicking nonsense.
         if (self.id == NPCs.DESSOUS_1914 && player != null && player.prayer.get(PrayerType.PROTECT_FROM_MELEE)) {
             self.transform(NPCs.DESSOUS_1915)
             Graphics.send(Graphics(86), self.location)
-        } else if (self.id == NPCs.DESSOUS_1915 && player != null && (player.prayer.get(PrayerType.PROTECT_FROM_MAGIC) || player.prayer.get(PrayerType.PROTECT_FROM_MISSILES))) {
+        } else if (self.id == NPCs.DESSOUS_1915 && player != null && (player.prayer.get(PrayerType.PROTECT_FROM_MAGIC) || player.prayer.get(
+                PrayerType.PROTECT_FROM_MISSILES
+            ))
+        ) {
             self.transform(NPCs.DESSOUS_1914)
             Graphics.send(Graphics(86), self.location)
         }
@@ -89,31 +90,46 @@ class DessousMeleeBehavior : NPCBehavior(NPCs.DESSOUS_1914, NPCs.DESSOUS_1915) {
     override fun onDeathFinished(self: NPC, killer: Entity) {
         if (killer is Player) {
             val player = killer
-            if (DTUtils.getSubStage(player, DesertTreasure.bloodStage) == 2) {
-                DTUtils.setSubStage(player, DesertTreasure.bloodStage, 3)
+            if (DesertTreasure.getSubStage(player, DesertTreasure.attributeBloodStage) == 2) {
+                DesertTreasure.setSubStage(player, DesertTreasure.attributeBloodStage, 3)
             }
             removeAttribute(player, DesertTreasure.attributeDessousInstance)
             openDialogue(player, object : DialogueFile() {
                 override fun handle(componentID: Int, buttonID: Int) {
                     when (stage) {
-                        0 -> player(FaceAnim.ANGRY, "Well that's Dessous dead, but where is the Diamond he", "was supposed to have?").also { stage++ }
-                        1 -> playerl(FaceAnim.ANGRY, "If Malak lied to me about it, he is going to pay!").also { stage = END_DIALOGUE }
+                        0 -> player(
+                            FaceAnim.ANGRY,
+                            "Well that's Dessous dead, but where is the Diamond he",
+                            "was supposed to have?"
+                        ).also { stage++ }
+
+                        1 -> playerl(FaceAnim.ANGRY, "If Malak lied to me about it, he is going to pay!").also {
+                            stage = END_DIALOGUE
+                        }
                     }
                 }
             })
         }
     }
 
-    /**
-     * Handler for ranged.
-     */
+    /** Handler for ranged. */
     class CombatHandler : MultiSwingHandler(
         SwitchAttack(CombatStyle.MAGIC.swingHandler, null),
         SwitchAttack(CombatStyle.RANGE.swingHandler, null)
     ) {
         override fun swing(entity: Entity?, victim: Entity?, state: BattleState?): Int {
             if (entity is NPC && victim is Player) {
-                val projectile = Projectile.create(victim.location.transform(Location(intArrayOf(3, -3).random(), intArrayOf(3, -3).random())), victim.location, 350, 0, 0, 0, 60, 0, 255)
+                val projectile = Projectile.create(
+                    victim.location.transform(Location(intArrayOf(3, -3).random(), intArrayOf(3, -3).random())),
+                    victim.location,
+                    350,
+                    0,
+                    0,
+                    0,
+                    60,
+                    0,
+                    255
+                )
                 // 2 x 5HP (One Magic, One Ranged)
                 state!!.estimatedHit = 5
                 state.secondaryHit = 5 // I have no idea what I'm doing
@@ -124,9 +140,11 @@ class DessousMeleeBehavior : NPCBehavior(NPCs.DESSOUS_1914, NPCs.DESSOUS_1915) {
                             projectile.send()
                             return@queueScript delayScript(entity, entity.location.getDistance(victim.location).toInt())
                         }
+
                         1 -> {
                             return@queueScript stopExecuting(entity)
                         }
+
                         else -> return@queueScript stopExecuting(entity)
                     }
                 }

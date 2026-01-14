@@ -12,10 +12,7 @@ import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
-import shared.consts.Items
-import shared.consts.NPCs
-import shared.consts.Quests
-import shared.consts.Scenery
+import shared.consts.*
 import kotlin.math.ceil
 
 /**
@@ -49,7 +46,7 @@ class EnchantedValleyPlugin : InteractionListener {
 
             sendMessage(player, "You cast out your net...")
 
-            if (player.viewport.region?.id == 12102) {
+            if (player.viewport.region?.id == Regions.ENCHANTED_VALLEY_12102) {
                 val npc = EnchantedValleyNPC.getRandom(RIVER_TROLL_IDS, node.location, player)
                 npc.init()
             } else sendMessage(player, "Nothing interesting happens.")

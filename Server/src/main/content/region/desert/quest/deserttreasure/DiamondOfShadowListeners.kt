@@ -1,7 +1,5 @@
-package content.region.desert.quest.deserttreasure.plugin
+package content.region.desert.quest.deserttreasure
 
-import content.region.desert.quest.deserttreasure.DTUtils
-import content.region.desert.quest.deserttreasure.DesertTreasure
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
@@ -21,53 +19,14 @@ import core.tools.RandomFunction
 import core.tools.START_DIALOGUE
 import shared.consts.Items
 import shared.consts.NPCs
-import shared.consts.Quests
 import shared.consts.Scenery
 
-class ShadowDiamondPlugin : InteractionListener, MapArea {
-    override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(
-        ZoneBorders(2726, 5072, 2728, 5072),
-        ZoneBorders(2731, 5085, 2748, 5097))
-
-    override fun areaEnter(entity: Entity) {
-        if (entity is Player) {
-            val player = entity.asPlayer()
-            when{
-                inBorders(player, ZoneBorders(2726, 5072, 2728, 5072)) -> if (getQuestStage(entity, Quests.DESERT_TREASURE) == 9 &&
-                    DTUtils.getSubStage(entity, DesertTreasure.shadowStage) == 3 &&
-                    getAttribute(entity, DesertTreasure.attributeDamisWarning, false)
-                ) {
-                    sendMessage(entity, "A voice seems to come from the walls around you;")
-                    sendMessage(entity, "'You... do not be... long in this... place")
-                    sendMessage(entity, "Turn... back now, or... prepare... to meet your... doom'")
-                    getAttribute(entity, DesertTreasure.attributeDamisWarning, true)
-                }
-
-                else -> if (getQuestStage(entity, Quests.DESERT_TREASURE) == 9) {
-                    if (DTUtils.getSubStage(entity, DesertTreasure.shadowStage) == 3 &&
-                        getAttribute<NPC?>(entity, DesertTreasure.attributeDamisInstance, null) == null
-                    ) {
-                        val npc = core.game.node.entity.npc.NPC.create(NPCs.DAMIS_1974, Location(2739, 5088, 0))
-                        setAttribute(entity, DesertTreasure.attributeDamisInstance, npc)
-                        setAttribute(npc, "target", entity)
-                        npc.isRespawn = false
-                        npc.walkRadius = 30
-                        npc.init()
-                        npc.attack(entity)
-                        sendChat(npc, "You should have listened to me!")
-                    }
-                } else if (DTUtils.getSubStage(entity, DesertTreasure.shadowStage) >= 100) {
-                    if (!inInventory(entity, Items.SHADOW_DIAMOND_4673) && !inBank(entity, Items.SHADOW_DIAMOND_4673)) {
-                        sendMessage(entity, "The Diamond of Shadow seems to have mystically found its way back here...")
-                        GroundItemManager.create(Item(Items.SHADOW_DIAMOND_4673), Location(2739, 5088, 0), entity)
-                    }
-                }
-            }
-        }
-    }
+class DiamondOfShadowListeners : InteractionListener {
 
     companion object {
+
         fun roll(player: Player): Boolean {
+
             val chance = RandomFunction.randomDouble(1.0, 100.0)
             val successChance = RandomFunction.getSkillSuccessChance(52.0, 128.0, getDynLevel(player, Skills.THIEVING))
 
@@ -147,8 +106,8 @@ class ShadowDiamondPlugin : InteractionListener, MapArea {
                     }
 
                     6 -> {
-                        if (DTUtils.getSubStage(player, DesertTreasure.shadowStage) == 1) {
-                            DTUtils.setSubStage(player, DesertTreasure.shadowStage, 2)
+                        if (DesertTreasure.getSubStage(player, DesertTreasure.attributeShadowStage) == 1) {
+                            DesertTreasure.setSubStage(player, DesertTreasure.attributeShadowStage, 2)
                         }
                         return@queueScript stopExecuting(player)
                     }
@@ -160,19 +119,22 @@ class ShadowDiamondPlugin : InteractionListener, MapArea {
     }
 
     override fun defineListeners() {
-        on(Scenery.LADDER_6561, SCENERY, "climb-down") { player, node ->
+
+        // Hidden entrance to the shadow dungeon.
+        on(Scenery.LADDER_6561, SCENERY, "climb-down") { player, _ ->
             teleport(player, Location(2630, 5072))
             return@on true
         }
 
+        /** This will open up a lot of other places. Maybe have this in a general file? */
         onEquip(Items.RING_OF_VISIBILITY_4657) { player, _ ->
-            if ((
-                    DTUtils.getSubStage(player, DesertTreasure.shadowStage) >= 3 &&
-                        getQuestStage(player, Quests.DESERT_TREASURE) >= 9
-                ) ||
-                getQuestStage(player, Quests.DESERT_TREASURE) >= 10
+
+            if ((DesertTreasure.getSubStage(player, DesertTreasure.attributeShadowStage) >= 3 &&
+                        getQuestStage(player, DesertTreasure.questName) >= 9) ||
+                getQuestStage(player, DesertTreasure.questName) >= 10
             ) {
-                setVarbit(player, DesertTreasure.varbitSmokeDungeonLadder, 1)
+
+                setVarbit(player, DesertTreasure.varbitRingOfVisibility, 1)
                 return@onEquip true
             }
             sendMessage(player, "You need to complete part of Desert Treasure to equip this.")
@@ -180,54 +142,45 @@ class ShadowDiamondPlugin : InteractionListener, MapArea {
         }
 
         onUnequip(Items.RING_OF_VISIBILITY_4657) { player, _ ->
-            setVarbit(player, DesertTreasure.varbitSmokeDungeonLadder, 0)
+            setVarbit(player, DesertTreasure.varbitRingOfVisibility, 0)
             return@onUnequip true
         }
 
+
+
         on(Scenery.SECURE_CHEST_6448, SCENERY, "open") { player, node ->
-            if (DTUtils.getSubStage(player, DesertTreasure.shadowStage) == 1) {
+            if (DesertTreasure.getSubStage(player, DesertTreasure.attributeShadowStage) == 1) {
                 if (inInventory(player, Items.LOCKPICK_1523)) {
-                    openDialogue(
-                        player,
-                        object : DialogueFile() {
-                            override fun handle(
-                                componentID: Int,
-                                buttonID: Int,
-                            ) {
-                                when (stage) {
-                                    START_DIALOGUE ->
-                                        dialogue(
-                                            "Your skill as a thief allows you to see some kind of elaborate booby",
-                                            "trapped locking mechanism on this chest.",
-                                        ).also { stage++ }
+                    openDialogue(player, object : DialogueFile() {
+                        override fun handle(componentID: Int, buttonID: Int) {
+                            when (stage) {
+                                START_DIALOGUE -> dialogue(
+                                    "Your skill as a thief allows you to see some kind of elaborate booby",
+                                    "trapped locking mechanism on this chest."
+                                ).also { stage++ }
 
-                                    1 ->
-                                        showTopics(
-                                            Topic(FaceAnim.NEUTRAL, "Yes", 2, true),
-                                            Topic(FaceAnim.NEUTRAL, "No", END_DIALOGUE, true),
-                                            title = "Try to open the chest?",
-                                        )
+                                1 -> showTopics(
+                                    Topic(FaceAnim.NEUTRAL, "Yes", 2, true),
+                                    Topic(FaceAnim.NEUTRAL, "No", END_DIALOGUE, true),
+                                    title = "Try to open the chest?"
+                                )
 
-                                    2 ->
-                                        end().also {
-                                            if (inInventory(player, Items.LOCKPICK_1523)) {
-                                                pickAttempt(player, null)
-                                            } else {
-                                                sendMessage(player, "You need a lockpick in order to attempt this.")
-                                            }
-                                        }
+                                2 -> end().also {
+                                    if (inInventory(player, Items.LOCKPICK_1523)) {
+                                        pickAttempt(player, null)
+                                    } else {
+                                        sendMessage(player, "You need a lockpick in order to attempt this.")
+                                    }
                                 }
                             }
-                        },
-                    )
+                        }
+                    })
                 } else {
                     sendMessage(player, "You need a lockpick in order to attempt this.")
                 }
-            } else if ((
-                    DTUtils.getSubStage(player, DesertTreasure.shadowStage) >= 2 &&
-                        getQuestStage(player, Quests.DESERT_TREASURE) >= 9
-                ) ||
-                getQuestStage(player, Quests.DESERT_TREASURE) >= 10
+            } else if ((DesertTreasure.getSubStage(player, DesertTreasure.attributeShadowStage) >= 2 &&
+                        getQuestStage(player, DesertTreasure.questName) >= 9) ||
+                getQuestStage(player, DesertTreasure.questName) >= 10
             ) {
                 if (inInventory(player, Items.GILDED_CROSS_4674)) {
                     sendMessage(player, "The chest is empty.")
@@ -243,19 +196,77 @@ class ShadowDiamondPlugin : InteractionListener, MapArea {
         }
 
         onUseWith(SCENERY, Items.LOCKPICK_1523, Scenery.SECURE_CHEST_6448) { player, used, _ ->
-            if (DTUtils.getSubStage(player, DesertTreasure.shadowStage) == 1) {
+            if (DesertTreasure.getSubStage(player, DesertTreasure.attributeShadowStage) == 1) {
                 pickAttempt(player, used as Item)
-            } else if ((
-                    DTUtils.getSubStage(player, DesertTreasure.shadowStage) >= 2 &&
-                        getQuestStage(player, Quests.DESERT_TREASURE) >= 9
-                ) ||
-                getQuestStage(player, Quests.DESERT_TREASURE) >= 10
+            } else if ((DesertTreasure.getSubStage(player, DesertTreasure.attributeShadowStage) >= 2 &&
+                        getQuestStage(player, DesertTreasure.questName) >= 9) ||
+                getQuestStage(player, DesertTreasure.questName) >= 10
             ) {
                 sendMessage(player, "The chest is unlocked.")
             } else {
                 sendPlayerDialogue(player, "These bandits are hostile enough without me trying to rob them!")
             }
             return@onUseWith true
+        }
+
+    }
+}
+
+class ShadowDungeonWarning : MapArea {
+    override fun defineAreaBorders(): Array<ZoneBorders> {
+        return arrayOf(ZoneBorders(2726, 5072, 2728, 5072))
+    }
+
+    override fun areaEnter(entity: Entity) {
+        if (entity is Player) {
+            if (
+                getQuestStage(entity, DesertTreasure.questName) == 9 &&
+                DesertTreasure.getSubStage(entity, DesertTreasure.attributeShadowStage) == 3 &&
+                getAttribute(entity, DesertTreasure.attributeDamisWarning, false)
+            ) {
+                sendMessage(entity, "A voice seems to come from the walls around you;")
+                sendMessage(entity, "'You... do not be... long in this... place")
+                sendMessage(entity, "Turn... back now, or... prepare... to meet your... doom'")
+                getAttribute(entity, DesertTreasure.attributeDamisWarning, true)
+            } else if (
+                getQuestStage(entity, DesertTreasure.questName) == 9 &&
+                DesertTreasure.getSubStage(entity, DesertTreasure.attributeShadowStage) == 100
+            ) {
+                if (!inInventory(entity, Items.SHADOW_DIAMOND_4673) && !inBank(entity, Items.SHADOW_DIAMOND_4673)) {
+                    sendMessage(entity, "The Diamond of Shadow seems to have mystically found its way back here...")
+                    GroundItemManager.create(Item(Items.SHADOW_DIAMOND_4673), Location(2739, 5088, 0), entity)
+                }
+            }
+        }
+    }
+}
+
+class ShadowDungeonAttack : MapArea {
+    override fun defineAreaBorders(): Array<ZoneBorders> {
+        return arrayOf(ZoneBorders(2731, 5085, 2748, 5097))
+    }
+
+    override fun areaEnter(entity: Entity) {
+        if (entity is Player) {
+            if (getQuestStage(entity, DesertTreasure.questName) == 9) {
+                if (DesertTreasure.getSubStage(entity, DesertTreasure.attributeShadowStage) == 3 &&
+                    getAttribute<NPC?>(entity, DesertTreasure.attributeDamisInstance, null) == null
+                ) {
+                    val npc = NPC.create(NPCs.DAMIS_1974, Location(2739, 5088, 0))
+                    setAttribute(entity, DesertTreasure.attributeDamisInstance, npc)
+                    setAttribute(npc, "target", entity)
+                    npc.isRespawn = false
+                    npc.walkRadius = 30
+                    npc.init()
+                    npc.attack(entity)
+                    sendChat(npc, "You should have listened to me!")
+                }
+            } else if (DesertTreasure.getSubStage(entity, DesertTreasure.attributeShadowStage) >= 100) {
+                if (!inInventory(entity, Items.SHADOW_DIAMOND_4673) && !inBank(entity, Items.SHADOW_DIAMOND_4673)) {
+                    sendMessage(entity, "The Diamond of Shadow seems to have mystically found its way back here...")
+                    GroundItemManager.create(Item(Items.SHADOW_DIAMOND_4673), Location(2739, 5088, 0), entity)
+                }
+            }
         }
     }
 }

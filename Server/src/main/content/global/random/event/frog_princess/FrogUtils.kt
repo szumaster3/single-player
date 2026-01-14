@@ -58,7 +58,7 @@ object FrogUtils {
                         face(player, npc, 3)
                         face(npc, player, 3)
                         npc.animate(Animation(FROG_KISS_ANIM))
-                        player.animate(Animation(2376))
+                        player.animate(Animation(Animations.HUMAN_KISS_THE_FROG_2376))
                     }
                     4 -> visualize(npc,TRANSFORM_INTO_HUMAN,Graphics.SPELL_SPLASH_85)
                     6 -> transformNpc(npc, royalCouple, 100)
@@ -69,9 +69,9 @@ object FrogUtils {
                         "I must return to my fairy tale kingdom now, but I will",
                         "leave you a reward for your kindness."
                     )
-                    9,12,14 -> {
+                    9,12 -> {
                         visualize()
-                        if (counter == 16) openInterface(player, Components.FADE_TO_BLACK_120)
+                        if (counter == 15) openInterface(player, Components.FADE_TO_BLACK_120)
                     }
 
                     16 -> {

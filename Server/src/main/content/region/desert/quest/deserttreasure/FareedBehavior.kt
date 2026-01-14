@@ -1,9 +1,7 @@
-package content.region.desert.quest.deserttreasure.npc
+package content.region.desert.quest.deserttreasure
 
 import content.global.skill.magic.spells.modern.ElementalSpellDefinition
 import content.global.skill.magic.spells.modern.ModernElementalSpell
-import content.region.desert.quest.deserttreasure.DTUtils
-import content.region.desert.quest.deserttreasure.DesertTreasure
 import core.api.*
 import core.game.container.impl.EquipmentContainer
 import core.game.global.action.EquipHandler
@@ -74,8 +72,8 @@ class FareedBehavior : NPCBehavior(NPCs.FAREED_1977) {
         if (killer is Player) {
             addItemOrDrop(killer, Items.SMOKE_DIAMOND_4672)
             sendMessage(killer, "You take the Diamond of Smoke from the ashes of the warrior.")
-            if (DTUtils.getSubStage(killer, DesertTreasure.smokeStage) == 1) {
-                DTUtils.setSubStage(killer, DesertTreasure.smokeStage, 100)
+            if (DesertTreasure.getSubStage(killer, DesertTreasure.attributeSmokeStage) == 1) {
+                DesertTreasure.setSubStage(killer, DesertTreasure.attributeSmokeStage, 100)
                 removeAttribute(killer, DesertTreasure.attributeFareedInstance)
             }
         }

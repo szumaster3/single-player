@@ -1,7 +1,5 @@
-package content.region.desert.quest.deserttreasure.plugin
+package content.region.desert.quest.deserttreasure
 
-import content.region.desert.quest.deserttreasure.DTUtils
-import content.region.desert.quest.deserttreasure.DesertTreasure
 import core.api.*
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
@@ -13,112 +11,137 @@ import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Scenery
 
-class BloodDiamondPlugin : InteractionListener {
-
+class DiamondOfBloodListeners : InteractionListener {
     override fun defineListeners() {
+
+        // Silver pot conversions
         onUseWith(ITEM, Items.SILVER_POT_4660, Items.SPICE_2007) { player, used, with ->
+            sendMessage(player, "You add some spices to the pot.")
             if (removeItem(player, used) && removeItem(player, with)) {
-                sendMessage(player, "You add some spices to the pot.")
                 addItemOrDrop(player, Items.SILVER_POT_4664)
             }
             return@onUseWith true
         }
         onUseWith(ITEM, Items.SILVER_POT_4660, Items.GARLIC_POWDER_4668) { player, used, with ->
+            sendMessage(player, "You add some crushed garlic to the pot.")
             if (removeItem(player, used) && removeItem(player, with)) {
-                sendMessage(player, "You add some crushed garlic to the pot.")
                 addItemOrDrop(player, Items.SILVER_POT_4662)
             }
             return@onUseWith true
         }
         onUseWith(ITEM, Items.SILVER_POT_4662, Items.SPICE_2007) { player, used, with ->
+            sendMessage(player, "You add some spices to the pot.")
             if (removeItem(player, used) && removeItem(player, with)) {
-                sendMessage(player, "You add some spices to the pot.")
                 addItemOrDrop(player, Items.SILVER_POT_4666)
             }
             return@onUseWith true
         }
         onUseWith(ITEM, Items.SILVER_POT_4664, Items.GARLIC_POWDER_4668) { player, used, with ->
+            sendMessage(player, "You add some crushed garlic to the pot.")
             if (removeItem(player, used) && removeItem(player, with)) {
-                sendMessage(player, "You add some crushed garlic to the pot.")
                 addItemOrDrop(player, Items.SILVER_POT_4666)
             }
             return@onUseWith true
         }
-
+        // Blessed pot conversions
         onUseWith(ITEM, Items.BLESSED_POT_4661, Items.SPICE_2007) { player, used, with ->
+            sendMessage(player, "You add some spices to the pot.")
             if (removeItem(player, used) && removeItem(player, with)) {
-                sendMessage(player, "You add some spices to the pot.")
                 addItemOrDrop(player, Items.BLESSED_POT_4665)
             }
             return@onUseWith true
         }
         onUseWith(ITEM, Items.BLESSED_POT_4661, Items.GARLIC_POWDER_4668) { player, used, with ->
+            sendMessage(player, "You add some crushed garlic to the pot.")
             if (removeItem(player, used) && removeItem(player, with)) {
-                sendMessage(player, "You add some crushed garlic to the pot.")
                 addItemOrDrop(player, Items.BLESSED_POT_4663)
             }
             return@onUseWith true
         }
         onUseWith(ITEM, Items.BLESSED_POT_4663, Items.SPICE_2007) { player, used, with ->
+            sendMessage(player, "You add some spices to the pot.")
             if (removeItem(player, used) && removeItem(player, with)) {
-                sendMessage(player, "You add some spices to the pot.")
                 addItemOrDrop(player, Items.BLESSED_POT_4667)
             }
             return@onUseWith true
         }
         onUseWith(ITEM, Items.BLESSED_POT_4665, Items.GARLIC_POWDER_4668) { player, used, with ->
+            sendMessage(player, "You add some crushed garlic to the pot.")
             if (removeItem(player, used) && removeItem(player, with)) {
-                sendMessage(player, "You add some crushed garlic to the pot.")
                 addItemOrDrop(player, Items.BLESSED_POT_4667)
             }
             return@onUseWith true
         }
 
-        onUseWith(ITEM, intArrayOf(Items.SILVER_POT_4660, Items.BLESSED_POT_4661, Items.SILVER_POT_4662, Items.BLESSED_POT_4663, Items.SILVER_POT_4664, Items.BLESSED_POT_4665, Items.SILVER_POT_4666, Items.BLESSED_POT_4667), Items.GARLIC_1550,) { player, _, _ ->
+        // You need to crush the garlic.
+        onUseWith(
+            ITEM,
+            intArrayOf(
+                Items.SILVER_POT_4660,
+                Items.BLESSED_POT_4661,
+                Items.SILVER_POT_4662,
+                Items.BLESSED_POT_4663,
+                Items.SILVER_POT_4664,
+                Items.BLESSED_POT_4665,
+                Items.SILVER_POT_4666,
+                Items.BLESSED_POT_4667
+            ),
+            Items.GARLIC_1550
+        ) { player, used, with ->
             sendMessage(player, "You need to crush the garlic before adding it to the pot.")
             return@onUseWith true
         }
 
+        // Dessous jumps out.
         onUseWith(SCENERY, Items.BLESSED_POT_4667, Scenery.VAMPIRE_TOMB_6437) { player, used, with ->
             val prevNpc = getAttribute<NPC?>(player, DesertTreasure.attributeDessousInstance, null)
-            prevNpc?.clear()
-
+            if (prevNpc != null) {
+                prevNpc.clear()
+            }
             sendMessage(player, "You pour the blood from the pot onto the tomb.")
             removeItem(player, used)
-
             val scenery = with.asScenery()
+            // Swap to a splittable vampire tomb scenery.
             replaceScenery(scenery, Scenery.VAMPIRE_TOMB_6438, Animation(1915).duration)
+            // Vampire Tomb breaks open.
             animateScenery(player, scenery, 1915)
-
-            DTUtils.spawnProjectiles()
-
+            // 8 Bat projectiles
+            spawnProjectile(Location(3570, 3402), Location(3570, 3404), 350, 0, 0, 0, 60, 0)
+            spawnProjectile(Location(3570, 3402), Location(3570, 3400), 350, 0, 0, 0, 60, 0)
+            spawnProjectile(Location(3570, 3402), Location(3568, 3402), 350, 0, 0, 0, 60, 0)
+            spawnProjectile(Location(3570, 3402), Location(3572, 3402), 350, 0, 0, 0, 60, 0)
+            spawnProjectile(Location(3570, 3402), Location(3568, 3404), 350, 0, 0, 0, 60, 0)
+            spawnProjectile(Location(3570, 3402), Location(3572, 3404), 350, 0, 0, 0, 60, 0)
+            spawnProjectile(Location(3570, 3402), Location(3568, 3400), 350, 0, 0, 0, 60, 0)
+            spawnProjectile(Location(3570, 3402), Location(3572, 3400), 350, 0, 0, 0, 60, 0)
             val npc = NPC(NPCs.DESSOUS_1914)
             queueScript(player, 1, QueueStrength.SOFT) { stage: Int ->
                 when (stage) {
                     0 -> {
+                        // Projectile gfx for Dessous to jump out.
                         spawnProjectile(Location(3570, 3402), Location(3570, 3405), 351, 0, 0, 0, 40, 0)
-                        delayScript(player, 1)
+                        return@queueScript delayScript(player, 1)
                     }
 
                     1 -> {
-                        npc.apply {
-                            isRespawn = false
-                            isWalks = false
-                            location = Location(3570, 3405, 0)
-                            direction = Direction.NORTH
-                        }
+                        npc.isRespawn = false
+                        npc.isWalks = false
+                        npc.location = Location(3570, 3405, 0)
+                        npc.direction = Direction.NORTH
                         setAttribute(player, DesertTreasure.attributeDessousInstance, npc)
                         setAttribute(npc, "target", player)
 
                         npc.init()
                         npc.attack(player)
-                        stopExecuting(player)
+                        return@queueScript stopExecuting(player)
                     }
 
-                    else -> stopExecuting(player)
+                    else -> return@queueScript stopExecuting(player)
                 }
             }
 
+            //sendGraphics(350, Location(3570, 3402))
+            //sendGraphics(351, Location(3570, 3402))
             return@onUseWith true
         }
     }

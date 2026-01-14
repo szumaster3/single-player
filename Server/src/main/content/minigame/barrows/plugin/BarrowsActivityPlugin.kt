@@ -33,6 +33,7 @@ import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
 import core.tools.RandomFunction
 import shared.consts.Components
+import shared.consts.Scenery as Objects
 
 /**
  * Handles the Barrows minigame activity.
@@ -139,29 +140,25 @@ class BarrowsActivityPlugin : ActivityPlugin("Barrows", false, false, false) {
             player = killer.owner
         }
         if (player != null && e is NPC) {
-            player.getSavedData().activityData.barrowKills = player.getSavedData().activityData.barrowKills + 1
+            player.getSavedData().activityData.barrowKills += 1
             sendConfiguration(player)
         }
         return false
     }
 
-    override fun interact(
-        e: Entity,
-        target: Node,
-        option: Option,
-    ): Boolean {
+    override fun interact(e: Entity, target: Node, option: Option): Boolean {
         if (target is Scenery) {
             val `object` = target
             val player = e as Player
-            if (`object`.id >= 6702 && `object`.id <= 6707) {
+            if (`object`.id in Objects.STAIRCASE_6702..Objects.STAIRCASE_6707) {
                 ClimbActionHandler.climb(
                     e,
                     ClimbActionHandler.CLIMB_UP,
-                    BarrowsCrypt.getCrypt(`object`.id - 6702).exitLocation,
+                    BarrowsCrypt.getCrypt(`object`.id - Objects.STAIRCASE_6702).exitLocation,
                 )
                 return true
             }
-            if (`object`.id >= 6708 && `object`.id <= 6712) {
+            if (`object`.id in Objects.LADDER_6708..6712) { // Varbit 465
                 ClimbActionHandler.climb(
                     e,
                     ClimbActionHandler.CLIMB_UP,
@@ -182,7 +179,7 @@ class BarrowsActivityPlugin : ActivityPlugin("Barrows", false, false, false) {
             }
 
             when (`object`.id) {
-                6714, 6733 -> {
+                Objects.DOOR_6714, Objects.DOOR_6733 -> {
                     DoorActionHandler.handleAutowalkDoor(e, target)
                     if (RandomFunction.random(15) == 0) {
                         val brothers = player.getSavedData().activityData.barrowBrothers
@@ -200,37 +197,37 @@ class BarrowsActivityPlugin : ActivityPlugin("Barrows", false, false, false) {
                     return true
                 }
 
-                6821 -> {
+                Objects.SARCOPHAGUS_6821 -> {
                     BarrowsCrypt.getCrypt(BarrowsCrypt.AHRIM).openSarcophagus(e, `object`)
                     return true
                 }
 
-                6771 -> {
+                Objects.SARCOPHAGUS_6771 -> {
                     BarrowsCrypt.getCrypt(BarrowsCrypt.DHAROK).openSarcophagus(e, `object`)
                     return true
                 }
 
-                6773 -> {
+                Objects.SARCOPHAGUS_6773 -> {
                     BarrowsCrypt.getCrypt(BarrowsCrypt.GUTHAN).openSarcophagus(e, `object`)
                     return true
                 }
 
-                6822 -> {
+                Objects.SARCOPHAGUS_6822 -> {
                     BarrowsCrypt.getCrypt(BarrowsCrypt.KARIL).openSarcophagus(e, `object`)
                     return true
                 }
 
-                6772 -> {
+                Objects.SARCOPHAGUS_6772 -> {
                     BarrowsCrypt.getCrypt(BarrowsCrypt.TORAG).openSarcophagus(e, `object`)
                     return true
                 }
 
-                6823 -> {
+                Objects.SARCOPHAGUS_6823 -> {
                     BarrowsCrypt.getCrypt(BarrowsCrypt.VERAC).openSarcophagus(e, `object`)
                     return true
                 }
 
-                6774 -> {
+                Objects.CHEST_6774 -> {
                     player.lock(1)
                     val brother = player.getSavedData().activityData.barrowTunnelIndex
                     if (!player.getSavedData().activityData.barrowBrothers[brother] &&
@@ -248,7 +245,7 @@ class BarrowsActivityPlugin : ActivityPlugin("Barrows", false, false, false) {
                     return true
                 }
 
-                6775 -> {
+                Objects.CHEST_6775 -> {
                     if (option.name == "Close") {
                         removeAttribute(player, "barrow:opened_chest")
                         sendConfiguration(player)

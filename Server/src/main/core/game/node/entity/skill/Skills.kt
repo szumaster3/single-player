@@ -40,13 +40,13 @@ class Skills(
     var experienceMultiplier: Double = 1.0
 
     /** Experience values for each skill. */
-    private val experience = DoubleArray(24)
+    val experience = DoubleArray(24)
 
     /** Stores the last experience update. */
-    private var lastUpdateXp: DoubleArray? = null
+    var lastUpdateXp: DoubleArray? = null
 
     /** Last update tick. */
-    private var lastUpdate = ticks
+    var lastUpdate = ticks
 
     /** Base levels of each skill. */
     val staticLevels: IntArray = IntArray(24)
@@ -55,13 +55,13 @@ class Skills(
     @JvmField val dynamicLevels: IntArray = IntArray(24)
 
     /** Current prayer points. */
-    private var prayerPoints = 1.0
+    var prayerPoints = 1.0
 
     /** Current lifepoints. */
-    private var lifepoints = 10
+    var lifepoints = 10
 
     /** Lifepoints increase tracker. */
-    private var lifepointsIncrease = 0
+    var lifepointsIncrease = 0
 
     /** Tracks total experience gained. */
     var experienceGained: Double = 0.0

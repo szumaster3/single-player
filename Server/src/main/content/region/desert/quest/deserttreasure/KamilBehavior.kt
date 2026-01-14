@@ -1,7 +1,5 @@
-package content.region.desert.quest.deserttreasure.npc
+package content.region.desert.quest.deserttreasure
 
-import content.region.desert.quest.deserttreasure.DTUtils
-import content.region.desert.quest.deserttreasure.DesertTreasure
 import core.api.*
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
@@ -16,15 +14,12 @@ import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
 import shared.consts.NPCs
 
-class KamilNPC : NPCBehavior(NPCs.KAMIL_1913) {
+// https://www.youtube.com/watch?v=xeu6Ncmt1fY
+
+class KamilBehavior : NPCBehavior(NPCs.KAMIL_1913) {
     private var disappearing = false
 
-    override fun canBeAttackedBy(
-        self: NPC,
-        attacker: Entity,
-        style: CombatStyle,
-        shouldSendMessage: Boolean,
-    ): Boolean {
+    override fun canBeAttackedBy(self: NPC, attacker: Entity, style: CombatStyle, shouldSendMessage: Boolean): Boolean {
         if (attacker is Player) {
             if (attacker == getAttribute<Player?>(self, "target", null)) {
                 return true
@@ -39,7 +34,11 @@ class KamilNPC : NPCBehavior(NPCs.KAMIL_1913) {
             return true
         }
         val player: Player? = getAttribute<Player?>(self, "target", null)
-        if (player == null || !self.location.withinDistance(self.properties.spawnLocation, (self.walkRadius*1.5).toInt())) {
+        if (player == null || !self.location.withinDistance(
+                self.properties.spawnLocation,
+                (self.walkRadius * 1.5).toInt()
+            )
+        ) {
             if (player != null && !disappearing) {
                 disappearing = true
                 sendMessage(player, "Kamil vanishes on an icy wind...")
@@ -50,44 +49,48 @@ class KamilNPC : NPCBehavior(NPCs.KAMIL_1913) {
         return true
     }
 
-    override fun onDeathFinished(
-        self: NPC,
-        killer: Entity,
-    ) {
+    override fun onDeathFinished(self: NPC, killer: Entity) {
         if (killer is Player) {
-            if (DTUtils.getSubStage(killer, DesertTreasure.iceStage) == 2) {
-                DTUtils.setSubStage(killer, DesertTreasure.iceStage, 3)
+            if (DesertTreasure.getSubStage(killer, DesertTreasure.attributeIceStage) == 2) {
+                DesertTreasure.setSubStage(killer, DesertTreasure.attributeIceStage, 3)
                 removeAttribute(killer, DesertTreasure.attributeKamilInstance)
                 sendPlayerDialogue(
                     killer,
-                    "Well, that must have been the 'bad man' that the troll kid was on about... His parents must be up ahead somewhere.",
+                    "Well, that must have been the 'bad man' that the troll kid was on about... His parents must be up ahead somewhere."
                 )
             }
         }
     }
 
-    override fun getSwingHandlerOverride(self: NPC, original: CombatSwingHandler): CombatSwingHandler = KamilCombatHandler()
+    override fun getSwingHandlerOverride(self: NPC, original: CombatSwingHandler): CombatSwingHandler {
+        return KamilCombatHandler()
+    }
 }
 
-private class KamilCombatHandler : MultiSwingHandler(SwitchAttack(CombatStyle.MELEE.swingHandler, null)) {
+// All these combat shit is the most trash level thing to use or decipher.
+class KamilCombatHandler : MultiSwingHandler(
+    SwitchAttack(CombatStyle.MELEE.swingHandler, null),
+) {
     override fun impact(entity: Entity?, victim: Entity?, state: BattleState?) {
         if (victim is Player) {
-            if (RandomFunction.roll(3) &&
-                !hasTimerActive(victim, "frozen") &&
-                !hasTimerActive(
+            // This is following RevenantCombatHandler.java, no idea if this is good.
+            // I can't be bothered to fix fucking frozen. The player can hit through frozen. What the fuck is frozen for then, to glue his fucking legs???
+            if (RandomFunction.roll(3) && !hasTimerActive(victim, "frozen") && !hasTimerActive(
                     victim,
-                    "frozen:immunity",
+                    "frozen:immunity"
                 )
             ) {
-                sendChat(entity as NPC, "Sallamakar Ro!")
+                sendChat(entity as NPC, "Sallamakar Ro!") // Salad maker roll.
                 impact(victim, 5)
                 impact(victim, 5)
                 registerTimer(victim, spawnTimer("frozen", 7, true))
                 sendMessage(victim, "You've been frozen!")
+                // FIXME: before the below vfx hits, there should be another one that looks kinda like a wind wave exploding at the player's feet. Hope somebody finds the id.
                 sendGraphics(539, victim.location)
-                victim.properties.combatPulse.stop()
+                victim.properties.combatPulse.stop() // Force the victim to stop fighting. Whatever.
+                // FIXME: sfx
             } else {
-                entity?.animate(Animation(440))
+                animate(entity!!, Animation(440))
             }
         }
         super.impact(entity, victim, state)

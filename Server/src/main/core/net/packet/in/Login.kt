@@ -174,9 +174,12 @@ object Login {
     private fun checkAccountLimit(ipAddress: String, username: String): Boolean {
         var accountLimit = ServerConstants.DAILY_ACCOUNT_LIMIT
 
-        if (File(ServerConstants.CONFIG_PATH + "account_limit_exceptions.conf").exists()) {
+        val f = File(ServerConstants.CONFIG_PATH!!)
+            .resolve("for_online")
+            .resolve("account_limit_exceptions.conf")
+
+        if (f.exists()) {
             try {
-                val f = File(ServerConstants.CONFIG_PATH + "account_limit_exceptions.conf")
                 if (f.lastModified() != lastModifiedData) {
                     exceptionData = Toml().read(f)
                     lastModifiedData = f.lastModified()

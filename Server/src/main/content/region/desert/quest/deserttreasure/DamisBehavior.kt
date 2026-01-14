@@ -1,7 +1,5 @@
-package content.region.desert.quest.deserttreasure.npc
+package content.region.desert.quest.deserttreasure
 
-import content.region.desert.quest.deserttreasure.DTUtils
-import content.region.desert.quest.deserttreasure.DesertTreasure
 import core.api.*
 import core.game.interaction.QueueStrength
 import core.game.node.entity.Entity
@@ -46,14 +44,18 @@ class DamisBehavior : NPCBehavior(NPCs.DAMIS_1974, NPCs.DAMIS_1975) {
 
     override fun beforeDamageReceived(self: NPC, attacker: Entity, state: BattleState) {
         if (attacker is Player) {
-            if (state.estimatedHit + Integer.max(state.secondaryHit, 0) >= self.skills.lifepoints && self.id == NPCs.DAMIS_1974) {
+            if (state.estimatedHit + Integer.max(
+                    state.secondaryHit,
+                    0
+                ) >= self.skills.lifepoints && self.id == NPCs.DAMIS_1974
+            ) {
                 state.estimatedHit = self.skills.lifepoints + 1
                 state.secondaryHit = -1
 
                 transformNpc(self, NPCs.DAMIS_1975, 500)
                 self.skills.lifepoints = self.skills.maximumLifepoints
                 sendChat(self, "Armour... is for restraint, not... protection...")
-                queueScript(self, 2, QueueStrength.NORMAL) { stage: Int ->
+                queueScript(self, 2, QueueStrength.NORMAL) {
                     sendChat(self, "Now I show... you... my true power!")
                     self.properties.attackSpeed = 3
                     return@queueScript stopExecuting(self)
@@ -72,9 +74,9 @@ class DamisBehavior : NPCBehavior(NPCs.DAMIS_1974, NPCs.DAMIS_1975) {
     override fun onDeathFinished(self: NPC, killer: Entity) {
         if (killer is Player) {
             if (self.id == NPCs.DAMIS_1975) {
-                if (DTUtils.getSubStage(killer, DesertTreasure.shadowStage) == 3) {
+                if (DesertTreasure.getSubStage(killer, DesertTreasure.attributeShadowStage) == 3) {
                     GroundItemManager.create(Item(Items.SHADOW_DIAMOND_4673), self.location, killer)
-                    DTUtils.setSubStage(killer, DesertTreasure.shadowStage, 100)
+                    DesertTreasure.setSubStage(killer, DesertTreasure.attributeShadowStage, 100)
                     removeAttribute(killer, DesertTreasure.attributeFareedInstance)
                 }
             }

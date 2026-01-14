@@ -78,7 +78,7 @@ object Skillcape {
     @JvmStatic
     fun getItems(player: Player, skill: Int): Array<Item> =
         arrayOf(
-            Item(ids[skill] + if (player.getSkills().getMasteredSkills() > 1) 1 else 0),
+            Item(ids[skill] + if (player.getSkills().masteredSkills > 1) 1 else 0),
             Item(ids[skill] + 2),
         )
 

@@ -143,7 +143,7 @@ sealed class PlayerFlags(
             buffer.p8(StringUtils.stringToLong(context.username))
             if (nonPvp) {
                 buffer.p1(context.properties.currentCombatLevel) // with summoning
-                buffer.p2(context.skills.getTotalLevel())
+                buffer.p2(context.skills.totalLevel)
             } else {
                 // combat level calculations
                 if ((GameWorld.settings!!.isPvp || (GameWorld.settings!!.wild_pvp_enabled && context.skullManager.isWilderness)) && !context.familiarManager.isUsingSummoning) {

@@ -1,11 +1,11 @@
-package content.region.desert.quest.deserttreasure.npc
+package content.region.desert.quest.deserttreasure
 
-import core.api.*
+import core.api.poofClear
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import shared.consts.NPCs
 
-class MummyNPC : NPCBehavior(NPCs.MUMMY_1958) {
+class ScarabNPC : NPCBehavior(NPCs.SCARABS_1969) {
     var clearTime = 0
 
     override fun tick(self: NPC): Boolean {

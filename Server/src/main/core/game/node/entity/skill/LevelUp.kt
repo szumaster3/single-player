@@ -123,13 +123,13 @@ object LevelUp {
             Graphics.send(Graphics(GRAPHIC.random(), 100, 50), player.location)
         }
 
-        if (TOTAL_LEVEL_MILESTONES.contains(player.skills.getTotalLevel())) {
+        if (TOTAL_LEVEL_MILESTONES.contains(player.skills.totalLevel)) {
             playAudio(player, Sounds.FIREWORK_2396, 1)
             Graphics.send(Graphics(GRAPHIC.random(), 100, 50), player.location)
-            sendMessage(player, DARK_RED + "Well done! You've reached the total level ${player.skills.getTotalLevel()} milestone!")
+            sendMessage(player, DARK_RED + "Well done! You've reached the total level ${player.skills.totalLevel} milestone!")
         }
 
-        if (player.skills.getTotalLevel() == 2376) {
+        if (player.skills.totalLevel == 2376) {
             Graphics.send(Graphics(GRAPHIC.random(), 100, 50), player.location)
             sendMessage(player, DARK_RED + "Congratulations! You've reached the maximum Total level possible!")
         }
@@ -170,7 +170,7 @@ object LevelUp {
             }
         }
 
-        val totalLevel = player.getSkills().getTotalLevel()
+        val totalLevel = player.getSkills().totalLevel
         for (i in SKILL_MILESTONES.indices) {
             if (totalLevel < SKILL_MILESTONES[i]) {
                 if (i > player.getSkills().skillMilestone) {
