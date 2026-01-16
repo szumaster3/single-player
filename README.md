@@ -17,17 +17,6 @@
   <a href="#license">License</a>
 </div>
 
-___
-
-> [!TIP]
-> **Play the game**
->
-> The entire project is fully built and ready to play.
->
-> [Click here](https://github.com/szumaster3/windows)
-
-___
-
 ### Prerequisites
 
 Before setting up the project, make sure you have the following installed:
