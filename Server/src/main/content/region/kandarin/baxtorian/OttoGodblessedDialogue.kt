@@ -34,14 +34,25 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
                 player,
                 "Choose an option:",
                 "Please, supply me details of your cunning with harpoons.",
-                if (player.savedData.activityData.isBarbarianFishingRod) "What was that secret knowledge of Herblore we talked of?" else "Are there any ways to use a fishing rod which I might learn?",
-                if (player.savedData.activityData.isBarbarianFiremakingBow) "I have completed Firemaking with a bow. What follows this?" else "My mind is ready for your Firemaking wisdom, please instruct me.",
-                if (player.savedData.activityData.isBarbarianSmithingSpear) "Tell me more about the one-handed spears." else "Tell me more about the use of spears."
+                if (player.savedData.activityData.isBarbarianFishingRod)
+                    "What was that secret knowledge of Herblore we talked of?"
+                else
+                    "Are there any ways to use a fishing rod which I might learn?",
+                if (player.savedData.activityData.isBarbarianFiremakingBow)
+                    "I have completed Firemaking with a bow. What follows this?"
+                else
+                    "My mind is ready for your Firemaking wisdom, please instruct me.",
+                if (player.savedData.activityData.isBarbarianSmithingSpear)
+                    "Tell me more about the one-handed spears."
+                else
+                    "Tell me more about the use of spears."
             )
-            stage = 14
+            stage = 13
+            return true
         }
 
         npcl(FaceAnim.FRIENDLY, "Good day, you seem a hearty warrior. Maybe even some barbarian blood in that body of yours?")
+        setAttribute(player, BarbarianTraining.BARBARIAN_TRAINING, true)
         return true
     }
 
