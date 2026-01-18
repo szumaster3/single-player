@@ -17,7 +17,7 @@ class HangoverCureListener : InteractionListener {
          * Handles creating chocolate milk.
          */
 
-        onUseWith(IntType.ITEM, Items.CHOCOLATE_DUST_1975, Items.BUCKET_OF_MILK_1927) { player, _, _ ->
+        onUseWith(IntType.ITEM, Items.BUCKET_OF_MILK_1927,  Items.CHOCOLATE_DUST_1975) { player, _, _ ->
             if (removeItem(player, Items.CHOCOLATE_DUST_1975) && removeItem(player, Items.BUCKET_OF_MILK_1927)) {
                 sendItemDialogue(player, Items.CHOCOLATEY_MILK_1977, "You mix the chocolate into the bucket.")
                 addItem(player, Items.CHOCOLATEY_MILK_1977)
@@ -30,7 +30,7 @@ class HangoverCureListener : InteractionListener {
          * Handles creating hangover cure.
          */
 
-        onUseWith(IntType.ITEM, Items.SNAPE_GRASS_231, Items.CHOCOLATEY_MILK_1977) { player, used, with ->
+        onUseWith(IntType.ITEM, Items.CHOCOLATEY_MILK_1977, Items.SNAPE_GRASS_231) { player, used, with ->
             if (removeItem(player, used.asItem()) && removeItem(player, with.asItem())) {
                 sendItemDialogue(player, Items.HANGOVER_CURE_1504, "You mix the snape grass into the bucket.")
                 replaceSlot(player, with.asItem().slot, Item(Items.HANGOVER_CURE_1504, 1))

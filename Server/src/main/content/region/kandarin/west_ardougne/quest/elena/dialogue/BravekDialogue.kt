@@ -29,15 +29,15 @@ class BravekDialogue(player: Player? = null) : Dialogue(player) {
                     1 -> playerl(FaceAnim.FRIENDLY, "This is really important though!").also { stage++ }
                     2 -> player("Ok, goodbye.").also { stage = END_DIALOGUE }
                 }
-                3 -> npcl(FaceAnim.FRIENDLY, "I can't possibly speak to you with my head spinning like this... I went a bit heavy on the drink last night.").also { stage++ }
-                4 -> npcl(FaceAnim.FRIENDLY, "Curse my herbalist, she made the best hangover cures. Darn inconvenient of her catching the plague.").also { stage++ }
+                3 -> npcl(FaceAnim.DRUNK, "I can't possibly speak to you with my head spinning like this... I went a bit heavy on the drink last night.").also { stage++ }
+                4 -> npcl(FaceAnim.DRUNK, "Curse my herbalist, she made the best hangover cures. Darn inconvenient of her catching the plague.").also { stage++ }
                 5 -> options("Okay, goodbye.", "You shouldn't drink so much then!", "Do you know what's in the cure?").also { stage++ }
                 6 -> when (buttonID) {
                     1 -> playerl(FaceAnim.FRIENDLY, "Okay, goodbye.").also { stage = END_DIALOGUE }
                     2 -> playerl(FaceAnim.FRIENDLY, "You shouldn't drink so much then!").also { stage = 7 }
                     3 -> playerl(FaceAnim.FRIENDLY, "Do you know what's in the cure?").also { stage = 20 }
                 }
-                7 -> npcl(FaceAnim.FRIENDLY, "Well positions of responsibility are hard, I need something to take my mind off things... Especially with the problems this place has..").also { stage++ }
+                7 -> npcl(FaceAnim.DRUNK, "Well positions of responsibility are hard, I need something to take my mind off things... Especially with the problems this place has..").also { stage++ }
                 8 -> playerl(FaceAnim.FRIENDLY, "I don't think drink is the solution.").also { stage++ }
                 9 -> npcl(FaceAnim.FRIENDLY, "Uurgh! My head still hurts too much to think straight. Oh for one of Trudi's hangover cures!").also { stage++ }
                 10 -> npcl(FaceAnim.FRIENDLY, "I'll see what I can do I suppose. Mr. Bravek, there's someone here who really needs to speak to you.").also { stage++ }

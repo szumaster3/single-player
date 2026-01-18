@@ -26,7 +26,7 @@ import shared.consts.*
  * Represents the Plague City plugin.
  *
  * # Relations
- * - [Plague City][content.region.kandarin.west_ardougne.west.quest.elena.PlagueCity]
+ * - [Plague City][content.region.kandarin.west_ardougne.quest.elena.PlagueCity]
  */
 class PlagueCityPlugin : InteractionListener {
 
