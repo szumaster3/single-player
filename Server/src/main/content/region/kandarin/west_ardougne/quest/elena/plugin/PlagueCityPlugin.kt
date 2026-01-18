@@ -204,11 +204,7 @@ class PlagueCityPlugin : InteractionListener {
 
             when {
                 questStage < 11 || questStage == 16 -> {
-                    if(node.asScenery().location.x != 2540) {
-                        sendNPCDialogueLines(player, NPCs.MOURNER_3216, FaceAnim.NEUTRAL, false, "I'd stand away from there. That black cross means that", "house has been pouched by plague.")
-                    } else {
-                        openDialogue(player, PlagueCityDoorDialogue())
-                    }
+                    openDialogue(player, PlagueCityDoorDialogue())
                 }
 
                 questStage == 11 -> {
