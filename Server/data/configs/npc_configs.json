@@ -38213,7 +38213,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "",
+    "examine": "He sells Farming equipment.",
     "name": "Richard",
     "defence_level": "1",
     "safespot": null,
@@ -38225,7 +38225,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "",
+    "examine": "She sells Farming equipment.",
     "name": "Alice",
     "defence_level": "1",
     "safespot": null,
@@ -38237,7 +38237,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "",
+    "examine": "Distinctly piratical.",
     "name": "Capt' Arnav",
     "defence_level": "1",
     "safespot": null,
@@ -38263,7 +38263,7 @@
     "defence_animation": ""
   },
   {
-    "examine": "",
+    "examine": "Young, but still beefy.",
     "melee_animation": "5849",
     "range_animation": "5849",
     "combat_audio": "366,368,367",
