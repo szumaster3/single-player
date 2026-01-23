@@ -34,9 +34,9 @@ class SurokMagisDialogue : Dialogue {
 
     override fun open(vararg args: Any): Boolean {
         npc = args[0] as NPC
-        val quest = player.getQuestRepository().getQuest(Quests.WHAT_LIES_BELOW) ?: return false
+        quest = player.getQuestRepository().getQuest(Quests.WHAT_LIES_BELOW) ?: return false
 
-        when (quest.getStage(player)) {
+        when (quest?.getStage(player)) {
             20 -> player("Hello.")
             30, 40 -> npc("Ah! You're back. Have you found the things I need yet?")
             50 -> if (!inInventory(player, WhatLiesBelow.SUROKS_LETTER, 1) &&
@@ -218,10 +218,12 @@ class SurokMagisDialogue : Dialogue {
                 10 -> {
                     close()
                     player.unlock()
-                    cutscene!!.king.unlock()
-                    cutscene!!.reset()
+                    cutscene?.let {
+                        it.king.unlock()
+                        it.reset()
+                        it.king.properties.combatPulse.attack(player)
+                    }
                     player.interfaceManager.restoreTabs()
-                    cutscene!!.king.properties.combatPulse.attack(player)
                     stage = 11
                 }
 
