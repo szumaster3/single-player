@@ -24,7 +24,8 @@ class WhatLiesBelow : Quest(Quests.WHAT_LIES_BELOW, 136, 135, 1) {
         var line = 12
         when (stage) {
             0 -> {
-                line(player, "I can start this quest by speaking to !!Rat Burgiss?? on the road south of !!Varrock??.", line++)
+                line(player, "I can start this quest by speaking to !!Rat Burgiss?? on the", line++)
+                line(player, "road south of !!Varrock??.", line++)
                 line(player, "Before I begin I will need to:", line++)
                 line(player, "Have level 35 !!Runecrafting??.", line++, hasLevelStat(player, Skills.RUNECRAFTING, 35))
                 line(player, "Be able to defeat a !!level 47 enemy??.", line++)
