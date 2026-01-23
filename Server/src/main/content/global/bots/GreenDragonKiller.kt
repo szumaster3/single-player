@@ -1,5 +1,6 @@
 package content.global.bots
 
+import core.api.closeInterface
 import core.api.forceMove
 import core.game.bots.AIRepository
 import core.game.bots.CombatBotAssembler
@@ -8,6 +9,7 @@ import core.game.interaction.DestinationFlag
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListeners
 import core.game.interaction.MovementPulse
+import core.game.node.Node
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.combat.CombatSwingHandler
@@ -17,6 +19,7 @@ import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.WarningHandler
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
+import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.impl.WildernessZone
@@ -210,8 +213,12 @@ class GreenDragonKiller(val style: CombatStyle) : Script() {
     }
 
     private fun toDragonsState() {
-        val ditch = scriptAPI.getNearestNode(Scenery.WILDERNESS_DITCH_23271, true) ?: run {
-            runToDragons()
+        val ditch = scriptAPI.getNearestNode(Scenery.WILDERNESS_DITCH_23271, true)
+        if (ditch == null) {
+            val target = wildernessLine.randomLoc
+            bot.pulseManager.run(object : MovementPulse(bot, target, DestinationFlag.LOCATION) {
+                override fun pulse(): Boolean = true
+            })
             return
         }
 
@@ -220,13 +227,20 @@ class GreenDragonKiller(val style: CombatStyle) : Script() {
         if (bot.location != start) {
             bot.pulseManager.run(object : MovementPulse(bot, start, DestinationFlag.LOCATION) {
                 override fun pulse(): Boolean {
-                    return true
+                    if (bot.location == start) {
+                        crossDitch(ditch, end)
+                        return true
+                    }
+                    return false
                 }
             })
-            return
+        } else {
+            crossDitch(ditch, end)
         }
+    }
 
-        forceMove(bot, start, end, 0, 60, null, Animations.HUMAN_JUMP_FENCE_6132) {
+    private fun crossDitch(ditch: Node, end: Location) {
+        forceMove(bot, ditch.location, end, 0, 60, null, Animations.HUMAN_JUMP_FENCE_6132) {
             runToDragons()
         }
     }
