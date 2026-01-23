@@ -7,10 +7,10 @@ import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
-import core.game.node.entity.player.link.diary.Diary
-import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.player.link.quest.Quest
+import core.game.node.entity.skill.Skills
 import core.plugin.Initializable
+import core.tools.END_DIALOGUE
 import shared.consts.NPCs
 import shared.consts.Quests
 
@@ -19,19 +19,11 @@ import shared.consts.Quests
  * @author Vexia
  */
 @Initializable
-class RatBurgissDialogue : Dialogue {
+class RatBurgissDialogue(player: Player? = null) : Dialogue(player) {
 
     private var quest: Quest? = null
-    private var isDiary: Boolean = false
-    private val level = 0
-
-    constructor(player: Player?) : super(player)
-
-    constructor()
-
-    override fun newInstance(player: Player?): Dialogue {
-        return RatBurgissDialogue(player)
-    }
+    private var beforeQuestStage = 0
+    private var afterQuestStage  = 0
 
     override fun open(vararg args: Any): Boolean {
         npc = args[0] as NPC
@@ -44,7 +36,15 @@ class RatBurgissDialogue : Dialogue {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         if (stage == -1) {
             when (buttonId) {
-                1 -> player("Hello there!").also { stage = 5 }
+                1 -> player("Hello there!").also {
+                    stage = if(getStatLevel(player, Skills.RUNECRAFTING) < 35) {
+                        1500
+                    } else if (quest?.isCompleted(player) == true) {
+                        1000
+                    } else {
+                        5
+                    }
+                }
                 2 -> {
                     player("I have a question about my Achievement Diary.")
                     loadFile(RatBurgissDiaryDialogue())
@@ -52,9 +52,21 @@ class RatBurgissDialogue : Dialogue {
             }
             return true
         }
-        if (stage == 900) {
-            sendDiaryDialogue()
-            return true
+        if(stage == 1500){
+            when(beforeQuestStage){
+                0 -> npcl(FaceAnim.FRIENDLY,"Oh, hello. I'd love to chat right now, but I'm a bit busy. Perhaps you could come back and chat some other time?").also { beforeQuestStage++ }
+                1 -> playerl(FaceAnim.FRIENDLY, "Of course. Sorry to bother you!").also { beforeQuestStage++ }
+                2 -> npcl(FaceAnim.FRIENDLY, "Not at all! Farewell!").also { stage = END_DIALOGUE }
+            }
+        }
+        if(stage == 1000){
+            when(afterQuestStage){
+                0 -> npcl(FaceAnim.FRIENDLY,"Ah! ${player.username}! You did a fine service for us. You might make a good member of the VPSG one day, with a little training and a bit more muscle!").also { afterQuestStage++ }
+                1 -> playerl(FaceAnim.HALF_ASKING, "So, do you have any more jobs for me to do?").also { afterQuestStage++ }
+                2 -> npcl(FaceAnim.FRIENDLY, "At the moment, no. Things seem pretty quiet. However, I have heard a rumour about something strange going on in...hmm, no, I think we can handle this one for now.").also { afterQuestStage++ }
+                3 -> npcl(FaceAnim.FRIENDLY, "But, who knows? We may need your assistance again soon. Thank you, ${player.username}").also { afterQuestStage++ }
+                4 -> playerl(FaceAnim.FRIENDLY, "Any time, Rat!").also { stage = END_DIALOGUE }
+            }
         }
         when (quest!!.getStage(player)) {
             0 -> when (stage) {
@@ -204,20 +216,8 @@ class RatBurgissDialogue : Dialogue {
         return true
     }
 
-    private fun sendDiaryDialogue() {
-        isDiary = true
-        if (Diary.canClaimLevelRewards(player, DiaryType.VARROCK, level)) {
-            player("I think I've finished all of the tasks in my Varrock", "Achievement Diary.")
-            stage = 440
-            return
-        }
-        if (Diary.canReplaceReward(player, DiaryType.VARROCK, level)) {
-            player("I've seemed to have lost my armour...")
-            stage = 460
-            return
-        }
-        options("What is the Achievement Diary?", "What are the rewards?", "How do I claim the rewards?", "See you later.")
-        stage = 0
+    override fun newInstance(player: Player?): Dialogue {
+        return RatBurgissDialogue(player)
     }
 
     override fun getIds(): IntArray {
