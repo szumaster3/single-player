@@ -30,67 +30,25 @@ class GloughDialogue : DialogueFile() {
                     1 -> sendDialogue(player!!, "The gnome is munching on a worm hole.").also { stage++ }
                     2 -> npcl(FaceAnim.OLD_DEFAULT, "Can I help human? Can't you see I'm eating?!").also { stage++ }
                     3 -> sendDialogue(player!!, "The gnome continues to eat.").also { stage++ }
-                    4 ->
-                        playerl(
-                            FaceAnim.FRIENDLY,
-                            "The King asked me to inform you that the Daconia rocks have been taken!",
-                        ).also {
-                            stage++
-                        }
+                    4 -> playerl(FaceAnim.FRIENDLY, "The King asked me to inform you that the Daconia rocks have been taken!").also { stage++ }
 
                     5 -> npcl(FaceAnim.OLD_DEFAULT, "Surely not!").also { stage++ }
-                    6 ->
-                        playerl(
-                            FaceAnim.FRIENDLY,
-                            "Apparently a human took them from Hazelmere. Hazelmere believed him; he had the King's seal!",
-                        ).also {
-                            stage++
-                        }
-
-                    7 ->
-                        npcl(
-                            FaceAnim.OLD_DEFAULT,
-                            "I should've known! The humans are going to invade!",
-                        ).also { stage++ }
-
+                    6 -> playerl(FaceAnim.FRIENDLY, "Apparently a human took them from Hazelmere. Hazelmere believed him; he had the King's seal!").also { stage++ }
+                    7 -> npcl(FaceAnim.OLD_DEFAULT, "I should've known! The humans are going to invade!").also { stage++ }
                     8 -> playerl(FaceAnim.FRIENDLY, "Never!").also { stage++ }
-                    9 ->
-                        npcl(
-                            FaceAnim.OLD_DEFAULT,
-                            "Your type can't be trusted! I'll take care of this! Go back to the King.",
-                        ).also {
-                            setQuestStage(player!!, Quests.THE_GRAND_TREE, 45)
-                            stage = END_DIALOGUE
-                        }
+                    9 -> npcl(FaceAnim.OLD_DEFAULT, "Your type can't be trusted! I'll take care of this! Go back to the King.").also {
+                        setQuestStage(player!!, Quests.THE_GRAND_TREE, 45)
+                        stage = END_DIALOGUE
+                    }
                 }
             }
 
             47 -> {
                 when (stage) {
-                    0 ->
-                        playerl(
-                            FaceAnim.FRIENDLY,
-                            "Glough! I don't know what you're up to but I know you paid Charlie to get those rocks!",
-                        ).also {
-                            stage++
-                        }
-                    1 ->
-                        npcl(
-                            FaceAnim.OLD_DEFAULT,
-                            "You're a fool human! You have no idea what's going on.",
-                        ).also { stage++ }
-                    2 ->
-                        playerl(
-                            FaceAnim.FRIENDLY,
-                            "I know the Grand Tree's dying! And I think you're part of the reason.",
-                        ).also {
-                            stage++
-                        }
-                    3 ->
-                        npcl(
-                            FaceAnim.OLD_DEFAULT,
-                            "How dare you accuse me! I'm the head tree guardian! Guards! Guards!",
-                        ).also { stage++ }
+                    0 -> playerl(FaceAnim.FRIENDLY, "Glough! I don't know what you're up to but I know you paid Charlie to get those rocks!").also { stage++ }
+                    1 -> npcl(FaceAnim.OLD_DEFAULT, "You're a fool human! You have no idea what's going on.").also { stage++ }
+                    2 -> playerl(FaceAnim.FRIENDLY, "I know the Grand Tree's dying! And I think you're part of the reason.").also { stage++ }
+                    3 -> npcl(FaceAnim.OLD_DEFAULT, "How dare you accuse me! I'm the head tree guardian! Guards! Guards!").also { stage++ }
                     4 -> {
                         GameWorld.Pulser
                             .submit(
@@ -141,29 +99,10 @@ class GloughDialogue : DialogueFile() {
                 when (stage) {
                     0 -> playerl(FaceAnim.FRIENDLY, "I know what you're up to Glough!").also { stage++ }
                     1 -> npcl(FaceAnim.OLD_DEFAULT, "You have no idea human!").also { stage++ }
-                    2 ->
-                        playerl(
-                            FaceAnim.FRIENDLY,
-                            "You may be able to make a fleet but the tree gnomes will never follow you into battle against humans.",
-                        ).also {
-                            stage++
-                        }
-                    3 ->
-                        npcl(
-                            FaceAnim.OLD_DEFAULT,
-                            "So, you know more than I thought! The gnomes fear humanity more than any other race. I just need to give them a push in the right direction. There's nothing you can do traveller! Leave before it's too late!",
-                        ).also {
-                            stage++
-                        }
+                    2 -> playerl(FaceAnim.FRIENDLY, "You may be able to make a fleet but the tree gnomes will never follow you into battle against humans.").also { stage++ }
+                    3 -> npcl(FaceAnim.OLD_DEFAULT, "So, you know more than I thought! The gnomes fear humanity more than any other race. I just need to give them a push in the right direction. There's nothing you can do traveller! Leave before it's too late!").also { stage++ }
                     4 -> playerl(FaceAnim.FRIENDLY, "King Narnode won't allow it!").also { stage++ }
-                    5 ->
-                        npcl(
-                            FaceAnim.OLD_DEFAULT,
-                            "The King's a fool and a coward! He'll bow to me! You'll soon be back in that cage!",
-                        ).also {
-                            stage =
-                                END_DIALOGUE
-                        }
+                    5 -> npcl(FaceAnim.OLD_DEFAULT, "The King's a fool and a coward! He'll bow to me! You'll soon be back in that cage!").also { stage = END_DIALOGUE }
                 }
             }
 
@@ -173,11 +112,7 @@ class GloughDialogue : DialogueFile() {
                     1 -> npcl(FaceAnim.OLD_DEFAULT, "You're becoming quite annoying traveller!").also { stage++ }
                     2 -> npcl(FaceAnim.OLD_DEFAULT, "Glough is searching his pockets.").also { stage++ }
                     3 -> npcl(FaceAnim.OLD_DEFAULT, "Where are that darn key?").also { stage++ }
-                    4 ->
-                        npcl(FaceAnim.OLD_DEFAULT, "Leave human, before I have you put in the cage!").also {
-                            stage =
-                                END_DIALOGUE
-                        }
+                    4 -> npcl(FaceAnim.OLD_DEFAULT, "Leave human, before I have you put in the cage!").also { stage = END_DIALOGUE }
                 }
             }
 
