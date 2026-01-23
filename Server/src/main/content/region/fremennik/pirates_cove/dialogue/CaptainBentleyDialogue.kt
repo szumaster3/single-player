@@ -1,7 +1,7 @@
 package content.region.fremennik.pirates_cove.dialogue
 
-import content.region.fremennik.plugin.FremennikBoat
-import content.region.fremennik.plugin.Travel
+import content.region.fremennik.rellekka.plugin.FremennikBoat
+import content.region.fremennik.rellekka.plugin.Travel
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player

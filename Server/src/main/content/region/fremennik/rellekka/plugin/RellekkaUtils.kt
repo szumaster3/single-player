@@ -1,4 +1,4 @@
-package content.region.fremennik.plugin
+package content.region.fremennik.rellekka.plugin
 
 import content.data.GameAttributes
 import core.api.*

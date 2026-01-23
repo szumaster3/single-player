@@ -13,7 +13,10 @@ import shared.consts.Scenery
 
 class NeitiznotPlugin : InteractionListener, MapArea {
 
-    private val ROPE_BRIDGE = intArrayOf(Scenery.ROPE_BRIDGE_21306, Scenery.ROPE_BRIDGE_21307, Scenery.ROPE_BRIDGE_21308, Scenery.ROPE_BRIDGE_21309)
+    companion object {
+        private val ROPE_BRIDGE = intArrayOf(Scenery.ROPE_BRIDGE_21306, Scenery.ROPE_BRIDGE_21307, Scenery.ROPE_BRIDGE_21308, Scenery.ROPE_BRIDGE_21309)
+
+    }
 
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(
         getRegionBorders(9275), ZoneBorders(2313, 3786, 2331, 3802)

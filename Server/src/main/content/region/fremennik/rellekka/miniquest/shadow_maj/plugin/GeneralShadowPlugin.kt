@@ -13,7 +13,9 @@ import shared.consts.Scenery
 
 class GeneralShadowPlugin : InteractionListener {
 
-    override fun defineListeners() {/*
+    override fun defineListeners() {
+
+        /*
          * Handles enter to the Goblin temple.
          */
 

@@ -1,4 +1,4 @@
-package content.region.fremennik.jatizso
+package content.region.fremennik.jatizso.plugin
 
 import core.api.*
 import core.game.dialogue.DialogueFile

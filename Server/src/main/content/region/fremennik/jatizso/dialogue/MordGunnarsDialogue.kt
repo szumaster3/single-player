@@ -1,7 +1,7 @@
 package content.region.fremennik.jatizso.dialogue
 
-import content.region.fremennik.plugin.FremennikBoat
-import content.region.fremennik.plugin.Travel
+import content.region.fremennik.rellekka.plugin.FremennikBoat
+import content.region.fremennik.rellekka.plugin.Travel
 import core.api.requireQuest
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

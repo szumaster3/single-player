@@ -1,7 +1,7 @@
 package content.region.fremennik.dialogue
 
-import content.region.fremennik.plugin.FremennikBoat
-import content.region.fremennik.plugin.Travel
+import content.region.fremennik.rellekka.plugin.FremennikBoat
+import content.region.fremennik.rellekka.plugin.Travel
 import core.api.isQuestComplete
 import core.api.removeItem
 import core.api.sendMessage

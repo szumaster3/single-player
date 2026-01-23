@@ -19,6 +19,7 @@ class IceTrollCavePlugin : InteractionListener {
         private val ENTER_ENTRANCE  = intArrayOf(Scenery.CAVE_21584, Scenery.CAVE_21585, Scenery.CAVE_21586)
         private val EXIT_ENTRANCE   = intArrayOf(Scenery.CAVE_OPENING_21597, Scenery.CAVE_OPENING_21598, Scenery.CAVE_OPENING_21599)
     }
+
     override fun defineListeners() {
 
         /*

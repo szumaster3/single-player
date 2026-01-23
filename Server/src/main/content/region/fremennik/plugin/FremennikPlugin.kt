@@ -1,6 +1,8 @@
 package content.region.fremennik.plugin
 
 import content.region.fremennik.dialogue.JarvaldTravelDialogue
+import content.region.fremennik.rellekka.plugin.FremennikBoat
+import content.region.fremennik.rellekka.plugin.Travel
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

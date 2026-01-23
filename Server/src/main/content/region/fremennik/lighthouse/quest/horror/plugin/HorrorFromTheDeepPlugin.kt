@@ -23,12 +23,16 @@ import core.game.world.update.flag.context.Animation
 import shared.consts.*
 
 class HorrorFromTheDeepPlugin : InteractionListener {
-    private val brokenBridge = intArrayOf(Scenery.BROKEN_BRIDGE_4615, Scenery.BROKEN_BRIDGE_4616)
-    private val strangeWalls = intArrayOf(Scenery.STRANGE_WALL_4544, Scenery.STRANGE_WALL_4543)
-    private val strangeDoors = intArrayOf(Scenery.STRANGE_WALL_4545, Scenery.STRANGE_WALL_4546)
-    private val requiredItems = intArrayOf(Items.BRONZE_ARROW_882, Items.BRONZE_SWORD_1277, Items.AIR_RUNE_556, Items.FIRE_RUNE_554, Items.EARTH_RUNE_557, Items.WATER_RUNE_555)
+
+    companion object {
+        private val brokenBridge  = intArrayOf(Scenery.BROKEN_BRIDGE_4615, Scenery.BROKEN_BRIDGE_4616)
+        private val strangeWalls  = intArrayOf(Scenery.STRANGE_WALL_4544, Scenery.STRANGE_WALL_4543)
+        private val strangeDoors  = intArrayOf(Scenery.STRANGE_WALL_4545, Scenery.STRANGE_WALL_4546)
+        private val requiredItems = intArrayOf(Items.BRONZE_ARROW_882, Items.BRONZE_SWORD_1277, Items.AIR_RUNE_556, Items.FIRE_RUNE_554, Items.EARTH_RUNE_557, Items.WATER_RUNE_555)
+    }
 
     override fun defineListeners() {
+
         /*
          * Handles lighthouse bookcase.
          */

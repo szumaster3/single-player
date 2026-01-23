@@ -45,12 +45,7 @@ class ThakkradYakDialogue(player: Player? = null) : Dialogue(player) {
                         return true
                     }
                     else -> {
-                        options(
-                            "Cure all my hides.",
-                            "Cure one hide.",
-                            "Cure no hide.",
-                            "Can you cure any other type of leather?"
-                        )
+                        options("Cure all my hides.", "Cure one hide.", "Cure no hide.", "Can you cure any other type of leather?")
                         stage++
                     }
                 }

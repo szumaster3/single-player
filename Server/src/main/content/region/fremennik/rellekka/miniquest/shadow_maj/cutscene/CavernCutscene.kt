@@ -11,9 +11,8 @@ import core.game.world.map.Direction
 import core.game.world.map.Location
 import shared.consts.NPCs
 
-class CavernCutscene(
-    player: Player,
-) : Cutscene(player) {
+class CavernCutscene(player: Player) : Cutscene(player) {
+
     override fun setup() {
         setExit(location(1759, 4711, 0))
         if (player.settings.isRunToggled) {
