@@ -15,7 +15,6 @@ import core.plugin.Initializable
 import core.tools.RandomFunction
 import shared.consts.NPCs
 
-@Initializable
 class BattleMageNPC : AbstractNPC {
     private val type: GodType?
 
